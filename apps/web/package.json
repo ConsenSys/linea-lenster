@@ -50,6 +50,7 @@
     "@thirdweb-dev/storage": "^1.1.4",
     "@tippyjs/react": "^4.2.6",
     "@workers/snapshot-relay": "workspace:*",
+    "@wagmi/chains": "^0.2.18",
     "@xmtp/xmtp-js": "^9.1.1",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
