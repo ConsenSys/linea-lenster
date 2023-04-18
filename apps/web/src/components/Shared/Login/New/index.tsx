@@ -1,7 +1,6 @@
-import ChooseFile from '@components/Shared/ChooseFile';
+import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
 import { Regex } from '@lenster/data';
-import { RelayErrorReasons } from '@lenster/lens';
 import {
   Button,
   ErrorMessage,
@@ -10,14 +9,22 @@ import {
   Spinner,
   useZodForm
 } from '@lenster/ui';
-import { uploadFileToIPFS } from '@lib/uploadToIPFS';
 import { t, Trans } from '@lingui/macro';
-import { APP_NAME, ZERO_ADDRESS } from 'data/constants';
-import { ethers } from 'ethers';
+import {
+  APP_NAME,
+  LENS_PROFILE_CREATOR,
+  LENS_PROFILE_CREATOR_ABI,
+  ZERO_ADDRESS
+} from 'data/constants';
 import getStampFyiURL from 'lib/getStampFyiURL';
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
 import React, { useState } from 'react';
-import { useAccount } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction
+} from 'wagmi';
 import { object, string } from 'zod';
 
 const newUserSchema = object({
@@ -25,7 +32,7 @@ const newUserSchema = object({
     .min(5, { message: t`Handle should be at least 5 characters` })
     .max(26, { message: t`Handle should not exceed 26 characters` })
     .regex(Regex.handle, {
-      message: t`Handle should only contain alphanumeric characters`
+      message: t`Handle should only contain lowercase alphanumeric characters`
     })
 });
 
@@ -34,153 +41,73 @@ interface NewProfileProps {
 }
 
 const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
-  const [avatar, setAvatar] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
-  const { isConnected, connector } = useAccount();
+  const [handle, setHandle] = useState('');
+  const [avatar, setAvatar] = useState(getStampFyiURL(address ?? ZERO_ADDRESS));
+  //const [uploading, setUploading] = useState(false);
+
+  const debouncedHandle = useSimpleDebounce(handle);
 
   const form = useZodForm({
     schema: newUserSchema
   });
 
-  const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (event.target.files?.length) {
-      try {
-        setUploading(true);
-        const attachment = await uploadFileToIPFS(event.target.files[0]);
-        if (attachment.original.url) {
-          setAvatar(attachment.original.url);
-        }
-      } finally {
-        setUploading(false);
+  const { config } = usePrepareContractWrite({
+    address: LENS_PROFILE_CREATOR,
+    abi: LENS_PROFILE_CREATOR_ABI,
+    functionName: 'proxyCreateProfile',
+    args: [
+      {
+        to: address,
+        handle: debouncedHandle,
+        imageURI: avatar,
+        followModule: '0x0000000000000000000000000000000000000000',
+        followModuleInitData: '0x',
+        followNFTURI: ''
       }
-    }
+    ],
+    enabled: Boolean(debouncedHandle)
+  });
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading, error } = useWaitForTransaction({
+    hash: data?.hash
+  });
+
+  /*const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+                                                                          event.preventDefault();
+                                                                          if (event.target.files?.length) {
+                                                                          try {
+                                                                            setUploading(true);
+        const attachment = await uploadFileToIPFS(event.target.files[0]);
+                                                                            if (attachment.original.url) {
+                                                                              setAvatar(attachment.original.url);
+                                                                            }
+                                                                          } finally {
+                                                                            setUploading(false);
+                                                                          }}
   };
 
   const relayErrorToString = (error: RelayErrorReasons): string => {
     return error === RelayErrorReasons.HandleTaken
       ? t`The selected handle is already taken`
       : error;
-  };
+                                                                        };*/
 
-  const handleCreateProfile = async (username: string, avatar: string) => {
-    if (connector) {
-      setLoading(true);
-      const { ethereum } = window as any;
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts'
-      });
-
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const walletAddress = accounts[0]; // first account in MetaMask
-      const signer = provider.getSigner(walletAddress);
-
-      const mockProfileProxyCreator = new ethers.Contract(
-        '0x923e7786176Ef21d0B31645fB1353b1392Dd0e40',
-        [
-          {
-            inputs: [
-              {
-                internalType: 'contract ILensHub',
-                name: 'hub',
-                type: 'address'
-              }
-            ],
-            stateMutability: 'nonpayable',
-            type: 'constructor'
-          },
-          {
-            inputs: [],
-            name: 'HandleContainsInvalidCharacters',
-            type: 'error'
-          },
-          { inputs: [], name: 'HandleFirstCharInvalid', type: 'error' },
-          { inputs: [], name: 'HandleLengthInvalid', type: 'error' },
-          {
-            inputs: [
-              {
-                components: [
-                  { internalType: 'address', name: 'to', type: 'address' },
-                  { internalType: 'string', name: 'handle', type: 'string' },
-                  { internalType: 'string', name: 'imageURI', type: 'string' },
-                  {
-                    internalType: 'address',
-                    name: 'followModule',
-                    type: 'address'
-                  },
-                  {
-                    internalType: 'bytes',
-                    name: 'followModuleInitData',
-                    type: 'bytes'
-                  },
-                  {
-                    internalType: 'string',
-                    name: 'followNFTURI',
-                    type: 'string'
-                  }
-                ],
-                internalType: 'struct DataTypes.CreateProfileData',
-                name: 'vars',
-                type: 'tuple'
-              }
-            ],
-            name: 'proxyCreateProfile',
-            outputs: [],
-            stateMutability: 'nonpayable',
-            type: 'function'
-          }
-        ],
-        signer
-      );
-
-      const createProfileRequest = {
-        to: walletAddress,
-        handle: username,
-        imageURI: '', // TODO: add picture URL once fixed
-        followModule: '0x0000000000000000000000000000000000000000',
-        followModuleInitData: '0x',
-        followNFTURI: ''
-      };
-
-      const result = await mockProfileProxyCreator.proxyCreateProfile(
-        createProfileRequest,
-        {
-          gasLimit: 300000
-        }
-      );
-
-      try {
-        await result.wait();
-      } catch {
-        setError(true);
-      }
-      setLoading(false);
-    }
+  const handleCreateProfile = async () => {
+    write?.();
   };
 
   return (
-    <Form
-      form={form}
-      className="space-y-4"
-      onSubmit={async ({ handle }) => {
-        const username = handle.toLowerCase();
-        const profilePicture =
-          avatar || getStampFyiURL(address ?? ZERO_ADDRESS);
-
-        await handleCreateProfile(username, profilePicture);
-      }}
-    >
+    <Form form={form} className="space-y-4" onSubmit={handleCreateProfile}>
       {error && (
         <ErrorMessage
           className="mb-3"
           title="Create profile failed!"
           error={{
             name: 'Create profile failed!',
-            message: 'Something went wrong with the transaction'
+            message: error.message
           }}
         />
       )}
@@ -202,7 +129,9 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
         label={t`Handle`}
         type="text"
         placeholder="gavin"
-        {...form.register('handle')}
+        {...form.register('handle', {
+          onChange: (e) => setHandle(e.target.value)
+        })}
       />
       <div className="space-y-1.5">
         <div className="label">Avatar</div>
@@ -218,6 +147,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
               />
             </div>
           )}
+          {/* TODO: reactivate avatar upload once we have a S3 bucket
           <div>
             <div className="flex items-center space-x-3">
               <ChooseFile
@@ -227,15 +157,15 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
               />
               {uploading && <Spinner size="sm" />}
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
       <Button
         className="ml-auto"
         type="submit"
-        disabled={loading || !isConnected}
+        disabled={!write || isLoading || !isConnected}
         icon={
-          loading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
+          isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
         }
       >
         <Trans>{isConnected ? 'Sign up' : 'Connect your wallet'}</Trans>
