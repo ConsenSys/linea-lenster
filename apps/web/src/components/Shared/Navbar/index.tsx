@@ -69,7 +69,7 @@ const Navbar: FC = () => {
   };
 
   return (
-    <Disclosure as="header" className="divider sticky top-0 z-10 w-full bg-white dark:bg-black">
+    <Disclosure as="header" className="divider bg-darker sticky top-0 z-10 w-full text-white">
       {({ open }) => (
         <>
           {staffMode && <StaffBar />}
@@ -80,13 +80,17 @@ const Navbar: FC = () => {
                   {open ? <XIcon className="h-6 w-6" /> : <SearchIcon className="h-6 w-6" />}
                 </Disclosure.Button>
                 <Link href="/" className="hidden md:block">
-                  <img
-                    className="h-8 w-8"
-                    height={32}
-                    width={32}
-                    src={currentProfile && hasPrideLogo(currentProfile) ? '/pride.svg' : '/logo.svg'}
-                    alt="Logo"
-                  />
+                  {currentProfile && hasPrideLogo(currentProfile) ? (
+                    <img
+                      className="h-8 w-8"
+                      height={32}
+                      width={32}
+                      src={currentProfile && hasPrideLogo(currentProfile) ? '/pride.svg' : '/logo.svg'}
+                      alt="Logo"
+                    />
+                  ) : (
+                    <h2 className="text-3xl font-medium">Lineaster</h2>
+                  )}
                 </Link>
                 <div className="hidden sm:ml-6 md:block">
                   <div className="flex items-center space-x-4">

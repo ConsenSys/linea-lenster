@@ -1,6 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
+const LineaCyan = {
+  ...colors.cyan,
+  500: '#61dfff'
+};
+
+// colors: {
+//   primary: '#61DFFF',
+//   white: '#fff',
+//   gray: '#C0C0C0',
+//   card: '#505050',
+//   cardBg: '#1D1D1D',
+//   darker: '#121212'
+// },
+// fontFamily: {
+//   atyp: ['var(--font-atyp)'],
+//   atyptext: ['var(--font-atyp-text)']
+// }
 
 module.exports = {
   darkMode: 'class',
@@ -12,12 +29,11 @@ module.exports = {
     extend: {
       colors: {
         gray: colors.zinc,
-        brand: colors.violet,
-        red: colors.red,
-        pink: colors.pink,
-        blue: colors.blue,
+        brand: LineaCyan,
         green: colors.emerald,
-        yellow: colors.yellow
+        cyan: LineaCyan,
+        dark: '#1D1D1D',
+        darker: '#121212'
       }
     }
   },
