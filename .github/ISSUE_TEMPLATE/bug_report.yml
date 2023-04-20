@@ -1,5 +1,5 @@
 name: "Bug Report"
-description: "Report a reproducible bug in the Lenster"
+description: "Report a reproducible bug in the Lineaster"
 labels: "needs review"
 body:
   - type: markdown
