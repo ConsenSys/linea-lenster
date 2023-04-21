@@ -12,15 +12,26 @@ const getEnvConfig = (): {
   lensPeripheryAddress: `0x${string}`;
   defaultCollectToken: string;
   litProtocolEnvironment: string;
+  isRelayerAvailable: boolean;
 } => {
   switch (LENS_NETWORK) {
+    case 'mainnet':
+      return {
+        apiEndpoint: LensEndpoint.Mainnet,
+        lensHubProxyAddress: MainnetContracts.LensHubProxy,
+        lensPeripheryAddress: MainnetContracts.LensPeriphery,
+        defaultCollectToken: MainnetContracts.DefaultToken,
+        litProtocolEnvironment: 'polygon',
+        isRelayerAvailable: false
+      };
     case 'testnet':
       return {
         apiEndpoint: LensEndpoint.Testnet,
         lensHubProxyAddress: TestnetContracts.LensHubProxy,
         lensPeripheryAddress: TestnetContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
-        litProtocolEnvironment: 'mumbai'
+        litProtocolEnvironment: 'mumbai',
+        isRelayerAvailable: false
       };
     case 'staging':
       return {
@@ -28,7 +39,8 @@ const getEnvConfig = (): {
         lensHubProxyAddress: TestnetContracts.LensHubProxy,
         lensPeripheryAddress: TestnetContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
-        litProtocolEnvironment: 'mumbai'
+        litProtocolEnvironment: 'mumbai',
+        isRelayerAvailable: false
       };
     case 'sandbox':
       return {
@@ -36,7 +48,8 @@ const getEnvConfig = (): {
         lensHubProxyAddress: SandboxContracts.LensHubProxy,
         lensPeripheryAddress: SandboxContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
-        litProtocolEnvironment: 'mumbai-sandbox'
+        litProtocolEnvironment: 'mumbai-sandbox',
+        isRelayerAvailable: false
       };
     case 'staging-sandbox':
       return {
@@ -44,7 +57,8 @@ const getEnvConfig = (): {
         lensHubProxyAddress: SandboxContracts.LensHubProxy,
         lensPeripheryAddress: SandboxContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
-        litProtocolEnvironment: 'mumbai-sandbox'
+        litProtocolEnvironment: 'mumbai-sandbox',
+        isRelayerAvailable: false
       };
     default:
       return {
@@ -52,7 +66,8 @@ const getEnvConfig = (): {
         lensHubProxyAddress: MainnetContracts.LensHubProxy,
         lensPeripheryAddress: MainnetContracts.LensPeriphery,
         defaultCollectToken: MainnetContracts.DefaultToken,
-        litProtocolEnvironment: 'polygon'
+        litProtocolEnvironment: 'polygon',
+        isRelayerAvailable: false
       };
   }
 };

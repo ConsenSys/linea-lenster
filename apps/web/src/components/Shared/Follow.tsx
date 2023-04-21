@@ -1,18 +1,20 @@
 import { UserAddIcon } from '@heroicons/react/outline';
-import { LensHub } from '@lenster/abis';
-import { LENSHUB_PROXY } from '@lenster/data/constants';
 import type { Profile } from '@lenster/lens';
-import {
-  useBroadcastMutation,
-  useCreateFollowTypedDataMutation,
-  useProxyActionMutation
-} from '@lenster/lens';
 import type { ApolloCache } from '@lenster/lens/apollo';
-import getSignature from '@lenster/lib/getSignature';
 import { Button, Spinner } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
 import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
+import { LensHub } from 'abis';
+import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY } from 'data/constants';
+import type { Profile } from 'lens';
+import {
+  useBroadcastMutation,
+  useCreateFollowTypedDataMutation,
+  useProxyActionMutation
+} from 'lens';
+import type { ApolloCache } from 'lens/apollo';
+import getSignature from 'lib/getSignature';
 import { useRouter } from 'next/router';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
@@ -139,7 +141,7 @@ const Follow: FC<FollowProps> = ({
 
     try {
       setIsLoading(true);
-      if (profile?.followModule) {
+      if (!IS_RELAYER_AVAILABLE || profile?.followModule) {
         return await createFollowTypedData({
           variables: {
             options: { overrideSigNonce: userSigNonce },
