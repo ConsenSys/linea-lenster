@@ -5,23 +5,9 @@ import Markup from '@components/Shared/Markup';
 import Collectors from '@components/Shared/Modal/Collectors';
 import ReferralAlert from '@components/Shared/ReferralAlert';
 import Uniswap from '@components/Shared/Uniswap';
-import {
-  CashIcon,
-  ClockIcon,
-  CollectionIcon,
-  PhotographIcon,
-  PuzzleIcon,
-  UsersIcon
-} from '@heroicons/react/outline';
+import { CashIcon, ClockIcon, CollectionIcon, PhotographIcon, PuzzleIcon, UsersIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { LensHub } from '@lenster/abis';
-import { Errors } from '@lenster/data';
-import { LENSHUB_PROXY, POLYGONSCAN_URL } from '@lenster/data/constants';
-import type {
-  ApprovedAllowanceAmount,
-  ElectedMirror,
-  Publication
-} from '@lenster/lens';
+import type { ApprovedAllowanceAmount, ElectedMirror, Publication } from '@lenster/lens';
 import {
   CollectModules,
   useApprovedModuleAllowanceAmountQuery,
@@ -29,8 +15,19 @@ import {
   useCollectModuleQuery,
   useCreateCollectTypedDataMutation,
   useProxyActionMutation,
-  usePublicationRevenueQuery
+  usePublicationRevenueQuery,
 } from '@lenster/lens';
+import { formatTime } from '@lib/formatTime';
+import getCoingeckoPrice from '@lib/getCoingeckoPrice';
+import { Plural, t, Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import { LensHub } from 'abis';
+import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY, POLYGONSCAN_URL } from 'data/constants';
+import Errors from 'data/errors';
+import dayjs from 'dayjs';
+import type { BigNumber } from 'ethers';
+import { defaultAbiCoder } from 'ethers/lib/utils';
+import type { ApprovedAllowanceAmount, ElectedMirror, Publication } from 'lens';
 import formatAddress from '@lenster/lib/formatAddress';
 import formatHandle from '@lenster/lib/formatHandle';
 import getAssetAddress from '@lenster/lib/getAssetAddress';
@@ -39,12 +36,7 @@ import getTokenImage from '@lenster/lib/getTokenImage';
 import humanize from '@lenster/lib/humanize';
 import { Button, Modal, Spinner, Tooltip, WarningMessage } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
-import { formatTime } from '@lib/formatTime';
-import getCoingeckoPrice from '@lib/getCoingeckoPrice';
 import { Leafwatch } from '@lib/leafwatch';
-import { Plural, t, Trans } from '@lingui/macro';
-import { useQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import Link from 'next/link';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
@@ -53,12 +45,7 @@ import { useAppStore } from 'src/store/app';
 import { useNonceStore } from 'src/store/nonce';
 import { PUBLICATION } from 'src/tracking';
 import { useUpdateEffect } from 'usehooks-ts';
-import {
-  useAccount,
-  useBalance,
-  useContractWrite,
-  useSignTypedData
-} from 'wagmi';
+import { useAccount, useBalance, useContractWrite, useSignTypedData } from 'wagmi';
 
 import Splits from './Splits';
 
@@ -70,25 +57,25 @@ interface CollectModuleProps {
 }
 
 const CollectModule: FC<CollectModuleProps> = ({
-  count,
-  setCount,
-  publication,
-  electedMirror
-}) => {
+                                                 count,
+                                                 setCount,
+                                                 publication,
+                                                 electedMirror,
+                                               }) => {
   const userSigNonce = useNonceStore((state) => state.userSigNonce);
   const setUserSigNonce = useNonceStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [isLoading, setIsLoading] = useState(false);
   const [revenue, setRevenue] = useState(0);
   const [hasCollectedByMe, setHasCollectedByMe] = useState(
-    publication?.hasCollectedByMe
+    publication?.hasCollectedByMe,
   );
   const [showCollectorsModal, setShowCollectorsModal] = useState(false);
   const [allowed, setAllowed] = useState(true);
   const { address } = useAccount();
 
   const { data, loading } = useCollectModuleQuery({
-    variables: { request: { publicationId: publication?.id } }
+    variables: { request: { publicationId: publication?.id } },
   });
 
   const collectModule: any = data?.publication?.collectModule;
@@ -136,8 +123,8 @@ const CollectModule: FC<CollectModuleProps> = ({
       ...(!isRevertCollectModule && {
         collect_amount: amount,
         collect_currency: currency,
-        collect_limit: collectLimit
-      })
+        collect_limit: collectLimit,
+      }),
     });
   };
 
@@ -159,7 +146,7 @@ const CollectModule: FC<CollectModuleProps> = ({
     onError: (error) => {
       onError(error);
       setUserSigNonce(userSigNonce - 1);
-    }
+    },
   });
 
   const percentageCollected = (count / parseInt(collectLimit)) * 100;
@@ -171,13 +158,13 @@ const CollectModule: FC<CollectModuleProps> = ({
           currencies: assetAddress,
           followModules: [],
           collectModules: collectModule?.type,
-          referenceModules: []
-        }
+          referenceModules: [],
+        },
       },
       skip: !assetAddress || !currentProfile,
       onCompleted: ({ approvedModuleAllowanceAmount }) => {
         setAllowed(approvedModuleAllowanceAmount[0]?.allowance !== '0x00');
-      }
+      },
     });
 
   const { data: revenueData, loading: revenueLoading } =
@@ -187,24 +174,24 @@ const CollectModule: FC<CollectModuleProps> = ({
           publicationId:
             publication.__typename === 'Mirror'
               ? publication?.mirrorOf?.id
-              : publication?.id
-        }
+              : publication?.id,
+        },
       },
       pollInterval: 5000,
-      skip: !publication?.id || isFreeCollectModule || isSimpleFreeCollectModule
+      skip: !publication?.id || isFreeCollectModule || isSimpleFreeCollectModule,
     });
 
   const { data: usdPrice } = useQuery(
     ['coingeckoData'],
     () => getCoingeckoPrice(getAssetAddress(currency)).then((res) => res),
-    { enabled: Boolean(amount) }
+    { enabled: Boolean(amount) },
   );
 
   useUpdateEffect(() => {
     setRevenue(
       parseFloat(
-        (revenueData?.publicationRevenue?.revenue?.total?.value as any) ?? 0
-      )
+        (revenueData?.publicationRevenue?.revenue?.total?.value as any) ?? 0,
+      ),
     );
   }, [revenueData]);
 
@@ -212,37 +199,34 @@ const CollectModule: FC<CollectModuleProps> = ({
     address,
     token: assetAddress,
     formatUnits: assetDecimals,
-    watch: true
+    watch: true,
   });
 
-  let hasAmount = false;
-  if (balanceData && parseFloat(balanceData?.formatted) < parseFloat(amount)) {
-    hasAmount = false;
-  } else {
-    hasAmount = true;
-  }
+  let hasAmount = !(
+    balanceData && parseFloat(balanceData?.formatted) < parseFloat(amount)
+  );
 
   const [broadcast] = useBroadcastMutation({
-    onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
+    onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename),
   });
   const [createCollectTypedData] = useCreateCollectTypedDataMutation({
     onCompleted: async ({ createCollectTypedData }) => {
       const { id, typedData } = createCollectTypedData;
       const signature = await signTypedDataAsync(getSignature(typedData));
       const { data } = await broadcast({
-        variables: { request: { id, signature } }
+        variables: { request: { id, signature } },
       });
       if (data?.broadcast.__typename === 'RelayError') {
         const { profileId, pubId, data: collectData } = typedData.value;
         return write?.({ args: [profileId, pubId, collectData] });
       }
     },
-    onError
+    onError,
   });
 
   const [createCollectProxyAction] = useProxyActionMutation({
     onCompleted: () => onCompleted(),
-    onError
+    onError,
   });
 
   const createViaProxyAction = async (variables: any) => {
@@ -258,8 +242,8 @@ const CollectModule: FC<CollectModuleProps> = ({
       return await createCollectTypedData({
         variables: {
           request: { publicationId: publication?.id },
-          options: { overrideSigNonce: userSigNonce }
-        }
+          options: { overrideSigNonce: userSigNonce },
+        },
       });
     }
   };
@@ -270,28 +254,36 @@ const CollectModule: FC<CollectModuleProps> = ({
     }
 
     try {
-      setIsLoading(true);
-      const canUseProxy =
-        (isSimpleFreeCollectModule || isFreeCollectModule) &&
-        !collectModule?.followerOnly;
-      if (canUseProxy) {
-        return await createViaProxyAction({
-          request: {
-            collect: { freeCollect: { publicationId: publication?.id } }
+      if (IS_RELAYER_AVAILABLE && isFreeCollectModule && !collectModule?.followerOnly) {
+        await createViaProxyAction({
+          request: { collect: { freeCollect: { publicationId: publication?.id } } },
+        });
+      } else if (collectModule?.__typename === 'UnknownCollectModuleSettings') {
+        refetch().then(async ({ data }) => {
+          if (data) {
+            const decodedData: any = data;
+            const encodedData = defaultAbiCoder.encode(
+              ['address', 'uint256'],
+              [decodedData?.[2] as string, decodedData?.[1] as BigNumber],
+            );
+            await createCollectTypedData({
+              variables: {
+                options: { overrideSigNonce: userSigNonce },
+                request: { publicationId: publication?.id, unknownModuleData: encodedData },
+              },
+            });
           }
         });
-      }
-
-      return await createCollectTypedData({
-        variables: {
-          options: { overrideSigNonce: userSigNonce },
-          request: {
-            publicationId: electedMirror
-              ? electedMirror.mirrorId
-              : publication?.id
-          }
+      } else {
+        await createCollectTypedData({
+          variables: {
+            options: { overrideSigNonce: userSigNonce },
+            request: { publicationId: electedMirror ? electedMirror.mirrorId : publication?.id },
+          },
         }
-      });
+      }
+    )
+      ;
     } catch (error) {
       onError(error);
     }
@@ -312,20 +304,20 @@ const CollectModule: FC<CollectModuleProps> = ({
     <>
       {Boolean(collectLimit) && (
         <Tooltip
-          placement="top"
+          placement='top'
           content={`${percentageCollected.toFixed(0)}% Collected`}
         >
-          <div className="h-2.5 w-full bg-gray-200 dark:bg-gray-700">
+          <div className='h-2.5 w-full bg-gray-200 dark:bg-gray-700'>
             <div
-              className="bg-brand-500 h-2.5"
+              className='bg-brand-500 h-2.5'
               style={{ width: `${percentageCollected}%` }}
             />
           </div>
         </Tooltip>
       )}
-      <div className="p-5">
+      <div className='p-5'>
         {collectModule?.followerOnly && (
-          <div className="pb-5">
+          <div className='pb-5'>
             <CollectWarning
               handle={formatHandle(publication?.profile?.handle)}
               isSuperFollow={
@@ -335,14 +327,14 @@ const CollectModule: FC<CollectModuleProps> = ({
             />
           </div>
         )}
-        <div className="space-y-1.5 pb-2">
+        <div className='space-y-1.5 pb-2'>
           {publication?.metadata?.name && (
-            <div className="text-xl font-bold">
+            <div className='text-xl font-bold'>
               {publication?.metadata?.name}
             </div>
           )}
           {publication?.metadata?.content && (
-            <Markup className="lt-text-gray-500 line-clamp-2">
+            <Markup className='lt-text-gray-500 line-clamp-2'>
               {publication?.metadata?.content}
             </Markup>
           )}
@@ -353,22 +345,22 @@ const CollectModule: FC<CollectModuleProps> = ({
           />
         </div>
         {amount && (
-          <div className="flex items-center space-x-1.5 py-2">
+          <div className='flex items-center space-x-1.5 py-2'>
             <img
-              className="h-7 w-7"
+              className='h-7 w-7'
               height={28}
               width={28}
               src={getTokenImage(currency)}
               alt={currency}
               title={currency}
             />
-            <span className="space-x-1">
-              <span className="text-2xl font-bold">{amount}</span>
-              <span className="text-xs">{currency}</span>
+            <span className='space-x-1'>
+              <span className='text-2xl font-bold'>{amount}</span>
+              <span className='text-xs'>{currency}</span>
               {usdPrice ? (
                 <>
-                  <span className="lt-text-gray-500 px-0.5">·</span>
-                  <span className="lt-text-gray-500 text-xs font-bold">
+                  <span className='lt-text-gray-500 px-0.5'>·</span>
+                  <span className='lt-text-gray-500 text-xs font-bold'>
                     ${(amount * usdPrice).toFixed(2)}
                   </span>
                 </>
@@ -376,26 +368,26 @@ const CollectModule: FC<CollectModuleProps> = ({
             </span>
           </div>
         )}
-        <div className="space-y-1.5">
-          <div className="block items-center space-y-1 sm:flex sm:space-x-5">
-            <div className="flex items-center space-x-2">
-              <UsersIcon className="lt-text-gray-500 h-4 w-4" />
+        <div className='space-y-1.5'>
+          <div className='block items-center space-y-1 sm:flex sm:space-x-5'>
+            <div className='flex items-center space-x-2'>
+              <UsersIcon className='lt-text-gray-500 h-4 w-4' />
               <button
-                className="font-bold"
-                type="button"
+                className='font-bold'
+                type='button'
                 onClick={() => setShowCollectorsModal(!showCollectorsModal)}
               >
                 {humanize(count)}{' '}
                 <Plural
                   value={count}
-                  zero="collector"
-                  one="collector"
-                  other="collectors"
+                  zero='collector'
+                  one='collector'
+                  other='collectors'
                 />
               </button>
               <Modal
                 title={t`Collected by`}
-                icon={<CollectionIcon className="text-brand h-5 w-5" />}
+                icon={<CollectionIcon className='text-brand h-5 w-5' />}
                 show={showCollectorsModal}
                 onClose={() => setShowCollectorsModal(false)}
               >
@@ -409,45 +401,45 @@ const CollectModule: FC<CollectModuleProps> = ({
               </Modal>
             </div>
             {collectLimit && (
-              <div className="flex items-center space-x-2">
-                <PhotographIcon className="lt-text-gray-500 h-4 w-4" />
-                <div className="font-bold">
+              <div className='flex items-center space-x-2'>
+                <PhotographIcon className='lt-text-gray-500 h-4 w-4' />
+                <div className='font-bold'>
                   <Trans>{parseInt(collectLimit) - count} available</Trans>
                 </div>
               </div>
             )}
             {referralFee ? (
-              <div className="flex items-center space-x-2">
-                <CashIcon className="lt-text-gray-500 h-4 w-4" />
-                <div className="font-bold">
+              <div className='flex items-center space-x-2'>
+                <CashIcon className='lt-text-gray-500 h-4 w-4' />
+                <div className='font-bold'>
                   <Trans>{referralFee}% referral fee</Trans>
                 </div>
               </div>
             ) : null}
           </div>
           {revenueData?.publicationRevenue && (
-            <div className="flex items-center space-x-2">
-              <CashIcon className="lt-text-gray-500 h-4 w-4" />
-              <div className="flex items-center space-x-1.5">
+            <div className='flex items-center space-x-2'>
+              <CashIcon className='lt-text-gray-500 h-4 w-4' />
+              <div className='flex items-center space-x-1.5'>
                 <span>
                   <Trans>Revenue:</Trans>
                 </span>
-                <span className="flex items-center space-x-1">
+                <span className='flex items-center space-x-1'>
                   <img
                     src={getTokenImage(currency)}
-                    className="h-5 w-5"
+                    className='h-5 w-5'
                     height={20}
                     width={20}
                     alt={currency}
                     title={currency}
                   />
-                  <div className="flex items-baseline space-x-1.5">
-                    <div className="font-bold">{revenue}</div>
-                    <div className="text-[10px]">{currency}</div>
+                  <div className='flex items-baseline space-x-1.5'>
+                    <div className='font-bold'>{revenue}</div>
+                    <div className='text-[10px]'>{currency}</div>
                     {usdPrice ? (
                       <>
-                        <span className="lt-text-gray-500">·</span>
-                        <span className="lt-text-gray-500 text-xs font-bold">
+                        <span className='lt-text-gray-500'>·</span>
+                        <span className='lt-text-gray-500 text-xs font-bold'>
                           ${(revenue * usdPrice).toFixed(2)}
                         </span>
                       </>
@@ -458,14 +450,14 @@ const CollectModule: FC<CollectModuleProps> = ({
             </div>
           )}
           {endTimestamp && (
-            <div className="flex items-center space-x-2">
-              <ClockIcon className="lt-text-gray-500 h-4 w-4" />
-              <div className="space-x-1.5">
+            <div className='flex items-center space-x-2'>
+              <ClockIcon className='lt-text-gray-500 h-4 w-4' />
+              <div className='space-x-1.5'>
                 <span>
                   <Trans>Sale Ends:</Trans>
                 </span>
                 <span
-                  className="font-bold text-gray-600"
+                  className='font-bold text-gray-600'
                   title={formatTime(endTimestamp)}
                 >
                   {dayjs(endTimestamp).format('MMMM DD, YYYY')} at{' '}
@@ -475,17 +467,17 @@ const CollectModule: FC<CollectModuleProps> = ({
             </div>
           )}
           {data?.publication?.collectNftAddress && (
-            <div className="flex items-center space-x-2">
-              <PuzzleIcon className="lt-text-gray-500 h-4 w-4" />
-              <div className="space-x-1.5">
+            <div className='flex items-center space-x-2'>
+              <PuzzleIcon className='lt-text-gray-500 h-4 w-4' />
+              <div className='space-x-1.5'>
                 <span>
                   <Trans>Token:</Trans>
                 </span>
                 <Link
                   href={`${POLYGONSCAN_URL}/token/${data?.publication?.collectNftAddress}`}
-                  target="_blank"
-                  className="font-bold text-gray-600"
-                  rel="noreferrer noopener"
+                  target='_blank'
+                  className='font-bold text-gray-600'
+                  rel='noreferrer noopener'
                 >
                   {formatAddress(data?.publication?.collectNftAddress)}
                 </Link>
@@ -496,24 +488,24 @@ const CollectModule: FC<CollectModuleProps> = ({
             <Splits recipients={collectModule?.recipients} />
           )}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className='flex items-center space-x-2'>
           {currentProfile &&
           (!hasCollectedByMe ||
             (!isFreeCollectModule && !isSimpleFreeCollectModule)) ? (
             allowanceLoading || balanceLoading ? (
-              <div className="shimmer mt-5 h-[34px] w-28 rounded-lg" />
+              <div className='shimmer mt-5 h-[34px] w-28 rounded-lg' />
             ) : allowed ? (
               hasAmount ? (
                 !isLimitedCollectAllCollected && !isCollectExpired ? (
                   <Button
-                    className="mt-5"
+                    className='mt-5'
                     onClick={createCollect}
                     disabled={isLoading}
                     icon={
                       isLoading ? (
-                        <Spinner size="xs" />
+                        <Spinner size='xs' />
                       ) : (
-                        <CollectionIcon className="h-4 w-4" />
+                        <CollectionIcon className='h-4 w-4' />
                       )
                     }
                   >
@@ -522,14 +514,14 @@ const CollectModule: FC<CollectModuleProps> = ({
                 ) : null
               ) : (
                 <WarningMessage
-                  className="mt-5"
+                  className='mt-5'
                   message={<Uniswap module={collectModule} />}
                 />
               )
             ) : (
-              <span className="mt-5">
+              <span className='mt-5'>
                 <AllowanceButton
-                  title="Allow collect module"
+                  title='Allow collect module'
                   module={
                     allowanceData
                       ?.approvedModuleAllowanceAmount[0] as ApprovedAllowanceAmount
@@ -542,8 +534,8 @@ const CollectModule: FC<CollectModuleProps> = ({
           ) : null}
         </div>
         {publication?.hasCollectedByMe && (
-          <div className="mt-3 flex items-center space-x-1.5 font-bold text-green-500">
-            <CheckCircleIcon className="h-5 w-5" />
+          <div className='mt-3 flex items-center space-x-1.5 font-bold text-green-500'>
+            <CheckCircleIcon className='h-5 w-5' />
             <div>
               <Trans>You already collected this</Trans>
             </div>
