@@ -415,7 +415,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
       }
 
       if (publicationContent.length === 0 && attachments.length === 0) {
-        return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
+        return setPublicationContentError(`${isComment ? 'COMMENT' : 'POST'} should not be empty!`);
       }
 
       setPublicationContentError('');
@@ -464,7 +464,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
             : null,
         name: isAudioPublication
           ? audioPublication.title
-          : `${isComment ? 'Comment' : 'Post'} by @${currentProfile?.handle}`,
+          : `${isComment ? 'COMMENT' : 'POST'} by @${currentProfile?.handle}`,
         tags: getTags(publicationContent),
         animation_url: getAnimationUrl(),
         mainContentFocus: getMainContentFocus(),
@@ -552,6 +552,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         </div>
         <div className="ml-auto pt-2 sm:pt-0">
           <Button
+            className="border-0 font-medium"
             disabled={isLoading || isUploading}
             icon={
               isLoading ? (
@@ -565,8 +566,8 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
             onClick={createPublication}
           >
             {isComment
-              ? t({ id: '[cta]Comment', message: 'Comment' })
-              : t({ id: '[cta]Post', message: 'Post' })}
+              ? t({ id: '[cta]COMMENT', message: 'COMMENT' })
+              : t({ id: '[cta]POST', message: 'POST' })}
           </Button>
         </div>
       </div>
