@@ -85,9 +85,9 @@ export const SNAPSHOT_URL = IS_MAINNET
   : 'https://demo.snapshot.org';
 
 // Application
-export const APP_NAME = 'Lenster';
+export const APP_NAME = 'Lineaster';
 export const DESCRIPTION =
-  'Lenster is a composable, decentralized, and permissionless social media web app built with Lens Protocol 🌿';
+  'Lineaster is a composable, decentralized, and permissionless social media web app built with Lens Protocol 🌿';
 export const APP_VERSION = packageJson.version;
 
 // Git

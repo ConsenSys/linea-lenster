@@ -33,7 +33,7 @@ const Publication: FC<PublicationProps> = ({ publication, comments }) => {
       : __typename === 'Mirror'
       ? 'Mirror'
       : 'Comment'
-  } by @${publication.profile.handle} • Lenster`;
+  } by @${publication.profile.handle} • Lineaster`;
   const description = truncateByWords(metadata?.content, 30);
   const image = hasMedia
     ? sanitizeDStorageUrl(metadata?.media[0].original.url)

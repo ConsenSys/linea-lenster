@@ -56,7 +56,7 @@ const Footer: FC = () => {
           <Trans>Thanks</Trans>
         </Link>
         <Link
-          href="https://github.com/lensterxyz/lenster"
+          href="https://github.com/ConsenSys/lineaster"
           target="_blank"
           rel="noreferrer noopener"
         >
