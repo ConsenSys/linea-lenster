@@ -114,7 +114,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
             variables: {
               request: {
                 handle: username,
-                profilePictureUri: avatar ? avatar : getStampFyiURL(address ?? ZERO_ADDRESS)
+                profilePictureUri: avatar || getStampFyiURL(address ?? ZERO_ADDRESS)
               }
             }
           });
