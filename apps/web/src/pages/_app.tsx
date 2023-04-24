@@ -1,7 +1,8 @@
 import '../styles.css';
-
-import circluarStd from '@lib/lensterFont';
 import type { AppProps } from 'next/app';
+
+import atypFont from '../font/atyp';
+import atypTextFont from '../font/atypText';
 import dynamic from 'next/dynamic';
 
 const Providers = dynamic(() => import('@components/Common/Providers'), {
@@ -13,10 +14,13 @@ const App = ({ Component, pageProps }: AppProps) => {
     <Providers>
       <style jsx global>{`
         body {
-          font-family: ${circluarStd.style.fontFamily};
+          font-family: ${atypTextFont.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <Component
+        {...pageProps}
+        className={`${atypFont.variable} ${atypTextFont.variable} ${atypFont.className}`}
+      />
     </Providers>
   );
 };

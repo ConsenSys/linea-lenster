@@ -48,7 +48,7 @@ const NotificationIcon: FC = () => {
   return (
     <Link
       href="/notifications"
-      className="hidden min-w-[40px] items-start justify-center rounded-md p-1 hover:bg-gray-300/20 md:flex"
+      className="hover:text-brand-500 hidden min-w-[40px] items-start justify-center p-1 text-white md:flex"
       onClick={() => {
         setNotificationCount(
           currentProfile?.id,

@@ -95,7 +95,7 @@ const UserProfile: FC<UserProfileProps> = ({
       </div>
       <div>
         <Slug
-          className="text-sm"
+          className="text-brand-500"
           slug={formatHandle(profile?.handle)}
           prefix="@"
         />
