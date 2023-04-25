@@ -4,6 +4,7 @@ import ExploreFeed from '@components/Explore/Feed';
 import Footer from '@components/Shared/Footer';
 import { GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
+import { IS_RELAYER_AVAILABLE } from 'data';
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
@@ -49,7 +50,7 @@ const Home: NextPage = () => {
         <GridItemFour>
           {currentProfile ? (
             <>
-              <EnableDispatcher />
+              {IS_RELAYER_AVAILABLE && <EnableDispatcher />}
               <EnableMessages />
               <SetDefaultProfile />
               <SetProfile />
