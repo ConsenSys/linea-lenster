@@ -27,7 +27,7 @@ export const Modal: FC<ModalProps> = ({
     <Transition.Root show={show} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="border-red fixed inset-2 z-10 overflow-y-auto border-2"
         onClose={() => onClose?.()}
         data-testid={dataTestId}
       >
@@ -63,10 +63,10 @@ export const Modal: FC<ModalProps> = ({
               )}
             >
               {title && (
-                <div className="divider flex items-center justify-between px-5 py-3.5">
+                <div className="divider border-red flex items-center justify-between border-2 px-5 py-3.5">
                   <div className="flex items-center space-x-2 font-bold">
                     {icon}
-                    <div>{title}</div>
+                    <div className="uppercase">{title}</div>
                   </div>
                   {onClose ? (
                     <button

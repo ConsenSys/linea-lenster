@@ -89,7 +89,7 @@ const NewPost: FC = () => {
           </span>
         </button>
         <Modal
-          title={t`CREATE POST`}
+          title={t`Create post`}
           size="md"
           show={showNewPostModal}
           onClose={() => setShowNewPostModal(false)}

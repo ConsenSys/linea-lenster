@@ -552,7 +552,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         </div>
         <div className="ml-auto pt-2 sm:pt-0">
           <Button
-            className="bg-brand-600 hover:bg-brand-800 border-0 font-medium"
+            className="bg-brand-600 hover:bg-brand-800 border-0 font-medium uppercase"
             disabled={isLoading || isUploading}
             icon={
               isLoading ? (
@@ -566,8 +566,8 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
             onClick={createPublication}
           >
             {isComment
-              ? t({ id: '[cta]COMMENT', message: 'COMMENT' })
-              : t({ id: '[cta]POST', message: 'POST' })}
+              ? t({ id: '[cta]Comment', message: 'COMMENT' })
+              : t({ id: '[cta]Post', message: 'POST' })}
           </Button>
         </div>
       </div>
