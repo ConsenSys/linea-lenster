@@ -15,7 +15,6 @@ import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 
 import MenuItems from './MenuItems';
-import MoreNavItems from './MoreNavItems';
 import Search from './Search';
 import StaffBar from './StaffBar';
 
