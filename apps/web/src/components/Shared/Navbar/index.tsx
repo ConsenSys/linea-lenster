@@ -5,6 +5,7 @@ import { Disclosure } from '@headlessui/react';
 import { SearchIcon, XIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
 import clsx from 'clsx';
+import { DISCORD_URL } from 'data/constants';
 import type { Profile } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import hasPrideLogo from 'lib/hasPrideLogo';
@@ -56,7 +57,7 @@ const Navbar: FC = () => {
       <>
         <NavItem url="/" name={t`Home`} current={pathname === '/'} />
         <NavItem url="/explore" name={t`Explore`} current={pathname === '/explore'} />
-        <MoreNavItems />
+        <NavItem url={DISCORD_URL} name={t`Contact`} current={pathname === '/explore'} />
       </>
     );
   };
