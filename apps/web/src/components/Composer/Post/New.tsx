@@ -79,7 +79,7 @@ const NewPost: FC = () => {
           alt={formatHandle(currentProfile?.handle)}
         />
         <button
-          className="bg-brand-500 flex  w-full items-center space-x-2 rounded-xl px-4 py-2 hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700"
+          className="hover:bg-brand-500 flex  w-full items-center space-x-2 rounded-xl bg-gray-100 px-4 py-2 dark:bg-black dark:hover:bg-gray-700"
           type="button"
           onClick={() => openModal('update')}
         >
