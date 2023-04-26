@@ -14,6 +14,7 @@ export const LENS_PERIPHERY = getEnvConfig().lensPeripheryAddress;
 export const DEFAULT_COLLECT_TOKEN = getEnvConfig().defaultCollectToken;
 export const LIT_PROTOCOL_ENVIRONMENT = getEnvConfig().litProtocolEnvironment;
 export const IS_RELAYER_AVAILABLE = getEnvConfig().isRelayerAvailable;
+export const IS_RARIBLE_AVAILABLE = getEnvConfig().isRaribleAvailable;
 export const LENS_PROFILE_CREATOR = '0x923e7786176Ef21d0B31645fB1353b1392Dd0e40';
 export const LENS_PROFILE_CREATOR_ABI = [
   {
@@ -110,6 +111,9 @@ export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
 export const POLYGONSCAN_URL = IS_MAINNET
   ? 'https://polygonscan.com'
   : 'https://mumbai.polygonscan.com';
+export const LINEA_EXPLORER_URL = IS_MAINNET
+  ? 'https://explorer.linea.build'
+  : 'https://explorer.goerli.linea.build';
 export const RARIBLE_URL = IS_MAINNET
   ? 'https://rarible.com'
   : 'https://testnet.rarible.com';

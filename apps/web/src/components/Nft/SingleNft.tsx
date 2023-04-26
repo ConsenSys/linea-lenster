@@ -1,9 +1,10 @@
-import { RARIBLE_URL, STATIC_IMAGES_URL } from '@lenster/data/constants';
+import { IS_RARIBLE_AVAILABLE, LINEA_EXPLORER_URL, RARIBLE_URL, STATIC_IMAGES_URL } from '@lenster/data/constants';
 import type { Nft } from '@lenster/lens';
 import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
 import { Card } from '@lenster/ui';
 import Link from 'next/link';
 import type { FC } from 'react';
+import { useMemo } from 'react';
 import { CHAIN_ID } from 'src/constants';
 
 interface SingleNftProps {
@@ -12,11 +13,18 @@ interface SingleNftProps {
 }
 
 const SingleNft: FC<SingleNftProps> = ({ nft, linkToDetail = true }) => {
-  const nftURL = linkToDetail
-    ? `${RARIBLE_URL}/token/${nft.chainId === CHAIN_ID ? 'polygon/' : ''}${
+  const nftUrl = useMemo(() => {
+    if (linkToDetail) {
+      if (IS_RARIBLE_AVAILABLE) {
+        return `${RARIBLE_URL}/token/${nft.chainId === CHAIN_ID ? 'linea/' : ''}${
         nft.contractAddress
-      }:${nft.tokenId}`.toLowerCase()
-    : undefined;
+          }:${nft.tokenId
+        }`.toLowerCase();
+      } else {
+        return `${LINEA_EXPLORER_URL}/token/${nft.contractAddress}/${nft.tokenId}`.toLowerCase();
+      }
+    }
+  }, [linkToDetail, nft.chainId, nft.tokenId, nft.contractAddress]);
 
   return (
     <Card>

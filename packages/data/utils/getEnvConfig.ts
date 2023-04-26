@@ -13,6 +13,7 @@ const getEnvConfig = (): {
   defaultCollectToken: string;
   litProtocolEnvironment: string;
   isRelayerAvailable: boolean;
+  isRaribleAvailable: boolean;
 } => {
   switch (LENS_NETWORK) {
     case 'mainnet':
@@ -22,7 +23,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: MainnetContracts.LensPeriphery,
         defaultCollectToken: MainnetContracts.DefaultToken,
         litProtocolEnvironment: 'polygon',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
     case 'testnet':
       return {
@@ -31,7 +33,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: TestnetContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
     case 'staging':
       return {
@@ -40,7 +43,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: TestnetContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
     case 'sandbox':
       return {
@@ -49,7 +53,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: SandboxContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai-sandbox',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
     case 'staging-sandbox':
       return {
@@ -58,7 +63,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: SandboxContracts.LensPeriphery,
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai-sandbox',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
     default:
       return {
@@ -67,7 +73,8 @@ const getEnvConfig = (): {
         lensPeripheryAddress: MainnetContracts.LensPeriphery,
         defaultCollectToken: MainnetContracts.DefaultToken,
         litProtocolEnvironment: 'polygon',
-        isRelayerAvailable: false
+        isRelayerAvailable: false,
+        isRaribleAvailable: false
       };
   }
 };
