@@ -672,7 +672,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
 
       if (publicationContent.length === 0 && attachments.length === 0) {
         return setPublicationContentError(
-          `${isComment ? 'Comment' : 'Post'} should not be empty!`
+          `${isComment ? 'COMMENT' : 'POST'} should not be empty!`
         );
       }
 
@@ -887,6 +887,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         </div>
         <div className="ml-auto pt-2 sm:pt-0">
           <Button
+            className="bg-brand-500 hover:bg-brand-800 text-dark rounded-full border-0 font-medium uppercase"
             disabled={
               isLoading ||
               isUploading ||
@@ -904,7 +905,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
             }
             onClick={createPublication}
           >
-            {isComment ? t`Comment` : t`Post`}
+            {isComment ? t`COMMENT` : t`POST`}
           </Button>
         </div>
       </div>

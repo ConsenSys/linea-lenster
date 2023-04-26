@@ -1,4 +1,3 @@
-import Beta from '@components/Shared/Badges/Beta';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { t } from '@lingui/macro';
 import {
@@ -71,7 +70,6 @@ const ToolbarPlugin: FC = () => {
           <i className="toolbar-icon code" />
         </button>
       </div>
-      <Beta />
     </div>
   );
 };

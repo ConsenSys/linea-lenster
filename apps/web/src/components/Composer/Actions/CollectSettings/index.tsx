@@ -21,12 +21,14 @@ const CollectSettings: FC = () => {
           onClick={() => setShowModal(!showModal)}
           aria-label="Choose Collect Module"
         >
-          <CollectionIcon className="text-brand h-5 w-5" />
+          <CollectionIcon className="text-brand-600 dark:text-brand-400/80" />
         </motion.button>
       </Tooltip>
       <Modal
         title={t`Collect settings`}
-        icon={<CollectionIcon className="text-brand h-5 w-5" />}
+        icon={
+          <CollectionIcon className="text-brand-600 dark:text-brand-400/80 h-5 w-5" />
+        }
         show={showModal}
         onClose={() => {
           setShowModal(false);

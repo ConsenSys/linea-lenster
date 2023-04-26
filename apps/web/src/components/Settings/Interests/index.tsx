@@ -1,6 +1,5 @@
 import MetaTags from '@components/Common/MetaTags';
 import Interests from '@components/Settings/Interests/Interests';
-import Beta from '@components/Shared/Badges/Beta';
 import New from '@components/Shared/Badges/New';
 import { APP_NAME } from '@lenster/data/constants';
 import { Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
@@ -38,7 +37,6 @@ const InterestsSettings: NextPage = () => {
               <div className="text-lg font-bold">
                 <Trans>Select profile interests</Trans>
               </div>
-              <Beta />
               <New />
             </div>
             <p>

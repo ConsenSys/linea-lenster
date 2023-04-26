@@ -26,7 +26,7 @@ const AccessSettings: FC = () => {
         >
           <LockClosedIcon
             className={clsx(
-              restricted ? 'text-green-500' : 'text-brand',
+              restricted ? 'text-green-500' : 'text-brand-600 dark:text-brand-400/80',
               'h-5 w-5'
             )}
           />
@@ -43,7 +43,7 @@ const AccessSettings: FC = () => {
             />
           </div>
         }
-        icon={<LockClosedIcon className="text-brand h-5 w-5" />}
+        icon={<LockClosedIcon className="text-brand-600 dark:text-brand-400/80 h-5 w-5" />}
         show={showModal}
         onClose={() => {
           setShowModal(false);
