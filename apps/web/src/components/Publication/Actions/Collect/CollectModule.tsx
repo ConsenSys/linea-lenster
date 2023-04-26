@@ -22,7 +22,7 @@ import getCoingeckoPrice from '@lib/getCoingeckoPrice';
 import { Plural, t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import { LensHub } from 'abis';
-import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY, POLYGONSCAN_URL } from 'data/constants';
+import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY, LINEA_EXPLORER_URL } from 'data/constants';
 import Errors from 'data/errors';
 import dayjs from 'dayjs';
 import type { BigNumber } from 'ethers';
@@ -474,7 +474,7 @@ const CollectModule: FC<CollectModuleProps> = ({
                   <Trans>Token:</Trans>
                 </span>
                 <Link
-                  href={`${POLYGONSCAN_URL}/token/${data?.publication?.collectNftAddress}`}
+                  href={`${LINEA_EXPLORER_URL}/token/${data?.publication?.collectNftAddress}`}
                   target='_blank'
                   className='font-bold text-gray-600'
                   rel='noreferrer noopener'

@@ -1,5 +1,4 @@
 import Slug from '@components/Shared/Slug';
-import { POLYGONSCAN_URL } from '@lenster/data/constants';
 import type { Profile, RecipientDataOutput } from '@lenster/lens';
 import { useProfilesQuery } from '@lenster/lens';
 import formatAddress from '@lenster/lib/formatAddress';
@@ -7,6 +6,7 @@ import formatHandle from '@lenster/lib/formatHandle';
 import getAvatar from '@lenster/lib/getAvatar';
 import getStampFyiURL from '@lenster/lib/getStampFyiURL';
 import { Trans } from '@lingui/macro';
+import { LINEA_EXPLORER_URL } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
 
@@ -64,7 +64,7 @@ const Splits: FC<SplitsProps> = ({ recipients }) => {
                     </Link>
                   ) : (
                     <Link
-                      href={`${POLYGONSCAN_URL}/address/${address}`}
+                      href={`${LINEA_EXPLORER_URL}/address/${address}`}
                       target="_blank"
                       rel="noreferrer noopener"
                     >

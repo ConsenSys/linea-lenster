@@ -2,8 +2,9 @@ import AllowanceButton from '@components/Settings/Allowance/Button';
 import { StarIcon, UserIcon } from '@heroicons/react/outline';
 import { LensHub } from '@lenster/abis';
 import { Errors } from '@lenster/data';
-import { LENSHUB_PROXY, POLYGONSCAN_URL } from '@lenster/data/constants';
-import type { ApprovedAllowanceAmount, Profile } from '@lenster/lens';
+import { t, Trans } from '@lingui/macro';
+import { LENSHUB_PROXY, LINEA_EXPLORER_URL } from 'data/constants';
+import type { ApprovedAllowanceAmount, Profile } from 'lens';
 import {
   FollowModules,
   useApprovedModuleAllowanceAmountQuery,
@@ -18,7 +19,6 @@ import getTokenImage from '@lenster/lib/getTokenImage';
 import { Button, Spinner, WarningMessage } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
 import { Leafwatch } from '@lib/leafwatch';
-import { t, Trans } from '@lingui/macro';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { Dispatch, FC } from 'react';
@@ -224,7 +224,7 @@ const FollowModule: FC<FollowModuleProps> = ({
             <Trans>Recipient:</Trans>
           </span>
           <Link
-            href={`${POLYGONSCAN_URL}/address/${followModule?.recipient}`}
+            href={`${LINEA_EXPLORER_URL}/address/${followModule?.recipient}`}
             target="_blank"
             className="font-bold text-gray-600"
             rel="noreferrer noopener"

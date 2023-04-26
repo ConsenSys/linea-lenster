@@ -3,6 +3,7 @@ import { IPFS_GATEWAY, POLYGONSCAN_URL } from '@lenster/data/constants';
 import type { Publication } from '@lenster/lens';
 import { Card } from '@lenster/ui';
 import { t } from '@lingui/macro';
+import { IPFS_GATEWAY, LINEA_EXPLORER_URL } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
 
@@ -80,7 +81,7 @@ const OnchainMeta: FC<OnchainMetaProps> = ({ publication }) => {
         {collectNftAddress ? (
           <Meta
             name={t`NFT ADDRESS`}
-            uri={`${POLYGONSCAN_URL}/token/${collectNftAddress}`}
+            uri={`${LINEA_EXPLORER_URL}/token/${collectNftAddress}`}
             hash={collectNftAddress}
           />
         ) : null}

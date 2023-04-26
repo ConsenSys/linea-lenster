@@ -1,4 +1,4 @@
-import { POLYGONSCAN_URL } from '@lenster/data/constants';
+import { LINEA_EXPLORER_URL } from '@lenster/data/constants';
 import type { Wallet } from '@lenster/lens';
 import formatAddress from '@lenster/lib/formatAddress';
 import getStampFyiURL from '@lenster/lib/getStampFyiURL';
@@ -15,7 +15,7 @@ export const NotificationWalletProfileAvatar: FC<
 > = ({ wallet }) => {
   return (
     <Link
-      href={`${POLYGONSCAN_URL}/address/${wallet?.address}`}
+      href={`${LINEA_EXPLORER_URL}/address/${wallet?.address}`}
       target="_blank"
       rel="noreferrer noopener"
     >
@@ -39,7 +39,7 @@ export const NotificationWalletProfileName: FC<
   return (
     <Link
       className="inline-flex items-center space-x-1 font-bold"
-      href={`${POLYGONSCAN_URL}/address/${wallet?.address}`}
+      href={`${LINEA_EXPLORER_URL}/address/${wallet?.address}`}
       target="_blank"
       rel="noreferrer noopener"
     >

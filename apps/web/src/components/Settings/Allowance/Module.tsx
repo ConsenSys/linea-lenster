@@ -1,4 +1,4 @@
-import { POLYGONSCAN_URL } from '@lenster/data/constants';
+import { LINEA_EXPLORER_URL } from '@lenster/data/constants';
 import type { ApprovedAllowanceAmount } from '@lenster/lens';
 import { Card } from '@lenster/ui';
 import getAllowanceModule from '@lib/getAllowanceModule';
@@ -26,7 +26,7 @@ const Module: FC<ModuleProps> = ({ module }) => {
           {getAllowanceModule(module?.module).name}
         </div>
         <Link
-          href={`${POLYGONSCAN_URL}/address/${module?.contractAddress}`}
+          href={`${LINEA_EXPLORER_URL}/address/${module?.contractAddress}`}
           className="lt-text-gray-500 truncate text-sm"
           target="_blank"
           rel="noreferrer noopener"

@@ -20,22 +20,23 @@ import type {
   Erc20OwnershipOutput,
   NftOwnershipOutput
 } from '@lens-protocol/sdk-gated/dist/graphql/types';
-import {
-  LIT_PROTOCOL_ENVIRONMENT,
-  POLYGONSCAN_URL,
-  RARIBLE_URL
-} from '@lenster/data/constants';
 import type { Publication, PublicationMetadataV2Input } from '@lenster/lens';
-import { DecryptFailReason, useCanDecryptStatusQuery } from '@lenster/lens';
-import formatHandle from '@lenster/lib/formatHandle';
-import getURLs from '@lenster/lib/getURLs';
-import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
-import stopEventPropagation from '@lenster/lib/stopEventPropagation';
 import { Card, ErrorMessage, Tooltip } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import axios from 'axios';
 import clsx from 'clsx';
+import {
+  LINEA_EXPLORER_URL,
+  LIT_PROTOCOL_ENVIRONMENT,
+  RARIBLE_URL
+} from 'data/constants';
+import type { Publication, PublicationMetadataV2Input } from 'lens';
+import { DecryptFailReason, useCanDecryptStatusQuery } from 'lens';
+import formatHandle from 'lib/formatHandle';
+import getURLs from 'lib/getURLs';
+import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
+import { stopEventPropagation } from 'lib/stopEventPropagation';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { FC, ReactNode } from 'react';
@@ -266,7 +267,7 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({
             <DecryptMessage icon={<DatabaseIcon className="h-4 w-4" />}>
               You need{' '}
               <Link
-                href={`${POLYGONSCAN_URL}/token/${tokenCondition.contractAddress}`}
+                href={`${LINEA_EXPLORER_URL}/token/${tokenCondition.contractAddress}`}
                 className="font-bold underline"
                 onClick={() =>
                   Leafwatch.track(
