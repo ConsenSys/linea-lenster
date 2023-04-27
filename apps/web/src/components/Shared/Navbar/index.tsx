@@ -8,13 +8,14 @@ import formatHandle from '@lenster/lib/formatHandle';
 import hasPrideLogo from '@lenster/lib/hasPrideLogo';
 import { t } from '@lingui/macro';
 import clsx from 'clsx';
+import { DISCORD_URL } from 'data/constants';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 
 import MenuItems from './MenuItems';
-import MoreNavItems from './MoreNavItems';
 import Search from './Search';
 import StaffBar from './StaffBar';
 
@@ -31,9 +32,10 @@ const Navbar: FC = () => {
     url: string;
     name: string;
     current: boolean;
+    newTab?: boolean;
   }
 
-  const NavItem = ({ url, name, current }: NavItemProps) => {
+  const NavItem = ({ url, name, current, newTab }: NavItemProps) => {
     return (
       <Link
         href={url}
@@ -43,6 +45,8 @@ const Navbar: FC = () => {
           'text-brand-500': current,
           'hover:text-brand-500': !current
         })}
+        target={newTab ? '_blank' : ''}
+        rel={newTab ? 'noopener noreferrer' : ''}
       >
         {name}
       </Link>
@@ -60,7 +64,7 @@ const Navbar: FC = () => {
           name={t`Explore`}
           current={pathname === '/explore'}
         />
-        <MoreNavItems />
+        <NavItem url={DISCORD_URL} name={t`Contact`} current={pathname === '/contact'} newTab />
       </>
     );
   };

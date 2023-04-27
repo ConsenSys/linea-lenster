@@ -195,3 +195,5 @@ export const ATTACHMENT = 'tr:w-1000';
 export const S3_BUCKET = {
   LENSTER_MEDIA: 'lenster-media'
 };
+
+export const DISCORD_URL = 'https://discord.com/invite/9QwXqsyAps';

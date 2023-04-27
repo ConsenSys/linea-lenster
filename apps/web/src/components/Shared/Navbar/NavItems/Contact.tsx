@@ -1,6 +1,7 @@
 import { SupportIcon } from '@heroicons/react/outline';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
+import { DISCORD_URL } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
 
@@ -12,7 +13,7 @@ interface ContactProps {
 const Contact: FC<ContactProps> = ({ onClick, className = '' }) => {
   return (
     <Link
-      href="/contact"
+      href={DISCORD_URL}
       className={clsx('bg-dark flex w-full  content-center items-center space-x-1.5 px-4 py-1.5', className)}
       onClick={onClick}
     >
