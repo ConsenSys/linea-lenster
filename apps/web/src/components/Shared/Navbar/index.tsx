@@ -31,9 +31,10 @@ const Navbar: FC = () => {
     url: string;
     name: string;
     current: boolean;
+    newTab?: boolean;
   }
 
-  const NavItem = ({ url, name, current }: NavItemProps) => {
+  const NavItem = ({ url, name, current, newTab }: NavItemProps) => {
     return (
       <Link
         href={url}
@@ -43,6 +44,8 @@ const Navbar: FC = () => {
           'text-brand-500': current,
           'hover:text-brand-500': !current
         })}
+        target={newTab ? '_blank' : ''}
+        rel={newTab ? 'noopener noreferrer' : ''}
       >
         {name}
       </Link>
@@ -56,7 +59,7 @@ const Navbar: FC = () => {
       <>
         <NavItem url="/" name={t`Home`} current={pathname === '/'} />
         <NavItem url="/explore" name={t`Explore`} current={pathname === '/explore'} />
-        <NavItem url={DISCORD_URL} name={t`Contact`} current={pathname === '/explore'} />
+        <NavItem url={DISCORD_URL} name={t`Contact`} current={pathname === '/contact'} newTab />
       </>
     );
   };
