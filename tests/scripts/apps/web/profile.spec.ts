@@ -4,11 +4,11 @@ import { WEB_BASE_URL } from 'test/constants';
 
 test.describe('Profile', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/igorms`);
   });
 
   test('should have page title', async ({ page }) => {
-    await expect(page).toHaveTitle(`Yoginth (@yoginth) • ${APP_NAME}`);
+    await expect(page).toHaveTitle(`@igorms • ${APP_NAME}`);
   });
 
   test.describe('Profile details', async () => {
@@ -17,11 +17,11 @@ test.describe('Profile', async () => {
     });
 
     test('should have name', async ({ page }) => {
-      await expect(page.getByTestId('profile-name')).toContainText('Yoginth');
+      await expect(page.getByTestId('profile-name')).toContainText('igorms');
     });
 
     test('should have handle', async ({ page }) => {
-      await expect(page.getByTestId('profile-handle')).toContainText('@yoginth');
+      await expect(page.getByTestId('profile-handle')).toContainText('@igorms');
     });
 
     test('should have bio', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('Profile', async () => {
     });
 
     test('should have meta ens', async ({ page }) => {
-      await expect(page.getByTestId('profile-meta-ens')).toContainText('yoginth.eth');
+      await expect(page.getByTestId('profile-meta-ens')).toContainText('igorms.eth');
     });
 
     test('should have meta website', async ({ page }) => {
@@ -52,7 +52,7 @@ test.describe('Profile', async () => {
 
 test.describe('Profile verified badge', async () => {
   test('should have verified badge', async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/igorms`);
     const verifiedBadge = page.getByTestId('profile-verified-badge');
     await expect(verifiedBadge).toBeVisible();
   });
@@ -66,7 +66,7 @@ test.describe('Profile verified badge', async () => {
 
 test.describe('Profile followerings', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/igorms`);
   });
 
   test('should have followers', async ({ page }) => {
@@ -93,7 +93,7 @@ test.describe('Profile followerings', async () => {
 // test for badges
 test.describe('Profile badges', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/igorms`);
   });
 
   test('should have ens badge', async ({ page }) => {
