@@ -10,10 +10,12 @@ test('should have global search', async ({ page }) => {
   await expect(globalSearch).toBeVisible();
 
   const input = globalSearch.getByPlaceholder('Search…');
-  await input.fill('igorms');
+  await input.fill('alainnicolas');
 
   const searchProfilesDropdown = page.getByTestId('search-profiles-dropdown');
-  await expect(searchProfilesDropdown.getByTestId('search-profile-igorms')).toContainText('igorms');
+  await expect(searchProfilesDropdown.getByTestId('search-profile-alainnicolas')).toContainText(
+    'alainnicolas'
+  );
 });
 
 test('should have login button', async ({ page }) => {
