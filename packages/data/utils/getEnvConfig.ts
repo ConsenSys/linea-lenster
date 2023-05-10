@@ -14,6 +14,7 @@ const getEnvConfig = (): {
   litProtocolEnvironment: string;
   isRelayerAvailable: boolean;
   isRaribleAvailable: boolean;
+  isMoralisAvailable: boolean;
 } => {
   switch (LENS_NETWORK) {
     case 'mainnet':
@@ -24,7 +25,8 @@ const getEnvConfig = (): {
         defaultCollectToken: MainnetContracts.DefaultToken,
         litProtocolEnvironment: 'polygon',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
     case 'testnet':
       return {
@@ -34,7 +36,8 @@ const getEnvConfig = (): {
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
     case 'staging':
       return {
@@ -44,7 +47,8 @@ const getEnvConfig = (): {
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
     case 'sandbox':
       return {
@@ -54,7 +58,8 @@ const getEnvConfig = (): {
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai-sandbox',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
     case 'staging-sandbox':
       return {
@@ -64,7 +69,8 @@ const getEnvConfig = (): {
         defaultCollectToken: TestnetContracts.DefaultToken,
         litProtocolEnvironment: 'mumbai-sandbox',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
     default:
       return {
@@ -74,7 +80,8 @@ const getEnvConfig = (): {
         defaultCollectToken: MainnetContracts.DefaultToken,
         litProtocolEnvironment: 'polygon',
         isRelayerAvailable: false,
-        isRaribleAvailable: false
+        isRaribleAvailable: false,
+        isMoralisAvailable: false
       };
   }
 };
