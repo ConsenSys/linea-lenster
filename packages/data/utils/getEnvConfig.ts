@@ -14,6 +14,7 @@ const getEnvConfig = (): {
   litProtocolEnvironment: string;
   isRelayerAvailable: boolean;
   isRaribleAvailable: boolean;
+  isLitAvailable: boolean;
   isMoralisAvailable: boolean;
 } => {
   switch (LENS_NETWORK) {
@@ -26,6 +27,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'polygon',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
     case 'testnet':
@@ -37,6 +39,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'mumbai',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
     case 'staging':
@@ -48,6 +51,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'mumbai',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
     case 'sandbox':
@@ -59,6 +63,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'mumbai-sandbox',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
     case 'staging-sandbox':
@@ -70,6 +75,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'mumbai-sandbox',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
     default:
@@ -81,6 +87,7 @@ const getEnvConfig = (): {
         litProtocolEnvironment: 'polygon',
         isRelayerAvailable: false,
         isRaribleAvailable: false,
+        isLitAvailable: false,
         isMoralisAvailable: false
       };
   }

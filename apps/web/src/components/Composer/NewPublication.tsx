@@ -23,6 +23,7 @@ import {
   ALLOWED_IMAGE_TYPES,
   ALLOWED_VIDEO_TYPES,
   APP_NAME,
+  IS_LIT_AVAILABLE,
   LENSHUB_PROXY,
   LIT_PROTOCOL_ENVIRONMENT
 } from '@lenster/data/constants';
@@ -763,7 +764,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
           ? publication.isDataAvailability && isRevertCollectModule
           : isRevertCollectModule);
 
-      let arweaveId = null;
+      let arweaveId;
       if (restricted) {
         arweaveId = await createTokenGatedMetadata(metadata);
       } else {
@@ -784,7 +785,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         referenceModule:
           selectedReferenceModule ===
           ReferenceModules.FollowerOnlyReferenceModule
-            ? { followerOnlyReferenceModule: onlyFollowers ? true : false }
+            ? { followerOnlyReferenceModule: onlyFollowers }
             : {
                 degreesOfSeparationReferenceModule: {
                   commentsRestricted: true,
@@ -880,7 +881,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
             <>
               <CollectSettings />
               <ReferenceSettings />
-              <AccessSettings />
+              {IS_LIT_AVAILABLE && <AccessSettings />}
             </>
           )}
           <PollSettings />
