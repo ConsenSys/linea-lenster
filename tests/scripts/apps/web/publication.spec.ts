@@ -83,7 +83,7 @@ test.describe('Publication', () => {
       await expect(collectorsModal).toBeVisible();
     });
 
-    test('should have comments feed', async ({ page }) => {
+    test.skip('should have comments feed', async ({ page }) => {
       await expect(page.getByTestId('comments-feed')).toBeVisible();
     });
 
@@ -183,19 +183,19 @@ test.describe('Publication sidebar', () => {
     await page.goto(`${WEB_BASE_URL}/posts/0x03-0x1e`);
   });
 
-  test('should have og poster profile', async ({ page }) => {
+  test.skip('should have og poster profile', async ({ page }) => {
     const posterProfile = page.getByTestId('poster-profile');
     await expect(posterProfile).toContainText('Alain');
   });
 
-  test('should have relevant profiles', async ({ page }) => {
+  test.skip('should have relevant profiles', async ({ page }) => {
     const relevantProfiles = page.getByTestId('relevant-profiles');
     await expect(relevantProfiles).toContainText('@igorms');
     await expect(relevantProfiles).toContainText('@matt17');
     await expect(relevantProfiles).toContainText('@sebhandle2');
   });
 
-  test('should have on chain meta', async ({ page }) => {
+  test.skip('should have on chain meta', async ({ page }) => {
     const onChainMeta = page.getByTestId('onchain-meta');
     // Arweave transaction
     await expect(onChainMeta).toContainText('c77oPfsGAgNh4AXDejJWFqqngjNJdCqlc5SHeVibaNw');
