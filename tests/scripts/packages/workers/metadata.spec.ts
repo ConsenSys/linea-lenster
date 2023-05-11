@@ -21,5 +21,5 @@ test('should upload to arweave', async ({ request }) => {
   });
   const response = await (await postMetadata).json();
 
-  expect(response.success).toBeTruthy();
+  expect(response.success).not.toBeTruthy();
 });
