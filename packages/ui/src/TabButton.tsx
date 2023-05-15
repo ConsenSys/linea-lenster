@@ -30,7 +30,7 @@ const TabButton: FC<TabButtonProps> = ({ name, icon, active, type, showOnSm = fa
       aria-label={name}
     >
       {icon}
-      <span className={clsx({ 'hidden sm:block': !showOnSm })}>{name}</span>
+      <span className={clsx({ 'hidden uppercase sm:block': !showOnSm })}>{name}</span>
     </button>
   );
 };

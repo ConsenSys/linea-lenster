@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  lineaster:
+    build:
+      context: .
+      target: development
+    command: pnpm run dev
+    ports:
+      - 4783:4783
+    restart: unless-stopped
+
