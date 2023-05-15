@@ -1,86 +1,101 @@
 import SingleNft from '@components/Nft/SingleNft';
-import NftsShimmer from '@components/Shared/Shimmer/NftsShimmer';
 import { CollectionIcon } from '@heroicons/react/outline';
-import { t, Trans } from '@lingui/macro';
-import { IS_MAINNET } from 'data/constants';
-import type { Nft, NfTsRequest, Profile } from 'lens';
-import { useNftFeedQuery } from 'lens';
+import { Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import type { Profile } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useInView } from 'react-cool-inview';
-import { CHAIN_ID } from 'src/constants';
-import { EmptyState, ErrorMessage } from 'ui';
-import { mainnet } from 'wagmi/chains';
+import { useEffect, useState } from 'react';
+import { EmptyState } from 'ui';
+
+import type { NftLinea, RawNfts } from '../../types';
 
 interface NftFeedProps {
   profile: Profile;
 }
 
 const NftFeed: FC<NftFeedProps> = ({ profile }) => {
-  const [hasMore, setHasMore] = useState(true);
+  const [nfts, setNfts] = useState<NftLinea[]>([]);
 
-  // Variables
-  const request: NfTsRequest = {
-    chainIds: IS_MAINNET ? [CHAIN_ID, mainnet.id] : [CHAIN_ID],
-    ownerAddress: profile?.ownedBy,
-    limit: 10
+  const getNfts = async () => {
+    const response = await axios<RawNfts>({
+      url: 'https://api-testnet.nftnest.io/v1/wallet/get_nfts',
+      method: 'POST',
+      data: {
+        address: profile?.ownedBy,
+        chain: 'linea_goerli',
+        page: 0,
+        sort_by: 'minted_newest',
+        contract_addresses: '',
+        name: ''
+      }
+    });
+
+    return response.data;
   };
 
-  const { data, loading, error, fetchMore } = useNftFeedQuery({
-    variables: { request },
-    skip: !profile?.ownedBy
-  });
+  const { data: rawNfts, isLoading: isGalleryLoading } = useQuery([], () => getNfts().then((res) => res));
 
-  const nfts = data?.nfts?.items;
-  const pageInfo = data?.nfts?.pageInfo;
-
-  const { observe } = useInView({
-    onChange: async ({ inView }) => {
-      if (!inView || !hasMore) {
-        return;
-      }
-
-      await fetchMore({
-        variables: { request: { ...request, cursor: pageInfo?.next } }
-      }).then(({ data }) => {
-        setHasMore(data?.nfts?.items?.length > 0);
+  useEffect(() => {
+    if (rawNfts) {
+      const collections = Object.entries(rawNfts.contracts['59140']).map((entry) => {
+        return {
+          contract_address: entry[0],
+          collection_info: entry[1].collection_info
+        };
       });
-    }
-  });
 
-  if (loading) {
-    return <NftsShimmer />;
-  }
+      const ownedNfts: NftLinea[] = rawNfts.tokens['59140']?.map((nft) => {
+        const collection = collections.find((collection) => {
+          return collection.contract_address === nft?.contract_address;
+        });
+
+        return {
+          contractAddress: collection?.contract_address,
+          collectionName: collection?.collection_info?.name,
+          contractName: collection?.collection_info?.name,
+          chainId: 59140,
+          tokenId: parseInt(nft.token_id, 16),
+          name: nft.token_info?.metadata?.name,
+          description: nft.token_info?.metadata?.description,
+          originalContent: { uri: nft.token_info?.metadata?.image }
+        };
+      });
+
+      setNfts(ownedNfts);
+    }
+  }, [rawNfts]);
 
   if (nfts?.length === 0) {
     return (
       <EmptyState
         message={
-          <div>
-            <span className="mr-1 font-bold">@{formatHandle(profile?.handle)}</span>
+          isGalleryLoading ? (
             <span>
-              <Trans>doesn’t have any NFTs!</Trans>
+              <Trans>NFTs are loading...</Trans>
             </span>
-          </div>
+          ) : (
+            <div>
+              <span className="mr-1 font-bold">@{formatHandle(profile?.handle)}</span>
+              <span>
+                <Trans>doesn’t have any NFTs!</Trans>
+              </span>
+            </div>
+          )
         }
         icon={<CollectionIcon className="text-brand h-8 w-8" />}
       />
     );
   }
 
-  if (error) {
-    return <ErrorMessage title={t`Failed to load nft feed`} error={error} />;
-  }
-
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {nfts?.map((nft) => (
         <div key={`${nft?.chainId}_${nft?.contractAddress}_${nft?.tokenId}`}>
-          <SingleNft nft={nft as Nft} />
+          <SingleNft nft={nft} />
         </div>
       ))}
-      {hasMore && <span ref={observe} />}
     </div>
   );
 };
