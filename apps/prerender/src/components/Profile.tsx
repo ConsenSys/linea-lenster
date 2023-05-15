@@ -1,6 +1,5 @@
 import type { MediaSet, NftImage, Publication } from '@lenster/lens';
 import { Profile } from '@lenster/lens';
-import { IS_MORALIS_AVAILABLE } from 'data/constants';
 import formatHandle from '@lenster/lib/formatHandle';
 import getStampFyiURL from '@lenster/lib/getStampFyiURL';
 import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
@@ -130,15 +129,11 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
               Collected
             </a>
           </div>
-          {IS_MORALIS_AVAILABLE && (
-            <div>
-              <a
-                href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=nft`}
-              >
-                NFTs
-              </a>
-            </div>
-          )}
+          <div>
+            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=nft`}>
+              NFTs
+            </a>
+          </div>
         </nav>
         <hr />
       </header>

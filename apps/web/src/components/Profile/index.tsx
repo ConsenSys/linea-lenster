@@ -24,7 +24,6 @@ import Details from './Details';
 import Feed from './Feed';
 import FeedType from './FeedType';
 import FollowDialog from './FollowDialog';
-import NftGallery from './NftGallery';
 import ProfilePageShimmer from './Shimmer';
 
 const ViewProfile: NextPage = () => {
@@ -138,11 +137,7 @@ const ViewProfile: NextPage = () => {
             <Feed profile={profile as Profile} type={feedType} />
           )}
           {feedType === ProfileFeedType.Nft ? (
-            isNftGalleryEnabled ? (
-              <NftGallery profile={profile as Profile} />
-            ) : (
-              <NftFeed profile={profile as Profile} />
-            )
+            <NftFeed profile={profile as Profile} />
           ) : null}
         </GridItemEight>
       </GridLayout>
