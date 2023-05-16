@@ -14,5 +14,6 @@
     "**/*.ts",
     "**/*.tsx",
     "../../packages/lib/isPrideMonth.ts"
-  ]
+  ],
+  "exclude": ["packages/*"]
 }
