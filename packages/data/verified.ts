@@ -244,8 +244,4 @@ export const mainnetVerified = [
   ...mainnetStaffs
 ];
 
-export const testnetVerified = [
-  '0x01', // lensprotocol.test
-  '0x02', // donosonaumczuk.test
-  '0x03' // alain
-];
+export const testnetVerified = [...aaveMembers, ...lineasterMembers];
