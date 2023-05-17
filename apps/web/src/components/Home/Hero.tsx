@@ -14,6 +14,7 @@ const Hero: FC = () => {
             <Trans>
               {APP_NAME} is a decentralized, and permissionless social media app
               built with Lens Protocol 🌿
+              on Linea
             </Trans>
           </div>
         </div>

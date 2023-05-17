@@ -1,10 +1,9 @@
+import Locale from '@components/Shared/Footer/Locale';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
 import { APP_NAME } from '@lenster/data/constants';
 import { Trans } from '@lingui/macro';
 import Link from 'next/link';
 import type { FC } from 'react';
-
-import Locale from './Locale';
 
 const Footer: FC = () => {
   const { allowed: staffMode } = useStaffMode();
@@ -12,74 +11,52 @@ const Footer: FC = () => {
   return (
     <footer
       className={`sticky text-sm leading-7 ${staffMode ? 'top-28' : 'top-20'}`}
-      data-testid="footer"
+      data-testid='footer'
     >
       <div className={'mt-4 flex flex-wrap gap-x-[12px] px-3 lg:px-0'}>
-        <span className="lt-text-gray-500 font-bold">
+        <span className='lt-text-gray-500 font-bold'>
           &copy; {new Date().getFullYear()} {APP_NAME}
         </span>
-        <Link href="/terms">
+        <Link href='/terms'>
           <Trans>Terms</Trans>
         </Link>
-        <Link href="/privacy">
+        <Link href='/privacy'>
           <Trans>Privacy</Trans>
         </Link>
         <Link
-          href="https://lenster.xyz/discord"
-          target="_blank"
-          rel="noreferrer noopener"
+          href='https://discord.com/invite/9QwXqsyAps'
+          target='_blank'
+          rel='noreferrer noopener'
         >
-          <Trans>Discord</Trans>
+          <Trans>ConsenSys Discord</Trans>
         </Link>
         <Link
-          href="https://lenster.xyz/donate"
-          target="_blank"
-          rel="noreferrer noopener"
+          href='https://lenster.xyz/discord'
+          target='_blank'
+          rel='noreferrer noopener'
         >
-          <Trans>Donate</Trans>
+          <Trans>Lenster Discord</Trans>
         </Link>
         <Link
-          href="https://status.lenster.xyz"
-          target="_blank"
-          rel="noreferrer noopener"
+          href='https://lenster.xyz/donate'
+          target='_blank'
+          rel='noreferrer noopener'
         >
-          <Trans>Status</Trans>
+          <Trans>Donate to Lenster</Trans>
         </Link>
         <Link
-          href="https://feedback.lenster.xyz"
-          target="_blank"
-          rel="noreferrer noopener"
+          href='https://feedback.lenster.xyz'
+          target='_blank'
+          rel='noreferrer noopener'
         >
           <Trans>Feedback</Trans>
-        </Link>
-        <Link href="/thanks">
-          <Trans>Thanks</Trans>
-        </Link>
-        <Link
-          href="https://github.com/ConsenSys/lineaster"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
+        </a>
+        <a href='https://github.com/ConsenSys/lineaster' target='_blank' rel='noreferrer noopener'>
           <Trans>GitHub</Trans>
-        </Link>
-        <Link
-          href="https://translate.lenster.xyz"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Trans>Translate</Trans>
-        </Link>
+        </a>
       </div>
-      <div className="mt-2 flex space-x-4">
+      <div className='mt-2 flex space-x-4'>
         <Locale />
-        <Link
-          className="hover:font-bold"
-          href={`https://vercel.com/?utm_source=${APP_NAME}&utm_campaign=oss`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Trans>▲ Powered by Vercel</Trans>
-        </Link>
       </div>
     </footer>
   );
