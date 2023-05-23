@@ -458,8 +458,12 @@ msgid "Welcome to {APP_NAME} 👋"
 msgstr ""
 
 #: src/components/Home/Hero.tsx
-msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿"
-msgstr ""
+msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿 on Linea"
+msgstr "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿 on Linea"
+
+#: src/components/Home/Hero.tsx
+#~ msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿"
+#~ msgstr ""
 
 #: src/components/Home/Highlights.tsx
 msgid "Failed to load highlights"
@@ -731,13 +735,16 @@ msgid "Gardeners"
 msgstr "Gardeners"
 
 #: src/components/Nft/NftFeed.tsx
+msgid "NFTs are loading..."
+msgstr "NFTs are loading..."
+
+#: src/components/Nft/NftFeed.tsx
 msgid "doesn’t have any NFTs!"
 msgstr ""
 
 #: src/components/Nft/NftFeed.tsx
-#: src/components/Profile/NftGallery/Picker.tsx
-msgid "Failed to load nft feed"
-msgstr ""
+msgid "Failed to load NFTs feed"
+msgstr "Failed to load NFTs feed"
 
 #: src/components/Notification/FeedType.tsx
 msgid "All notifications"
@@ -1458,6 +1465,10 @@ msgstr "Let's do it!"
 #: src/components/Profile/NftGallery/Picker.tsx
 msgid "doesn't have any NFTs!"
 msgstr "doesn't have any NFTs!"
+
+#: src/components/Profile/NftGallery/Picker.tsx
+msgid "Failed to load nft feed"
+msgstr ""
 
 #: src/components/Profile/NftGallery/Picker.tsx
 msgid "Only 50 items allowed for gallery"
@@ -2244,23 +2255,19 @@ msgid "Privacy"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
-msgid "Discord"
-msgstr ""
+msgid "ConsenSys Discord"
+msgstr "ConsenSys Discord"
 
 #: src/components/Shared/Footer/index.tsx
-msgid "Donate"
-msgstr ""
+msgid "Lenster Discord"
+msgstr "Lenster Discord"
 
 #: src/components/Shared/Footer/index.tsx
-msgid "Status"
-msgstr ""
+msgid "Donate to Lenster"
+msgstr "Donate to Lenster"
 
 #: src/components/Shared/Footer/index.tsx
 msgid "Feedback"
-msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-msgid "Thanks"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
@@ -2268,8 +2275,8 @@ msgid "GitHub"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
-msgid "▲ Powered by Vercel"
-msgstr ""
+#~ msgid "▲ Powered by Vercel"
+#~ msgstr ""
 
 #: src/components/Shared/GlobalAlerts.tsx
 msgid "Perform mod actions on this publication."
@@ -2331,8 +2338,8 @@ msgid "Handle should not exceed 26 characters"
 msgstr "Handle should not exceed 26 characters"
 
 #: src/components/Shared/Login/New/index.tsx
-msgid "Handle should only contain alphanumeric characters"
-msgstr ""
+msgid "Handle should only contain lowercase alphanumeric characters"
+msgstr "Handle should only contain lowercase alphanumeric characters"
 
 #: src/components/Shared/Login/New/index.tsx
 msgid "The selected handle is already taken"
@@ -2347,8 +2354,20 @@ msgid "Handle"
 msgstr ""
 
 #: src/components/Shared/Login/New/index.tsx
-msgid "Sign up"
-msgstr ""
+msgid "{0}"
+msgstr "{0}"
+
+#: src/components/Shared/Login/New/index.tsx
+#~ msgid "Handle should be at least 2 characters"
+#~ msgstr ""
+
+#: src/components/Shared/Login/New/index.tsx
+#~ msgid "Handle should only contain alphanumeric characters"
+#~ msgstr ""
+
+#: src/components/Shared/Login/New/index.tsx
+#~ msgid "Sign up"
+#~ msgstr ""
 
 #: src/components/Shared/Login/WalletSelector.tsx
 msgid "Sign-In with Lens"
@@ -2544,6 +2563,7 @@ msgid "More"
 msgstr ""
 
 #: src/components/Shared/Navbar/NavItems/Contact.tsx
+#: src/components/Shared/Navbar/index.tsx
 msgid "Contact"
 msgstr ""
 
@@ -2564,8 +2584,8 @@ msgid "Enable mod mode"
 msgstr "Enable mod mode"
 
 #: src/components/Shared/Navbar/NavItems/ReportBug.tsx
-msgid "Report a bug"
-msgstr ""
+#~ msgid "Report a bug"
+#~ msgstr ""
 
 #: src/components/Shared/Navbar/NavItems/Settings.tsx
 msgid "Settings"
