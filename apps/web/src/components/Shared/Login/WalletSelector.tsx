@@ -206,7 +206,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
             <span>
               {isMounted()
                 ? connector.id === 'injected'
-                  ? t`Browser Wallet`
+                  ? 'MetaMask'
                   : getWalletDetails(connector.name).name
                 : getWalletDetails(connector.name).name}
               {isMounted() ? !connector.ready && ' (unsupported)' : ''}

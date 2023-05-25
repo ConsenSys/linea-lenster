@@ -12,10 +12,10 @@ test.describe('getWalletDetails', () => {
   });
 
   test('should return correct details for name other than WalletConnect', () => {
-    const walletDetails = getWalletDetails('SomeOtherWallet');
-    expect(walletDetails.name).toBe('SomeOtherWallet');
+    const walletDetails = getWalletDetails('MetaMask');
+    expect(walletDetails.name).toBe('MetaMask');
     expect(walletDetails.logo).toBe(
-      `${STATIC_IMAGES_URL}/wallets/browser-wallet.svg`
+      `/logo_metamask.svg`
     );
   });
 
@@ -23,7 +23,7 @@ test.describe('getWalletDetails', () => {
     const walletDetails = getWalletDetails('');
     expect(walletDetails.name).toBe('');
     expect(walletDetails.logo).toBe(
-      `${STATIC_IMAGES_URL}/wallets/browser-wallet.svg`
+      `/logo_metamask.svg`
     );
   });
 });
