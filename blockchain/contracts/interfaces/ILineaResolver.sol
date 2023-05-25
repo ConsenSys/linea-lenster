@@ -16,22 +16,6 @@ interface ILineaResolver {
   event AddrChanged(bytes32 indexed node, address a);
 
   /**
-   * @dev Constructor function to initialize the ERC721 contract with the given name, symbol, and base URI.
-   * @notice This constructor function is used to initialize the ERC721 contract with the given name, symbol, and base URI.
-   * @param _name The name of the ERC721 token.
-   * @param _symbol The symbol of the ERC721 token.
-   * @param baseURI The base URI for the token URI.
-   */
-  // constructor(
-  //   string memory _name,
-  //   string memory _symbol,
-  //   string memory baseURI
-  // ) ERC721(_name, _symbol) {
-  //   _baseTokenURI = baseURI;
-  //   _tokenIds.increment();
-  // }
-
-  /**
    * @dev Mints a new subdomain token for the given name and address.
    * @notice This function is used to mint a new subdomain token for the given name and address.
    * @param name The name of the subdomain to mint.
@@ -90,6 +74,11 @@ interface ILineaResolver {
    */
   function burn(uint256 tokenId) external;
 
-
+  /**
+   * @dev Get the BalanceOf ENS tokens Lens handle.
+   * @notice This function is used to get the balance of ENS tokens.
+   * @param wallet  The address wallet of the  user.
+   * @return The number of tokens.
+   */
   function balanceOf(address wallet) external view returns (uint256);
 }

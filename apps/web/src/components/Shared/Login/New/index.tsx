@@ -94,6 +94,15 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     );
   }, [data, txData]);
 
+  const handleContractError = (message: string) => {
+    if (message.includes("Doesn't have an ENS token")) {
+      return "You don't have an ENS record";
+    } else if (message.includes('Already has a Lens handle')) {
+      return 'You already have a Lens handle';
+    }
+    return message;
+  };
+
   return isCreationLoading ? (
     <Pending
       handle={form.getValues('handle')}
@@ -136,10 +145,10 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
       {(contractError as any) && (
         <ErrorMessage
           className="mb-3"
-          title="Create profile failed!"
+          title="Unable to create your handle"
           error={{
             name: 'Create profile failed!',
-            message: (contractError as any).data?.message
+            message: handleContractError((contractError as any).data?.message)
           }}
         />
       )}
