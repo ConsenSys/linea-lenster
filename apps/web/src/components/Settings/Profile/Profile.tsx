@@ -2,7 +2,7 @@ import ChooseFile from '@components/Shared/ChooseFile';
 import { PencilIcon } from '@heroicons/react/outline';
 import { LensPeriphery } from '@lenster/abis';
 import { Errors, Regex } from '@lenster/data';
-import { APP_NAME, COVER, LENS_PERIPHERY } from '@lenster/data/constants';
+import { APP_NAME, COVER, HANDLE_SUFFIX, LENS_PERIPHERY } from '@lenster/data/constants';
 import { getCroppedImg } from '@lenster/image-cropper/cropUtils';
 import type { Area } from '@lenster/image-cropper/types';
 import type {
@@ -157,7 +157,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
   const form = useZodForm({
     schema: editProfileSchema,
     defaultValues: {
-      name: profile?.name ?? '',
+      name: profile?.name ?? currentProfile?.handle?.replace(HANDLE_SUFFIX, ''),
       location: getProfileAttribute(profile?.attributes, 'location'),
       website: getProfileAttribute(profile?.attributes, 'website'),
       twitter: getProfileAttribute(profile?.attributes, 'twitter')?.replace(
