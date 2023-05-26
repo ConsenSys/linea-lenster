@@ -48,7 +48,7 @@ const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
     skip: !publicationId
   });
 
-  const comments = data?.publications?.items ?? [];
+  const comments = [...new Set(data?.publications?.items)] ?? [];
   const pageInfo = data?.publications?.pageInfo;
   const totalComments = comments?.length;
 

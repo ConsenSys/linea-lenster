@@ -54,7 +54,7 @@ const Feed: FC<FeedProps> = ({
     variables: { request, reactionRequest, profileId }
   });
 
-  const publications = data?.explorePublications?.items;
+  const publications = [...new Set(data?.explorePublications?.items)];
   const pageInfo = data?.explorePublications?.pageInfo;
 
   useEffect(() => {

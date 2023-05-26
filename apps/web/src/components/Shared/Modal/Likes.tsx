@@ -29,7 +29,7 @@ const Likes: FC<LikesProps> = ({ publicationId }) => {
     skip: !publicationId
   });
 
-  const profiles = data?.whoReactedPublication?.items;
+  const profiles = [...new Set(data?.whoReactedPublication?.items)];
   const pageInfo = data?.whoReactedPublication?.pageInfo;
 
   const onEndReached = async () => {

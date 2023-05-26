@@ -34,7 +34,7 @@ const Profiles: FC<ProfilesProps> = ({ query }) => {
   });
 
   const search = data?.search as ProfileSearchResult;
-  const profiles = search?.items;
+  const profiles = [...new Set(search?.items)];
   const pageInfo = search?.pageInfo;
 
   const onEndReached = async () => {

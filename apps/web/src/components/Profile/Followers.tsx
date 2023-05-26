@@ -29,7 +29,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
     skip: !profile?.id
   });
 
-  const followers = data?.followers?.items;
+  const followers = [...new Set(data?.followers?.items)];
   const pageInfo = data?.followers?.pageInfo;
 
   const onEndReached = async () => {

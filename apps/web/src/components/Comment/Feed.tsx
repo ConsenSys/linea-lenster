@@ -56,7 +56,7 @@ const Feed: FC<FeedProps> = ({ publication }) => {
     skip: !publicationId
   });
 
-  const comments = data?.publications?.items ?? [];
+  const comments = [...new Set(data?.publications?.items)] ?? [];
   const pageInfo = data?.publications?.pageInfo;
 
   const queuedCount = txnQueue.filter(
