@@ -9,6 +9,7 @@ ENV NODE_ENV production
 COPY --from=deps node_modules ./node_modules
 COPY --from=deps package.json ./
 COPY src ./src
+COPY tsconfig.json ./tsconfig.json
 COPY .env.example ./.env
 RUN npm run build
 
