@@ -11,7 +11,13 @@ import { BadgeCheckIcon } from '@heroicons/react/solid';
 import buildConversationId from '@lib/buildConversationId';
 import { buildConversationKey } from '@lib/conversationKey';
 import { t, Trans } from '@lingui/macro';
-import { STATIC_IMAGES_URL, ZONIC_URL } from 'data/constants';
+import {
+  ENS_DOMAIN_URL,
+  LINEA_RESOLVER,
+  LINEA_RESOLVER_ABI,
+  STATIC_IMAGES_URL,
+  ZONIC_URL
+} from 'data/constants';
 import getEnvConfig from 'data/utils/getEnvConfig';
 import type { Profile } from 'lens';
 import formatAddress from 'lib/formatAddress';
@@ -24,12 +30,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import type { Dispatch, FC, ReactElement } from 'react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useMessageStore } from 'src/store/message';
 import { FollowSource } from 'src/tracking';
 import { Button, Image, Modal, Tooltip } from 'ui';
+import { useAccount, useContractRead } from 'wagmi';
 
+import { ENS_FRONT_DEV_LINEA_URL } from '../../../packages/data/constants';
 import Badges from './Badges';
 import Followerings from './Followerings';
 import MutualFollowers from './MutualFollowers';
@@ -41,13 +49,83 @@ interface DetailsProps {
   setFollowing: Dispatch<boolean>;
 }
 
+interface Domain {
+  tokenId: string;
+  name: string | null;
+  image: string;
+  address: string;
+  registered: boolean;
+  owned: boolean;
+}
 const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
+  const { address } = useAccount();
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [showMutualFollowersModal, setShowMutualFollowersModal] = useState(false);
+  const [domain, setDomain] = useState<Domain | null>();
   const { allowed: staffMode } = useStaffMode();
   const { resolvedTheme } = useTheme();
   const router = useRouter();
   const addProfileAndSelectTab = useMessageStore((state) => state.addProfileAndSelectTab);
+
+  const {
+    isError: isBalanceError,
+    error: balanceError,
+    data: balanceData
+  } = useContractRead({
+    address: LINEA_RESOLVER,
+    abi: LINEA_RESOLVER_ABI,
+    functionName: 'balanceOf',
+    args: [String(address)]
+  });
+
+  const balance = parseInt(balanceData as string);
+
+  if (isBalanceError) {
+    console.log('Linea resolver balanceOf error', balanceError?.message);
+  }
+
+  const {
+    data: tokenId,
+    isError: isTokenError,
+    error: TokenError
+  } = useContractRead({
+    address: LINEA_RESOLVER,
+    abi: LINEA_RESOLVER_ABI,
+    functionName: 'tokenOfOwnerByIndex',
+    args: [String(address), 0]
+  });
+
+  const getTokenMetadata = async (tokenId: string) => {
+    const res = await fetch(`${ENS_FRONT_DEV_LINEA_URL}/${tokenId}`);
+    return await res.json();
+  };
+
+  const handleLineaDomain = useCallback(async () => {
+    if (!isTokenError) {
+      try {
+        const metadata = await getTokenMetadata(String(tokenId));
+        const domainData: Domain = {
+          tokenId: String(tokenId),
+          name: (metadata as any).name,
+          image: (metadata as any).image,
+          address: String(address),
+          registered: true,
+          owned: true
+        };
+        setDomain(domainData);
+      } catch (error: any) {
+        console.log('getTokenMetadata error', error?.message);
+      }
+    } else {
+      console.log('tokenOfOwnerByIndex error', TokenError);
+    }
+  }, [address, TokenError, isTokenError, tokenId]);
+
+  useEffect(() => {
+    if (!isBalanceError && balance > 0 && tokenId) {
+      handleLineaDomain();
+    }
+  }, [handleLineaDomain, balance, tokenId, isBalanceError]);
 
   const onMessageClick = () => {
     if (!currentProfile) {
@@ -203,6 +281,24 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
               dataTestId="profile-meta-ens"
             >
               {profile?.onChainIdentity?.ens?.name}
+            </MetaDetails>
+          )}
+          {domain && (
+            <MetaDetails
+              icon={
+                <img
+                  src={`${STATIC_IMAGES_URL}/brands/ens.svg`}
+                  className="h-4 w-4"
+                  height={16}
+                  width={16}
+                  alt="ENS Logo"
+                />
+              }
+              dataTestId="profile-meta-ens"
+            >
+              <a href={`${ENS_DOMAIN_URL}/${domain.name}`} target="_blank">
+                {domain.name}
+              </a>
             </MetaDetails>
           )}
           {getProfileAttribute(profile?.attributes, 'website') && (
