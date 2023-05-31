@@ -1,6 +1,6 @@
 export const isNightly = process.env.NIGHTLY === 'true';
 export const WEB_BASE_URL = isNightly
-  ? 'https://lenster.xyz'
+  ? 'https://lineaster.dev.linea.build'
   : 'http://localhost:4783';
 export const PRERENDER_BASE_URL = isNightly
   ? 'https://prerender.lenster.xyz'
