@@ -1,7 +1,9 @@
 module.exports = {
   root: true,
-  extends: ['node'],
-  rules: {
-    'import/no-anonymous-default-export': 'off'
-  }
+  env: {
+    node: true
+  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint']
 };
