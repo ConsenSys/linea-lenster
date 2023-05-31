@@ -244,4 +244,4 @@ export const mainnetVerified = [
   ...mainnetStaffs
 ];
 
-export const testnetVerified = [...aaveMembers, ...lineasterMembers];
+export const testnetVerified = [...aaveMembers, ...lineasterMembers, '0x26'];
