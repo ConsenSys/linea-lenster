@@ -13,13 +13,13 @@ import { buildConversationKey } from '@lib/conversationKey';
 import { t, Trans } from '@lingui/macro';
 import {
   ENS_DOMAIN_URL,
+  ENS_FRONT_DEV_LINEA_URL,
   LINEA_RESOLVER,
   LINEA_RESOLVER_ABI,
   STATIC_IMAGES_URL,
   ZONIC_URL
 } from 'data/constants';
 import getEnvConfig from 'data/utils/getEnvConfig';
-import type { Profile } from 'lens';
 import formatAddress from 'lib/formatAddress';
 import formatHandle from 'lib/formatHandle';
 import getAvatar from 'lib/getAvatar';
@@ -29,7 +29,7 @@ import isVerified from 'lib/isVerified';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
-import type { Dispatch, FC, ReactElement } from 'react';
+import type { FC, ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useMessageStore } from 'src/store/message';
@@ -37,26 +37,11 @@ import { FollowSource } from 'src/tracking';
 import { Button, Image, Modal, Tooltip } from 'ui';
 import { useAccount, useContractRead } from 'wagmi';
 
-import { ENS_FRONT_DEV_LINEA_URL } from '../../../packages/data/constants';
+import type { DetailsProps, Domain } from '../../types';
 import Badges from './Badges';
 import Followerings from './Followerings';
 import MutualFollowers from './MutualFollowers';
 import MutualFollowersList from './MutualFollowers/List';
-
-interface DetailsProps {
-  profile: Profile;
-  following: boolean;
-  setFollowing: Dispatch<boolean>;
-}
-
-interface Domain {
-  tokenId: string;
-  name: string | null;
-  image: string;
-  address: string;
-  registered: boolean;
-  owned: boolean;
-}
 const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   const { address } = useAccount();
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -67,11 +52,7 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   const router = useRouter();
   const addProfileAndSelectTab = useMessageStore((state) => state.addProfileAndSelectTab);
 
-  const {
-    isError: isBalanceError,
-    error: balanceError,
-    data: balanceData
-  } = useContractRead({
+  const { isError: isBalanceError, data: balanceData } = useContractRead({
     address: LINEA_RESOLVER,
     abi: LINEA_RESOLVER_ABI,
     functionName: 'balanceOf',
@@ -80,15 +61,7 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
 
   const balance = parseInt(balanceData as string);
 
-  if (isBalanceError) {
-    console.log('Linea resolver balanceOf error', balanceError?.message);
-  }
-
-  const {
-    data: tokenId,
-    isError: isTokenError,
-    error: TokenError
-  } = useContractRead({
+  const { data: tokenId, isError: isTokenError } = useContractRead({
     address: LINEA_RESOLVER,
     abi: LINEA_RESOLVER_ABI,
     functionName: 'tokenOfOwnerByIndex',
@@ -116,10 +89,8 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
       } catch (error: any) {
         console.log('getTokenMetadata error', error?.message);
       }
-    } else {
-      console.log('tokenOfOwnerByIndex error', TokenError);
     }
-  }, [address, TokenError, isTokenError, tokenId]);
+  }, [address, isTokenError, tokenId]);
 
   useEffect(() => {
     if (!isBalanceError && balance > 0 && tokenId) {

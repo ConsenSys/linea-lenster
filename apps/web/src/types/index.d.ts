@@ -161,3 +161,18 @@ export interface RawNfts {
   contracts: Contracts;
   tokens: Tokens;
 }
+
+export interface DetailsProps {
+  profile: Profile;
+  following: boolean;
+  setFollowing: Dispatch<boolean>;
+}
+
+export interface Domain {
+  tokenId: string;
+  name: string;
+  image: string;
+  address: string;
+  registered: boolean;
+  owned: boolean;
+}

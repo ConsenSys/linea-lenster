@@ -417,6 +417,7 @@ export const EVER_API = 'https://endpoint.4everland.co';
 export const SIMPLEANALYTICS_API = 'https://simpleanalytics.com/lenster.xyz.json';
 export const DEFAULT_OG = `${STATIC_IMAGES_URL}/og/logo.jpeg`;
 export const IFRAMELY_URL = 'https://iframely.lenster.xyz/iframely';
+export const ENS_FRONT_DEV_LINEA_URL = 'https://ensfront.dev.linea.build/metadata';
 
 // Workers
 export const USER_CONTENT_URL = 'https://user-content.lenster.xyz';
