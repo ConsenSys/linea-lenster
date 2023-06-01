@@ -161,9 +161,3 @@ export interface RawNfts {
   contracts: Contracts;
   tokens: Tokens;
 }
-
-export interface DetailsProps {
-  profile: Profile;
-  following: boolean;
-  setFollowing: Dispatch<boolean>;
-}
