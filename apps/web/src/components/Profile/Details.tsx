@@ -35,18 +35,18 @@ import { useAppStore } from 'src/store/app';
 import { useMessageStore } from 'src/store/message';
 import { FollowSource } from 'src/tracking';
 import { Button, Image, Modal, Tooltip } from 'ui';
-import { useAccount, useContractRead } from 'wagmi';
+import { useContractRead } from 'wagmi';
 
-import type { DetailsProps, Domain } from '../../types';
+import type { DetailsProps } from '../../types';
 import Badges from './Badges';
 import Followerings from './Followerings';
 import MutualFollowers from './MutualFollowers';
 import MutualFollowersList from './MutualFollowers/List';
 const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
-  const { address } = useAccount();
+  const address = profile.ownedBy;
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [showMutualFollowersModal, setShowMutualFollowersModal] = useState(false);
-  const [domain, setDomain] = useState<Domain | null>();
+  const [domain, setDomain] = useState('');
   const { allowed: staffMode } = useStaffMode();
   const { resolvedTheme } = useTheme();
   const router = useRouter();
@@ -77,20 +77,12 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
     if (!isTokenError) {
       try {
         const metadata = await getTokenMetadata(String(tokenId));
-        const domainData: Domain = {
-          tokenId: String(tokenId),
-          name: (metadata as any).name,
-          image: (metadata as any).image,
-          address: String(address),
-          registered: true,
-          owned: true
-        };
-        setDomain(domainData);
+        setDomain((metadata as any).name);
       } catch (error: any) {
         console.log('getTokenMetadata error', error?.message);
       }
     }
-  }, [address, isTokenError, tokenId]);
+  }, [isTokenError, tokenId]);
 
   useEffect(() => {
     if (!isBalanceError && balance > 0 && tokenId) {
@@ -267,8 +259,8 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
               }
               dataTestId="profile-meta-ens"
             >
-              <a href={`${ENS_DOMAIN_URL}/${domain.name}`} target="_blank">
-                {domain.name}
+              <a href={`${ENS_DOMAIN_URL}/${domain}`} target="_blank">
+                {domain}
               </a>
             </MetaDetails>
           )}

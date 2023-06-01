@@ -167,12 +167,3 @@ export interface DetailsProps {
   following: boolean;
   setFollowing: Dispatch<boolean>;
 }
-
-export interface Domain {
-  tokenId: string;
-  name: string;
-  image: string;
-  address: string;
-  registered: boolean;
-  owned: boolean;
-}
