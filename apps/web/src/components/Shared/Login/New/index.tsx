@@ -1,4 +1,3 @@
-import ChooseFile from '@components/Shared/ChooseFile';
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
 import { Regex } from '@lenster/data';
@@ -21,8 +20,8 @@ import {
 } from 'data/constants';
 import { useCreateProfileMutation } from 'lens';
 import getStampFyiURL from 'lib/getStampFyiURL';
-import type { ChangeEvent, FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   useAccount,
   useContractWrite,
@@ -50,10 +49,10 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
   const { address, isConnected } = useAccount();
 
   const [handle, setHandle] = useState('');
-  const [avatar, setAvatar] = useState(getStampFyiURL(address ?? ZERO_ADDRESS));
-  const [uploading, setUploading] = useState(false);
   const [createProfile, { data }] = useCreateProfileMutation();
   const [isCreationLoading, setIsCreationLoading] = useState(false);
+
+  const avatar = useMemo(() => getStampFyiURL(address ?? ZERO_ADDRESS), [address]);
 
   const debouncedHandle = useSimpleDebounce(handle);
 
@@ -83,26 +82,6 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     hash: txData?.hash
   });
 
-  /*const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-                                                                          event.preventDefault();
-                                                                          if (event.target.files?.length) {
-                                                                          try {
-                                                                            setUploading(true);
-        const attachment = await uploadFileToIPFS(event.target.files[0]);
-                                                                            if (attachment.original.url) {
-                                                                              setAvatar(attachment.original.url);
-                                                                            }
-                                                                          } finally {
-                                                                            setUploading(false);
-                                                                          }}
-  };
-
-  const relayErrorToString = (error: RelayErrorReasons): string => {
-    return error === RelayErrorReasons.HandleTaken
-      ? t`The selected handle is already taken`
-      : error;
-                                                                        };*/
-
   const handleCreateProfile = async () => {
     write?.();
   };
@@ -113,13 +92,18 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     );
   }, [data, txData]);
 
-  const handleContractError = (message: string) => {
-    if (message.includes("Doesn't have an ENS token")) {
-      return "You don't have an ENS record";
-    } else if (message.includes('Already has a Lens handle')) {
-      return 'You already have a Lens handle';
+  const handleContractError = (error: { message: string; data: string }) => {
+    if (error.message.includes("Doesn't have an ENS token")) {
+      return 'You need a Linea ENS domain before creating a Lineaster handle';
+    } else if (error.message.includes('Already has a Lens handle')) {
+      return 'You already have a Lineaster handle';
+    } else if (error.data === '0x3eb64ab3') {
+      return 'Handle too short';
+    } else if (error.data === '0x561a8587') {
+      return 'Profile creator not allowlisted';
     }
-    return message;
+
+    return `Error code = ${error.data}`;
   };
 
   return isCreationLoading ? (
@@ -142,7 +126,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
             variables: {
               request: {
                 handle: username,
-                profilePictureUri: avatar || getStampFyiURL(address ?? ZERO_ADDRESS)
+                profilePictureUri: avatar
               }
             }
           });
@@ -167,7 +151,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
           title="Unable to create your handle"
           error={{
             name: 'Create profile failed!',
-            message: handleContractError((contractError as any).data?.message)
+            message: handleContractError((contractError as any).data)
           }}
         />
       )}
@@ -200,16 +184,6 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
               />
             </div>
           )}
-          <div>
-            <div className="flex items-center space-x-3">
-              <ChooseFile
-                onChange={(evt: ChangeEvent<HTMLInputElement>) =>
-                  handleUpload(evt)
-                }
-              />
-              {uploading && <Spinner size="sm" />}
-            </div>
-          </div>
         </div>
       </div>
       <Button
