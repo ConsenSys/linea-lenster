@@ -25,7 +25,7 @@ interface FeedProps {
 
 const Feed: FC<FeedProps> = ({
   focus,
-  feedType = PublicationSortCriteria.CuratedProfiles
+  feedType = PublicationSortCriteria.Latest
 }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [hasMore, setHasMore] = useState(true);
@@ -33,7 +33,7 @@ const Feed: FC<FeedProps> = ({
   // Variables
   const request: ExplorePublicationRequest = {
     sortCriteria: feedType,
-    noRandomize: feedType === 'LATEST',
+    noRandomize: feedType === PublicationSortCriteria.Latest,
     customFilters: [CustomFiltersTypes.Gardeners],
     metadata: focus ? { mainContentFocus: [focus] } : null,
     limit: 10

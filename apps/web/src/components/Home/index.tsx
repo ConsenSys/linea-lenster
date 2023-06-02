@@ -1,6 +1,6 @@
 import MetaTags from '@components/Common/MetaTags';
 import NewPost from '@components/Composer/Post/New';
-import ExploreFeed from '@components/Explore/Feed';
+import Feed from '@components/Explore/Feed';
 import Footer from '@components/Shared/Footer';
 import { GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
               {feedType === 'TIMELINE' ? <Timeline /> : <Highlights />}
             </>
           ) : (
-            <ExploreFeed />
+            <Feed />
           )}
         </GridItemEight>
         <GridItemFour>
