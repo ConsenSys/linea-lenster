@@ -1,9 +1,6 @@
 import { CashIcon, DocumentTextIcon } from '@heroicons/react/outline';
 import type { Publication } from '@lenster/lens';
-import {
-  PublicationReportingSpamSubreason,
-  useReportPublicationMutation
-} from '@lenster/lens';
+import { PublicationReportingSpamSubreason, useReportPublicationMutation } from '@lenster/lens';
 import stopEventPropagation from '@lenster/lib/stopEventPropagation';
 import { Button } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
@@ -20,18 +17,10 @@ interface ModActionProps {
 }
 
 const ModAction: FC<ModActionProps> = ({ publication, className = '' }) => {
-  const setShowModActionAlert = useGlobalAlertStateStore(
-    (state) => state.setShowModActionAlert
-  );
+  const setShowModActionAlert = useGlobalAlertStateStore((state) => state.setShowModActionAlert);
   const [createReport, { loading }] = useReportPublicationMutation();
 
-  const reportPublication = async ({
-    type,
-    subreason
-  }: {
-    type: string;
-    subreason: string;
-  }) => {
+  const reportPublication = async ({ type, subreason }: { type: string; subreason: string }) => {
     return await createReport({
       variables: {
         request: {

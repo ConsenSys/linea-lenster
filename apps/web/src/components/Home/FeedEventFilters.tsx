@@ -8,12 +8,8 @@ import type { ChangeEvent, FC } from 'react';
 import { useTimelinePersistStore } from 'src/store/timeline';
 
 const FeedEventFilters: FC = () => {
-  const feedEventFilters = useTimelinePersistStore(
-    (state) => state.feedEventFilters
-  );
-  const setFeedEventFilters = useTimelinePersistStore(
-    (state) => state.setFeedEventFilters
-  );
+  const feedEventFilters = useTimelinePersistStore((state) => state.feedEventFilters);
+  const setFeedEventFilters = useTimelinePersistStore((state) => state.setFeedEventFilters);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFeedEventFilters({

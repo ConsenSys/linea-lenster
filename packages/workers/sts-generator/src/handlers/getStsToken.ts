@@ -22,7 +22,7 @@ const params = {
         ]
       }
     ]
-  }`
+  }`,
 };
 
 export default async (request: IRequest, env: Env) => {
@@ -33,15 +33,15 @@ export default async (request: IRequest, env: Env) => {
     const stsClient = new STSClient({
       endpoint: everEndpoint,
       region: 'us-west-2',
-      credentials: { accessKeyId, secretAccessKey }
+      credentials: { accessKeyId, secretAccessKey },
     });
 
     const data = await stsClient.send(
       new AssumeRoleCommand({
         ...params,
         RoleArn: undefined,
-        RoleSessionName: undefined
-      })
+        RoleSessionName: undefined,
+      }),
     );
 
     return new Response(
@@ -49,13 +49,13 @@ export default async (request: IRequest, env: Env) => {
         success: true,
         accessKeyId: data.Credentials?.AccessKeyId,
         secretAccessKey: data.Credentials?.SecretAccessKey,
-        sessionToken: data.Credentials?.SessionToken
-      })
+        sessionToken: data.Credentials?.SessionToken,
+      }),
     );
   } catch (error) {
     console.error('Failed to get STS data', error);
     return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
+      JSON.stringify({ success: false, error: 'Something went wrong!' }),
     );
   }
 };

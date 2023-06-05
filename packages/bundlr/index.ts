@@ -36,14 +36,14 @@ export class Secp256k1 {
 }
 
 export class EthereumSigner extends Secp256k1 {
-  get publicKey(): Buffer {
-    return Buffer.from(this.pk, 'hex');
-  }
-
   constructor(key: string) {
     const b = Buffer.from(key, 'hex');
     const pub = publicKeyCreate(b, false);
     super(key, Buffer.from(pub));
+  }
+
+  get publicKey(): Buffer {
+    return Buffer.from(this.pk, 'hex');
   }
 
   sign(message: Uint8Array): Uint8Array {
@@ -62,22 +62,12 @@ export class EthereumSigner extends Secp256k1 {
 
 export class DataItem {
   private readonly binary: Buffer;
-  private _id!: Buffer;
 
   constructor(binary: Buffer) {
     this.binary = binary;
   }
 
-  static isDataItem(obj: any): obj is DataItem {
-    return obj.binary !== undefined;
-  }
-
-  get signatureType(): number {
-    const signatureTypeVal: number = byteArrayToLong(
-      this.binary.subarray(0, 2)
-    );
-    return signatureTypeVal;
-  }
+  private _id!: Buffer;
 
   get id(): string {
     return base64url.encode(this._id);
@@ -85,6 +75,13 @@ export class DataItem {
 
   set id(id: string) {
     this._id = base64url.toBuffer(id);
+  }
+
+  get signatureType(): number {
+    const signatureTypeVal: number = byteArrayToLong(
+      this.binary.subarray(0, 2)
+    );
+    return signatureTypeVal;
   }
 
   // @ts-ignore
@@ -104,6 +101,13 @@ export class DataItem {
     return base64url.encode(this.rawSignature);
   }
 
+  get rawOwner(): Buffer {
+    return this.binary.subarray(
+      2 + this.signatureLength,
+      2 + this.signatureLength + this.ownerLength
+    );
+  }
+
   set rawOwner(pubkey: Buffer) {
     if (pubkey.byteLength !== this.ownerLength) {
       throw new Error(
@@ -111,13 +115,6 @@ export class DataItem {
       );
     }
     this.binary.set(pubkey, 2 + this.signatureLength);
-  }
-
-  get rawOwner(): Buffer {
-    return this.binary.subarray(
-      2 + this.signatureLength,
-      2 + this.signatureLength + this.ownerLength
-    );
   }
 
   get signatureLength(): number {
@@ -165,17 +162,6 @@ export class DataItem {
     return this.binary.subarray(tagsStart + 16, tagsStart + 16 + tagsSize);
   }
 
-  getStartOfData(): number {
-    const tagsStart = this.getTagsStart();
-
-    const numberOfTagBytesArray = this.binary.subarray(
-      tagsStart + 8,
-      tagsStart + 16
-    );
-    const numberOfTagBytes = byteArrayToLong(numberOfTagBytesArray);
-    return tagsStart + 16 + numberOfTagBytes;
-  }
-
   get rawData(): Buffer {
     const tagsStart = this.getTagsStart();
 
@@ -191,6 +177,21 @@ export class DataItem {
 
   get data(): string {
     return base64url.encode(this.rawData);
+  }
+
+  static isDataItem(obj: any): obj is DataItem {
+    return obj.binary !== undefined;
+  }
+
+  getStartOfData(): number {
+    const tagsStart = this.getTagsStart();
+
+    const numberOfTagBytesArray = this.binary.subarray(
+      tagsStart + 8,
+      tagsStart + 16
+    );
+    const numberOfTagBytes = byteArrayToLong(numberOfTagBytesArray);
+    return tagsStart + 16 + numberOfTagBytes;
   }
 
   /**

@@ -13,11 +13,7 @@ interface ProfileNameOrHandleProps {
   separator?: ReactNode;
 }
 
-const ProfileNameOrHandle: FC<ProfileNameOrHandleProps> = ({
-  profile,
-  className = '',
-  separator = ''
-}) => {
+const ProfileNameOrHandle: FC<ProfileNameOrHandleProps> = ({ profile, className = '', separator = '' }) => {
   if (!profile) {
     return null;
   }

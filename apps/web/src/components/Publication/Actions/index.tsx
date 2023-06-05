@@ -36,15 +36,9 @@ const PublicationActions: FC<PublicationActionsProps> = ({
       {canMirror && <Mirror publication={publication} showCount={showCount} />}
       <Like publication={publication} showCount={showCount} />
       {collectModuleType !== 'RevertCollectModuleSettings' && (
-        <Collect
-          electedMirror={electedMirror}
-          publication={publication}
-          showCount={showCount}
-        />
+        <Collect electedMirror={electedMirror} publication={publication} showCount={showCount} />
       )}
-      {modMode && (
-        <Mod publication={publication} isFullPublication={showCount} />
-      )}
+      {modMode && <Mod publication={publication} isFullPublication={showCount} />}
     </span>
   );
 };

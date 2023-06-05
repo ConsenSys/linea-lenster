@@ -2,11 +2,7 @@ import UserProfilesShimmer from '@components/Shared/Shimmer/UserProfilesShimmer'
 import UserProfile from '@components/Shared/UserProfile';
 import { UsersIcon } from '@heroicons/react/outline';
 import type { ProfileSearchResult, SearchQueryRequest } from '@lenster/lens';
-import {
-  CustomFiltersTypes,
-  SearchRequestTypes,
-  useSearchProfilesQuery
-} from '@lenster/lens';
+import { CustomFiltersTypes, SearchRequestTypes, useSearchProfilesQuery } from '@lenster/lens';
 import { Card, EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import type { FC } from 'react';

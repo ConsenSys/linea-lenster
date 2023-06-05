@@ -2,11 +2,7 @@ import { SwitchHorizontalIcon } from '@heroicons/react/outline';
 import { LensHub } from '@lenster/abis';
 import { Errors } from '@lenster/data';
 import { LENSHUB_PROXY } from '@lenster/data/constants';
-import type {
-  CreateDataAvailabilityMirrorRequest,
-  CreateMirrorRequest,
-  Publication
-} from '@lenster/lens';
+import type { CreateDataAvailabilityMirrorRequest, CreateMirrorRequest, Publication } from '@lenster/lens';
 import {
   useBroadcastMutation,
   useCreateDataAvailabilityMirrorViaDispatcherMutation,
@@ -71,10 +67,7 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
   };
 
   const onCompleted = (
-    __typename?:
-      | 'RelayError'
-      | 'RelayerResult'
-      | 'CreateDataAvailabilityPublicationResult'
+    __typename?: 'RelayError' | 'RelayerResult' | 'CreateDataAvailabilityPublicationResult'
   ) => {
     if (__typename === 'RelayError') {
       return;
@@ -126,22 +119,18 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
     onError
   });
 
-  const [createDataAvailabilityMirrorViaDispatcher] =
-    useCreateDataAvailabilityMirrorViaDispatcherMutation({
-      onCompleted: ({ createDataAvailabilityMirrorViaDispatcher }) =>
-        onCompleted(createDataAvailabilityMirrorViaDispatcher.__typename),
-      onError
-    });
-
-  const [createMirrorViaDispatcher] = useCreateMirrorViaDispatcherMutation({
-    onCompleted: ({ createMirrorViaDispatcher }) =>
-      onCompleted(createMirrorViaDispatcher.__typename),
+  const [createDataAvailabilityMirrorViaDispatcher] = useCreateDataAvailabilityMirrorViaDispatcherMutation({
+    onCompleted: ({ createDataAvailabilityMirrorViaDispatcher }) =>
+      onCompleted(createDataAvailabilityMirrorViaDispatcher.__typename),
     onError
   });
 
-  const createViaDataAvailablityDispatcher = async (
-    request: CreateDataAvailabilityMirrorRequest
-  ) => {
+  const [createMirrorViaDispatcher] = useCreateMirrorViaDispatcherMutation({
+    onCompleted: ({ createMirrorViaDispatcher }) => onCompleted(createMirrorViaDispatcher.__typename),
+    onError
+  });
+
+  const createViaDataAvailablityDispatcher = async (request: CreateDataAvailabilityMirrorRequest) => {
     await createDataAvailabilityMirrorViaDispatcher({
       variables: { request }
     });
@@ -191,9 +180,7 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
 
       if (canUseRelay) {
         if (publication.isDataAvailability && isSponsored) {
-          return await createViaDataAvailablityDispatcher(
-            dataAvailablityRequest
-          );
+          return await createViaDataAvailablityDispatcher(dataAvailablityRequest);
         }
 
         return await createViaDispatcher(request);
@@ -210,17 +197,10 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
     }
   };
 
-  const iconClassName = showCount
-    ? 'w-[17px] sm:w-[20px]'
-    : 'w-[15px] sm:w-[18px]';
+  const iconClassName = showCount ? 'w-[17px] sm:w-[20px]' : 'w-[15px] sm:w-[18px]';
 
   return (
-    <div
-      className={clsx(
-        mirrored ? 'text-green-500' : 'text-brand',
-        'flex items-center space-x-1'
-      )}
-    >
+    <div className={clsx(mirrored ? 'text-green-500' : 'text-brand', 'flex items-center space-x-1')}>
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={createMirror}
@@ -228,10 +208,7 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
         aria-label="Mirror"
       >
         <div
-          className={clsx(
-            mirrored ? 'hover:bg-green-300/20' : 'hover:bg-brand-300/20',
-            'rounded-full p-1.5'
-          )}
+          className={clsx(mirrored ? 'hover:bg-green-300/20' : 'hover:bg-brand-300/20', 'rounded-full p-1.5')}
         >
           {isLoading ? (
             <Spinner variant={mirrored ? 'success' : 'primary'} size="xs" />
@@ -246,9 +223,7 @@ const Mirror: FC<MirrorProps> = ({ publication, showCount }) => {
           )}
         </div>
       </motion.button>
-      {count > 0 && !showCount && (
-        <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>
-      )}
+      {count > 0 && !showCount && <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>}
     </div>
   );
 };

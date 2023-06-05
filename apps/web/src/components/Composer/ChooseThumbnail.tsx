@@ -27,9 +27,7 @@ const ChooseThumbnail: FC = () => {
   const [selectedThumbnailIndex, setSelectedThumbnailIndex] = useState(-1);
   const attachments = usePublicationStore((state) => state.attachments);
   const videoThumbnail = usePublicationStore((state) => state.videoThumbnail);
-  const setVideoThumbnail = usePublicationStore(
-    (state) => state.setVideoThumbnail
-  );
+  const setVideoThumbnail = usePublicationStore((state) => state.setVideoThumbnail);
   const { file } = attachments[0];
 
   const uploadThumbnailToIpfs = async (fileToUpload: File) => {
@@ -51,24 +49,20 @@ const ChooseThumbnail: FC = () => {
     setSelectedThumbnailIndex(index);
     if (thumbnails[index]?.ipfsUrl === '') {
       setVideoThumbnail({ uploading: true });
-      getFileFromDataURL(
-        thumbnails[index].blobUrl,
-        'thumbnail.jpeg',
-        async (file: any) => {
-          if (!file) {
-            return toast.error(t`Please upload a custom thumbnail`);
-          }
-          const ipfsResult = await uploadThumbnailToIpfs(file);
-          setThumbnails(
-            thumbnails.map((thumbnail, i) => {
-              if (i === index) {
-                thumbnail.ipfsUrl = ipfsResult.original.url;
-              }
-              return thumbnail;
-            })
-          );
+      getFileFromDataURL(thumbnails[index].blobUrl, 'thumbnail.jpeg', async (file: any) => {
+        if (!file) {
+          return toast.error(t`Please upload a custom thumbnail`);
         }
-      );
+        const ipfsResult = await uploadThumbnailToIpfs(file);
+        setThumbnails(
+          thumbnails.map((thumbnail, i) => {
+            if (i === index) {
+              thumbnail.ipfsUrl = ipfsResult.original.url;
+            }
+            return thumbnail;
+          })
+        );
+      });
     } else {
       setVideoThumbnail({
         url: thumbnails[index]?.ipfsUrl,
@@ -80,10 +74,7 @@ const ChooseThumbnail: FC = () => {
 
   const generateThumbnails = async (fileToGenerate: File) => {
     try {
-      const thumbnailArray = await generateVideoThumbnails(
-        fileToGenerate,
-        THUMBNAIL_GENERATE_COUNT
-      );
+      const thumbnailArray = await generateVideoThumbnails(fileToGenerate, THUMBNAIL_GENERATE_COUNT);
       const thumbnailList: Thumbnail[] = [];
       for (const thumbnailBlob of thumbnailArray) {
         thumbnailList.push({

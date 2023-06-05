@@ -35,11 +35,8 @@ const SuperFollow: FC = () => {
   const setUserSigNonce = useNonceStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    DEFAULT_COLLECT_TOKEN
-  );
-  const [selectedCurrencySymbol, setSelectedCurrencySymbol] =
-    useState('WMATIC');
+  const [selectedCurrency, setSelectedCurrency] = useState(DEFAULT_COLLECT_TOKEN);
+  const [selectedCurrencySymbol, setSelectedCurrencySymbol] = useState('WMATIC');
 
   const onCompleted = (__typename?: 'RelayError' | 'RelayerResult') => {
     if (__typename === 'RelayError') {
@@ -85,29 +82,24 @@ const SuperFollow: FC = () => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetFollowModuleTypedData] =
-    useCreateSetFollowModuleTypedDataMutation({
-      onCompleted: async ({ createSetFollowModuleTypedData }) => {
-        const { id, typedData } = createSetFollowModuleTypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
+  const [createSetFollowModuleTypedData] = useCreateSetFollowModuleTypedDataMutation({
+    onCompleted: async ({ createSetFollowModuleTypedData }) => {
+      const { id, typedData } = createSetFollowModuleTypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, followModule, followModuleInitData } = typedData.value;
+        return write?.({
+          args: [profileId, followModule, followModuleInitData]
         });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, followModule, followModuleInitData } =
-            typedData.value;
-          return write?.({
-            args: [profileId, followModule, followModuleInitData]
-          });
-        }
-      },
-      onError
-    });
+      }
+    },
+    onError
+  });
 
-  const setSuperFollow = async (
-    amount: string | null,
-    recipient: string | null
-  ) => {
+  const setSuperFollow = async (amount: string | null, recipient: string | null) => {
     if (!currentProfile) {
       return toast.error(Errors.SignWallet);
     }
@@ -164,9 +156,8 @@ const SuperFollow: FC = () => {
         </div>
         <p>
           <Trans>
-            Setting super follow makes users spend crypto to follow you, and
-            it's a good way to earn it, you can change the amount and currency
-            or disable/enable it anytime.
+            Setting super follow makes users spend crypto to follow you, and it's a good way to earn it, you
+            can change the amount and currency or disable/enable it anytime.
           </Trans>
         </p>
         <div className="pt-2">
@@ -182,10 +173,7 @@ const SuperFollow: FC = () => {
             }}
           >
             {currencyData?.enabledModuleCurrencies?.map((currency: Erc20) => (
-              <option
-                key={currency.address}
-                value={`${currency.address}-${currency.symbol}`}
-              >
+              <option key={currency.address} value={`${currency.address}-${currency.symbol}`}>
                 {currency.name}
               </option>
             ))}
@@ -229,14 +217,8 @@ const SuperFollow: FC = () => {
                 <Trans>Disable Super follow</Trans>
               </Button>
             )}
-            <Button
-              type="submit"
-              disabled={isLoading}
-              icon={<StarIcon className="h-4 w-4" />}
-            >
-              {followType === 'FeeFollowModuleSettings'
-                ? t`Update Super follow`
-                : t`Set Super follow`}
+            <Button type="submit" disabled={isLoading} icon={<StarIcon className="h-4 w-4" />}>
+              {followType === 'FeeFollowModuleSettings' ? t`Update Super follow` : t`Set Super follow`}
             </Button>
           </div>
         </div>

@@ -15,13 +15,13 @@ test('should have name', async ({ page }) => {
 });
 
 test('should have handle', async ({ page }) => {
-  await expect(page.getByTestId('profile-handle')).toContainText('@alainnicolas');
+  await expect(page.getByTestId('profile-handle')).toContainText(
+    '@alainnicolas'
+  );
 });
 
 test('should have bio', async ({ page }) => {
-  await expect(page.getByTestId('profile-bio')).toContainText(
-    ''
-  );
+  await expect(page.getByTestId('profile-bio')).toContainText('');
 });
 
 test.skip('should have feed', async ({ page }) => {

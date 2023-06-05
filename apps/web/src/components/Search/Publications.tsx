@@ -1,16 +1,8 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
 import { CollectionIcon } from '@heroicons/react/outline';
-import type {
-  Publication,
-  PublicationSearchResult,
-  SearchQueryRequest
-} from '@lenster/lens';
-import {
-  CustomFiltersTypes,
-  SearchRequestTypes,
-  useSearchPublicationsQuery
-} from '@lenster/lens';
+import type { Publication, PublicationSearchResult, SearchQueryRequest } from '@lenster/lens';
+import { CustomFiltersTypes, SearchRequestTypes, useSearchPublicationsQuery } from '@lenster/lens';
 import { Card, EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import type { FC } from 'react';
@@ -33,9 +25,7 @@ const Publications: FC<PublicationsProps> = ({ query }) => {
     customFilters: [CustomFiltersTypes.Gardeners],
     limit: 10
   };
-  const reactionRequest = currentProfile
-    ? { profileId: currentProfile?.id }
-    : null;
+  const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
   const profileId = currentProfile?.id ?? null;
 
   const { data, loading, error, fetchMore } = useSearchPublicationsQuery({
@@ -83,19 +73,14 @@ const Publications: FC<PublicationsProps> = ({ query }) => {
   }
 
   if (error) {
-    return (
-      <ErrorMessage title={t`Failed to load publications`} error={error} />
-    );
+    return <ErrorMessage title={t`Failed to load publications`} error={error} />;
   }
 
   return (
     <>
       <Card className="divide-y-[1px] dark:divide-gray-700">
         {publications?.map((publication, index) => (
-          <SinglePublication
-            key={`${publication?.id}_${index}`}
-            publication={publication}
-          />
+          <SinglePublication key={`${publication?.id}_${index}`} publication={publication} />
         ))}
       </Card>
       {hasMore && <span ref={observe} />}

@@ -3,7 +3,7 @@
 The following ports are exposed by the repository
 
 | Port | Description                | Local endpoint        | Production endpoint                |
-| ---- | -------------------------- | --------------------- | ---------------------------------- |
+|------|----------------------------|-----------------------|------------------------------------|
 | 4783 | Web app                    | http://localhost:4783 | https://lenster.xyz                |
 | 4784 | Prerender app              | http://localhost:4784 | https://prerender.lenster.xyz      |
 | 8082 | STS token generator worker | http://localhost:8082 | https://sts.lenster.xyz            |

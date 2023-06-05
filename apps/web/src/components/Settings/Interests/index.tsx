@@ -41,9 +41,8 @@ const InterestsSettings: NextPage = () => {
             </div>
             <p>
               <Trans>
-                Interests you select are used to personalize your experience
-                across Lenster. You can adjust your interests if something
-                doesn't look right.
+                Interests you select are used to personalize your experience across Lenster. You can adjust
+                your interests if something doesn't look right.
               </Trans>
             </p>
           </div>

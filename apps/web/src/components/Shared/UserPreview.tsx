@@ -60,18 +60,11 @@ const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex max-w-sm items-center gap-1 truncate">
         <div className={clsx(isBig ? 'font-bold' : 'text-md')}>
-          {sanitizeDisplayName(lazyProfile?.name) ??
-            formatHandle(lazyProfile?.handle)}
+          {sanitizeDisplayName(lazyProfile?.name) ?? formatHandle(lazyProfile?.handle)}
         </div>
-        {isVerified(lazyProfile?.id) && (
-          <BadgeCheckIcon className="text-brand h-4 w-4" />
-        )}
+        {isVerified(lazyProfile?.id) && <BadgeCheckIcon className="text-brand h-4 w-4" />}
       </div>
-      <Slug
-        className="text-sm"
-        slug={formatHandle(lazyProfile?.handle)}
-        prefix="@"
-      />
+      <Slug className="text-sm" slug={formatHandle(lazyProfile?.handle)} prefix="@" />
     </>
   );
 
@@ -83,8 +76,7 @@ const UserPreview: FC<UserPreviewProps> = ({
           {!lazyProfile.isFollowedByMe &&
             (followStatusLoading ? (
               <div className="shimmer h-8 w-10 rounded-lg" />
-            ) : following ? null : lazyProfile?.followModule?.__typename ===
-              'FeeFollowModuleSettings' ? (
+            ) : following ? null : lazyProfile?.followModule?.__typename === 'FeeFollowModuleSettings' ? (
               <SuperFollow
                 profile={lazyProfile}
                 setFollowing={setFollowing}
@@ -103,22 +95,14 @@ const UserPreview: FC<UserPreviewProps> = ({
         <UserName />
         <div>
           {lazyProfile?.bio && (
-            <div
-              className={clsx(
-                isBig ? 'text-base' : 'text-sm',
-                'mt-2',
-                'linkify break-words leading-6'
-              )}
-            >
+            <div className={clsx(isBig ? 'text-base' : 'text-sm', 'mt-2', 'linkify break-words leading-6')}>
               <Markup>{lazyProfile?.bio}</Markup>
             </div>
           )}
         </div>
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-1">
-            <div className="text-base">
-              {nFormatter(lazyProfile?.stats?.totalFollowing)}
-            </div>
+            <div className="text-base">{nFormatter(lazyProfile?.stats?.totalFollowing)}</div>
             <div className="lt-text-gray-500 text-sm">
               <Plural
                 value={lazyProfile?.stats?.totalFollowing}
@@ -129,9 +113,7 @@ const UserPreview: FC<UserPreviewProps> = ({
             </div>
           </div>
           <div className="text-md flex items-center space-x-1">
-            <div className="text-base">
-              {nFormatter(lazyProfile?.stats?.totalFollowers)}
-            </div>
+            <div className="text-base">{nFormatter(lazyProfile?.stats?.totalFollowers)}</div>
             <div className="lt-text-gray-500 text-sm">
               <Plural
                 value={lazyProfile?.stats?.totalFollowers}

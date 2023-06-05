@@ -2,11 +2,7 @@ import { PencilIcon } from '@heroicons/react/outline';
 import { LensHub } from '@lenster/abis';
 import { Errors, Regex } from '@lenster/data';
 import { IS_MAINNET, LENSHUB_PROXY } from '@lenster/data/constants';
-import type {
-  NftImage,
-  Profile,
-  UpdateProfileImageRequest
-} from '@lenster/lens';
+import type { NftImage, Profile, UpdateProfileImageRequest } from '@lenster/lens';
 import {
   useBroadcastMutation,
   useCreateSetProfileImageUriTypedDataMutation,
@@ -14,14 +10,7 @@ import {
   useNftChallengeLazyQuery
 } from '@lenster/lens';
 import getSignature from '@lenster/lib/getSignature';
-import {
-  Button,
-  ErrorMessage,
-  Form,
-  Input,
-  Spinner,
-  useZodForm
-} from '@lenster/ui';
+import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
 import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
@@ -51,9 +40,7 @@ const NftPicture: FC<NftPictureProps> = ({ profile }) => {
   const setUserSigNonce = useNonceStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [isLoading, setIsLoading] = useState(false);
-  const [chainId, setChainId] = useState<number>(
-    profile?.picture?.chainId || mainnet.id
-  );
+  const [chainId, setChainId] = useState<number>(profile?.picture?.chainId || mainnet.id);
   const { signMessageAsync } = useSignMessage();
 
   const form = useZodForm({
@@ -96,37 +83,33 @@ const NftPicture: FC<NftPictureProps> = ({ profile }) => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetProfileImageURITypedData] =
-    useCreateSetProfileImageUriTypedDataMutation({
-      onCompleted: async ({ createSetProfileImageURITypedData }) => {
-        const { id, typedData } = createSetProfileImageURITypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        setUserSigNonce(userSigNonce + 1);
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
-        });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, imageURI } = typedData.value;
-          return write?.({ args: [profileId, imageURI] });
-        }
-      },
-      onError
-    });
+  const [createSetProfileImageURITypedData] = useCreateSetProfileImageUriTypedDataMutation({
+    onCompleted: async ({ createSetProfileImageURITypedData }) => {
+      const { id, typedData } = createSetProfileImageURITypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      setUserSigNonce(userSigNonce + 1);
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, imageURI } = typedData.value;
+        return write?.({ args: [profileId, imageURI] });
+      }
+    },
+    onError
+  });
 
-  const [createSetProfileImageURIViaDispatcher] =
-    useCreateSetProfileImageUriViaDispatcherMutation({
-      onCompleted: ({ createSetProfileImageURIViaDispatcher }) =>
-        onCompleted(createSetProfileImageURIViaDispatcher.__typename),
-      onError
-    });
+  const [createSetProfileImageURIViaDispatcher] = useCreateSetProfileImageUriViaDispatcherMutation({
+    onCompleted: ({ createSetProfileImageURIViaDispatcher }) =>
+      onCompleted(createSetProfileImageURIViaDispatcher.__typename),
+    onError
+  });
 
   const createViaDispatcher = async (request: UpdateProfileImageRequest) => {
     const { data } = await createSetProfileImageURIViaDispatcher({
       variables: { request }
     });
-    if (
-      data?.createSetProfileImageURIViaDispatcher?.__typename === 'RelayError'
-    ) {
+    if (data?.createSetProfileImageURIViaDispatcher?.__typename === 'RelayError') {
       return await createSetProfileImageURITypedData({
         variables: {
           options: { overrideSigNonce: userSigNonce },
@@ -193,13 +176,7 @@ const NftPicture: FC<NftPictureProps> = ({ profile }) => {
         await setAvatar(contractAddress, tokenId);
       }}
     >
-      {error && (
-        <ErrorMessage
-          className="mb-3"
-          title={t`Transaction failed!`}
-          error={error}
-        />
-      )}
+      {error && <ErrorMessage className="mb-3" title={t`Transaction failed!`} error={error} />}
       <div>
         <div className="label">Chain</div>
         <div>
@@ -221,19 +198,12 @@ const NftPicture: FC<NftPictureProps> = ({ profile }) => {
         placeholder="0x277f5959e22f94d5bd4c2cc0a77c4c71f31da3ac"
         {...form.register('contractAddress')}
       />
-      <Input
-        label={t`Token Id`}
-        type="text"
-        placeholder="1"
-        {...form.register('tokenId')}
-      />
+      <Input label={t`Token Id`} type="text" placeholder="1" {...form.register('tokenId')} />
       <Button
         className="ml-auto"
         type="submit"
         disabled={isLoading}
-        icon={
-          isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />
-        }
+        icon={isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
       >
         <Trans>Save</Trans>
       </Button>

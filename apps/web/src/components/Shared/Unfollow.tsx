@@ -2,10 +2,7 @@ import { UserRemoveIcon } from '@heroicons/react/outline';
 import { FollowNft } from '@lenster/abis';
 import { Errors } from '@lenster/data';
 import type { Profile } from '@lenster/lens';
-import {
-  useBroadcastMutation,
-  useCreateUnfollowTypedDataMutation
-} from '@lenster/lens';
+import { useBroadcastMutation, useCreateUnfollowTypedDataMutation } from '@lenster/lens';
 import type { ApolloCache } from '@lenster/lens/apollo';
 import getSignature from '@lenster/lib/getSignature';
 import { Button, Spinner } from '@lenster/ui';
@@ -25,11 +22,7 @@ interface UnfollowProps {
   showText?: boolean;
 }
 
-const Unfollow: FC<UnfollowProps> = ({
-  profile,
-  showText = false,
-  setFollowing
-}) => {
+const Unfollow: FC<UnfollowProps> = ({ profile, showText = false, setFollowing }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -110,13 +103,7 @@ const Unfollow: FC<UnfollowProps> = ({
       disabled={isLoading}
       variant="danger"
       aria-label="Unfollow"
-      icon={
-        isLoading ? (
-          <Spinner variant="danger" size="xs" />
-        ) : (
-          <UserRemoveIcon className="h-4 w-4" />
-        )
-      }
+      icon={isLoading ? <Spinner variant="danger" size="xs" /> : <UserRemoveIcon className="h-4 w-4" />}
     >
       {showText && t`Unfollow`}
     </Button>

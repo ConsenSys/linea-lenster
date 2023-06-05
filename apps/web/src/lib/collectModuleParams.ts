@@ -1,9 +1,4 @@
-import type {
-  CollectModuleParams,
-  ModuleFeeAmountParams,
-  Profile,
-  RecipientDataInput
-} from '@lenster/lens';
+import type { CollectModuleParams, ModuleFeeAmountParams, Profile, RecipientDataInput } from '@lenster/lens';
 import { CollectModules } from '@lenster/lens';
 import type { CollectModuleType } from 'src/store/collect-module';
 
@@ -13,14 +8,7 @@ const collectModuleParams = (
   collectModule: CollectModuleType,
   currentProfile: Profile
 ): CollectModuleParams => {
-  const {
-    collectLimit,
-    followerOnlyCollect,
-    timeLimit,
-    amount,
-    referralFee,
-    recipients
-  } = collectModule;
+  const { collectLimit, followerOnlyCollect, timeLimit, amount, referralFee, recipients } = collectModule;
   const baseCollectModuleParams = {
     collectLimit: collectLimit,
     followerOnly: followerOnlyCollect as boolean,

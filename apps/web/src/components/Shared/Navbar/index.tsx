@@ -1,15 +1,15 @@
 import MessageIcon from '@components/Messages/MessageIcon';
 import NotificationIcon from '@components/Notification/NotificationIcon';
+import StaffBar from '@components/Shared/Navbar/StaffBar';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
 import { Disclosure } from '@headlessui/react';
 import { SearchIcon, XIcon } from '@heroicons/react/outline';
+import { DISCORD_URL } from '@lenster/data/constants';
 import type { Profile } from '@lenster/lens';
 import formatHandle from '@lenster/lib/formatHandle';
 import hasPrideLogo from '@lenster/lib/hasPrideLogo';
 import { t } from '@lingui/macro';
 import clsx from 'clsx';
-import { DISCORD_URL } from 'data/constants';
-
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { FC } from 'react';
@@ -17,7 +17,6 @@ import { useAppStore } from 'src/store/app';
 
 import MenuItems from './MenuItems';
 import Search from './Search';
-import StaffBar from './StaffBar';
 
 const Navbar: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -59,11 +58,7 @@ const Navbar: FC = () => {
     return (
       <>
         <NavItem url="/" name={t`Home`} current={pathname === '/'} />
-        <NavItem
-          url="/explore"
-          name={t`Explore`}
-          current={pathname === '/explore'}
-        />
+        <NavItem url="/explore" name={t`Explore`} current={pathname === '/explore'} />
         <NavItem url={DISCORD_URL} name={t`Contact`} current={pathname === '/contact'} newTab />
       </>
     );
@@ -79,10 +74,7 @@ const Navbar: FC = () => {
   );
 
   return (
-    <Disclosure
-      as="header"
-      className="bg-darker sticky top-0 z-10 w-full text-white"
-    >
+    <Disclosure as="header" className="bg-darker sticky top-0 z-10 w-full text-white">
       {({ open }) => (
         <>
           {staffMode && <StaffBar />}
@@ -90,11 +82,7 @@ const Navbar: FC = () => {
             <div className="relative flex h-14 items-center justify-between sm:h-16">
               <div className="flex items-center justify-start">
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md text-gray-500 focus:outline-none md:hidden">
-                  {open ? (
-                    <XIcon className="h-6 w-6" />
-                  ) : (
-                    <SearchIcon className="h-6 w-6" />
-                  )}
+                  {open ? <XIcon className="h-6 w-6" /> : <SearchIcon className="h-6 w-6" />}
                 </Disclosure.Button>
                 <Link href="/" className="hidden md:block">
                   <Headline />
@@ -108,13 +96,7 @@ const Navbar: FC = () => {
                   </div>
                 </div>
               </div>
-              <Link
-                href="/"
-                className={clsx(
-                  'md:hidden',
-                  !currentProfile?.id && 'ml-[60px]'
-                )}
-              >
+              <Link href="/" className={clsx('md:hidden', !currentProfile?.id && 'ml-[60px]')}>
                 <Headline />
               </Link>
               <div className="flex items-center gap-4">

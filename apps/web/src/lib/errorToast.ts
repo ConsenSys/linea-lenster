@@ -9,9 +9,7 @@ const errorToast = (error: any) => {
     return;
   }
 
-  toast.error(
-    error?.data?.message ?? error?.message ?? Errors.SomethingWentWrong
-  );
+  toast.error(error?.data?.message ?? error?.message ?? Errors.SomethingWentWrong);
 };
 
 export default errorToast;

@@ -7,9 +7,7 @@ import { useState } from 'react';
 import { usePublicationStore } from 'src/store/publication';
 
 const PollEditor: FC = () => {
-  const setShowPollEditor = usePublicationStore(
-    (state) => state.setShowPollEditor
-  );
+  const setShowPollEditor = usePublicationStore((state) => state.setShowPollEditor);
   const pollConfig = usePublicationStore((state) => state.pollConfig);
   const setPollConfig = usePublicationStore((state) => state.setPollConfig);
   const resetPollConfig = usePublicationStore((state) => state.resetPollConfig);
@@ -30,13 +28,7 @@ const PollEditor: FC = () => {
             onClick={() => setShowPollLengthModal(true)}
             outline
           >
-            {pollConfig.length}{' '}
-            <Plural
-              value={pollConfig.length}
-              zero="day"
-              one="day"
-              other="days"
-            />
+            {pollConfig.length} <Plural value={pollConfig.length} zero="day" one="day" other="days" />
           </Button>
           <Modal
             title={t`Poll length`}
@@ -70,11 +62,7 @@ const PollEditor: FC = () => {
                 >
                   <Trans>Cancel</Trans>
                 </Button>
-                <Button
-                  className="ml-auto"
-                  variant="primary"
-                  onClick={() => setShowPollLengthModal(false)}
-                >
+                <Button className="ml-auto" variant="primary" onClick={() => setShowPollLengthModal(false)}>
                   <Trans>Save</Trans>
                 </Button>
               </div>

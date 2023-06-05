@@ -46,6 +46,7 @@ export const getSignatureData = (item: DataItem): Promise<Uint8Array> => {
 
 const shimClass = class {
   context = [];
+
   // @ts-expect-error
   constructor(private algo) {
     this.context = [];

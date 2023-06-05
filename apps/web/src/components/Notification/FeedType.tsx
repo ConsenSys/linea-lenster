@@ -1,10 +1,4 @@
-import {
-  AtSymbolIcon,
-  BellIcon,
-  ChatAlt2Icon,
-  CollectionIcon,
-  HeartIcon
-} from '@heroicons/react/outline';
+import { AtSymbolIcon, BellIcon, ChatAlt2Icon, CollectionIcon, HeartIcon } from '@heroicons/react/outline';
 import { TabButton } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';

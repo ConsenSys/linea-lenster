@@ -19,10 +19,7 @@ const Uniswap: FC<UniswapProps> = ({ module }) => {
         </Trans>
       </div>
       <Link
-        href={getUniswapURL(
-          parseFloat(module?.amount?.value),
-          module?.amount?.asset?.address
-        )}
+        href={getUniswapURL(parseFloat(module?.amount?.value), module?.amount?.asset?.address)}
         onClick={() => {
           Leafwatch.track(PUBLICATION.COLLECT_MODULE.OPEN_UNISWAP);
         }}

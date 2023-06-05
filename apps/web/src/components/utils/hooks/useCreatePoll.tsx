@@ -8,9 +8,7 @@ type CreatePollResponse = string;
 const useCreatePoll = (): [createPoll: () => Promise<CreatePollResponse>] => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const pollConfig = usePublicationStore((state) => state.pollConfig);
-  const publicationContent = usePublicationStore(
-    (state) => state.publicationContent
-  );
+  const publicationContent = usePublicationStore((state) => state.publicationContent);
 
   const createPoll = async (): Promise<CreatePollResponse> => {
     try {

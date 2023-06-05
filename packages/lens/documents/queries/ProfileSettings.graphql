@@ -1,5 +1,5 @@
 query ProfileSettings($request: SingleProfileQueryRequest!) {
-  profile(request: $request) {
-    ...ProfileFields
-  }
+    profile(request: $request) {
+        ...ProfileFields
+    }
 }

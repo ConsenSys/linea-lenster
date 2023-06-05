@@ -32,12 +32,9 @@ interface MentionNotificationProps {
   notification: NewMentionNotification;
 }
 
-const MentionNotification: FC<MentionNotificationProps> = ({
-  notification
-}) => {
+const MentionNotification: FC<MentionNotificationProps> = ({ notification }) => {
   const profile = notification?.mentionPublication?.profile;
-  const typeName =
-    notification?.mentionPublication.__typename?.toLowerCase() || '';
+  const typeName = notification?.mentionPublication.__typename?.toLowerCase() || '';
   return (
     <div className="flex items-start justify-between">
       <div className="w-4/5 space-y-2">
@@ -53,27 +50,18 @@ const MentionNotification: FC<MentionNotificationProps> = ({
             components={[
               <span className="text-gray-600 dark:text-gray-400" key="" />,
               <NotificationProfileName profile={profile} key="" />,
-              <Link
-                href={`/posts/${notification?.mentionPublication?.id}`}
-                className="font-bold"
-                key=""
-              />
+              <Link href={`/posts/${notification?.mentionPublication?.id}`} className="font-bold" key="" />
             ]}
           />
           <Link
             href={`/posts/${notification?.mentionPublication.id}`}
             className="lt-text-gray-500 linkify mt-2 line-clamp-2"
           >
-            <Markup>
-              {notification?.mentionPublication?.metadata?.content}
-            </Markup>
+            <Markup>{notification?.mentionPublication?.metadata?.content}</Markup>
           </Link>
         </div>
       </div>
-      <div
-        className="text-[12px] text-gray-400"
-        title={formatTime(notification?.createdAt)}
-      >
+      <div className="text-[12px] text-gray-400" title={formatTime(notification?.createdAt)}>
         {getTimeFromNow(notification?.createdAt)}
       </div>
     </div>

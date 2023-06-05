@@ -1,6 +1,7 @@
 # Feature Flags
 
-Lenster uses [GrowthBook](https://growthbook.io/) for feature flags. GrowthBook is a open-source feature flagging and A/B testing library.
+Lenster uses [GrowthBook](https://growthbook.io/) for feature flags. GrowthBook is a open-source feature flagging and
+A/B testing library.
 
 ## Creating a feature flag _(only admins)_
 

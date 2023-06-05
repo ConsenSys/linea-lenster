@@ -1,15 +1,9 @@
 import MetaTags from '@components/Common/MetaTags';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
-import { Errors } from '@lenster/data';
-import { APP_NAME, POLYGONSCAN_URL } from '@lenster/data/constants';
+import { Errors, LINEA_EXPLORER_URL } from '@lenster/data';
+import { APP_NAME } from '@lenster/data/constants';
 import { useRelayQueuesQuery } from '@lenster/lens';
-import {
-  Card,
-  GridItemEight,
-  GridItemFour,
-  GridLayout,
-  Spinner
-} from '@lenster/ui';
+import { Card, GridItemEight, GridItemFour, GridLayout, Spinner } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import type { NextPage } from 'next';
@@ -30,24 +24,19 @@ interface RelayProps {
 export const Relay: FC<RelayProps> = ({ address, queue, relayer }) => {
   function getRelayerName(name: string): string {
     const words = name.split('_');
-    const capitalizedWords = words.map(
-      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    );
+    const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
 
     return capitalizedWords.join(' ');
   }
 
   return (
-    <Card
-      className="flex w-full flex-wrap items-center justify-between p-5"
-      forceRounded
-    >
+    <Card className="flex w-full flex-wrap items-center justify-between p-5" forceRounded>
       <div>
         <b>{getRelayerName(relayer)}</b>
         <div>
           <Link
             className="text-sm"
-            href={`${POLYGONSCAN_URL}/address/${address}`}
+            href={`${LINEA_EXPLORER_URL}/address/${address}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -108,12 +97,7 @@ const RelayQueues: NextPage = () => {
               </h1>
               <div className="space-y-3">
                 {sortedRelays?.map(({ address, queue, relayer }) => (
-                  <Relay
-                    key={address}
-                    address={address}
-                    queue={queue}
-                    relayer={relayer}
-                  />
+                  <Relay key={address} address={address} queue={queue} relayer={relayer} />
                 ))}
               </div>
             </section>

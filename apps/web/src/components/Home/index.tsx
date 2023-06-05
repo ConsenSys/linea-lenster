@@ -2,9 +2,9 @@ import MetaTags from '@components/Common/MetaTags';
 import NewPost from '@components/Composer/Post/New';
 import Feed from '@components/Explore/Feed';
 import Footer from '@components/Shared/Footer';
+import { IS_RELAYER_AVAILABLE } from '@lenster/data/constants';
 import { GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
-import { IS_RELAYER_AVAILABLE } from 'data';
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
@@ -23,9 +23,7 @@ import Timeline from './Timeline';
 
 const Home: NextPage = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const [feedType, setFeedType] = useState<'TIMELINE' | 'HIGHLIGHTS'>(
-    'TIMELINE'
-  );
+  const [feedType, setFeedType] = useState<'TIMELINE' | 'HIGHLIGHTS'>('TIMELINE');
 
   useEffectOnce(() => {
     Leafwatch.track(PAGEVIEW, { page: 'home' });

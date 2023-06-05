@@ -11,14 +11,7 @@ import {
 } from '@lenster/lens';
 import getProfileAttribute from '@lenster/lib/getProfileAttribute';
 import getSignature from '@lenster/lib/getSignature';
-import {
-  Button,
-  ErrorMessage,
-  Form,
-  Input,
-  Spinner,
-  useZodForm
-} from '@lenster/ui';
+import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
 import { Leafwatch } from '@lib/leafwatch';
 import uploadToArweave from '@lib/uploadToArweave';
@@ -44,9 +37,7 @@ const editStatusSchema = object({
 
 const Status: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowStatusModal = useGlobalModalStateStore(
-    (state) => state.setShowStatusModal
-  );
+  const setShowStatusModal = useGlobalModalStateStore((state) => state.setShowStatusModal);
   const [isLoading, setIsLoading] = useState(false);
   const [emoji, setEmoji] = useState<string>('');
 
@@ -77,10 +68,7 @@ const Status: FC = () => {
     variables: { request: { profileId: currentProfile?.id } },
     skip: !currentProfile?.id,
     onCompleted: ({ profile }) => {
-      form.setValue(
-        'status',
-        getProfileAttribute(profile?.attributes, 'statusMessage')
-      );
+      form.setValue('status', getProfileAttribute(profile?.attributes, 'statusMessage'));
       setEmoji(getProfileAttribute(profile?.attributes, 'statusEmoji'));
     }
   });
@@ -97,38 +85,32 @@ const Status: FC = () => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetProfileMetadataTypedData] =
-    useCreateSetProfileMetadataTypedDataMutation({
-      onCompleted: async ({ createSetProfileMetadataTypedData }) => {
-        const { id, typedData } = createSetProfileMetadataTypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
-        });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, metadata } = typedData.value;
-          return write?.({ args: [profileId, metadata] });
-        }
-      },
-      onError
-    });
+  const [createSetProfileMetadataTypedData] = useCreateSetProfileMetadataTypedDataMutation({
+    onCompleted: async ({ createSetProfileMetadataTypedData }) => {
+      const { id, typedData } = createSetProfileMetadataTypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, metadata } = typedData.value;
+        return write?.({ args: [profileId, metadata] });
+      }
+    },
+    onError
+  });
 
-  const [createSetProfileMetadataViaDispatcher] =
-    useCreateSetProfileMetadataViaDispatcherMutation({
-      onCompleted: ({ createSetProfileMetadataViaDispatcher }) =>
-        onCompleted(createSetProfileMetadataViaDispatcher.__typename),
-      onError
-    });
+  const [createSetProfileMetadataViaDispatcher] = useCreateSetProfileMetadataViaDispatcherMutation({
+    onCompleted: ({ createSetProfileMetadataViaDispatcher }) =>
+      onCompleted(createSetProfileMetadataViaDispatcher.__typename),
+    onError
+  });
 
-  const createViaDispatcher = async (
-    request: CreatePublicSetProfileMetadataUriRequest
-  ) => {
+  const createViaDispatcher = async (request: CreatePublicSetProfileMetadataUriRequest) => {
     const { data } = await createSetProfileMetadataViaDispatcher({
       variables: { request }
     });
-    if (
-      data?.createSetProfileMetadataViaDispatcher?.__typename === 'RelayError'
-    ) {
+    if (data?.createSetProfileMetadataViaDispatcher?.__typename === 'RelayError') {
       return await createSetProfileMetadataTypedData({
         variables: { request }
       });
@@ -148,9 +130,7 @@ const Status: FC = () => {
         name: profile?.name ?? '',
         bio: profile?.bio ?? '',
         cover_picture:
-          profile?.coverPicture?.__typename === 'MediaSet'
-            ? profile?.coverPicture?.original?.url ?? ''
-            : '',
+          profile?.coverPicture?.__typename === 'MediaSet' ? profile?.coverPicture?.original?.url ?? '' : '',
         attributes: [
           ...(profile?.attributes
             ?.filter(
@@ -176,10 +156,7 @@ const Status: FC = () => {
           },
           {
             key: 'twitter',
-            value: getProfileAttribute(profile?.attributes, 'twitter')?.replace(
-              'https://twitter.com/',
-              ''
-            )
+            value: getProfileAttribute(profile?.attributes, 'twitter')?.replace('https://twitter.com/', '')
           },
           {
             key: 'hasPrideLogo',
@@ -219,9 +196,7 @@ const Status: FC = () => {
   }
 
   if (error) {
-    return (
-      <ErrorMessage title={t`Failed to load status settings`} error={error} />
-    );
+    return <ErrorMessage title={t`Failed to load status settings`} error={error} />;
   }
 
   return (
@@ -257,13 +232,7 @@ const Status: FC = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            icon={
-              isLoading ? (
-                <Spinner size="xs" />
-              ) : (
-                <PencilIcon className="h-4 w-4" />
-              )
-            }
+            icon={isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
           >
             <Trans>Save</Trans>
           </Button>

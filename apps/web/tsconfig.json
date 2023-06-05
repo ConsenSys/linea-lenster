@@ -3,10 +3,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components*": ["src/components*"],
-      "@lib*": ["src/lib*"],
-      "@gql*": ["src/graphql*"],
-      "@generated*": ["src/generated*"]
+      "@components*": [
+        "src/components*"
+      ],
+      "@lib*": [
+        "src/lib*"
+      ],
+      "@gql*": [
+        "src/graphql*"
+      ],
+      "@generated*": [
+        "src/generated*"
+      ]
     }
   },
   "include": [
@@ -15,5 +23,7 @@
     "**/*.tsx",
     "../../packages/lib/isPrideMonth.ts"
   ],
-  "exclude": ["packages/*"]
+  "exclude": [
+    "packages/*"
+  ]
 }

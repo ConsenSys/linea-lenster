@@ -7,8 +7,7 @@ interface AttachmentProps {
   attachment: TAttachment;
 }
 
-const isImage = (mimeType: string): boolean =>
-  ['image/png', 'image/jpeg', 'image/gif'].includes(mimeType);
+const isImage = (mimeType: string): boolean => ['image/png', 'image/jpeg', 'image/gif'].includes(mimeType);
 
 const Attachment: FC<AttachmentProps> = ({ attachment }) => {
   /**
@@ -27,13 +26,7 @@ const Attachment: FC<AttachmentProps> = ({ attachment }) => {
   );
 
   if (isImage(attachment.mimeType)) {
-    return (
-      <Image
-        className="max-h-48 rounded object-contain"
-        src={objectURL}
-        alt={attachment.filename}
-      />
-    );
+    return <Image className="max-h-48 rounded object-contain" src={objectURL} alt={attachment.filename} />;
   }
 
   return (

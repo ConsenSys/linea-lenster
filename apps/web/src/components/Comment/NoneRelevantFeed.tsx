@@ -1,9 +1,5 @@
 import SinglePublication from '@components/Publication/SinglePublication';
-import type {
-  Comment,
-  Publication,
-  PublicationsQueryRequest
-} from '@lenster/lens';
+import type { Comment, Publication, PublicationsQueryRequest } from '@lenster/lens';
 import {
   CommentOrderingTypes,
   CommentRankingFilter,
@@ -22,10 +18,7 @@ interface NoneRelevantFeedProps {
 }
 
 const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
-  const publicationId =
-    publication?.__typename === 'Mirror'
-      ? publication?.mirrorOf?.id
-      : publication?.id;
+  const publicationId = publication?.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id;
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [hasMore, setHasMore] = useState(true);
   const [showMore, setShowMore] = useState(false);
@@ -38,9 +31,7 @@ const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
     commentsRankingFilter: CommentRankingFilter.NoneRelevant,
     limit: 30
   };
-  const reactionRequest = currentProfile
-    ? { profileId: currentProfile?.id }
-    : null;
+  const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
   const profileId = currentProfile?.id ?? null;
 
   const { data, fetchMore } = useCommentFeedQuery({
@@ -83,11 +74,7 @@ const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
         }}
         dataTestId="none-relevant-feed"
       >
-        {showMore ? (
-          <Trans>Hide more comments</Trans>
-        ) : (
-          <Trans>Show more comments</Trans>
-        )}
+        {showMore ? <Trans>Hide more comments</Trans> : <Trans>Show more comments</Trans>}
       </Card>
       {showMore ? (
         <Card className="divide-y-[1px] dark:divide-gray-700">

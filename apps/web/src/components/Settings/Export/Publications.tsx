@@ -17,11 +17,7 @@ const Publications: FC = () => {
 
   const request: PublicationsQueryRequest = {
     profileId: currentProfile?.id,
-    publicationTypes: [
-      PublicationTypes.Post,
-      PublicationTypes.Comment,
-      PublicationTypes.Mirror
-    ],
+    publicationTypes: [PublicationTypes.Post, PublicationTypes.Comment, PublicationTypes.Mirror],
     limit: 50
   };
 
@@ -37,23 +33,16 @@ const Publications: FC = () => {
         variables: { request: { ...request, cursor } },
         onCompleted: (data) => {
           setPublications((prev) => {
-            const newPublications = data.publications.items.filter(
-              (newPublication) => {
-                return !prev.some(
-                  (publication) => publication.id === newPublication.id
-                );
-              }
-            );
+            const newPublications = data.publications.items.filter((newPublication) => {
+              return !prev.some((publication) => publication.id === newPublication.id);
+            });
 
             return [...prev, ...newPublications];
           });
         }
       });
 
-      if (
-        data?.publications.items.length === 0 ||
-        !data?.publications.pageInfo.next
-      ) {
+      if (data?.publications.items.length === 0 || !data?.publications.pageInfo.next) {
         setFetchCompleted(true);
         setExporting(false);
       } else {
@@ -77,9 +66,7 @@ const Publications: FC = () => {
         <Trans>Export publications</Trans>
       </div>
       <div className="pb-2">
-        <Trans>
-          Export all your posts, comments and mirrors to a JSON file.
-        </Trans>
+        <Trans>Export all your posts, comments and mirrors to a JSON file.</Trans>
       </div>
       {publications.length > 0 ? (
         <div className="pb-2">

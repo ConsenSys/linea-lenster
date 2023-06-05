@@ -36,20 +36,10 @@ interface AudioProps {
   expandCover: (url: string) => void;
 }
 
-const Audio: FC<AudioProps> = ({
-  src,
-  isNew = false,
-  publication,
-  txn,
-  expandCover
-}) => {
+const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCover }) => {
   const [playing, setPlaying] = useState(false);
-  const audioPublication = usePublicationStore(
-    (state) => state.audioPublication
-  );
-  const setAudioPublication = usePublicationStore(
-    (state) => state.setAudioPublication
-  );
+  const audioPublication = usePublicationStore((state) => state.audioPublication);
+  const setAudioPublication = usePublicationStore((state) => state.setAudioPublication);
   const playerRef = useRef<APITypes>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -83,11 +73,7 @@ const Audio: FC<AudioProps> = ({
       <div className="flex flex-wrap md:flex-nowrap md:space-x-2">
         <CoverImage
           isNew={isNew && !txn}
-          cover={
-            isNew
-              ? txn?.cover ?? audioPublication.cover
-              : getThumbnailUrl(publication?.metadata)
-          }
+          cover={isNew ? txn?.cover ?? audioPublication.cover : getThumbnailUrl(publication?.metadata)}
           setCover={(url, mimeType) =>
             setAudioPublication({
               ...audioPublication,
@@ -130,15 +116,10 @@ const Audio: FC<AudioProps> = ({
                   </div>
                 ) : (
                   <>
-                    <h5 className="truncate text-lg text-white">
-                      {publication?.metadata.name ?? txn.title}
-                    </h5>
+                    <h5 className="truncate text-lg text-white">{publication?.metadata.name ?? txn.title}</h5>
                     <h6 className="truncate text-white/70">
                       {txn?.author ??
-                        getPublicationAttribute(
-                          publication?.metadata.attributes,
-                          'author'
-                        ) ??
+                        getPublicationAttribute(publication?.metadata.attributes, 'author') ??
                         sanitizeDisplayName(publication?.profile.name)}
                     </h6>
                   </>

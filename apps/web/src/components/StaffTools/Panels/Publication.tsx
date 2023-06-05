@@ -11,9 +11,7 @@ interface PublicationStaffToolProps {
   publication: Publication;
 }
 
-const PublicationStaffTool: FC<PublicationStaffToolProps> = ({
-  publication
-}) => {
+const PublicationStaffTool: FC<PublicationStaffToolProps> = ({ publication }) => {
   const isComment = publication.__typename === 'Comment';
 
   return (

@@ -33,10 +33,7 @@ const Followers: FC = () => {
         onCompleted: (data) => {
           setFollowers((prev) => {
             const newFollowers = data.followers.items.filter((newFollower) => {
-              return !prev.some(
-                (follower) =>
-                  follower.wallet.address === newFollower.wallet.address
-              );
+              return !prev.some((follower) => follower.wallet.address === newFollower.wallet.address);
             });
 
             return [...prev, ...newFollowers];
@@ -44,10 +41,7 @@ const Followers: FC = () => {
         }
       });
 
-      if (
-        data?.followers.items.length === 0 ||
-        !data?.followers.pageInfo.next
-      ) {
+      if (data?.followers.items.length === 0 || !data?.followers.pageInfo.next) {
         setFetchCompleted(true);
         setExporting(false);
       } else {

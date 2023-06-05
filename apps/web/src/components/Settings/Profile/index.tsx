@@ -2,14 +2,7 @@ import MetaTags from '@components/Common/MetaTags';
 import { CubeIcon, PhotographIcon } from '@heroicons/react/outline';
 import { APP_NAME } from '@lenster/data/constants';
 import { useProfileSettingsQuery } from '@lenster/lens';
-import {
-  Card,
-  GridItemEight,
-  GridItemFour,
-  GridLayout,
-  PageLoading,
-  TabButton
-} from '@lenster/ui';
+import { Card, GridItemEight, GridItemFour, GridLayout, PageLoading, TabButton } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import type { NextPage } from 'next';

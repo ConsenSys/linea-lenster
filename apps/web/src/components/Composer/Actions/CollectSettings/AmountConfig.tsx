@@ -13,10 +13,7 @@ interface AmountConfigProps {
   setCollectType: (data: any) => void;
 }
 
-const AmountConfig: FC<AmountConfigProps> = ({
-  enabledModuleCurrencies,
-  setCollectType
-}) => {
+const AmountConfig: FC<AmountConfigProps> = ({ enabledModuleCurrencies, setCollectType }) => {
   const collectModule = useCollectModuleStore((state) => state.collectModule);
 
   return (
@@ -30,9 +27,7 @@ const AmountConfig: FC<AmountConfigProps> = ({
               : collectModule.recipients?.length
               ? CollectModules.MultirecipientFeeCollectModule
               : CollectModules.SimpleCollectModule,
-            amount: collectModule.amount?.value
-              ? null
-              : { currency: DEFAULT_COLLECT_TOKEN, value: '1' }
+            amount: collectModule.amount?.value ? null : { currency: DEFAULT_COLLECT_TOKEN, value: '1' }
           });
         }}
         heading={t`Charge for collecting`}
@@ -77,9 +72,7 @@ const AmountConfig: FC<AmountConfigProps> = ({
                   <option
                     key={currency.address}
                     value={currency.address}
-                    selected={
-                      currency?.address === collectModule.amount?.currency
-                    }
+                    selected={currency?.address === collectModule.amount?.currency}
                   >
                     {currency.name}
                   </option>

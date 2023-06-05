@@ -1,23 +1,23 @@
 version = 1
 
 exclude_patterns = [
-  "node_modules",
-  ".next",
-  ".github",
-  ".husky",
-  ".vscode",
-  "tests",
-  "pnpm-lock.yaml",
-  "packages/lens/generated.ts",
-  "packages/snapshot/generated.ts",
+    "node_modules",
+    ".next",
+    ".github",
+    ".husky",
+    ".vscode",
+    "tests",
+    "pnpm-lock.yaml",
+    "packages/lens/generated.ts",
+    "packages/snapshot/generated.ts",
 ]
 
 [[analyzers]]
 name = "javascript"
 enabled = true
 
-  [analyzers.meta]
-  plugins = ["react"]
+[analyzers.meta]
+plugins = ["react"]
 
 [[transformers]]
 name = "prettier"

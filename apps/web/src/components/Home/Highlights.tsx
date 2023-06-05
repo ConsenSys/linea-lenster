@@ -23,9 +23,7 @@ const Highlights: FC = () => {
     profileId: currentProfile?.id,
     limit: 10
   };
-  const reactionRequest = currentProfile
-    ? { profileId: currentProfile?.id }
-    : null;
+  const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
   const profileId = currentProfile?.id ?? null;
 
   const { data, loading, error, fetchMore } = useFeedHighlightsQuery({
@@ -58,12 +56,7 @@ const Highlights: FC = () => {
   }
 
   if (publications?.length === 0) {
-    return (
-      <EmptyState
-        message={t`No posts yet!`}
-        icon={<CollectionIcon className="text-brand h-8 w-8" />}
-      />
-    );
+    return <EmptyState message={t`No posts yet!`} icon={<CollectionIcon className="text-brand h-8 w-8" />} />;
   }
 
   if (error) {
@@ -81,10 +74,7 @@ const Highlights: FC = () => {
           )
       )}
       {publications?.map((publication, index) => (
-        <SinglePublication
-          key={`${publication?.id}_${index}`}
-          publication={publication as Publication}
-        />
+        <SinglePublication key={`${publication?.id}_${index}`} publication={publication as Publication} />
       ))}
       {hasMore && <span ref={observe} />}
     </Card>

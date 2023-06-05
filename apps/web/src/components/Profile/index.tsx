@@ -32,14 +32,11 @@ const ViewProfile: NextPage = () => {
   } = useRouter();
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [feedType, setFeedType] = useState(
-    type &&
-      ['feed', 'replies', 'media', 'collects', 'nft'].includes(type as string)
+    type && ['feed', 'replies', 'media', 'collects', 'nft'].includes(type as string)
       ? type.toString().toUpperCase()
       : ProfileFeedType.Feed
   );
-  const { on: isNftGalleryEnabled } = Growthbook.feature(
-    FeatureFlag.NftGallery
-  );
+  const { on: isNftGalleryEnabled } = Growthbook.feature(FeatureFlag.NftGallery);
 
   useEffectOnce(() => {
     Leafwatch.track(PAGEVIEW, { page: 'profile' });
@@ -54,15 +51,13 @@ const ViewProfile: NextPage = () => {
   const profile = data?.profile;
   const [following, setFollowing] = useState<boolean | null>(null);
   const [showFollowModal, setShowFollowModal] = useState(false);
-  const isFollowedByMe =
-    Boolean(currentProfile) && Boolean(profile?.isFollowedByMe);
+  const isFollowedByMe = Boolean(currentProfile) && Boolean(profile?.isFollowedByMe);
 
   const followType = profile?.followModule?.__typename;
   const initState = following === null;
   // profile is not defined until the second render
   if (initState && profile) {
-    const canFollow =
-      followType !== 'RevertFollowModuleSettings' && !isFollowedByMe;
+    const canFollow = followType !== 'RevertFollowModuleSettings' && !isFollowedByMe;
     if (followIntent && canFollow) {
       setShowFollowModal(true);
     }
@@ -104,11 +99,7 @@ const ViewProfile: NextPage = () => {
         />
       </Modal>
       {profile?.name ? (
-        <MetaTags
-          title={`${profile?.name} (@${formatHandle(
-            profile?.handle
-          )}) • ${APP_NAME}`}
-        />
+        <MetaTags title={`${profile?.name} (@${formatHandle(profile?.handle)}) • ${APP_NAME}`} />
       ) : (
         <MetaTags title={`@${formatHandle(profile?.handle)} • ${APP_NAME}`} />
       )}
@@ -121,11 +112,7 @@ const ViewProfile: NextPage = () => {
       />
       <GridLayout className="pt-6">
         <GridItemFour>
-          <Details
-            profile={profile as Profile}
-            following={Boolean(following)}
-            setFollowing={setFollowing}
-          />
+          <Details profile={profile as Profile} following={Boolean(following)} setFollowing={setFollowing} />
         </GridItemFour>
         <GridItemEight className="space-y-5">
           <FeedType setFeedType={setFeedType} feedType={feedType} />
@@ -133,12 +120,8 @@ const ViewProfile: NextPage = () => {
           {(feedType === ProfileFeedType.Feed ||
             feedType === ProfileFeedType.Replies ||
             feedType === ProfileFeedType.Media ||
-            feedType === ProfileFeedType.Collects) && (
-            <Feed profile={profile as Profile} type={feedType} />
-          )}
-          {feedType === ProfileFeedType.Nft ? (
-            <NftFeed profile={profile as Profile} />
-          ) : null}
+            feedType === ProfileFeedType.Collects) && <Feed profile={profile as Profile} type={feedType} />}
+          {feedType === ProfileFeedType.Nft ? <NftFeed profile={profile as Profile} /> : null}
         </GridItemEight>
       </GridLayout>
     </>

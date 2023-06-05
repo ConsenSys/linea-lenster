@@ -7,14 +7,14 @@ module.exports = {
   catalogs: [
     {
       path: 'src/locales/{locale}/messages',
-      include: ['src']
-    }
+      include: ['src'],
+    },
   ],
   fallbackLocales: {
-    default: 'en'
+    default: 'en',
   },
   formatOptions: {
     origins: true,
-    lineNumbers: false
-  }
+    lineNumbers: false,
+  },
 };

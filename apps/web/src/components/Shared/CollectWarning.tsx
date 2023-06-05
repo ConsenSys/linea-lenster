@@ -9,10 +9,7 @@ interface CollectWarningProps {
   isSuperFollow?: boolean | null;
 }
 
-const CollectWarning: FC<CollectWarningProps> = ({
-  handle,
-  isSuperFollow = false
-}) => {
+const CollectWarning: FC<CollectWarningProps> = ({ handle, isSuperFollow = false }) => {
   return (
     <Card
       className={clsx(

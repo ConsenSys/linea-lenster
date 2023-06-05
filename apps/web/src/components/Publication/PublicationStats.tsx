@@ -1,11 +1,7 @@
 import Collectors from '@components/Shared/Modal/Collectors';
 import Likes from '@components/Shared/Modal/Likes';
 import Mirrors from '@components/Shared/Modal/Mirrors';
-import {
-  CollectionIcon,
-  HeartIcon,
-  SwitchHorizontalIcon
-} from '@heroicons/react/outline';
+import { CollectionIcon, HeartIcon, SwitchHorizontalIcon } from '@heroicons/react/outline';
 import type { Publication } from '@lenster/lens';
 import nFormatter from '@lenster/lib/nFormatter';
 import { Modal } from '@lenster/ui';
@@ -42,30 +38,12 @@ const PublicationStats: FC<PublicationStatsProps> = ({ publication }) => {
       {mirrorCount > 0 && (
         <>
           <span data-testid="comment-stats">
-            <b className="text-black dark:text-white">
-              {nFormatter(commentsCount)}
-            </b>{' '}
-            <Plural
-              value={commentsCount}
-              zero="Comment"
-              one="Comment"
-              other="Comments"
-            />
+            <b className="text-black dark:text-white">{nFormatter(commentsCount)}</b>{' '}
+            <Plural value={commentsCount} zero="Comment" one="Comment" other="Comments" />
           </span>
-          <button
-            type="button"
-            onClick={() => setShowMirrorsModal(true)}
-            data-testid="mirror-stats"
-          >
-            <b className="text-black dark:text-white">
-              {nFormatter(mirrorCount)}
-            </b>{' '}
-            <Plural
-              value={mirrorCount}
-              zero="Mirror"
-              one="Mirror"
-              other="Mirrors"
-            />
+          <button type="button" onClick={() => setShowMirrorsModal(true)} data-testid="mirror-stats">
+            <b className="text-black dark:text-white">{nFormatter(mirrorCount)}</b>{' '}
+            <Plural value={mirrorCount} zero="Mirror" one="Mirror" other="Mirrors" />
           </button>
           <Modal
             title={t`Mirrored by`}
@@ -79,20 +57,9 @@ const PublicationStats: FC<PublicationStatsProps> = ({ publication }) => {
       )}
       {reactionCount > 0 && (
         <>
-          <button
-            type="button"
-            onClick={() => setShowLikesModal(true)}
-            data-testid="like-stats"
-          >
-            <b className="text-black dark:text-white">
-              {nFormatter(reactionCount)}
-            </b>{' '}
-            <Plural
-              value={reactionCount}
-              zero="Like"
-              one="Like"
-              other="Likes"
-            />
+          <button type="button" onClick={() => setShowLikesModal(true)} data-testid="like-stats">
+            <b className="text-black dark:text-white">{nFormatter(reactionCount)}</b>{' '}
+            <Plural value={reactionCount} zero="Like" one="Like" other="Likes" />
           </button>
           <Modal
             title={t`Liked by`}
@@ -106,20 +73,9 @@ const PublicationStats: FC<PublicationStatsProps> = ({ publication }) => {
       )}
       {collectCount > 0 && (
         <>
-          <button
-            type="button"
-            onClick={() => setShowCollectorsModal(true)}
-            data-testid="collect-stats"
-          >
-            <b className="text-black dark:text-white">
-              {nFormatter(collectCount)}
-            </b>{' '}
-            <Plural
-              value={collectCount}
-              zero="Collect"
-              one="Collect"
-              other="Collects"
-            />
+          <button type="button" onClick={() => setShowCollectorsModal(true)} data-testid="collect-stats">
+            <b className="text-black dark:text-white">{nFormatter(collectCount)}</b>{' '}
+            <Plural value={collectCount} zero="Collect" one="Collect" other="Collects" />
           </button>
           <Modal
             title={t`Collected by`}

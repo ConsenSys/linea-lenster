@@ -12,9 +12,7 @@ interface NotificationProfileProps {
   profile: Profile;
 }
 
-export const NotificationProfileAvatar: FC<NotificationProfileProps> = ({
-  profile
-}) => {
+export const NotificationProfileAvatar: FC<NotificationProfileProps> = ({ profile }) => {
   return (
     <Link href={`/u/${formatHandle(profile?.handle)}`}>
       <Image
@@ -28,20 +26,14 @@ export const NotificationProfileAvatar: FC<NotificationProfileProps> = ({
   );
 };
 
-export const NotificationProfileName: FC<NotificationProfileProps> = ({
-  profile
-}) => {
+export const NotificationProfileName: FC<NotificationProfileProps> = ({ profile }) => {
   return (
     <Link
       href={`/u/${formatHandle(profile?.handle)}`}
       className="inline-flex items-center space-x-1 font-bold"
     >
-      <div>
-        {sanitizeDisplayName(profile?.name) ?? formatHandle(profile?.handle)}
-      </div>
-      {isVerified(profile?.id) && (
-        <BadgeCheckIcon className="text-brand h-4 w-4" />
-      )}
+      <div>{sanitizeDisplayName(profile?.name) ?? formatHandle(profile?.handle)}</div>
+      {isVerified(profile?.id) && <BadgeCheckIcon className="text-brand h-4 w-4" />}
     </Link>
   );
 };

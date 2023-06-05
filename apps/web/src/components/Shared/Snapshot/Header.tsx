@@ -38,11 +38,7 @@ const Header: FC<HeaderProps> = ({ proposal }) => {
           {formatAddress(author)}
         </Link>
       </div>
-      <Link
-        href={`${spaceUrl}/proposal/${id}`}
-        className="font-bold"
-        target="_blank"
-      >
+      <Link href={`${spaceUrl}/proposal/${id}`} className="font-bold" target="_blank">
         {title}
       </Link>
     </>

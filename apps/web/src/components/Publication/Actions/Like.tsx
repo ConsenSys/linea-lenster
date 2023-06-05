@@ -1,15 +1,8 @@
 import { HeartIcon, SunIcon } from '@heroicons/react/outline';
-import {
-  HeartIcon as HeartIconSolid,
-  SunIcon as SunIconSolid
-} from '@heroicons/react/solid';
+import { HeartIcon as HeartIconSolid, SunIcon as SunIconSolid } from '@heroicons/react/solid';
 import { Errors } from '@lenster/data';
 import type { Publication } from '@lenster/lens';
-import {
-  ReactionTypes,
-  useAddReactionMutation,
-  useRemoveReactionMutation
-} from '@lenster/lens';
+import { ReactionTypes, useAddReactionMutation, useRemoveReactionMutation } from '@lenster/lens';
 import type { ApolloCache } from '@lenster/lens/apollo';
 import { publicationKeyFields } from '@lenster/lens/apollo/lib';
 import hasGm from '@lenster/lib/hasGm';
@@ -37,35 +30,24 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
   const isMirror = publication.__typename === 'Mirror';
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [liked, setLiked] = useState(
-    (isMirror ? publication?.mirrorOf?.reaction : publication?.reaction) ===
-      'UPVOTE'
+    (isMirror ? publication?.mirrorOf?.reaction : publication?.reaction) === 'UPVOTE'
   );
   const [count, setCount] = useState(
-    isMirror
-      ? publication?.mirrorOf?.stats?.totalUpvotes
-      : publication?.stats?.totalUpvotes
+    isMirror ? publication?.mirrorOf?.stats?.totalUpvotes : publication?.stats?.totalUpvotes
   );
 
   const onError = (error: any) => {
     errorToast(error);
   };
 
-  const updateCache = (
-    cache: ApolloCache<any>,
-    type: ReactionTypes.Upvote | ReactionTypes.Downvote
-  ) => {
+  const updateCache = (cache: ApolloCache<any>, type: ReactionTypes.Upvote | ReactionTypes.Downvote) => {
     if (showCount) {
       cache.modify({
-        id: publicationKeyFields(
-          isMirror ? publication?.mirrorOf : publication
-        ),
+        id: publicationKeyFields(isMirror ? publication?.mirrorOf : publication),
         fields: {
           stats: (stats) => ({
             ...stats,
-            totalUpvotes:
-              type === ReactionTypes.Upvote
-                ? stats.totalUpvotes + 1
-                : stats.totalUpvotes - 1
+            totalUpvotes: type === ReactionTypes.Upvote ? stats.totalUpvotes + 1 : stats.totalUpvotes - 1
           })
         }
       });
@@ -127,10 +109,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
         request: {
           profileId: currentProfile?.id,
           reaction: ReactionTypes.Upvote,
-          publicationId:
-            publication.__typename === 'Mirror'
-              ? publication?.mirrorOf?.id
-              : publication?.id
+          publicationId: publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
         }
       }
     };
@@ -146,19 +125,12 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
     }
   };
 
-  const iconClassName = showCount
-    ? 'w-[17px] sm:w-[20px]'
-    : 'w-[15px] sm:w-[18px]';
+  const iconClassName = showCount ? 'w-[17px] sm:w-[20px]' : 'w-[15px] sm:w-[18px]';
   const { content } = publication.metadata;
   const isGM = hasGm(content);
 
   return (
-    <div
-      className={clsx(
-        isGM ? 'text-yellow-600' : 'text-pink-500',
-        'flex items-center space-x-1'
-      )}
-    >
+    <div className={clsx(isGM ? 'text-yellow-600' : 'text-pink-500', 'flex items-center space-x-1')}>
       <motion.button
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -167,17 +139,8 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
         onClick={createLike}
         aria-label="Like"
       >
-        <div
-          className={clsx(
-            isGM ? 'hover:bg-yellow-400/20' : 'hover:bg-pink-300/20',
-            'rounded-full p-1.5'
-          )}
-        >
-          <Tooltip
-            placement="top"
-            content={liked ? t`Unlike` : t`Like`}
-            withDelay
-          >
+        <div className={clsx(isGM ? 'hover:bg-yellow-400/20' : 'hover:bg-pink-300/20', 'rounded-full p-1.5')}>
+          <Tooltip placement="top" content={liked ? t`Unlike` : t`Like`} withDelay>
             {liked ? (
               isGM ? (
                 <SunIconSolid className={iconClassName} />
@@ -192,9 +155,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
           </Tooltip>
         </div>
       </motion.button>
-      {count > 0 && !showCount && (
-        <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>
-      )}
+      {count > 0 && !showCount && <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>}
     </div>
   );
 };

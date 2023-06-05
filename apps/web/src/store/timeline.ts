@@ -22,8 +22,7 @@ export const useTimelinePersistStore = create(
         mirrors: true,
         likes: false
       },
-      setFeedEventFilters: (feedEventFilters) =>
-        set(() => ({ feedEventFilters }))
+      setFeedEventFilters: (feedEventFilters) => set(() => ({ feedEventFilters }))
     }),
     { name: Localstorage.TimelineStore }
   )
@@ -31,6 +30,5 @@ export const useTimelinePersistStore = create(
 
 export const useTimelineStore = create<TimelineState>((set) => ({
   seeThroughProfile: null,
-  setSeeThroughProfile: (seeThroughProfile) =>
-    set(() => ({ seeThroughProfile }))
+  setSeeThroughProfile: (seeThroughProfile) => set(() => ({ seeThroughProfile }))
 }));

@@ -22,16 +22,12 @@ const Custom500: FC = () => {
         </h1>
         <div className="lt-text-gray-500 mb-4">
           <Trans>
-            We track these errors automatically, but if the problem persists
-            feel free to contact us. In the meantime, try refreshing.
+            We track these errors automatically, but if the problem persists feel free to contact us. In the
+            meantime, try refreshing.
           </Trans>
         </div>
         <Link href="/">
-          <Button
-            className="mx-auto flex items-center"
-            size="lg"
-            icon={<HomeIcon className="h-4 w-4" />}
-          >
+          <Button className="mx-auto flex items-center" size="lg" icon={<HomeIcon className="h-4 w-4" />}>
             <Trans>Go to home</Trans>
           </Button>
         </Link>

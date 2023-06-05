@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import { gql } from '@apollo/client';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -18,8 +19,8 @@ export type MakeEmpty<
 export type Incremental<T> =
   | T
   | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+  [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -600,34 +601,34 @@ export type SpaceQuery = {
 };
 
 export const SnapshotDocument = gql`
-  query Snapshot($id: String, $where: VoteWhere) {
-    proposal(id: $id) {
-      id
-      author
-      state
-      title
-      choices
-      scores
-      scores_total
-      snapshot
-      symbol
-      network
-      type
-      end
-      space {
-        id
-        name
-      }
-      strategies {
-        network
-        name
-        params
-      }
+    query Snapshot($id: String, $where: VoteWhere) {
+        proposal(id: $id) {
+            id
+            author
+            state
+            title
+            choices
+            scores
+            scores_total
+            snapshot
+            symbol
+            network
+            type
+            end
+            space {
+                id
+                name
+            }
+            strategies {
+                network
+                name
+                params
+            }
+        }
+        votes(where: $where) {
+            choice
+        }
     }
-    votes(where: $where) {
-      choice
-    }
-  }
 `;
 
 /**
@@ -648,26 +649,28 @@ export const SnapshotDocument = gql`
  * });
  */
 export function useSnapshotQuery(
-  baseOptions?: Apollo.QueryHookOptions<SnapshotQuery, SnapshotQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<SnapshotQuery, SnapshotQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SnapshotQuery, SnapshotQueryVariables>(
     SnapshotDocument,
-    options
+    options,
   );
 }
+
 export function useSnapshotLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     SnapshotQuery,
     SnapshotQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<SnapshotQuery, SnapshotQueryVariables>(
     SnapshotDocument,
-    options
+    options,
   );
 }
+
 export type SnapshotQueryHookResult = ReturnType<typeof useSnapshotQuery>;
 export type SnapshotLazyQueryHookResult = ReturnType<
   typeof useSnapshotLazyQuery
@@ -677,13 +680,13 @@ export type SnapshotQueryResult = Apollo.QueryResult<
   SnapshotQueryVariables
 >;
 export const SpaceDocument = gql`
-  query Space($id: String) {
-    proposal(id: $id) {
-      space {
-        id
-      }
+    query Space($id: String) {
+        proposal(id: $id) {
+            space {
+                id
+            }
+        }
     }
-  }
 `;
 
 /**
@@ -703,23 +706,25 @@ export const SpaceDocument = gql`
  * });
  */
 export function useSpaceQuery(
-  baseOptions?: Apollo.QueryHookOptions<SpaceQuery, SpaceQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<SpaceQuery, SpaceQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SpaceQuery, SpaceQueryVariables>(
     SpaceDocument,
-    options
+    options,
   );
 }
+
 export function useSpaceLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<SpaceQuery, SpaceQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<SpaceQuery, SpaceQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<SpaceQuery, SpaceQueryVariables>(
     SpaceDocument,
-    options
+    options,
   );
 }
+
 export type SpaceQueryHookResult = ReturnType<typeof useSpaceQuery>;
 export type SpaceLazyQueryHookResult = ReturnType<typeof useSpaceLazyQuery>;
 export type SpaceQueryResult = Apollo.QueryResult<
@@ -732,7 +737,8 @@ export interface PossibleTypesResultData {
     [key: string]: string[];
   };
 }
+
 const result: PossibleTypesResultData = {
-  possibleTypes: {}
+  possibleTypes: {},
 };
 export default result;

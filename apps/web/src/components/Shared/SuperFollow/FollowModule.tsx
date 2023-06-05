@@ -2,9 +2,8 @@ import AllowanceButton from '@components/Settings/Allowance/Button';
 import { StarIcon, UserIcon } from '@heroicons/react/outline';
 import { LensHub } from '@lenster/abis';
 import { Errors } from '@lenster/data';
-import { t, Trans } from '@lingui/macro';
-import { LENSHUB_PROXY, LINEA_EXPLORER_URL } from 'data/constants';
-import type { ApprovedAllowanceAmount, Profile } from 'lens';
+import { LENSHUB_PROXY, LINEA_EXPLORER_URL } from '@lenster/data/constants';
+import type { ApprovedAllowanceAmount, Profile } from '@lenster/lens';
 import {
   FollowModules,
   useApprovedModuleAllowanceAmountQuery,
@@ -19,6 +18,7 @@ import getTokenImage from '@lenster/lib/getTokenImage';
 import { Button, Spinner, WarningMessage } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
 import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { Dispatch, FC } from 'react';
@@ -103,21 +103,20 @@ const FollowModule: FC<FollowModuleProps> = ({
 
   const followModule: any = data?.profile?.followModule;
 
-  const { data: allowanceData, loading: allowanceLoading } =
-    useApprovedModuleAllowanceAmountQuery({
-      variables: {
-        request: {
-          currencies: followModule?.amount?.asset?.address,
-          followModules: [FollowModules.FeeFollowModule],
-          collectModules: [],
-          referenceModules: []
-        }
-      },
-      skip: !followModule?.amount?.asset?.address || !currentProfile,
-      onCompleted: ({ approvedModuleAllowanceAmount }) => {
-        setAllowed(approvedModuleAllowanceAmount[0]?.allowance !== '0x00');
+  const { data: allowanceData, loading: allowanceLoading } = useApprovedModuleAllowanceAmountQuery({
+    variables: {
+      request: {
+        currencies: followModule?.amount?.asset?.address,
+        followModules: [FollowModules.FeeFollowModule],
+        collectModules: [],
+        referenceModules: []
       }
-    });
+    },
+    skip: !followModule?.amount?.asset?.address || !currentProfile,
+    onCompleted: ({ approvedModuleAllowanceAmount }) => {
+      setAllowed(approvedModuleAllowanceAmount[0]?.allowance !== '0x00');
+    }
+  });
 
   const { data: balanceData } = useBalance({
     address: currentProfile?.ownedBy,
@@ -127,10 +126,7 @@ const FollowModule: FC<FollowModuleProps> = ({
   });
   let hasAmount = false;
 
-  if (
-    balanceData &&
-    parseFloat(balanceData?.formatted) < parseFloat(followModule?.amount?.value)
-  ) {
+  if (balanceData && parseFloat(balanceData?.formatted) < parseFloat(followModule?.amount?.value)) {
     hasAmount = false;
   } else {
     hasAmount = true;
@@ -194,12 +190,9 @@ const FollowModule: FC<FollowModuleProps> = ({
     <div className="p-5">
       <div className="space-y-1.5 pb-2">
         <div className="text-lg font-bold">
-          Super follow <Slug slug={formatHandle(profile?.handle)} prefix="@" />{' '}
-          {again ? 'again' : ''}
+          Super follow <Slug slug={formatHandle(profile?.handle)} prefix="@" /> {again ? 'again' : ''}
         </div>
-        <div className="lt-text-gray-500">
-          Follow {again ? 'again' : ''} and get some awesome perks!
-        </div>
+        <div className="lt-text-gray-500">Follow {again ? 'again' : ''} and get some awesome perks!</div>
       </div>
       <div className="flex items-center space-x-1.5 py-2">
         <img
@@ -211,9 +204,7 @@ const FollowModule: FC<FollowModuleProps> = ({
           title={followModule?.amount?.asset?.name}
         />
         <span className="space-x-1">
-          <span className="text-2xl font-bold">
-            {followModule?.amount?.value}
-          </span>
+          <span className="text-2xl font-bold">{followModule?.amount?.value}</span>
           <span className="text-xs">{followModule?.amount?.asset?.symbol}</span>
         </span>
       </div>
@@ -239,35 +230,25 @@ const FollowModule: FC<FollowModuleProps> = ({
           <li className="flex space-x-2 leading-6 tracking-normal">
             <div>•</div>
             <div>
-              <Trans>
-                You can comment on @{formatHandle(profile?.handle)}'s
-                publications
-              </Trans>
+              <Trans>You can comment on @{formatHandle(profile?.handle)}'s publications</Trans>
             </div>
           </li>
           <li className="flex space-x-2 leading-6 tracking-normal">
             <div>•</div>
             <div>
-              <Trans>
-                You can collect @{formatHandle(profile?.handle)}'s publications
-              </Trans>
+              <Trans>You can collect @{formatHandle(profile?.handle)}'s publications</Trans>
             </div>
           </li>
           <li className="flex space-x-2 leading-6 tracking-normal">
             <div>•</div>
             <div>
-              <Trans>
-                You will get super follow badge in @
-                {formatHandle(profile?.handle)}'s profile
-              </Trans>
+              <Trans>You will get super follow badge in @{formatHandle(profile?.handle)}'s profile</Trans>
             </div>
           </li>
           <li className="flex space-x-2 leading-6 tracking-normal">
             <div>•</div>
             <div>
-              <Trans>
-                You will have high voting power if you followed multiple times
-              </Trans>
+              <Trans>You will have high voting power if you followed multiple times</Trans>
             </div>
           </li>
           <li className="flex space-x-2 leading-6 tracking-normal">
@@ -289,30 +270,18 @@ const FollowModule: FC<FollowModuleProps> = ({
               outline
               onClick={createFollow}
               disabled={isLoading}
-              icon={
-                isLoading ? (
-                  <Spinner variant="super" size="xs" />
-                ) : (
-                  <StarIcon className="h-4 w-4" />
-                )
-              }
+              icon={isLoading ? <Spinner variant="super" size="xs" /> : <StarIcon className="h-4 w-4" />}
             >
               {again ? t`Super follow again` : t`Super follow now`}
             </Button>
           ) : (
-            <WarningMessage
-              className="mt-5"
-              message={<Uniswap module={followModule} />}
-            />
+            <WarningMessage className="mt-5" message={<Uniswap module={followModule} />} />
           )
         ) : (
           <div className="mt-5">
             <AllowanceButton
               title={t`Allow follow module`}
-              module={
-                allowanceData
-                  ?.approvedModuleAllowanceAmount[0] as ApprovedAllowanceAmount
-              }
+              module={allowanceData?.approvedModuleAllowanceAmount[0] as ApprovedAllowanceAmount}
               allowed={allowed}
               setAllowed={setAllowed}
             />

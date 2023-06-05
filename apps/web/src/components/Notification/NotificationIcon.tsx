@@ -8,14 +8,9 @@ import { useNotificationPersistStore } from 'src/store/notification';
 
 const NotificationIcon: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const getNotificationCount = useNotificationPersistStore(
-    (state) => state.getNotificationCount
-  );
-  const setNotificationCount = useNotificationPersistStore(
-    (state) => state.setNotificationCount
-  );
-  const [unreadNotificationCount, setUnreadNotificationCount] =
-    useState<number>(0);
+  const getNotificationCount = useNotificationPersistStore((state) => state.getNotificationCount);
+  const setNotificationCount = useNotificationPersistStore((state) => state.setNotificationCount);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState<number>(0);
 
   const { data, loading } = useNotificationCountQuery({
     variables: {
@@ -50,17 +45,12 @@ const NotificationIcon: FC = () => {
       href="/notifications"
       className="hover:text-brand-500 hidden min-w-[40px] items-start justify-center p-1 text-white md:flex"
       onClick={() => {
-        setNotificationCount(
-          currentProfile?.id,
-          data?.notifications?.pageInfo?.totalCount || 0
-        );
+        setNotificationCount(currentProfile?.id, data?.notifications?.pageInfo?.totalCount || 0);
         setUnreadNotificationCount(0);
       }}
     >
       <BellIcon className="h-5 w-5 sm:h-6 sm:w-6" />
-      {unreadNotificationCount > 0 && (
-        <span className="h-2 w-2 rounded-full bg-red-500" />
-      )}
+      {unreadNotificationCount > 0 && <span className="h-2 w-2 rounded-full bg-red-500" />}
     </Link>
   );
 };

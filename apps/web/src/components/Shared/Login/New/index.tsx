@@ -1,33 +1,20 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
 import { Regex } from '@lenster/data';
-import uploadToIPFS from '@lib/uploadToIPFS';
-import {
-  Button,
-  ErrorMessage,
-  Form,
-  Input,
-  Spinner,
-  useZodForm
-} from '@lenster/ui';
-import { t, Trans } from '@lingui/macro';
 import {
   APP_NAME,
   IS_RELAYER_AVAILABLE,
   LENS_PROFILE_CREATOR,
   LENS_PROFILE_CREATOR_ABI,
   ZERO_ADDRESS
-} from 'data/constants';
-import { useCreateProfileMutation } from 'lens';
-import getStampFyiURL from 'lib/getStampFyiURL';
+} from '@lenster/data/constants';
+import { useCreateProfileMutation } from '@lenster/lens';
+import getStampFyiURL from '@lenster/lib/getStampFyiURL';
+import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from '@lenster/ui';
+import { t, Trans } from '@lingui/macro';
 import type { FC } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction
-} from 'wagmi';
+import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { object, string } from 'zod';
 
 import Pending from './Pending';
@@ -175,13 +162,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
         <div className="space-y-3">
           {avatar && (
             <div>
-              <img
-                className="h-60 w-60 rounded-lg"
-                height={240}
-                width={240}
-                src={avatar}
-                alt={avatar}
-              />
+              <img className="h-60 w-60 rounded-lg" height={240} width={240} src={avatar} alt={avatar} />
             </div>
           )}
         </div>
@@ -190,9 +171,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
         className="ml-auto rounded-full"
         type="submit"
         disabled={isLoading || !isConnected}
-        icon={
-          isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />
-        }
+        icon={isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />}
       >
         <Trans>{isConnected ? 'Sign up' : 'Connect your wallet'}</Trans>
       </Button>

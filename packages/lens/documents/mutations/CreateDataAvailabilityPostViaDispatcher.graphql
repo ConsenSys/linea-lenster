@@ -1,13 +1,13 @@
 mutation CreateDataAvailabilityPostViaDispatcher(
-  $request: CreateDataAvailabilityPostRequest!
+    $request: CreateDataAvailabilityPostRequest!
 ) {
-  createDataAvailabilityPostViaDispatcher(request: $request) {
-    ... on CreateDataAvailabilityPublicationResult {
-      id
-      proofs
+    createDataAvailabilityPostViaDispatcher(request: $request) {
+        ... on CreateDataAvailabilityPublicationResult {
+            id
+            proofs
+        }
+        ... on RelayError {
+            reason
+        }
     }
-    ... on RelayError {
-      reason
-    }
-  }
 }

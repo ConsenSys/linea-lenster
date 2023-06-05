@@ -1,10 +1,5 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
-import {
-  PlusIcon,
-  SwitchHorizontalIcon,
-  UsersIcon,
-  XCircleIcon
-} from '@heroicons/react/outline';
+import { PlusIcon, SwitchHorizontalIcon, UsersIcon, XCircleIcon } from '@heroicons/react/outline';
 import { HANDLE_SUFFIX, LENSPROTOCOL_HANDLE } from '@lenster/data/constants';
 import { CollectModules, useProfileLazyQuery } from '@lenster/lens';
 import isValidEthAddress from '@lenster/lib/isValidEthAddress';
@@ -20,10 +15,7 @@ interface SplitConfigProps {
   setCollectType: (data: any) => void;
 }
 
-const SplitConfig: FC<SplitConfigProps> = ({
-  isRecipientsDuplicated,
-  setCollectType
-}) => {
+const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated, setCollectType }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const collectModule = useCollectModuleStore((state) => state.collectModule);
 
@@ -47,16 +39,10 @@ const SplitConfig: FC<SplitConfigProps> = ({
   };
 
   const getIsHandle = (handle: string) => {
-    return handle === LENSPROTOCOL_HANDLE
-      ? true
-      : handle.includes(HANDLE_SUFFIX);
+    return handle === LENSPROTOCOL_HANDLE ? true : handle.includes(HANDLE_SUFFIX);
   };
 
-  const onChangeRecipientOrSplit = (
-    index: number,
-    value: string,
-    type: 'recipient' | 'split'
-  ) => {
+  const onChangeRecipientOrSplit = (index: number, value: string, type: 'recipient' | 'split') => {
     const getRecipients = (value: string) => {
       return recipients.map((recipient, i) => {
         if (i === index) {
@@ -93,10 +79,7 @@ const SplitConfig: FC<SplitConfigProps> = ({
               recipients.length > 0
                 ? CollectModules.SimpleCollectModule
                 : CollectModules.MultirecipientFeeCollectModule,
-            recipients:
-              recipients.length > 0
-                ? []
-                : [{ recipient: currentProfile?.ownedBy, split: 100 }]
+            recipients: recipients.length > 0 ? [] : [{ recipient: currentProfile?.ownedBy, split: 100 }]
           });
         }}
         heading={
@@ -118,17 +101,8 @@ const SplitConfig: FC<SplitConfigProps> = ({
                   placeholder="0x3A5bd...5e3 or wagmi.lens"
                   value={recipient.recipient}
                   disabled={loading}
-                  error={
-                    recipient.recipient.length > 0 &&
-                    !isValidEthAddress(recipient.recipient)
-                  }
-                  onChange={(event) =>
-                    onChangeRecipientOrSplit(
-                      index,
-                      event.target.value,
-                      'recipient'
-                    )
-                  }
+                  error={recipient.recipient.length > 0 && !isValidEthAddress(recipient.recipient)}
+                  onChange={(event) => onChangeRecipientOrSplit(index, event.target.value, 'recipient')}
                 />
                 <div className="w-1/3">
                   <Input
@@ -138,13 +112,7 @@ const SplitConfig: FC<SplitConfigProps> = ({
                     max="100"
                     value={recipient.split}
                     iconRight="%"
-                    onChange={(event) =>
-                      onChangeRecipientOrSplit(
-                        index,
-                        event.target.value,
-                        'split'
-                      )
-                    }
+                    onChange={(event) => onChangeRecipientOrSplit(index, event.target.value, 'split')}
                   />
                 </div>
                 <button

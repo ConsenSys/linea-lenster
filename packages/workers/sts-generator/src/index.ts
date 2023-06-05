@@ -17,8 +17,11 @@ let envVars: Env;
 let params: AssumeRoleRequest;
 const app = express();
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', process.env.STS_CORS ?? 'http://localhost:4783');
+app.use(function(req, res, next) {
+  res.header(
+    'Access-Control-Allow-Origin',
+    process.env.STS_CORS ?? 'http://localhost:4783',
+  );
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -27,7 +30,9 @@ app.use(function (req, res, next) {
 app.get('/', async (req, res) => {
   try {
     if (!envVars.secretContent || envVars.secretContent === '') {
-      envVars.secretContent = await fs.readFile(envVars.filePath, { encoding: 'utf8' });
+      envVars.secretContent = await fs.readFile(envVars.filePath, {
+        encoding: 'utf8',
+      });
     }
 
     const { accessKeyId, secretAccessKey } = JSON.parse(envVars.secretContent);
@@ -35,7 +40,7 @@ app.get('/', async (req, res) => {
     const stsClient = new STSClient({
       endpoint: envVars.stsEndpoint,
       region: envVars.bucketRegion,
-      credentials: { accessKeyId, secretAccessKey }
+      credentials: { accessKeyId, secretAccessKey },
     });
 
     const data = await stsClient.send(new AssumeRoleCommand(params));
@@ -45,12 +50,14 @@ app.get('/', async (req, res) => {
         success: true,
         accessKeyId: data.Credentials?.AccessKeyId,
         secretAccessKey: data.Credentials?.SecretAccessKey,
-        sessionToken: data.Credentials?.SessionToken
-      })
+        sessionToken: data.Credentials?.SessionToken,
+      }),
     );
   } catch (error) {
     console.error(error);
-    res.send(JSON.stringify({ success: false, message: 'Something went wrong!' }));
+    res.send(
+      JSON.stringify({ success: false, message: 'Something went wrong!' }),
+    );
   }
 });
 
@@ -62,7 +69,7 @@ app.listen(port, () => {
     bucketRegion: process.env.STS_BUCKET_REGION ?? 'us-west-2',
     stsEndpoint: process.env.STS_ENDPOINT ?? 'https://sts.amazonaws.com',
     filePath: process.env.STS_FILE_PATH ?? '',
-    secretContent: process.env.STS_SECRET_CONTENT
+    secretContent: process.env.STS_SECRET_CONTENT,
   };
 
   params = {
@@ -83,8 +90,10 @@ app.listen(port, () => {
         ]
       }
     ]
-  }`
+  }`,
   };
 
-  console.log(`ready - started server on 0.0.0.0:8082, url: http://localhost:${port}`);
+  console.log(
+    `ready - started server on 0.0.0.0:8082, url: http://localhost:${port}`,
+  );
 });

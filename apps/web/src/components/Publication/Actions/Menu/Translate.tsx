@@ -15,19 +15,14 @@ interface TranslateProps {
 
 const Translate: FC<TranslateProps> = ({ publication }) => {
   const getGoogleTranslateUrl = (text: string): string => {
-    return encodeURI(
-      `https://translate.google.com/#auto|en|${encodeURIComponent(text)}`
-    );
+    return encodeURI(`https://translate.google.com/#auto|en|${encodeURIComponent(text)}`);
   };
 
   return (
     <Menu.Item
       as={Link}
       className={({ active }) =>
-        clsx(
-          { 'dropdown-active': active },
-          'm-2 block cursor-pointer rounded-lg px-4 py-1.5 text-sm'
-        )
+        clsx({ 'dropdown-active': active }, 'm-2 block cursor-pointer rounded-lg px-4 py-1.5 text-sm')
       }
       href={getGoogleTranslateUrl(publication?.metadata?.content)}
       onClick={(event) => {

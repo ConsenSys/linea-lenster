@@ -578,8 +578,8 @@ interface ILensHub {
      */
     function getCollectNFTImpl() external view returns (address);
 
-  /**
-   * @dev Get the BalanceOf Lens handle.
+    /**
+     * @dev Get the BalanceOf Lens handle.
    * @notice This function is used to get the balance of Lens handles.
    * @param wallet  The address wallet of the  user.
    * @return The number of handles.

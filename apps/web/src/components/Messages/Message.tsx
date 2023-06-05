@@ -33,9 +33,7 @@ interface MessageProps {
 const Message: FC<MessageProps> = ({ conversationKey }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const { profile } = useGetProfile(currentProfile?.id, conversationKey);
-  const selectedConversation = useMessageStore((state) =>
-    state.conversations.get(conversationKey)
-  );
+  const selectedConversation = useMessageStore((state) => state.conversations.get(conversationKey));
   const [endTime, setEndTime] = useState<Map<string, Date>>(new Map());
   const { messages, hasMore } = useGetMessages(
     conversationKey,
@@ -62,12 +60,9 @@ const Message: FC<MessageProps> = ({ conversationKey }) => {
 
   const showLoading = !missingXmtpAuth && !currentProfile;
 
-  const userNameForTitle =
-    sanitizeDisplayName(profile?.name) ?? formatHandle(profile?.handle);
+  const userNameForTitle = sanitizeDisplayName(profile?.name) ?? formatHandle(profile?.handle);
 
-  const title = userNameForTitle
-    ? `${userNameForTitle} • ${APP_NAME}`
-    : APP_NAME;
+  const title = userNameForTitle ? `${userNameForTitle} • ${APP_NAME}` : APP_NAME;
 
   return (
     <GridLayout classNameChild="md:gap-8">
@@ -84,10 +79,7 @@ const Message: FC<MessageProps> = ({ conversationKey }) => {
             </div>
           ) : (
             <>
-              <MessageHeader
-                profile={profile}
-                conversationKey={conversationKey}
-              />
+              <MessageHeader profile={profile} conversationKey={conversationKey} />
               <MessagesList
                 conversationKey={conversationKey}
                 currentProfile={currentProfile}
@@ -121,11 +113,7 @@ const MessagePage: NextPage = () => {
   });
 
   // Need to have a login page for when there is no currentProfileId
-  if (
-    !conversationKey ||
-    !currentProfileId ||
-    !Array.isArray(conversationKey)
-  ) {
+  if (!conversationKey || !currentProfileId || !Array.isArray(conversationKey)) {
     return <Custom404 />;
   }
 

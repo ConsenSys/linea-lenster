@@ -1,19 +1,15 @@
-import type {
-  EditorConfig,
-  LexicalNode,
-  NodeKey,
-  SerializedTextNode,
-  Spread
-} from 'lexical';
+import type { EditorConfig, LexicalNode, NodeKey, SerializedTextNode, Spread } from 'lexical';
 import { TextNode } from 'lexical';
 
-export type SerializedEmojiNode = Spread<
-  { className: string; type: 'emoji' },
-  SerializedTextNode
->;
+export type SerializedEmojiNode = Spread<{ className: string; type: 'emoji' }, SerializedTextNode>;
 
 export class EmojiNode extends TextNode {
   __className: string;
+
+  constructor(className: string, text: string, key?: NodeKey) {
+    super(text, key);
+    this.__className = className;
+  }
 
   static getType(): string {
     return 'emoji';
@@ -23,9 +19,15 @@ export class EmojiNode extends TextNode {
     return new EmojiNode(node.__className, node.__text, node.__key);
   }
 
-  constructor(className: string, text: string, key?: NodeKey) {
-    super(text, key);
-    this.__className = className;
+  static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
+    // eslint-disable-next-line no-use-before-define
+    const node = $createEmojiNode(serializedNode.className, serializedNode.text);
+    node.setFormat(serializedNode.format);
+    node.setDetail(serializedNode.detail);
+    node.setMode(serializedNode.mode);
+    node.setStyle(serializedNode.style);
+
+    return node;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
@@ -38,11 +40,7 @@ export class EmojiNode extends TextNode {
     return dom;
   }
 
-  updateDOM(
-    prevNode: TextNode,
-    dom: HTMLElement,
-    config: EditorConfig
-  ): boolean {
+  updateDOM(prevNode: TextNode, dom: HTMLElement, config: EditorConfig): boolean {
     const inner = dom.firstChild;
     if (inner === null) {
       return true;
@@ -50,20 +48,6 @@ export class EmojiNode extends TextNode {
     super.updateDOM(prevNode, inner as HTMLElement, config);
 
     return false;
-  }
-
-  static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
-    // eslint-disable-next-line no-use-before-define
-    const node = $createEmojiNode(
-      serializedNode.className,
-      serializedNode.text
-    );
-    node.setFormat(serializedNode.format);
-    node.setDetail(serializedNode.detail);
-    node.setMode(serializedNode.mode);
-    node.setStyle(serializedNode.style);
-
-    return node;
   }
 
   exportJSON(): SerializedEmojiNode {
@@ -80,15 +64,10 @@ export class EmojiNode extends TextNode {
   }
 }
 
-export const $isEmojiNode = (
-  node: LexicalNode | null | undefined
-): node is EmojiNode => {
+export const $isEmojiNode = (node: LexicalNode | null | undefined): node is EmojiNode => {
   return node instanceof EmojiNode;
 };
 
-export const $createEmojiNode = (
-  className: string,
-  emojiText: string
-): EmojiNode => {
+export const $createEmojiNode = (className: string, emojiText: string): EmojiNode => {
   return new EmojiNode(className, emojiText).setMode('token');
 };

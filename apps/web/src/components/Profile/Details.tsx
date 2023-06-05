@@ -12,8 +12,11 @@ import { BadgeCheckIcon } from '@heroicons/react/solid';
 import {
   ENS_DOMAIN_URL,
   ENS_FRONT_DEV_LINEA_URL,
+  EXPANDED_AVATAR,
   LINEA_RESOLVER,
-  LINEA_RESOLVER_ABI
+  LINEA_RESOLVER_ABI,
+  STATIC_IMAGES_URL,
+  ZONIC_URL
 } from '@lenster/data/constants';
 import getEnvConfig from '@lenster/data/utils/getEnvConfig';
 import type { Profile } from '@lenster/lens';
@@ -44,7 +47,6 @@ import Badges from './Badges';
 import Followerings from './Followerings';
 import MutualFollowers from './MutualFollowers';
 import MutualFollowersList from './MutualFollowers/List';
-import { STATIC_IMAGES_URL, ZONIC_URL } from 'data/constants';
 
 export interface DetailsProps {
   profile: Profile;
@@ -65,7 +67,11 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
   const { persistProfile } = useMessageDb();
   const setSelectedTab = useMessageStore((state) => state.setSelectedTab);
 
-  const { isError: isBalanceError, data: balanceData } = useContractRead({
+  const {
+    isError: isBalanceError,
+    data: balanceData,
+    error: balanceError
+  } = useContractRead({
     address: LINEA_RESOLVER,
     abi: LINEA_RESOLVER_ABI,
     functionName: 'balanceOf',

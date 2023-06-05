@@ -9,15 +9,11 @@ import { useGlobalAlertStateStore } from 'src/store/alerts';
 import { PUBLICATION } from 'src/tracking';
 
 const DeletePublication: FC = () => {
-  const showPublicationDeleteAlert = useGlobalAlertStateStore(
-    (state) => state.showPublicationDeleteAlert
-  );
+  const showPublicationDeleteAlert = useGlobalAlertStateStore((state) => state.showPublicationDeleteAlert);
   const setShowPublicationDeleteAlert = useGlobalAlertStateStore(
     (state) => state.setShowPublicationDeleteAlert
   );
-  const deletingPublication = useGlobalAlertStateStore(
-    (state) => state.deletingPublication
-  );
+  const deletingPublication = useGlobalAlertStateStore((state) => state.deletingPublication);
 
   const [hidePost, { loading }] = useHidePublicationMutation({
     onCompleted: () => {

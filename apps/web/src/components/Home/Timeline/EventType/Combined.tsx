@@ -18,23 +18,15 @@ const Combined: FC<CombinedProps> = ({ feedItem }) => {
   const commentsLength = comments?.length ?? 0;
 
   const getReactionsLength = () => {
-    return [
-      mirrorsLength,
-      collectsLength,
-      reactionsLength,
-      commentsLength ?? 0
-    ].filter((n) => n > 0).length;
+    return [mirrorsLength, collectsLength, reactionsLength, commentsLength ?? 0].filter((n) => n > 0).length;
   };
 
   const totalActions = getReactionsLength();
 
   const getAllProfiles = () => {
-    let profiles = [...mirrors, ...collects, ...reactions, ...comments].map(
-      (event) => event.profile
-    );
+    let profiles = [...mirrors, ...collects, ...reactions, ...comments].map((event) => event.profile);
     profiles = profiles.filter(
-      (profile, index, self) =>
-        index === self.findIndex((t) => t.id === profile.id)
+      (profile, index, self) => index === self.findIndex((t) => t.id === profile.id)
     );
     return profiles;
   };
@@ -63,9 +55,7 @@ const Combined: FC<CombinedProps> = ({ feedItem }) => {
                   ? ' and '
                   : ''
                 : ', '}
-              {totalActions >= 3 && (!collectsLength || !reactionsLength)
-                ? ' and '
-                : ''}
+              {totalActions >= 3 && (!collectsLength || !reactionsLength) ? ' and ' : ''}
             </Trans>
           </span>
         ) : null}
@@ -73,11 +63,7 @@ const Combined: FC<CombinedProps> = ({ feedItem }) => {
           <span>
             <Trans>
               collected
-              {totalActions >= 3 && reactionsLength
-                ? ' and '
-                : reactionsLength
-                ? ' and '
-                : ''}
+              {totalActions >= 3 && reactionsLength ? ' and ' : reactionsLength ? ' and ' : ''}
             </Trans>
           </span>
         ) : null}

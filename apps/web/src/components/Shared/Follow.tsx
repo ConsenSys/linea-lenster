@@ -1,20 +1,18 @@
 import { UserAddIcon } from '@heroicons/react/outline';
+import { LensHub } from '@lenster/abis';
+import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY } from '@lenster/data/constants';
 import type { Profile } from '@lenster/lens';
-import type { ApolloCache } from '@lenster/lens/apollo';
-import { Button, Spinner } from '@lenster/ui';
-import errorToast from '@lib/errorToast';
-import { Leafwatch } from '@lib/leafwatch';
-import { t } from '@lingui/macro';
-import { LensHub } from 'abis';
-import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY } from 'data/constants';
-import type { Profile } from 'lens';
 import {
   useBroadcastMutation,
   useCreateFollowTypedDataMutation,
   useProxyActionMutation
-} from 'lens';
-import type { ApolloCache } from 'lens/apollo';
-import getSignature from 'lib/getSignature';
+} from '@lenster/lens';
+import type { ApolloCache } from '@lenster/lens/apollo';
+import getSignature from '@lenster/lib/getSignature';
+import { Button, Spinner } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
+import { t } from '@lingui/macro';
 import { useRouter } from 'next/router';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
@@ -97,9 +95,7 @@ const Follow: FC<FollowProps> = ({
     onCompleted: async ({ createFollowTypedData }) => {
       const { id, typedData } = createFollowTypedData;
       // TODO: Replace deep clone with right helper
-      const signature = await signTypedDataAsync(
-        getSignature(JSON.parse(JSON.stringify(typedData)))
-      );
+      const signature = await signTypedDataAsync(getSignature(JSON.parse(JSON.stringify(typedData))));
       setUserSigNonce(userSigNonce + 1);
       const { data } = await broadcast({
         variables: { request: { id, signature } }
@@ -150,8 +146,7 @@ const Follow: FC<FollowProps> = ({
                 {
                   profile: profile?.id,
                   followModule:
-                    profile?.followModule?.__typename ===
-                    'ProfileFollowModuleSettings'
+                    profile?.followModule?.__typename === 'ProfileFollowModuleSettings'
                       ? {
                           profileFollowModule: { profileId: currentProfile?.id }
                         }
@@ -180,9 +175,7 @@ const Follow: FC<FollowProps> = ({
       onClick={createFollow}
       aria-label="Follow"
       disabled={isLoading}
-      icon={
-        isLoading ? <Spinner size="xs" /> : <UserAddIcon className="h-4 w-4" />
-      }
+      icon={isLoading ? <Spinner size="xs" /> : <UserAddIcon className="h-4 w-4" />}
     >
       {showText && t`Follow`}
     </Button>

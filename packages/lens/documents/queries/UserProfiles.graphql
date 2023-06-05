@@ -1,14 +1,14 @@
 query UserProfiles($ownedBy: [EthereumAddress!]) {
-  profiles(request: { ownedBy: $ownedBy }) {
-    items {
-      ...ProfileFields
-      interests
-      isDefault
-      dispatcher {
-        address
-        canUseRelay
-        sponsor
-      }
+    profiles(request: { ownedBy: $ownedBy }) {
+        items {
+            ...ProfileFields
+            interests
+            isDefault
+            dispatcher {
+                address
+                canUseRelay
+                sponsor
+            }
+        }
     }
-  }
 }

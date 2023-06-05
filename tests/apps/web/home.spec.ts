@@ -11,7 +11,9 @@ test('should have page title', async ({ page }) => {
 });
 
 test('should have hero', async ({ page }) => {
-  await expect(page.getByTestId('home-hero')).toContainText('Welcome to Lineaster 👋');
+  await expect(page.getByTestId('home-hero')).toContainText(
+    'Welcome to Lineaster 👋'
+  );
 });
 
 test.skip('should have explore feed', async ({ page }) => {

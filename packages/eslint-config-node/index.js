@@ -1,19 +1,19 @@
-/** @type {import("eslint").Linter.Config} */
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
-    es2022: true
+    es2022: true,
   },
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: [
     '@typescript-eslint',
     'unused-imports',
     'simple-import-sort',
     'prettier',
-    'unicorn'
+    'unicorn',
   ],
   extends: ['next', 'next/core-web-vitals'],
   rules: {
@@ -45,6 +45,6 @@ module.exports = {
     'unicorn/no-for-loop': 'error',
     'unicorn/no-lonely-if': 'error',
     'unicorn/no-useless-undefined': 'error',
-    'unicorn/prefer-array-find': 'error'
-  }
+    'unicorn/prefer-array-find': 'error',
+  },
 };

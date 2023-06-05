@@ -21,25 +21,17 @@ interface CollectFormProps {
 const CollectForm: FC<CollectFormProps> = ({ setShowModal }) => {
   const collectModule = useCollectModuleStore((state) => state.collectModule);
   const reset = useCollectModuleStore((state) => state.reset);
-  const setCollectModule = useCollectModuleStore(
-    (state) => state.setCollectModule
-  );
+  const setCollectModule = useCollectModuleStore((state) => state.setCollectModule);
 
-  const { RevertCollectModule, FreeCollectModule, SimpleCollectModule } =
-    CollectModules;
+  const { RevertCollectModule, FreeCollectModule, SimpleCollectModule } = CollectModules;
   const recipients = collectModule.recipients ?? [];
   const splitTotal = recipients.reduce((acc, curr) => acc + curr.split, 0);
-  const hasEmptyRecipients = recipients.some(
-    (recipient) => !recipient.recipient
-  );
+  const hasEmptyRecipients = recipients.some((recipient) => !recipient.recipient);
   const hasInvalidEthAddressInRecipients = recipients.some(
-    (recipient) =>
-      recipient.recipient && !isValidEthAddress(recipient.recipient)
+    (recipient) => recipient.recipient && !isValidEthAddress(recipient.recipient)
   );
   const isRecipientsDuplicated = () => {
-    const recipientsSet = new Set(
-      recipients.map((recipient) => recipient.recipient)
-    );
+    const recipientsSet = new Set(recipients.map((recipient) => recipient.recipient));
     return recipientsSet.size !== recipients.length;
   };
 
@@ -64,13 +56,7 @@ const CollectForm: FC<CollectFormProps> = ({ setShowModal }) => {
   }
 
   if (error) {
-    return (
-      <ErrorMessage
-        className="p-5"
-        title={t`Failed to load modules`}
-        error={error}
-      />
-    );
+    return <ErrorMessage className="p-5" title={t`Failed to load modules`} error={error} />;
   }
 
   const toggleCollect = () => {
@@ -97,10 +83,7 @@ const CollectForm: FC<CollectFormProps> = ({ setShowModal }) => {
           {collectModule.amount?.value ? (
             <>
               <ReferralConfig setCollectType={setCollectType} />
-              <SplitConfig
-                isRecipientsDuplicated={isRecipientsDuplicated}
-                setCollectType={setCollectType}
-              />
+              <SplitConfig isRecipientsDuplicated={isRecipientsDuplicated} setCollectType={setCollectType} />
             </>
           ) : null}
           <CollectLimitConfig setCollectType={setCollectType} />

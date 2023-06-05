@@ -9,12 +9,7 @@ interface MetaDetailsProps {
   icon: ReactNode;
 }
 
-const MetaDetails: FC<MetaDetailsProps> = ({
-  children,
-  title,
-  value,
-  icon
-}) => (
+const MetaDetails: FC<MetaDetailsProps> = ({ children, title, value, icon }) => (
   <div
     className="linkify flex cursor-pointer items-center gap-1 text-sm font-bold"
     onClick={async () => {

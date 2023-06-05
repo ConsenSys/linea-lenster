@@ -33,9 +33,7 @@ const Following: FC = () => {
         onCompleted: (data) => {
           setFollowing((prev) => {
             const newFollowing = data.following.items.filter((newFollowing) => {
-              return !prev.some(
-                (following) => following.profile.id === newFollowing.profile.id
-              );
+              return !prev.some((following) => following.profile.id === newFollowing.profile.id);
             });
 
             return [...prev, ...newFollowing];
@@ -43,10 +41,7 @@ const Following: FC = () => {
         }
       });
 
-      if (
-        data?.following.items.length === 0 ||
-        !data?.following.pageInfo.next
-      ) {
+      if (data?.following.items.length === 0 || !data?.following.pageInfo.next) {
         setFetchCompleted(true);
         setExporting(false);
       } else {

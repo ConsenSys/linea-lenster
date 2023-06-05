@@ -10,9 +10,9 @@ import {
   SparklesIcon,
   UserIcon
 } from '@heroicons/react/outline';
+import { IS_RELAYER_AVAILABLE } from '@lenster/data';
 import type { Profile } from '@lenster/lens';
 import { t, Trans } from '@lingui/macro';
-import { IS_RELAYER_AVAILABLE } from 'data';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 
@@ -22,10 +22,7 @@ const SettingsSidebar: FC = () => {
   return (
     <div className="mb-4 space-y-1.5 px-3 sm:px-0">
       <div className="pb-3">
-        <UserProfile
-          profile={currentProfile as Profile}
-          showUserPreview={false}
-        />
+        <UserProfile profile={currentProfile as Profile} showUserPreview={false} />
       </div>
       <Sidebar
         items={[

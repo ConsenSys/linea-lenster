@@ -9,9 +9,7 @@ interface CollectLimitConfigProps {
   setCollectType: (data: any) => void;
 }
 
-const CollectLimitConfig: FC<CollectLimitConfigProps> = ({
-  setCollectType
-}) => {
+const CollectLimitConfig: FC<CollectLimitConfigProps> = ({ setCollectType }) => {
   const collectModule = useCollectModuleStore((state) => state.collectModule);
 
   return (

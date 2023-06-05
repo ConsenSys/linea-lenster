@@ -1,30 +1,30 @@
 query Profile($request: SingleProfileQueryRequest!, $who: ProfileId) {
-  profile(request: $request) {
-    ...ProfileFields
-    metadata
-    followNftAddress
-    isFollowing(who: $who)
-    dispatcher {
-      address
-      canUseRelay
-      sponsor
-    }
-    onChainIdentity {
-      proofOfHumanity
-      sybilDotOrg {
-        verified
-        source {
-          twitter {
-            handle
-          }
+    profile(request: $request) {
+        ...ProfileFields
+        metadata
+        followNftAddress
+        isFollowing(who: $who)
+        dispatcher {
+            address
+            canUseRelay
+            sponsor
         }
-      }
-      ens {
-        name
-      }
-      worldcoin {
-        isHuman
-      }
+        onChainIdentity {
+            proofOfHumanity
+            sybilDotOrg {
+                verified
+                source {
+                    twitter {
+                        handle
+                    }
+                }
+            }
+            ens {
+                name
+            }
+            worldcoin {
+                isHuman
+            }
+        }
     }
-  }
 }

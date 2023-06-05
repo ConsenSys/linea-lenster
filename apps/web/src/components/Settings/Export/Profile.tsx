@@ -1,7 +1,4 @@
-import type {
-  Profile as TProfile,
-  SingleProfileQueryRequest
-} from '@lenster/lens';
+import type { Profile as TProfile, SingleProfileQueryRequest } from '@lenster/lens';
 import { useProfileLazyQuery } from '@lenster/lens';
 import { Button, Card } from '@lenster/ui';
 import downloadJson from '@lib/downloadJson';

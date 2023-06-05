@@ -1,17 +1,17 @@
 query Followers($request: FollowersRequest!) {
-  followers(request: $request) {
-    items {
-      wallet {
-        address
-        defaultProfile {
-          ...ProfileFields
-          isFollowedByMe
+    followers(request: $request) {
+        items {
+            wallet {
+                address
+                defaultProfile {
+                    ...ProfileFields
+                    isFollowedByMe
+                }
+            }
+            totalAmountOfTimesFollowed
         }
-      }
-      totalAmountOfTimesFollowed
+        pageInfo {
+            next
+        }
     }
-    pageInfo {
-      next
-    }
-  }
 }

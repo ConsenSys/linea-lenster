@@ -142,22 +142,11 @@ const Gallery: FC<GalleryProps> = ({ galleries }) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h6 className="line-clamp-1 text-lg font-medium">
-          {isRearrange ? 'Arrange gallery' : gallery.name}
-        </h6>
-        {galleryStore?.isEdit && (
-          <Create
-            showModal={showCreateModal}
-            setShowModal={setShowCreateModal}
-          />
-        )}
+        <h6 className="line-clamp-1 text-lg font-medium">{isRearrange ? 'Arrange gallery' : gallery.name}</h6>
+        {galleryStore?.isEdit && <Create showModal={showCreateModal} setShowModal={setShowCreateModal} />}
         {isRearrange ? (
           <div className="flex items-center space-x-2">
-            <Button
-              onClick={() => setIsRearrange(false)}
-              size="sm"
-              variant="secondary"
-            >
+            <Button onClick={() => setIsRearrange(false)} size="sm" variant="secondary">
               <Trans>Cancel</Trans>
             </Button>
             <Button onClick={onSaveRearrange} size="sm">

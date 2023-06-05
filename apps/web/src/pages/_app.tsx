@@ -1,9 +1,10 @@
 import '../styles.css';
+
 import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 
 import atypFont from '../font/atyp';
 import atypTextFont from '../font/atypText';
-import dynamic from 'next/dynamic';
 
 const Providers = dynamic(() => import('@components/Common/Providers'), {
   ssr: false

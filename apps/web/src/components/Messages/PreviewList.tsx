@@ -8,14 +8,7 @@ import useMessagePreviews from '@components/utils/hooks/useMessagePreviews';
 import { MailIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import { Errors } from '@lenster/data';
 import type { Profile } from '@lenster/lens';
-import {
-  Card,
-  EmptyState,
-  ErrorMessage,
-  GridItemFour,
-  Modal,
-  TabButton
-} from '@lenster/ui';
+import { Card, EmptyState, ErrorMessage, GridItemFour, Modal, TabButton } from '@lenster/ui';
 import buildConversationId from '@lib/buildConversationId';
 import { buildConversationKey } from '@lib/conversationKey';
 import { Leafwatch } from '@lib/leafwatch';
@@ -36,10 +29,7 @@ interface PreviewListProps {
   selectedConversationKey?: string;
 }
 
-const PreviewList: FC<PreviewListProps> = ({
-  className,
-  selectedConversationKey
-}) => {
+const PreviewList: FC<PreviewListProps> = ({ className, selectedConversationKey }) => {
   const router = useRouter();
   const currentProfile = useAppStore((state) => state.currentProfile);
   const { persistProfile } = useMessageDb();
@@ -48,27 +38,16 @@ const PreviewList: FC<PreviewListProps> = ({
   const setSelectedTab = useMessageStore((state) => state.setSelectedTab);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
-  const {
-    authenticating,
-    loading,
-    messages,
-    profilesToShow,
-    requestedCount,
-    profilesError
-  } = useMessagePreviews();
+  const { authenticating, loading, messages, profilesToShow, requestedCount, profilesError } =
+    useMessagePreviews();
 
-  const { loading: previewsLoading, progress: previewsProgress } =
-    useGetMessagePreviews();
-  const clearMessagesBadge = useMessagePersistStore(
-    (state) => state.clearMessagesBadge
-  );
+  const { loading: previewsLoading, progress: previewsProgress } = useGetMessagePreviews();
+  const clearMessagesBadge = useMessagePersistStore((state) => state.clearMessagesBadge);
 
   const sortedProfiles = Array.from(profilesToShow).sort(([keyA], [keyB]) => {
     const messageA = messages.get(keyA);
     const messageB = messages.get(keyB);
-    return (messageA?.sent?.getTime() || 0) >= (messageB?.sent?.getTime() || 0)
-      ? -1
-      : 1;
+    return (messageA?.sent?.getTime() || 0) >= (messageB?.sent?.getTime() || 0) ? -1 : 1;
   });
 
   useEffect(() => {
@@ -80,8 +59,7 @@ const PreviewList: FC<PreviewListProps> = ({
   }, [currentProfile]);
 
   const showAuthenticating = currentProfile && authenticating;
-  const showLoading =
-    loading && (messages.size === 0 || profilesToShow.size === 0);
+  const showLoading = loading && (messages.size === 0 || profilesToShow.size === 0);
 
   const newMessageClick = () => {
     setShowSearchModal(true);
@@ -90,14 +68,9 @@ const PreviewList: FC<PreviewListProps> = ({
 
   const onProfileSelected = async (profile: Profile) => {
     const conversationId = buildConversationId(currentProfile?.id, profile.id);
-    const conversationKey = buildConversationKey(
-      profile.ownedBy,
-      conversationId
-    );
+    const conversationKey = buildConversationKey(profile.ownedBy, conversationId);
     await persistProfile(conversationKey, profile);
-    const selectedTab: TabValues = profile.isFollowedByMe
-      ? MessageTabs.Lens
-      : MessageTabs.Requests;
+    const selectedTab: TabValues = profile.isFollowedByMe ? MessageTabs.Lens : MessageTabs.Requests;
     setSelectedTab(selectedTab);
     router.push(`/messages/${conversationKey}`);
     setShowSearchModal(false);
@@ -152,11 +125,7 @@ const PreviewList: FC<PreviewListProps> = ({
           </div>
           <TabButton
             className="p-2 px-4"
-            name={
-              requestedCount > 99
-                ? '99+'
-                : `${requestedCount.toString()} Requests`
-            }
+            name={requestedCount > 99 ? '99+' : `${requestedCount.toString()} Requests`}
             active={selectedTab === MessageTabs.Requests}
             onClick={() => setSelectedTab(MessageTabs.Requests)}
             showOnSm
@@ -164,10 +133,7 @@ const PreviewList: FC<PreviewListProps> = ({
         </div>
         {selectedTab === MessageTabs.Requests ? (
           <div className="bg-yellow-100 p-2 px-5 text-sm text-yellow-800">
-            <Trans>
-              These conversations are from Lens profiles that you don't
-              currently follow.
-            </Trans>
+            <Trans>These conversations are from Lens profiles that you don't currently follow.</Trans>
           </div>
         ) : null}
         <div className="h-full overflow-y-auto overflow-x-hidden">
@@ -189,11 +155,7 @@ const PreviewList: FC<PreviewListProps> = ({
               }}
             />
           ) : sortedProfiles.length === 0 ? (
-            <button
-              className="h-full w-full justify-items-center"
-              onClick={newMessageClick}
-              type="button"
-            >
+            <button className="h-full w-full justify-items-center" onClick={newMessageClick} type="button">
               <EmptyState
                 message={t`Start messaging your Lens frens`}
                 icon={<MailIcon className="text-brand h-8 w-8" />}
@@ -235,12 +197,7 @@ const PreviewList: FC<PreviewListProps> = ({
             onProfileSelected={onProfileSelected}
           />
         </div>
-        {currentProfile && (
-          <Following
-            profile={currentProfile}
-            onProfileSelected={onProfileSelected}
-          />
-        )}
+        {currentProfile && <Following profile={currentProfile} onProfileSelected={onProfileSelected} />}
       </Modal>
     </GridItemFour>
   );

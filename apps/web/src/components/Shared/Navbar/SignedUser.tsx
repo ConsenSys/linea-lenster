@@ -1,12 +1,11 @@
 import { Menu } from '@headlessui/react';
 import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import isGardener from '@lenster/lib/isGardener';
+import isStaff from '@lenster/lib/isStaff';
 import { Image } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import isGardener from 'lib/isGardener';
-import isStaff from 'lib/isStaff';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
@@ -28,12 +27,8 @@ import YourProfile from './NavItems/YourProfile';
 
 const SignedUser: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowMobileDrawer = useGlobalModalStateStore(
-    (state) => state.setShowMobileDrawer
-  );
-  const showMobileDrawer = useGlobalModalStateStore(
-    (state) => state.showMobileDrawer
-  );
+  const setShowMobileDrawer = useGlobalModalStateStore((state) => state.setShowMobileDrawer);
+  const showMobileDrawer = useGlobalModalStateStore((state) => state.showMobileDrawer);
 
   const Avatar = () => (
     <Image
@@ -50,10 +45,7 @@ const SignedUser: FC = () => {
   return (
     <>
       {showMobileDrawer && <MobileDrawerMenu />}
-      <button
-        className="focus:outline-none md:hidden"
-        onClick={() => openMobileMenuDrawer()}
-      >
+      <button className="focus:outline-none md:hidden" onClick={() => openMobileMenuDrawer()}>
         <Avatar />
       </button>
       <Menu as="div" className="hidden md:block">
@@ -61,10 +53,7 @@ const SignedUser: FC = () => {
           <Avatar />
         </Menu.Button>
         <MenuTransition>
-          <Menu.Items
-            static
-            className="bg-dark absolute right-0 w-48 rounded-[2px] border border-gray-500"
-          >
+          <Menu.Items static className="bg-dark absolute right-0 w-48 rounded-[2px] border border-gray-500">
             <Menu.Item
               as={NextLink}
               href={`/u/${formatHandle(currentProfile?.handle)}`}
@@ -111,32 +100,20 @@ const SignedUser: FC = () => {
                 <Mod className="hover:text-brand-500 text-xs text-gray-300" />
               </Menu.Item>
             )}
-            <Menu.Item
-              as="div"
-              className="bg-dark hover:bg-darker hover:text-brand-500 flex"
-            >
+            <Menu.Item as="div" className="bg-dark hover:bg-darker hover:text-brand-500 flex">
               <Logout className="hover:text-brand-500 text-xs uppercase text-gray-300" />
             </Menu.Item>
             <div className="divider border-gray-700" />
-            <Menu.Item
-              as="div"
-              className="bg-dark hover:bg-darker hover:text-brand-500 flex"
-            >
+            <Menu.Item as="div" className="bg-dark hover:bg-darker hover:text-brand-500 flex">
               <ThemeSwitch className="hover:text-brand-500 text-xs uppercase text-gray-300" />
             </Menu.Item>
             {isGardener(currentProfile?.id) && (
-              <Menu.Item
-                as="div"
-                className="bg-dark hover:bg-darker hover:text-brand-500 flex"
-              >
+              <Menu.Item as="div" className="bg-dark hover:bg-darker hover:text-brand-500 flex">
                 <ModMode className="hover:text-brand-500 text-xs uppercase text-gray-300" />
               </Menu.Item>
             )}
             {isStaff(currentProfile?.id) && (
-              <Menu.Item
-                as="div"
-                className="bg-dark hover:bg-darker hover:text-brand-500 flex"
-              >
+              <Menu.Item as="div" className="bg-dark hover:bg-darker hover:text-brand-500 flex">
                 <StaffMode className="hover:text-brand-500 text-xs uppercase text-gray-300" />
               </Menu.Item>
             )}

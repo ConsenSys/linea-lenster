@@ -1,14 +1,8 @@
 import IndexStatus from '@components/Shared/IndexStatus';
 import { CheckCircleIcon, XIcon } from '@heroicons/react/outline';
 import { LensHub } from '@lenster/abis';
-import {
-  LENSHUB_PROXY,
-  OLD_LENS_RELAYER_ADDRESS
-} from '@lenster/data/constants';
-import {
-  useBroadcastMutation,
-  useCreateSetDispatcherTypedDataMutation
-} from '@lenster/lens';
+import { LENSHUB_PROXY, OLD_LENS_RELAYER_ADDRESS } from '@lenster/data/constants';
+import { useBroadcastMutation, useCreateSetDispatcherTypedDataMutation } from '@lenster/lens';
 import getIsDispatcherEnabled from '@lenster/lib/getIsDispatcherEnabled';
 import getSignature from '@lenster/lib/getSignature';
 import { Button, Spinner } from '@lenster/ui';
@@ -35,8 +29,7 @@ const ToggleDispatcher: FC<ToggleDispatcherProps> = ({ buttonSize = 'md' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const canUseRelay = getIsDispatcherEnabled(currentProfile);
   const isOldDispatcherEnabled =
-    currentProfile?.dispatcher?.address?.toLocaleLowerCase() ===
-    OLD_LENS_RELAYER_ADDRESS.toLocaleLowerCase();
+    currentProfile?.dispatcher?.address?.toLocaleLowerCase() === OLD_LENS_RELAYER_ADDRESS.toLocaleLowerCase();
 
   const onCompleted = (__typename?: 'RelayError' | 'RelayerResult') => {
     if (__typename === 'RelayError') {
@@ -75,23 +68,22 @@ const ToggleDispatcher: FC<ToggleDispatcherProps> = ({ buttonSize = 'md' }) => {
   const [broadcast, { data: broadcastData }] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetDispatcherTypedData] =
-    useCreateSetDispatcherTypedDataMutation({
-      onCompleted: async ({ createSetDispatcherTypedData }) => {
-        const { id, typedData } = createSetDispatcherTypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
+  const [createSetDispatcherTypedData] = useCreateSetDispatcherTypedDataMutation({
+    onCompleted: async ({ createSetDispatcherTypedData }) => {
+      const { id, typedData } = createSetDispatcherTypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, dispatcher } = typedData.value;
+        return write?.({
+          args: [profileId, dispatcher]
         });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, dispatcher } = typedData.value;
-          return write?.({
-            args: [profileId, dispatcher]
-          });
-        }
-      },
-      onError
-    });
+      }
+    },
+    onError
+  });
 
   const toggleDispatcher = async () => {
     try {
@@ -120,8 +112,7 @@ const ToggleDispatcher: FC<ToggleDispatcherProps> = ({ buttonSize = 'md' }) => {
   };
 
   const broadcastTxHash =
-    broadcastData?.broadcast.__typename === 'RelayerResult' &&
-    broadcastData.broadcast.txHash;
+    broadcastData?.broadcast.__typename === 'RelayerResult' && broadcastData.broadcast.txHash;
 
   return writeData?.hash ?? broadcastTxHash ? (
     <div className="mt-2">

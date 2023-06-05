@@ -1,10 +1,6 @@
 import type { DragEndEvent } from '@dnd-kit/core';
 import { closestCenter, DndContext } from '@dnd-kit/core';
-import {
-  arrayMove,
-  rectSortingStrategy,
-  SortableContext
-} from '@dnd-kit/sortable';
+import { arrayMove, rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { useNftGalleryStore } from 'src/store/nft-gallery';
@@ -38,9 +34,7 @@ const ReArrange: FC = () => {
       const movedItem = items.find((i) => i.itemId === active?.id);
       if (movedItem) {
         let reArranged = gallery.reArrangedItems;
-        let alreadyExistsIndex = gallery.reArrangedItems.findIndex(
-          (i) => i.itemId === active?.id
-        );
+        let alreadyExistsIndex = gallery.reArrangedItems.findIndex((i) => i.itemId === active?.id);
         if (alreadyExistsIndex >= 0) {
           reArranged[alreadyExistsIndex].newOrder = movedItem.newOrder;
         } else {
@@ -59,9 +53,7 @@ const ReArrange: FC = () => {
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
         strategy={rectSortingStrategy}
-        items={allNfts.map(
-          (i) => `${i.chainId}_${i.contractAddress}_${i.tokenId}`
-        )}
+        items={allNfts.map((i) => `${i.chainId}_${i.contractAddress}_${i.tokenId}`)}
       >
         <div className="grid gap-5 py-5 md:grid-cols-3">
           {allNfts.map((item) => {

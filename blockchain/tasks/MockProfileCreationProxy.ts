@@ -7,11 +7,11 @@ async function main() {
   const signers: SignerWithAddress[] = await ethers.getSigners();
   console.log('Deployer address:', signers[0].address);
   const mockProfileCreationProxy__factory = await ethers.getContractFactory(
-    'MockProfileCreationProxy'
+    'MockProfileCreationProxy',
   );
   const mockProfileCreationProxy = await mockProfileCreationProxy__factory.deploy(
     LENS_HUB,
-    LINEA_RESOLVER
+    LINEA_RESOLVER,
   );
   await mockProfileCreationProxy.deployed();
   await mockProfileCreationProxy.deployTransaction.wait();

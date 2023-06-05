@@ -34,10 +34,7 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
           <div>Account created successfully</div>
           <div className="pt-3">
             <Link href={`/u/${handle}${HANDLE_SUFFIX}`}>
-              <Button
-                className="mx-auto"
-                icon={<ArrowRightIcon className="mr-1 h-4 w-4" />}
-              >
+              <Button className="mx-auto" icon={<ArrowRightIcon className="mr-1 h-4 w-4" />}>
                 <Trans>Go to profile</Trans>
               </Button>
             </Link>

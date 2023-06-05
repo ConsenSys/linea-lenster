@@ -14,16 +14,12 @@ test.describe('getWalletDetails', () => {
   test('should return correct details for name other than WalletConnect', () => {
     const walletDetails = getWalletDetails('MetaMask');
     expect(walletDetails.name).toBe('MetaMask');
-    expect(walletDetails.logo).toBe(
-      `/logo_metamask.svg`
-    );
+    expect(walletDetails.logo).toBe(`/logo_metamask.svg`);
   });
 
   test('should handle empty string as input', () => {
     const walletDetails = getWalletDetails('');
     expect(walletDetails.name).toBe('');
-    expect(walletDetails.logo).toBe(
-      `/logo_metamask.svg`
-    );
+    expect(walletDetails.logo).toBe(`/logo_metamask.svg`);
   });
 });

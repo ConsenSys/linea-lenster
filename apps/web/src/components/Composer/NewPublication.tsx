@@ -89,39 +89,24 @@ import { useContractWrite, usePublicClient, useSignTypedData } from 'wagmi';
 import PollEditor from './Actions/PollSettings/PollEditor';
 import Editor from './Editor';
 
-const Attachment = dynamic(
-  () => import('@components/Composer/Actions/Attachment'),
-  {
-    loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
-  }
-);
+const Attachment = dynamic(() => import('@components/Composer/Actions/Attachment'), {
+  loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
+});
 const Giphy = dynamic(() => import('@components/Composer/Actions/Giphy'), {
   loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
 });
-const CollectSettings = dynamic(
-  () => import('@components/Composer/Actions/CollectSettings'),
-  {
-    loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
-  }
-);
-const ReferenceSettings = dynamic(
-  () => import('@components/Composer/Actions/ReferenceSettings'),
-  {
-    loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
-  }
-);
-const AccessSettings = dynamic(
-  () => import('@components/Composer/Actions/AccessSettings'),
-  {
-    loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
-  }
-);
-const PollSettings = dynamic(
-  () => import('@components/Composer/Actions/PollSettings'),
-  {
-    loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
-  }
-);
+const CollectSettings = dynamic(() => import('@components/Composer/Actions/CollectSettings'), {
+  loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
+});
+const ReferenceSettings = dynamic(() => import('@components/Composer/Actions/ReferenceSettings'), {
+  loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
+});
+const AccessSettings = dynamic(() => import('@components/Composer/Actions/AccessSettings'), {
+  loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
+});
+const PollSettings = dynamic(() => import('@components/Composer/Actions/PollSettings'), {
+  loading: () => <div className="shimmer mb-1 h-5 w-5 rounded-lg" />
+});
 
 interface NewPublicationProps {
   publication: Publication;
@@ -137,33 +122,19 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
 
   // Publication store
-  const publicationContent = usePublicationStore(
-    (state) => state.publicationContent
-  );
-  const setPublicationContent = usePublicationStore(
-    (state) => state.setPublicationContent
-  );
-  const audioPublication = usePublicationStore(
-    (state) => state.audioPublication
-  );
-  const setShowNewPostModal = usePublicationStore(
-    (state) => state.setShowNewPostModal
-  );
+  const publicationContent = usePublicationStore((state) => state.publicationContent);
+  const setPublicationContent = usePublicationStore((state) => state.setPublicationContent);
+  const audioPublication = usePublicationStore((state) => state.audioPublication);
+  const setShowNewPostModal = usePublicationStore((state) => state.setShowNewPostModal);
   const attachments = usePublicationStore((state) => state.attachments);
   const setAttachments = usePublicationStore((state) => state.setAttachments);
   const addAttachments = usePublicationStore((state) => state.addAttachments);
   const isUploading = usePublicationStore((state) => state.isUploading);
   const videoThumbnail = usePublicationStore((state) => state.videoThumbnail);
-  const setVideoThumbnail = usePublicationStore(
-    (state) => state.setVideoThumbnail
-  );
-  const videoDurationInSeconds = usePublicationStore(
-    (state) => state.videoDurationInSeconds
-  );
+  const setVideoThumbnail = usePublicationStore((state) => state.setVideoThumbnail);
+  const videoDurationInSeconds = usePublicationStore((state) => state.videoDurationInSeconds);
   const showPollEditor = usePublicationStore((state) => state.showPollEditor);
-  const setShowPollEditor = usePublicationStore(
-    (state) => state.setShowPollEditor
-  );
+  const setShowPollEditor = usePublicationStore((state) => state.setShowPollEditor);
   const pollConfig = usePublicationStore((state) => state.pollConfig);
   const resetPollConfig = usePublicationStore((state) => state.resetPollConfig);
 
@@ -176,13 +147,9 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   const resetCollectSettings = useCollectModuleStore((state) => state.reset);
 
   // Reference module store
-  const selectedReferenceModule = useReferenceModuleStore(
-    (state) => state.selectedReferenceModule
-  );
+  const selectedReferenceModule = useReferenceModuleStore((state) => state.selectedReferenceModule);
   const onlyFollowers = useReferenceModuleStore((state) => state.onlyFollowers);
-  const degreesOfSeparation = useReferenceModuleStore(
-    (state) => state.degreesOfSeparation
-  );
+  const degreesOfSeparation = useReferenceModuleStore((state) => state.degreesOfSeparation);
 
   // Access module store
   const restricted = useAccessSettingsStore((state) => state.restricted);
@@ -200,12 +167,8 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   const [createPoll] = useCreatePoll();
 
   const isComment = Boolean(publication);
-  const hasAudio = ALLOWED_AUDIO_TYPES.includes(
-    attachments[0]?.original.mimeType
-  );
-  const hasVideo = ALLOWED_VIDEO_TYPES.includes(
-    attachments[0]?.original.mimeType
-  );
+  const hasAudio = ALLOWED_AUDIO_TYPES.includes(attachments[0]?.original.mimeType);
+  const hasVideo = ALLOWED_VIDEO_TYPES.includes(attachments[0]?.original.mimeType);
 
   // Dispatcher
   const canUseRelay = currentProfile?.dispatcher?.canUseRelay;
@@ -241,20 +204,14 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
       publication_collect_module: collectModule.type,
       publication_reference_module: selectedReferenceModule,
       publication_reference_module_degrees_of_separation:
-        selectedReferenceModule ===
-        ReferenceModules.DegreesOfSeparationReferenceModule
+        selectedReferenceModule === ReferenceModules.DegreesOfSeparationReferenceModule
           ? degreesOfSeparation
           : null,
       publication_has_attachments: attachments.length > 0,
       publication_attachment_types:
-        attachments.length > 0
-          ? attachments.map((attachment) => attachment.original.mimeType)
-          : null
+        attachments.length > 0 ? attachments.map((attachment) => attachment.original.mimeType) : null
     };
-    Leafwatch.track(
-      isComment ? PUBLICATION.NEW_COMMENT : PUBLICATION.NEW_POST,
-      eventProperties
-    );
+    Leafwatch.track(isComment ? PUBLICATION.NEW_COMMENT : PUBLICATION.NEW_POST, eventProperties);
   };
 
   const onError = (error: any) => {
@@ -272,19 +229,11 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     });
   });
 
-  const generateOptimisticPublication = ({
-    txHash,
-    txId
-  }: {
-    txHash?: string;
-    txId?: string;
-  }) => {
+  const generateOptimisticPublication = ({ txHash, txId }: { txHash?: string; txId?: string }) => {
     return {
       id: uuid(),
       ...(isComment && { parent: publication.id }),
-      type: isComment
-        ? OptmisticPublicationType.NewComment
-        : OptmisticPublicationType.NewPost,
+      type: isComment ? OptmisticPublicationType.NewComment : OptmisticPublicationType.NewPost,
       txHash,
       txId,
       content: publicationContent,
@@ -306,10 +255,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     onSuccess: ({ hash }) => {
       onCompleted();
       setUserSigNonce(userSigNonce + 1);
-      setTxnQueue([
-        generateOptimisticPublication({ txHash: hash }),
-        ...txnQueue
-      ]);
+      setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
     },
     onError: (error) => {
       onError(error);
@@ -324,10 +270,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         return toast.error(Errors.SomethingWentWrong);
       }
 
-      if (
-        data?.broadcastDataAvailability.__typename ===
-        'CreateDataAvailabilityPublicationResult'
-      ) {
+      if (data?.broadcastDataAvailability.__typename === 'CreateDataAvailabilityPublicationResult') {
         push(`/posts/${data?.broadcastDataAvailability.id}`);
       }
     },
@@ -338,10 +281,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     onCompleted: ({ broadcast }) => {
       onCompleted(broadcast.__typename);
       if (broadcast.__typename === 'RelayerResult') {
-        setTxnQueue([
-          generateOptimisticPublication({ txId: broadcast.txId }),
-          ...txnQueue
-        ]);
+        setTxnQueue([generateOptimisticPublication({ txId: broadcast.txId }), ...txnQueue]);
       }
     }
   });
@@ -363,10 +303,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     }
   });
 
-  const typedDataGenerator = async (
-    generatedData: any,
-    isDataAvailabilityPublication = false
-  ) => {
+  const typedDataGenerator = async (generatedData: any, isDataAvailabilityPublication = false) => {
     const { id, typedData } = generatedData;
     const signature = await signTypedDataAsync(getSignature(typedData));
     if (isDataAvailabilityPublication) {
@@ -385,29 +322,25 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
 
   // Normal typed data generation
   const [createCommentTypedData] = useCreateCommentTypedDataMutation({
-    onCompleted: async ({ createCommentTypedData }) =>
-      await typedDataGenerator(createCommentTypedData),
+    onCompleted: async ({ createCommentTypedData }) => await typedDataGenerator(createCommentTypedData),
     onError
   });
 
   const [createPostTypedData] = useCreatePostTypedDataMutation({
-    onCompleted: async ({ createPostTypedData }) =>
-      await typedDataGenerator(createPostTypedData),
+    onCompleted: async ({ createPostTypedData }) => await typedDataGenerator(createPostTypedData),
     onError
   });
 
   // Data availability typed data generation
-  const [createDataAvailabilityPostTypedData] =
-    useCreateDataAvailabilityPostTypedDataMutation({
-      onCompleted: async ({ createDataAvailabilityPostTypedData }) =>
-        await typedDataGenerator(createDataAvailabilityPostTypedData, true)
-    });
+  const [createDataAvailabilityPostTypedData] = useCreateDataAvailabilityPostTypedDataMutation({
+    onCompleted: async ({ createDataAvailabilityPostTypedData }) =>
+      await typedDataGenerator(createDataAvailabilityPostTypedData, true)
+  });
 
-  const [createDataAvailabilityCommentTypedData] =
-    useCreateDataAvailabilityCommentTypedDataMutation({
-      onCompleted: async ({ createDataAvailabilityCommentTypedData }) =>
-        await typedDataGenerator(createDataAvailabilityCommentTypedData, true)
-    });
+  const [createDataAvailabilityCommentTypedData] = useCreateDataAvailabilityCommentTypedDataMutation({
+    onCompleted: async ({ createDataAvailabilityCommentTypedData }) =>
+      await typedDataGenerator(createDataAvailabilityCommentTypedData, true)
+  });
 
   const [createCommentViaDispatcher] = useCreateCommentViaDispatcherMutation({
     onCompleted: ({ createCommentViaDispatcher }) => {
@@ -428,58 +361,46 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     onCompleted: ({ createPostViaDispatcher }) => {
       onCompleted(createPostViaDispatcher.__typename);
       if (createPostViaDispatcher.__typename === 'RelayerResult') {
-        setTxnQueue([
-          generateOptimisticPublication({ txId: createPostViaDispatcher.txId }),
-          ...txnQueue
-        ]);
+        setTxnQueue([generateOptimisticPublication({ txId: createPostViaDispatcher.txId }), ...txnQueue]);
       }
     },
     onError
   });
 
-  const [createDataAvailabilityPostViaDispatcher] =
-    useCreateDataAvailabilityPostViaDispatcherMutation({
-      onCompleted: (data) => {
-        if (
-          data?.createDataAvailabilityPostViaDispatcher?.__typename ===
-          'RelayError'
-        ) {
-          return;
-        }
+  const [createDataAvailabilityPostViaDispatcher] = useCreateDataAvailabilityPostViaDispatcherMutation({
+    onCompleted: (data) => {
+      if (data?.createDataAvailabilityPostViaDispatcher?.__typename === 'RelayError') {
+        return;
+      }
 
-        if (
-          data.createDataAvailabilityPostViaDispatcher.__typename ===
-          'CreateDataAvailabilityPublicationResult'
-        ) {
-          onCompleted();
-          const { id } = data.createDataAvailabilityPostViaDispatcher;
-          push(`/posts/${id}`);
-        }
-      },
-      onError
-    });
+      if (
+        data.createDataAvailabilityPostViaDispatcher.__typename === 'CreateDataAvailabilityPublicationResult'
+      ) {
+        onCompleted();
+        const { id } = data.createDataAvailabilityPostViaDispatcher;
+        push(`/posts/${id}`);
+      }
+    },
+    onError
+  });
 
-  const [createDataAvailabilityCommentViaDispatcher] =
-    useCreateDataAvailabilityCommentViaDispatcherMutation({
-      onCompleted: (data) => {
-        if (
-          data?.createDataAvailabilityCommentViaDispatcher?.__typename ===
-          'RelayError'
-        ) {
-          return;
-        }
+  const [createDataAvailabilityCommentViaDispatcher] = useCreateDataAvailabilityCommentViaDispatcherMutation({
+    onCompleted: (data) => {
+      if (data?.createDataAvailabilityCommentViaDispatcher?.__typename === 'RelayError') {
+        return;
+      }
 
-        if (
-          data.createDataAvailabilityCommentViaDispatcher.__typename ===
-          'CreateDataAvailabilityPublicationResult'
-        ) {
-          onCompleted();
-          const { id } = data.createDataAvailabilityCommentViaDispatcher;
-          getPublication({ variables: { request: { publicationId: id } } });
-        }
-      },
-      onError
-    });
+      if (
+        data.createDataAvailabilityCommentViaDispatcher.__typename ===
+        'CreateDataAvailabilityPublicationResult'
+      ) {
+        onCompleted();
+        const { id } = data.createDataAvailabilityCommentViaDispatcher;
+        getPublication({ variables: { request: { publicationId: id } } });
+      }
+    },
+    onError
+  });
 
   const createViaDataAvailablityDispatcher = async (request: any) => {
     const variables = { request };
@@ -489,10 +410,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         variables
       });
 
-      if (
-        data?.createDataAvailabilityCommentViaDispatcher?.__typename ===
-        'RelayError'
-      ) {
+      if (data?.createDataAvailabilityCommentViaDispatcher?.__typename === 'RelayError') {
         await createDataAvailabilityCommentTypedData({ variables });
       }
 
@@ -503,9 +421,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
       variables
     });
 
-    if (
-      data?.createDataAvailabilityPostViaDispatcher?.__typename === 'RelayError'
-    ) {
+    if (data?.createDataAvailabilityPostViaDispatcher?.__typename === 'RelayError') {
       await createDataAvailabilityPostTypedData({ variables });
     }
 
@@ -541,9 +457,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     if (attachments.length > 0) {
       if (hasAudio) {
         return PublicationMainFocus.Audio;
-      } else if (
-        ALLOWED_IMAGE_TYPES.includes(attachments[0]?.original.mimeType)
-      ) {
+      } else if (ALLOWED_IMAGE_TYPES.includes(attachments[0]?.original.mimeType)) {
         return PublicationMainFocus.Image;
       } else if (hasVideo) {
         return PublicationMainFocus.Video;
@@ -564,17 +478,11 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   };
 
   const getAttachmentImage = () => {
-    return hasAudio
-      ? audioPublication.cover
-      : hasVideo
-      ? videoThumbnail.url
-      : attachments[0]?.original.url;
+    return hasAudio ? audioPublication.cover : hasVideo ? videoThumbnail.url : attachments[0]?.original.url;
   };
 
   const getAttachmentImageMimeType = () => {
-    return hasAudio
-      ? audioPublication.coverMimeType
-      : attachments[0]?.original.mimeType;
+    return hasAudio ? audioPublication.coverMimeType : attachments[0]?.original.mimeType;
   };
 
   const getTitlePrefix = () => {
@@ -585,9 +493,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     return isComment ? 'Comment' : 'Post';
   };
 
-  const createTokenGatedMetadata = async (
-    metadata: PublicationMetadataV2Input
-  ) => {
+  const createTokenGatedMetadata = async (metadata: PublicationMetadataV2Input) => {
     if (!currentProfile) {
       return toast.error(Errors.SignWallet);
     }
@@ -620,10 +526,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
     if (collectToView && followToView) {
       accessCondition = {
         and: {
-          criteria: [
-            { collect: collectAccessCondition },
-            { follow: followAccessCondition }
-          ]
+          criteria: [{ collect: collectAccessCondition }, { follow: followAccessCondition }]
         }
       };
     } else if (collectToView) {
@@ -672,17 +575,12 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
       }
 
       if (publicationContent.length === 0 && attachments.length === 0) {
-        return setPublicationContentError(
-          `${isComment ? 'COMMENT' : 'POST'} should not be empty!`
-        );
+        return setPublicationContentError(`${isComment ? 'COMMENT' : 'POST'} should not be empty!`);
       }
 
       setPublicationContentError('');
       let textNftImageUrl = null;
-      if (
-        !attachments.length &&
-        collectModule.type !== CollectModules.RevertCollectModule
-      ) {
+      if (!attachments.length && collectModule.type !== CollectModules.RevertCollectModule) {
         textNftImageUrl = await getTextNftUrl(
           publicationContent,
           currentProfile.handle,
@@ -715,14 +613,12 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         });
       }
 
-      const attachmentsInput: PublicationMetadataMediaInput[] = attachments.map(
-        (attachment) => ({
-          item: attachment.original.url,
-          cover: getAttachmentImage(),
-          type: attachment.original.mimeType,
-          altTag: attachment.original.altTag
-        })
-      );
+      const attachmentsInput: PublicationMetadataMediaInput[] = attachments.map((attachment) => ({
+        item: attachment.original.url,
+        cover: getAttachmentImage(),
+        type: attachment.original.mimeType,
+        altTag: attachment.original.altTag
+      }));
 
       let processedPublicationContent = publicationContent;
 
@@ -735,17 +631,14 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         metadata_id: uuid(),
         content: processedPublicationContent,
         external_url: `https://lenster.xyz/u/${currentProfile?.handle}`,
-        image:
-          attachmentsInput.length > 0 ? getAttachmentImage() : textNftImageUrl,
+        image: attachmentsInput.length > 0 ? getAttachmentImage() : textNftImageUrl,
         imageMimeType:
           attachmentsInput.length > 0
             ? getAttachmentImageMimeType()
             : textNftImageUrl
             ? 'image/svg+xml'
             : null,
-        name: hasAudio
-          ? audioPublication.title
-          : `${getTitlePrefix()} by @${currentProfile?.handle}`,
+        name: hasAudio ? audioPublication.title : `${getTitlePrefix()} by @${currentProfile?.handle}`,
         tags: getTags(publicationContent),
         animation_url: getAnimationUrl(),
         mainContentFocus: getMainContentFocus(),
@@ -756,13 +649,10 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         appId: APP_NAME
       };
 
-      const isRevertCollectModule =
-        collectModule.type === CollectModules.RevertCollectModule;
+      const isRevertCollectModule = collectModule.type === CollectModules.RevertCollectModule;
       const useDataAvailability =
         !restricted &&
-        (isComment
-          ? publication.isDataAvailability && isRevertCollectModule
-          : isRevertCollectModule);
+        (isComment ? publication.isDataAvailability && isRevertCollectModule : isRevertCollectModule);
 
       let arweaveId;
       if (restricted) {
@@ -776,15 +666,11 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         profileId: currentProfile?.id,
         contentURI: `ar://${arweaveId}`,
         ...(isComment && {
-          publicationId:
-            publication.__typename === 'Mirror'
-              ? publication?.mirrorOf?.id
-              : publication?.id
+          publicationId: publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
         }),
         collectModule: collectModuleParams(collectModule, currentProfile),
         referenceModule:
-          selectedReferenceModule ===
-          ReferenceModules.FollowerOnlyReferenceModule
+          selectedReferenceModule === ReferenceModules.FollowerOnlyReferenceModule
             ? { followerOnlyReferenceModule: onlyFollowers }
             : {
                 degreesOfSeparationReferenceModule: {
@@ -799,19 +685,14 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
       const dataAvailablityRequest = {
         from: currentProfile?.id,
         ...(isComment && {
-          commentOn:
-            publication.__typename === 'Mirror'
-              ? publication?.mirrorOf?.id
-              : publication?.id
+          commentOn: publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
         }),
         contentURI: `ar://${arweaveId}`
       };
 
       if (canUseRelay) {
         if (useDataAvailability && isSponsored) {
-          return await createViaDataAvailablityDispatcher(
-            dataAvailablityRequest
-          );
+          return await createViaDataAvailablityDispatcher(dataAvailablityRequest);
         }
 
         return await createViaDispatcher(request);
@@ -848,53 +729,30 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   };
 
   const isSubmitDisabledByPoll = showPollEditor
-    ? !pollConfig.choices.length ||
-      pollConfig.choices.some((choice) => !choice.length)
+    ? !pollConfig.choices.length || pollConfig.choices.some((choice) => !choice.length)
     : false;
 
   return (
-    <Card
-      className={clsx(
-        { '!rounded-b-xl !rounded-t-none border-none': !isComment },
-        'pb-3'
-      )}
-    >
-      {error && (
-        <ErrorMessage
-          className="!rounded-none"
-          title={t`Transaction failed!`}
-          error={error}
-        />
-      )}
+    <Card className={clsx({ '!rounded-b-xl !rounded-t-none border-none': !isComment }, 'pb-3')}>
+      {error && <ErrorMessage className="!rounded-none" title={t`Transaction failed!`} error={error} />}
       <Editor />
       {publicationContentError && (
-        <div className="mt-1 px-5 pb-3 text-sm font-bold text-red-500">
-          {publicationContentError}
-        </div>
+        <div className="mt-1 px-5 pb-3 text-sm font-bold text-red-500">{publicationContentError}</div>
       )}
       {showPollEditor && <PollEditor />}
       <div className="block items-center px-5 sm:flex">
         <div className="flex items-center space-x-4">
           <Attachment />
           <Giphy setGifAttachment={(gif: IGif) => setGifAttachment(gif)} />
-          {!publication?.isDataAvailability && (
-            <>
-              <CollectSettings />
-              <ReferenceSettings />
-              {IS_LIT_AVAILABLE && <AccessSettings />}
-            </>
-          )}
+          <CollectSettings />
+          <ReferenceSettings />
+          {IS_LIT_AVAILABLE && <AccessSettings />}
           <PollSettings />
         </div>
         <div className="ml-auto pt-2 sm:pt-0">
           <Button
             className="bg-brand-500 hover:bg-brand-800 text-dark rounded-full border-0 font-medium uppercase"
-            disabled={
-              isLoading ||
-              isUploading ||
-              isSubmitDisabledByPoll ||
-              videoThumbnail.uploading
-            }
+            disabled={isLoading || isUploading || isSubmitDisabledByPoll || videoThumbnail.uploading}
             icon={
               isLoading ? (
                 <Spinner size="xs" />

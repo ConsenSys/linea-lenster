@@ -1,13 +1,13 @@
 import SingleNft from '@components/Nft/SingleNft';
 import { CollectionIcon } from '@heroicons/react/outline';
 import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
 import { EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
-import type { FC } from 'react';
-import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import formatHandle from 'lib/formatHandle';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 
 import type { NftLinea, RawNfts } from '../../types';
 
@@ -80,9 +80,7 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
             </span>
           ) : (
             <div>
-              <span className="mr-1 font-bold">
-                @{formatHandle(profile?.handle)}
-              </span>
+              <span className="mr-1 font-bold">@{formatHandle(profile?.handle)}</span>
               <span>
                 <Trans>doesn’t have any NFTs!</Trans>
               </span>

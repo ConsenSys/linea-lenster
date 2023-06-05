@@ -45,9 +45,7 @@ const Feed: FC<FeedProps> = ({
     customFilters,
     limit: 50
   };
-  const reactionRequest = currentProfile
-    ? { profileId: currentProfile?.id }
-    : null;
+  const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
   const profileId = currentProfile?.id ?? null;
 
   const { data, loading, error, fetchMore, refetch } = useExploreFeedQuery({
@@ -86,18 +84,11 @@ const Feed: FC<FeedProps> = ({
   }
 
   if (publications?.length === 0) {
-    return (
-      <EmptyState
-        message={t`No posts yet!`}
-        icon={<CollectionIcon className="text-brand h-8 w-8" />}
-      />
-    );
+    return <EmptyState message={t`No posts yet!`} icon={<CollectionIcon className="text-brand h-8 w-8" />} />;
   }
 
   if (error) {
-    return (
-      <ErrorMessage title={t`Failed to load moderation feed`} error={error} />
-    );
+    return <ErrorMessage title={t`Failed to load moderation feed`} error={error} />;
   }
 
   return (

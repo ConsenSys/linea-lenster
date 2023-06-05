@@ -10,24 +10,13 @@ import { useMessagePersistStore } from 'src/store/message';
 
 const MessageIcon: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const clearMessagesBadge = useMessagePersistStore(
-    (state) => state.clearMessagesBadge
-  );
-  const viewedMessagesAtNs = useMessagePersistStore(
-    (state) => state.viewedMessagesAtNs
-  );
-  const showMessagesBadge = useMessagePersistStore(
-    (state) => state.showMessagesBadge
-  );
-  const setShowMessagesBadge = useMessagePersistStore(
-    (state) => state.setShowMessagesBadge
-  );
+  const clearMessagesBadge = useMessagePersistStore((state) => state.clearMessagesBadge);
+  const viewedMessagesAtNs = useMessagePersistStore((state) => state.viewedMessagesAtNs);
+  const showMessagesBadge = useMessagePersistStore((state) => state.showMessagesBadge);
+  const setShowMessagesBadge = useMessagePersistStore((state) => state.setShowMessagesBadge);
   const { client: cachedClient } = useXmtpClient(true);
 
-  const shouldShowBadge = (
-    viewedAt: string | undefined,
-    messageSentAt: Date | undefined
-  ): boolean => {
+  const shouldShowBadge = (viewedAt: string | undefined, messageSentAt: Date | undefined): boolean => {
     if (!messageSentAt) {
       return false;
     }
@@ -36,8 +25,7 @@ const MessageIcon: FC = () => {
 
     return (
       !viewedMessagesAt ||
-      (viewedMessagesAt.getTime() < messageSentAt.getTime() &&
-        messageSentAt.getTime() < new Date().getTime())
+      (viewedMessagesAt.getTime() < messageSentAt.getTime() && messageSentAt.getTime() < new Date().getTime())
     );
   };
 
@@ -61,24 +49,18 @@ const MessageIcon: FC = () => {
           direction: SortDirection.SORT_DIRECTION_DESCENDING
         }))
       );
-      const mostRecentTimestamp = queryResults.reduce(
-        (lastTimestamp: string | null, envelopes) => {
-          if (!envelopes.length || !envelopes[0]?.timestampNs) {
-            return lastTimestamp;
-          }
-          if (!lastTimestamp || envelopes[0]?.timestampNs > lastTimestamp) {
-            return envelopes[0].timestampNs;
-          }
+      const mostRecentTimestamp = queryResults.reduce((lastTimestamp: string | null, envelopes) => {
+        if (!envelopes.length || !envelopes[0]?.timestampNs) {
           return lastTimestamp;
-        },
-        null
-      );
+        }
+        if (!lastTimestamp || envelopes[0]?.timestampNs > lastTimestamp) {
+          return envelopes[0].timestampNs;
+        }
+        return lastTimestamp;
+      }, null);
       // No messages have been sent or received by the user, ever
       const sentAt = fromNanoString(mostRecentTimestamp ?? undefined);
-      const showBadge = shouldShowBadge(
-        viewedMessagesAtNs.get(currentProfile.id),
-        sentAt
-      );
+      const showBadge = shouldShowBadge(viewedMessagesAtNs.get(currentProfile.id), sentAt);
       showMessagesBadge.set(currentProfile.id, showBadge);
       setShowMessagesBadge(new Map(showMessagesBadge));
     };
@@ -93,25 +75,17 @@ const MessageIcon: FC = () => {
     // For v1 badging, only badge when not already viewing messages. Once we have
     // badging per-conversation, we can remove this.
     const newMessageValidator = (profileId: string): boolean => {
-      return (
-        !window.location.pathname.startsWith('/messages') &&
-        currentProfile.id === profileId
-      );
+      return !window.location.pathname.startsWith('/messages') && currentProfile.id === profileId;
     };
 
-    const streamAllMessages = async (
-      messageValidator: (profileId: string) => boolean
-    ) => {
+    const streamAllMessages = async (messageValidator: (profileId: string) => boolean) => {
       messageStream = await cachedClient.conversations.streamAllMessages();
 
       for await (const message of messageStream) {
         if (messageValidator(currentProfile.id)) {
           const isFromPeer = currentProfile.ownedBy !== message.senderAddress;
           if (isFromPeer) {
-            const showBadge = shouldShowBadge(
-              viewedMessagesAtNs.get(currentProfile.id),
-              message.sent
-            );
+            const showBadge = shouldShowBadge(viewedMessagesAtNs.get(currentProfile.id), message.sent);
             showMessagesBadge.set(currentProfile.id, showBadge);
             setShowMessagesBadge(new Map(showMessagesBadge));
           }

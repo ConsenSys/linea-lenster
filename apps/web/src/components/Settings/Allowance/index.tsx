@@ -46,11 +46,10 @@ const AllowanceSettings: NextPage = () => {
     error: enabledModulesError
   } = useEnabledModulesQuery();
 
-  const { data, loading, error, refetch } =
-    useApprovedModuleAllowanceAmountQuery({
-      variables: { request: getAllowancePayload(DEFAULT_COLLECT_TOKEN) },
-      skip: !currentProfile?.id || enabledModulesLoading
-    });
+  const { data, loading, error, refetch } = useApprovedModuleAllowanceAmountQuery({
+    variables: { request: getAllowancePayload(DEFAULT_COLLECT_TOKEN) },
+    skip: !currentProfile?.id || enabledModulesLoading
+  });
 
   useEffectOnce(() => {
     Leafwatch.track(PAGEVIEW, { page: 'settings', subpage: 'allowance' });
@@ -79,8 +78,8 @@ const AllowanceSettings: NextPage = () => {
               </div>
               <p>
                 <Trans>
-                  In order to use collect feature you need to allow the module
-                  you use, you can allow and revoke the module anytime.
+                  In order to use collect feature you need to allow the module you use, you can allow and
+                  revoke the module anytime.
                 </Trans>
               </p>
             </div>
@@ -100,13 +99,11 @@ const AllowanceSettings: NextPage = () => {
               {enabledModulesLoading ? (
                 <option>Loading...</option>
               ) : (
-                enabledModules?.enabledModuleCurrencies.map(
-                  (currency: Erc20) => (
-                    <option key={currency.address} value={currency.address}>
-                      {currency.name}
-                    </option>
-                  )
-                )
+                enabledModules?.enabledModuleCurrencies.map((currency: Erc20) => (
+                  <option key={currency.address} value={currency.address}>
+                    {currency.name}
+                  </option>
+                ))
               )}
             </select>
           </div>

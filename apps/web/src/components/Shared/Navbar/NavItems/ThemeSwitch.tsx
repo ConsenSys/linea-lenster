@@ -17,10 +17,7 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({ onClick, className = '' }) => {
   return (
     <button
       type="button"
-      className={clsx(
-        'flex w-full px-4 py-1.5',
-        className
-      )}
+      className={clsx('flex w-full px-4 py-1.5', className)}
       onClick={() => {
         setTheme(theme === 'light' ? 'dark' : 'light');
         Leafwatch.track(SYSTEM.SWITCH_THEME, {

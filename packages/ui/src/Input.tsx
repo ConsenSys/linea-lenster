@@ -42,9 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <label className="w-full" htmlFor={id}>
       {label && (
         <div className="mb-1 flex items-center space-x-1.5">
-          <div className="font-medium text-white">
-            {label}
-          </div>
+          <div className="font-medium text-white">{label}</div>
           <HelpTooltip content={helper} />
         </div>
       )}

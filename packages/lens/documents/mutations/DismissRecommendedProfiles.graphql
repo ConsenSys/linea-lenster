@@ -1,5 +1,5 @@
 mutation DismissRecommendedProfiles(
-  $request: DismissRecommendedProfilesRequest!
+    $request: DismissRecommendedProfilesRequest!
 ) {
-  dismissRecommendedProfiles(request: $request)
+    dismissRecommendedProfiles(request: $request)
 }

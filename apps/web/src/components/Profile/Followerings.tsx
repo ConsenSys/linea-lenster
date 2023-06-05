@@ -25,16 +25,9 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
         onClick={() => setShowFollowingModal(!showFollowingModal)}
         data-testid="profile-followings"
       >
-        <div className="text-xl">
-          {humanize(profile?.stats?.totalFollowing)}
-        </div>
+        <div className="text-xl">{humanize(profile?.stats?.totalFollowing)}</div>
         <div className="lt-text-gray-500">
-          <Plural
-            value={profile?.stats?.totalFollowing}
-            zero="Following"
-            one="Following"
-            other="Following"
-          />
+          <Plural value={profile?.stats?.totalFollowing} zero="Following" one="Following" other="Following" />
         </div>
       </button>
       <button
@@ -43,16 +36,9 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
         onClick={() => setShowFollowersModal(!showFollowersModal)}
         data-testid="profile-followers"
       >
-        <div className="text-xl">
-          {humanize(profile?.stats?.totalFollowers)}
-        </div>
+        <div className="text-xl">{humanize(profile?.stats?.totalFollowers)}</div>
         <div className="lt-text-gray-500">
-          <Plural
-            value={profile?.stats?.totalFollowers}
-            zero="Follower"
-            one="Follower"
-            other="Followers"
-          />
+          <Plural value={profile?.stats?.totalFollowers} zero="Follower" one="Follower" other="Followers" />
         </div>
       </button>
       <Modal

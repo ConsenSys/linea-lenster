@@ -64,6 +64,16 @@ class ImageCropper extends Component<CropperProps, State> {
     hasWheelJustStarted: false
   };
 
+  static getMousePoint = (e: MouseEvent | React.MouseEvent | GestureEvent) => ({
+    x: Number(e.clientX),
+    y: Number(e.clientY)
+  });
+
+  static getTouchPoint = (touch: Touch | React.Touch) => ({
+    x: Number(touch.clientX),
+    y: Number(touch.clientY)
+  });
+
   componentDidMount() {
     if (this.containerRef) {
       if (this.containerRef.ownerDocument) {
@@ -183,16 +193,6 @@ class ImageCropper extends Component<CropperProps, State> {
       return cropSize;
     }
   };
-
-  static getMousePoint = (e: MouseEvent | React.MouseEvent | GestureEvent) => ({
-    x: Number(e.clientX),
-    y: Number(e.clientY)
-  });
-
-  static getTouchPoint = (touch: Touch | React.Touch) => ({
-    x: Number(touch.clientX),
-    y: Number(touch.clientY)
-  });
 
   onMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();

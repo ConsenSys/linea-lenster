@@ -9,9 +9,7 @@ import { usePublicationStore } from 'src/store/publication';
 
 const PollSettings: FC = () => {
   const showPollEditor = usePublicationStore((state) => state.showPollEditor);
-  const setShowPollEditor = usePublicationStore(
-    (state) => state.setShowPollEditor
-  );
+  const setShowPollEditor = usePublicationStore((state) => state.setShowPollEditor);
   const resetPollConfig = usePublicationStore((state) => state.resetPollConfig);
   const { on: isPollsEnabled } = Growthbook.feature(FeatureFlag.Polls);
 

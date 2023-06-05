@@ -10,9 +10,7 @@ import axios from 'axios';
 const getSnapshotProposal = async (proposalId: string, voter: string) => {
   try {
     const response = await axios(
-      `${SNAPSHOR_RELAY_WORKER_URL}/getProposal/${
-        IS_MAINNET ? 'mainnet' : 'testnet'
-      }/${proposalId}/${voter}`
+      `${SNAPSHOR_RELAY_WORKER_URL}/getProposal/${IS_MAINNET ? 'mainnet' : 'testnet'}/${proposalId}/${voter}`
     );
 
     return response.data;

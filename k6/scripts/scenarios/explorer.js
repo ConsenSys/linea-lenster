@@ -7,14 +7,14 @@ const payload = JSON.stringify(exploreFeedQuery);
 const API = 'https://api-zkevm-goerli.lens.dev';
 const params = {
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 };
 
 export const constantsVus = {
   executor: 'constant-vus',
   duration: '1m',
-  vus: 2500
+  vus: 2500,
 };
 
 export const rampingVus = {
@@ -23,8 +23,8 @@ export const rampingVus = {
   startVUs: 0,
   stages: [
     { duration: '1m', target: 2500 },
-    { duration: '30s', target: 0 }
-  ]
+    { duration: '30s', target: 0 },
+  ],
 };
 
 export function explorerAPIcall() {

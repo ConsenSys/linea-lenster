@@ -1,12 +1,10 @@
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { POLYGONSCAN_URL } from '@lenster/data/constants';
+import { LINEA_EXPLORER_URL } from '@lenster/data/constants';
 import { useHasTxHashBeenIndexedQuery } from '@lenster/lens';
 import { Spinner } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { LINEA_EXPLORER_URL } from 'data/constants';
-import { useHasTxHashBeenIndexedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 
@@ -16,21 +14,14 @@ interface IndexStatusProps {
   reload?: boolean;
 }
 
-const IndexStatus: FC<IndexStatusProps> = ({
-  type = 'Transaction',
-  txHash,
-  reload = false
-}) => {
+const IndexStatus: FC<IndexStatusProps> = ({ type = 'Transaction', txHash, reload = false }) => {
   const [hide, setHide] = useState(false);
   const [pollInterval, setPollInterval] = useState(500);
   const { data, loading } = useHasTxHashBeenIndexedQuery({
     variables: { request: { txHash } },
     pollInterval,
     onCompleted: ({ hasTxHashBeenIndexed }) => {
-      if (
-        hasTxHashBeenIndexed.__typename === 'TransactionIndexedResult' &&
-        hasTxHashBeenIndexed?.indexed
-      ) {
+      if (hasTxHashBeenIndexed.__typename === 'TransactionIndexedResult' && hasTxHashBeenIndexed?.indexed) {
         setPollInterval(0);
         if (reload) {
           location.reload();
