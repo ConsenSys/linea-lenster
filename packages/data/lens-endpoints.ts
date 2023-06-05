@@ -1,5 +1,5 @@
 export enum LensEndpoint {
-  Mainnet = 'https://api.lens.dev',
+  Mainnet = 'https://api-zkevm-goerli.lens.dev',
   Testnet = 'https://api-zkevm-goerli.lens.dev',
   Sandbox = 'https://api-sandbox-mumbai.lens.dev',
   Staging = 'https://staging-api-social-mumbai.lens.crtlkey.com',
