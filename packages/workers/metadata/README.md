@@ -12,4 +12,4 @@ free.
 
 - A EVM address's private key
 - Add the following environment variables to your `.dev.vars` file:
-    - `BUNDLR_PRIVATE_KEY` - the private key of the EVM address
+  - `BUNDLR_PRIVATE_KEY` - the private key of the EVM address
