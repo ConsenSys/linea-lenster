@@ -8,7 +8,7 @@ test.describe('Publication sidebar', () => {
 
   test('should have og poster profile', async ({ page }) => {
     const posterProfile = page.getByTestId('poster-profile');
-    await expect(posterProfile).toContainText('@yoginth');
+    await expect(posterProfile).toContainText('@alainnicolas');
   });
 
   test('should have relevant profiles', async ({ page }) => {

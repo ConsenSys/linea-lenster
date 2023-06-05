@@ -4,11 +4,11 @@ import { WEB_BASE_URL } from 'test/constants';
 
 test.describe('Profile', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/alainnicolas`);
   });
 
   test('should have page title', async ({ page }) => {
-    await expect(page).toHaveTitle(`Yoginth (@yoginth) • ${APP_NAME}`);
+    await expect(page).toHaveTitle(`Alain (@alainnicolas) • ${APP_NAME}`);
   });
 
   test.skip('should have avatar', async ({ page }) => {

@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.skip('should have page title', async ({ page }) => {
-  await expect(page).toHaveTitle(`Post by @yoginth.lens • ${APP_NAME}`);
+  await expect(page).toHaveTitle(`Post by @alainnicolas.lens • ${APP_NAME}`);
 });
 
 test.skip('should have publication', async ({ page }) => {

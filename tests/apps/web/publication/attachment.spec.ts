@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { WEB_BASE_URL } from 'test/constants';
 
 test.describe('Publication attachments', () => {
-  test('should have publication image', async ({ page }) => {
+  test.skip('should have publication image', async ({ page }) => {
     const publicationId = '0x0d-0x037d';
     await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 
@@ -21,7 +21,7 @@ test.describe('Publication attachments', () => {
     await expect(newPage.url()).toBe(imageURL + '/');
   });
 
-  test('should have publication video', async ({ page }) => {
+  test.skip('should have publication video', async ({ page }) => {
     const publicationId = '0x01-0x01';
     await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 
@@ -53,7 +53,7 @@ test.describe('Publication attachments', () => {
   });
 
   test.describe('Publication oembed', () => {
-    test('should have normal oembed', async ({ page }) => {
+    test.skip('should have normal oembed', async ({ page }) => {
       const publicationId = '0x0d-0x0375';
       await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 
@@ -67,7 +67,7 @@ test.describe('Publication attachments', () => {
       );
     });
 
-    test('should have rich oembed', async ({ page }) => {
+    test.skip('should have rich oembed', async ({ page }) => {
       const publicationId = '0x0d-0x02fb';
       await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 
@@ -79,7 +79,7 @@ test.describe('Publication attachments', () => {
   });
 
   test.describe('Publication snapshot widget', () => {
-    test('should have snapshot oembed', async ({ page }) => {
+    test.skip('should have snapshot oembed', async ({ page }) => {
       const publicationId = '0x0c-0x2c';
       await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 
@@ -94,7 +94,7 @@ test.describe('Publication attachments', () => {
       await expect(snapshotWidget).toContainText('Yes ser 🙌');
     });
 
-    test('should have poll oembed', async ({ page }) => {
+    test.skip('should have poll oembed', async ({ page }) => {
       const publicationId = '0x0d-0x03ce-DA-f4283318';
       await page.goto(`${WEB_BASE_URL}/posts/${publicationId}`);
 

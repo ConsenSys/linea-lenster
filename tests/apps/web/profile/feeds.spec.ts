@@ -3,7 +3,7 @@ import { WEB_BASE_URL } from 'test/constants';
 
 test.describe('Profile feeds', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${WEB_BASE_URL}/u/yoginth`);
+    await page.goto(`${WEB_BASE_URL}/u/alainnicolas`);
   });
 
   test('should have main feed', async ({ page }) => {
