@@ -1,0 +1,19 @@
+{
+  "name": "@lenster/abis",
+  "version": "0.0.0",
+  "private": true,
+  "license": "GPL-3.0",
+  "main": "index.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --fix --ext .ts",
+    "prettier": "prettier --check \"**/*.{js,ts,tsx,md}\"  --cache",
+    "prettier:fix": "prettier --write \"**/*.{js,ts,tsx,md}\"  --cache",
+    "typecheck": "tsc --pretty"
+  },
+  "devDependencies": {
+    "@lenster/tsconfig": "workspace:*",
+    "eslint-config-node": "workspace:*",
+    "typescript": "^5.1.3"
+  }
+}

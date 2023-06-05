@@ -1,0 +1,3 @@
+{
+  "extends": "@lenster/tsconfig/react.json"
+}
