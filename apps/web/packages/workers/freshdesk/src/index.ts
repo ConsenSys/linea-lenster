@@ -25,12 +25,9 @@ const handleRequest = async (request: Request, env: EnvType) => {
   const { email, subject, body } = payload;
 
   if (!email || !subject || !body) {
-    return new Response(
-      JSON.stringify({ success: false, message: 'Please fill all the fields' }),
-      {
-        headers
-      }
-    );
+    return new Response(JSON.stringify({ success: false, message: 'Please fill all the fields' }), {
+      headers
+    });
   }
 
   try {
@@ -55,10 +52,7 @@ const handleRequest = async (request: Request, env: EnvType) => {
     });
   } catch (error) {
     console.error('Failed to send email', error);
-    return new Response(
-      JSON.stringify({ success: false, message: 'Something went wrong!' }),
-      { headers }
-    );
+    return new Response(JSON.stringify({ success: false, message: 'Something went wrong!' }), { headers });
   }
 };
 

@@ -5,8 +5,7 @@ const getImage = (document: Document): string | null => {
     document.querySelector('meta[name="lens:image"]') ||
     document.querySelector('meta[property="lens:image"]');
   const og =
-    document.querySelector('meta[name="og:image"]') ||
-    document.querySelector('meta[property="og:image"]');
+    document.querySelector('meta[name="og:image"]') || document.querySelector('meta[property="og:image"]');
   const twitter =
     document.querySelector('meta[name="twitter:image"]') ||
     document.querySelector('meta[name="twitter:image:src"]') ||

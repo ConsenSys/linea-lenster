@@ -50,9 +50,7 @@ const TabButton: FC<TabButtonProps> = ({
       aria-label={name}
     >
       {icon}
-      <span className={clsx({ 'hidden uppercase sm:block': !showOnSm })}>
-        {name}
-      </span>
+      <span className={clsx({ 'hidden uppercase sm:block': !showOnSm })}>{name}</span>
       {count && (
         <span
           className={clsx(

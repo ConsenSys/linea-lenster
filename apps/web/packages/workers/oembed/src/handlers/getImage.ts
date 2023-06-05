@@ -11,21 +11,16 @@ export default async (request: IRequest, env: Env) => {
     const isSquare = transform === 'square';
     const height = isSquare ? 400 : 600;
     const width = isSquare ? 400 : 1000;
-    const image = await fetch(
-      `${env.IMAGEKIT_URL}/tr:di-placeholder.webp,h-${height},w-${width}/${url}`,
-      {
-        cf: {
-          cacheTtl: 60 * 60 * 24 * 7,
-          cacheEverything: true
-        }
+    const image = await fetch(`${env.IMAGEKIT_URL}/tr:di-placeholder.webp,h-${height},w-${width}/${url}`, {
+      cf: {
+        cacheTtl: 60 * 60 * 24 * 7,
+        cacheEverything: true
       }
-    );
+    });
 
     return new Response(image.body);
   } catch (error) {
     console.error('Failed to get oembed data', error);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong!' }));
   }
 };

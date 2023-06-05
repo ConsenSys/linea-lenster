@@ -1,9 +1,5 @@
 import { LENS_NETWORK } from '../constants';
-import {
-  MainnetContracts,
-  SandboxContracts,
-  TestnetContracts
-} from '../contracts';
+import { MainnetContracts, SandboxContracts, TestnetContracts } from '../contracts';
 import LensEndpoint from '../lens-endpoints';
 
 const getEnvConfig = (): {

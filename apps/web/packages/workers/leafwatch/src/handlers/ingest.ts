@@ -23,8 +23,7 @@ export default async (request: IRequest, env: Env) => {
     return error(400, 'Bad request!');
   }
 
-  const { name, user_id, fingerprint, referrer, properties } =
-    body as ExtensionRequest;
+  const { name, user_id, fingerprint, referrer, properties } = body as ExtensionRequest;
 
   const missingKeysError = keysValidator(requiredKeys, body);
   if (missingKeysError) {
@@ -55,8 +54,7 @@ export default async (request: IRequest, env: Env) => {
         client_id: '108061307956868790691',
         auth_uri: 'https://accounts.google.com/o/oauth2/auth',
         token_uri: 'https://oauth2.googleapis.com/token',
-        auth_provider_x509_cert_url:
-          'https://www.googleapis.com/oauth2/v1/certs',
+        auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
         client_x509_cert_url: `https://www.googleapis.com/robot/v1/metadata/x509/${datasetName}%40${projectName}.iam.gserviceaccount.com`,
         universe_domain: 'googleapis.com'
       },
@@ -96,16 +94,12 @@ export default async (request: IRequest, env: Env) => {
 
     const json: { kind: string } = await bqResponse.json();
     if (json.kind !== 'bigquery#tableDataInsertAllResponse') {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Ingestion failed!' })
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Ingestion failed!' }));
     }
 
     return new Response(JSON.stringify({ success: true, id }));
   } catch (error) {
     console.error('Failed to ingest event', error);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong!' }));
   }
 };

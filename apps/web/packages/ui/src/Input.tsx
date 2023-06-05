@@ -18,17 +18,7 @@ interface InputProps extends Omit<ComponentProps<'input'>, 'prefix'> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {
-    label,
-    prefix,
-    type = 'text',
-    iconLeft,
-    iconRight,
-    error,
-    className = '',
-    helper,
-    ...props
-  },
+  { label, prefix, type = 'text', iconLeft, iconRight, error, className = '', helper, ...props },
   ref
 ) {
   const id = useId();
@@ -72,16 +62,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             ref={ref}
             {...props}
           />
-          <span
-            tabIndex={-1}
-            className={clsx({ 'order-first pl-3': iconLeft }, iconStyles)}
-          >
+          <span tabIndex={-1} className={clsx({ 'order-first pl-3': iconLeft }, iconStyles)}>
             {iconLeft}
           </span>
-          <span
-            tabIndex={-1}
-            className={clsx({ 'order-last pr-3': iconRight }, iconStyles)}
-          >
+          <span tabIndex={-1} className={clsx({ 'order-last pr-3': iconRight }, iconStyles)}>
             {iconRight}
           </span>
         </div>

@@ -6,8 +6,7 @@ export type DeepHashChunks = DeepHashChunk[];
 export async function deepHash(data: DeepHashChunk): Promise<Uint8Array> {
   if (
     // @ts-expect-error
-    typeof data[Symbol.asyncIterator as keyof AsyncIterable<Buffer>] ===
-    'function'
+    typeof data[Symbol.asyncIterator as keyof AsyncIterable<Buffer>] === 'function'
   ) {
     const _data = data as AsyncIterable<Buffer>;
     const context = getShim('sha384');
@@ -19,10 +18,7 @@ export async function deepHash(data: DeepHashChunk): Promise<Uint8Array> {
       context.update(chunk);
     }
 
-    const tag = Buffer.concat([
-      Buffer.from('blob', 'utf-8'),
-      Buffer.from(length.toString(), 'utf-8')
-    ]);
+    const tag = Buffer.concat([Buffer.from('blob', 'utf-8'), Buffer.from(length.toString(), 'utf-8')]);
 
     const taggedHash = Buffer.concat([
       Buffer.from(await crypto.subtle.digest('SHA-384', tag)),
@@ -30,15 +26,9 @@ export async function deepHash(data: DeepHashChunk): Promise<Uint8Array> {
     ]);
     return Buffer.from(await crypto.subtle.digest('SHA-384', taggedHash));
   } else if (Array.isArray(data)) {
-    const tag = Buffer.concat([
-      Buffer.from('list', 'utf-8'),
-      Buffer.from(data.length.toString(), 'utf-8')
-    ]);
+    const tag = Buffer.concat([Buffer.from('list', 'utf-8'), Buffer.from(data.length.toString(), 'utf-8')]);
 
-    return await deepHashChunks(
-      data,
-      Buffer.from(await crypto.subtle.digest('SHA-384', tag))
-    );
+    return await deepHashChunks(data, Buffer.from(await crypto.subtle.digest('SHA-384', tag)));
   }
 
   const _data = data as Uint8Array;
@@ -56,10 +46,7 @@ export async function deepHash(data: DeepHashChunk): Promise<Uint8Array> {
   return Buffer.from(await crypto.subtle.digest('SHA-384', taggedHash));
 }
 
-export async function deepHashChunks(
-  chunks: DeepHashChunks,
-  acc: Uint8Array
-): Promise<Uint8Array> {
+export async function deepHashChunks(chunks: DeepHashChunks, acc: Uint8Array): Promise<Uint8Array> {
   if (chunks.length < 1) {
     return acc;
   }
@@ -69,9 +56,7 @@ export async function deepHashChunks(
   return await deepHashChunks(chunks.slice(1), newAcc);
 }
 
-export async function hashStream(
-  stream: AsyncIterable<Buffer>
-): Promise<Buffer> {
+export async function hashStream(stream: AsyncIterable<Buffer>): Promise<Buffer> {
   const context = getShim('sha384');
 
   for await (const chunk of stream) {

@@ -6,9 +6,7 @@ import { Regex } from '@lenster/data';
  * @param name Profile name
  * @returns Profile name with restricted symbols removed
  */
-const sanitizeDisplayName = (
-  name: string | null | undefined
-): string | null => {
+const sanitizeDisplayName = (name: string | null | undefined): string | null => {
   if (!name) {
     return null;
   }

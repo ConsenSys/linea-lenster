@@ -33,13 +33,7 @@ type SnapshotResponse = {
   };
 };
 
-const requiredKeys: (keyof ExtensionRequest)[] = [
-  'isMainnet',
-  'title',
-  'description',
-  'choices',
-  'length'
-];
+const requiredKeys: (keyof ExtensionRequest)[] = ['isMainnet', 'title', 'description', 'choices', 'length'];
 
 export default async (request: IRequest, env: Env) => {
   const body = await request.json();
@@ -47,23 +41,16 @@ export default async (request: IRequest, env: Env) => {
     return error(400, 'Bad request!');
   }
 
-  const { isMainnet, title, description, choices, length } =
-    body as ExtensionRequest;
+  const { isMainnet, title, description, choices, length } = body as ExtensionRequest;
 
   const missingKeysError = keysValidator(requiredKeys, body);
   if (missingKeysError) {
     return missingKeysError;
   }
 
-  const sequencerUrl = isMainnet
-    ? MAINNET_SNAPSHOT_SEQUNECER_API
-    : TESTNET_SNAPSHOT_SEQUNECER_API;
-  const snapshotUrl = isMainnet
-    ? MAINNET_SNAPSHOT_INTERFACE_URL
-    : TESTNET_SNAPSHOT_INTERFACE_URL;
-  const relayerAddress = isMainnet
-    ? MAINNET_PROPOSAL_CREATOR_ADDRESS
-    : TESTNET_PROPOSAL_CREATOR_ADDRESS;
+  const sequencerUrl = isMainnet ? MAINNET_SNAPSHOT_SEQUNECER_API : TESTNET_SNAPSHOT_SEQUNECER_API;
+  const snapshotUrl = isMainnet ? MAINNET_SNAPSHOT_INTERFACE_URL : TESTNET_SNAPSHOT_INTERFACE_URL;
+  const relayerAddress = isMainnet ? MAINNET_PROPOSAL_CREATOR_ADDRESS : TESTNET_PROPOSAL_CREATOR_ADDRESS;
   const relayerPrivateKey = isMainnet
     ? env.MAINNET_PROPOSAL_CREATOR_PRIVATE_KEY
     : env.TESTNET_PROPOSAL_CREATOR_PRIVATE_KEY;
@@ -127,9 +114,7 @@ export default async (request: IRequest, env: Env) => {
     const snapshotResponse: SnapshotResponse = await response.json();
 
     if (!snapshotResponse.id) {
-      return new Response(
-        JSON.stringify({ success: false, response: snapshotResponse })
-      );
+      return new Response(JSON.stringify({ success: false, response: snapshotResponse }));
     }
 
     return new Response(
@@ -140,8 +125,6 @@ export default async (request: IRequest, env: Env) => {
     );
   } catch (error) {
     console.error('Failed to create poll', error);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong!' }));
   }
 };

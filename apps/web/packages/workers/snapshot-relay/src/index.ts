@@ -18,20 +18,14 @@ router.get('/', () => new Response('say gm to snapshot relay service 👋'));
 router.get('/getProposal/:network/:id/:voter', ({ params }) =>
   getProposal(params.network, params.id, params.voter)
 );
-router.get('/getSpaceId/:network/:id', ({ params }) =>
-  getSpaceId(params.network, params.id)
-);
+router.get('/getSpaceId/:network/:id', ({ params }) => getSpaceId(params.network, params.id));
 router.post('/createPoll', createPoll);
 router.post('/votePoll', votePoll);
 
 const routerHandleStack = (request: Request, env: Env, ctx: ExecutionContext) =>
   router.handle(request, env, ctx).then(json);
 
-const handleFetch = async (
-  request: Request,
-  env: Env,
-  ctx: ExecutionContext
-) => {
+const handleFetch = async (request: Request, env: Env, ctx: ExecutionContext) => {
   try {
     return await routerHandleStack(request, env, ctx);
   } catch (error_) {
