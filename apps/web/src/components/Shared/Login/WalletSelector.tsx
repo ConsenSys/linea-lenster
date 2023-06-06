@@ -43,7 +43,6 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
   });
   const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
   const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery();
-  console.log('[connectors]', connectors);
 
   const onConnect = async (connector: Connector) => {
     try {
@@ -63,7 +62,6 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
     let keepModal = false;
     try {
       setLoading(true);
-      console.log('address', address);
       // Get challenge
       const challenge = await loadChallenge({
         variables: { request: { address } }
@@ -73,20 +71,15 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         return toast.error(Errors.SomethingWentWrong);
       }
 
-      console.log('[challenge]', challenge);
-
       // Get signature
       const signature = await signMessageAsync({
         message: challenge?.data?.challenge?.text
       });
 
-      console.log('[signature]', signature);
       // Auth user and set cookies
       const auth = await authenticate({
         variables: { request: { address, signature } }
       });
-
-      console.log('[auth]', auth);
       localStorage.setItem('accessToken', auth.data?.authenticate.accessToken);
       localStorage.setItem('refreshToken', auth.data?.authenticate.refreshToken);
 
@@ -94,8 +87,6 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       const { data: profilesData } = await getProfiles({
         variables: { ownedBy: address }
       });
-
-      console.log('[profilesData]', profilesData);
 
       if (!profilesData?.profiles?.items?.length) {
         setHasProfile(false);
