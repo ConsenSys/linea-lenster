@@ -12,7 +12,8 @@
 
 ## Cloudflare Workers
 
-We use Cloudflare Workers to handle some of the heavy lifting for us. These workers are deployed to Cloudflare's edge network and are written in TypeScript. They are located in the `packages/workers` directory.
+We use Cloudflare Workers to handle some of the heavy lifting for us. These workers are deployed to Cloudflare's edge
+network and are written in TypeScript. They are located in the `packages/workers` directory.
 
 - [STS Token Generator](../packages/workers/sts-generator/README.md)
 - [Metadata](../packages/workers/metadata/README.md)

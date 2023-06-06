@@ -9,46 +9,31 @@ const Footer: FC = () => {
   const { allowed: staffMode } = useStaffMode();
 
   return (
-    <footer
-      className={`sticky text-sm leading-7 ${staffMode ? 'top-28' : 'top-20'}`}
-      data-testid='footer'
-    >
+    <footer className={`sticky text-sm leading-7 ${staffMode ? 'top-28' : 'top-20'}`} data-testid="footer">
       <div className={'mt-4 flex flex-wrap gap-x-[12px] px-3 lg:px-0'}>
-        <span className='lt-text-gray-500 font-bold'>
+        <span className="lt-text-gray-500 font-bold">
           &copy; {new Date().getFullYear()} {APP_NAME}
         </span>
-        <Link href='/terms'>
+        <Link href="/terms">
           <Trans>Terms</Trans>
         </Link>
-        <Link href='/privacy'>
+        <Link href="/privacy">
           <Trans>Privacy</Trans>
         </Link>
-        <Link
-          href='https://discord.com/invite/9QwXqsyAps'
-          target='_blank'
-          rel='noreferrer noopener'
-        >
+        <Link href="https://discord.com/invite/9QwXqsyAps" target="_blank" rel="noreferrer noopener">
           <Trans>ConsenSys Discord</Trans>
         </Link>
-        <Link
-          href='https://lenster.xyz/donate'
-          target='_blank'
-          rel='noreferrer noopener'
-        >
+        <Link href="https://lenster.xyz/donate" target="_blank" rel="noreferrer noopener">
           <Trans>Donate to Lenster</Trans>
         </Link>
-        <Link
-          href='https://feedback.lenster.xyz'
-          target='_blank'
-          rel='noreferrer noopener'
-        >
+        <Link href="https://feedback.lenster.xyz" target="_blank" rel="noreferrer noopener">
           <Trans>Feedback</Trans>
         </Link>
-        <Link href='https://github.com/ConsenSys/lineaster' target='_blank' rel='noreferrer noopener'>
+        <Link href="https://github.com/ConsenSys/lineaster" target="_blank" rel="noreferrer noopener">
           <Trans>GitHub</Trans>
         </Link>
       </div>
-      <div className='mt-2 flex space-x-4'>
+      <div className="mt-2 flex space-x-4">
         <Locale />
       </div>
     </footer>

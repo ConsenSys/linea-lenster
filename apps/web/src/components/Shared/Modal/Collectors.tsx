@@ -1,11 +1,7 @@
 import UserProfile from '@components/Shared/UserProfile';
 import WalletProfile from '@components/Shared/WalletProfile';
 import { CollectionIcon } from '@heroicons/react/outline';
-import type {
-  Profile,
-  Wallet,
-  WhoCollectedPublicationRequest
-} from '@lenster/lens';
+import type { Profile, Wallet, WhoCollectedPublicationRequest } from '@lenster/lens';
 import { useCollectorsQuery } from '@lenster/lens';
 import { EmptyState, ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
@@ -66,15 +62,8 @@ const Collectors: FC<CollectorsProps> = ({ publicationId }) => {
   }
 
   return (
-    <div
-      className="max-h-[80vh] overflow-y-auto"
-      data-testid="collectors-modal"
-    >
-      <ErrorMessage
-        className="m-5"
-        title={t`Failed to load collectors`}
-        error={error}
-      />
+    <div className="max-h-[80vh] overflow-y-auto" data-testid="collectors-modal">
+      <ErrorMessage className="m-5" title={t`Failed to load collectors`} error={error} />
       <Virtuoso
         className="virtual-profile-list"
         data={profiles}

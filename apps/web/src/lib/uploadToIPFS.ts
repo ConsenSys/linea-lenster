@@ -1,11 +1,6 @@
 import { S3 } from '@aws-sdk/client-s3';
 import { KillSwitch } from '@lenster/data';
-import {
-  EVER_API,
-  IS_PRODUCTION,
-  S3_BUCKET,
-  STS_GENERATOR_WORKER_URL
-} from '@lenster/data/constants';
+import { EVER_API, IS_PRODUCTION, S3_BUCKET, STS_GENERATOR_WORKER_URL } from '@lenster/data/constants';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import axios from 'axios';
 import type { MediaSetWithoutOnChain } from 'src/types';
@@ -60,9 +55,7 @@ const getS3Client = async (): Promise<S3> => {
  */
 const uploadToIPFS = async (data: any): Promise<MediaSetWithoutOnChain[]> => {
   try {
-    const { on: useThirdwebIpfs } = Growthbook.feature(
-      KillSwitch.UseThirdwebIpfs
-    );
+    const { on: useThirdwebIpfs } = Growthbook.feature(KillSwitch.UseThirdwebIpfs);
     const files = Array.from(data);
 
     if (useThirdwebIpfs || !IS_PRODUCTION) {
@@ -115,9 +108,7 @@ const uploadToIPFS = async (data: any): Promise<MediaSetWithoutOnChain[]> => {
  * @param file File to upload to IPFS.
  * @returns MediaSet object or null if the upload fails.
  */
-export const uploadFileToIPFS = async (
-  file: File
-): Promise<MediaSetWithoutOnChain> => {
+export const uploadFileToIPFS = async (file: File): Promise<MediaSetWithoutOnChain> => {
   try {
     const ipfsResponse = await uploadToIPFS([file]);
     const metadata = ipfsResponse[0];

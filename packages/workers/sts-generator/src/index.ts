@@ -1,4 +1,8 @@
-import { AssumeRoleCommand, AssumeRoleRequest, STSClient } from '@aws-sdk/client-sts';
+import {
+  AssumeRoleCommand,
+  AssumeRoleRequest,
+  STSClient
+} from '@aws-sdk/client-sts';
 import dotenv from 'dotenv';
 import express from 'express';
 import { promises as fs } from 'fs';
@@ -18,7 +22,10 @@ let params: AssumeRoleRequest;
 const app = express();
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', process.env.STS_CORS ?? 'http://localhost:4783');
+  res.header(
+    'Access-Control-Allow-Origin',
+    process.env.STS_CORS ?? 'http://localhost:4783'
+  );
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -27,7 +34,9 @@ app.use(function (req, res, next) {
 app.get('/', async (req, res) => {
   try {
     if (!envVars.secretContent || envVars.secretContent === '') {
-      envVars.secretContent = await fs.readFile(envVars.filePath, { encoding: 'utf8' });
+      envVars.secretContent = await fs.readFile(envVars.filePath, {
+        encoding: 'utf8'
+      });
     }
 
     const { accessKeyId, secretAccessKey } = JSON.parse(envVars.secretContent);
@@ -50,7 +59,9 @@ app.get('/', async (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    res.send(JSON.stringify({ success: false, message: 'Something went wrong!' }));
+    res.send(
+      JSON.stringify({ success: false, message: 'Something went wrong!' })
+    );
   }
 });
 
@@ -86,5 +97,7 @@ app.listen(port, () => {
   }`
   };
 
-  console.log(`ready - started server on 0.0.0.0:8082, url: http://localhost:${port}`);
+  console.log(
+    `ready - started server on 0.0.0.0:8082, url: http://localhost:${port}`
+  );
 });

@@ -24,8 +24,7 @@ const useSendMessage = (conversationKey: string) => {
     if (!missingXmtpAuth && !conversations.has(conversationKey)) {
       const conversationId = conversationKey?.split('/')[0];
 
-      const conversationXmtpId =
-        parseConversationKey(conversationKey)?.conversationId ?? '';
+      const conversationXmtpId = parseConversationKey(conversationKey)?.conversationId ?? '';
 
       conversation =
         conversationXmtpId !== ''

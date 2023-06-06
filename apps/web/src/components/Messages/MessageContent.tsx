@@ -12,22 +12,14 @@ interface MessageContentProps {
   sentByMe: boolean;
 }
 
-const MessageContent: FC<MessageContentProps> = ({
-  message,
-  profile,
-  sentByMe
-}) => {
+const MessageContent: FC<MessageContentProps> = ({ message, profile, sentByMe }) => {
   if (message.error) {
     return <span>Error: {`${message.error}`}</span>;
   }
 
   if (message.contentType.sameAs(ContentTypeRemoteAttachment)) {
     return (
-      <RemoteAttachmentPreview
-        remoteAttachment={message.content}
-        profile={profile}
-        sentByMe={sentByMe}
-      />
+      <RemoteAttachmentPreview remoteAttachment={message.content} profile={profile} sentByMe={sentByMe} />
     );
   }
 

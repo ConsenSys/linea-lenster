@@ -23,14 +23,10 @@ export default async (request: IRequest, env: Env) => {
     if (bundlrRes.statusText === 'Created' || bundlrRes.statusText === 'OK') {
       return new Response(JSON.stringify({ success: true, id: tx.id }));
     } else {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Bundlr error!', bundlrRes })
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Bundlr error!', bundlrRes }));
     }
   } catch (error) {
     console.error('Failed to create metadata data', error);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong!' }));
   }
 };

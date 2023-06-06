@@ -1,13 +1,6 @@
 import type { Attribute, Maybe } from '@lenster/lens';
 
-type Key =
-  | 'hasPrideLogo'
-  | 'app'
-  | 'twitter'
-  | 'location'
-  | 'website'
-  | 'statusEmoji'
-  | 'statusMessage';
+type Key = 'hasPrideLogo' | 'app' | 'twitter' | 'location' | 'website' | 'statusEmoji' | 'statusMessage';
 
 /**
  * Returns the attribute value for a given key from an array of attributes.
@@ -16,10 +9,7 @@ type Key =
  * @param key The key to search for.
  * @returns The attribute value.
  */
-const getProfileAttribute = (
-  attributes: Maybe<Attribute[]> = [],
-  key: Key
-): string => {
+const getProfileAttribute = (attributes: Maybe<Attribute[]> = [], key: Key): string => {
   const attribute = attributes?.find((attr) => attr.key === key);
   return attribute?.value ?? '';
 };

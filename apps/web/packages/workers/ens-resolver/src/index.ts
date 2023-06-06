@@ -13,8 +13,7 @@ router.all('*', preflight);
 router.get('/', () => new Response('say gm to ens resolver service 👋'));
 router.post('/', resolveEns);
 
-const routerHandleStack = (request: Request, ctx: ExecutionContext) =>
-  router.handle(request, ctx).then(json);
+const routerHandleStack = (request: Request, ctx: ExecutionContext) => router.handle(request, ctx).then(json);
 
 const handleFetch = async (request: Request, ctx: ExecutionContext) => {
   try {
@@ -26,6 +25,5 @@ const handleFetch = async (request: Request, ctx: ExecutionContext) => {
 };
 
 export default {
-  fetch: (request: Request, context: ExecutionContext) =>
-    handleFetch(request, context).then(corsify)
+  fetch: (request: Request, context: ExecutionContext) => handleFetch(request, context).then(corsify)
 };

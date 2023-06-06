@@ -8,10 +8,7 @@ interface UserProfilesShimmerProps {
   isBig?: boolean;
 }
 
-const UserProfilesShimmer: FC<UserProfilesShimmerProps> = ({
-  showFollow = false,
-  isBig = false
-}) => {
+const UserProfilesShimmer: FC<UserProfilesShimmerProps> = ({ showFollow = false, isBig = false }) => {
   return (
     <div className="space-y-3">
       <Card className="p-5">

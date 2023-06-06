@@ -31,14 +31,14 @@ export class Secp256k1 {
 }
 
 export class EthereumSigner extends Secp256k1 {
-  get publicKey(): Buffer {
-    return Buffer.from(this.pk, 'hex');
-  }
-
   constructor(key: string) {
     const b = Buffer.from(key, 'hex');
     const account = privateKeyToAccount(bytesToHex(b));
     super(key, Buffer.from(hexToBytes(account.publicKey)));
+  }
+
+  get publicKey(): Buffer {
+    return Buffer.from(this.pk, 'hex');
   }
 
   sign(message: Uint8Array): Uint8Array {
@@ -52,10 +52,15 @@ export class EthereumSigner extends Secp256k1 {
 
 export class DataItem {
   private readonly binary: Buffer;
-  private _id!: Buffer;
 
   constructor(binary: Buffer) {
     this.binary = binary;
+  }
+
+  private _id!: Buffer;
+
+  get id(): string {
+    return base64url.encode(this._id);
   }
 
   get signatureType(): number {
@@ -63,10 +68,6 @@ export class DataItem {
       this.binary.subarray(0, 2)
     );
     return signatureTypeVal;
-  }
-
-  get id(): string {
-    return base64url.encode(this._id);
   }
 
   get rawOwner(): Buffer {

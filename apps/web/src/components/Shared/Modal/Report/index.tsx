@@ -3,15 +3,7 @@ import { CheckCircleIcon } from '@heroicons/react/solid';
 import type { Publication } from '@lenster/lens';
 import { useReportPublicationMutation } from '@lenster/lens';
 import stopEventPropagation from '@lenster/lib/stopEventPropagation';
-import {
-  Button,
-  EmptyState,
-  ErrorMessage,
-  Form,
-  Spinner,
-  TextArea,
-  useZodForm
-} from '@lenster/ui';
+import { Button, EmptyState, ErrorMessage, Form, Spinner, TextArea, useZodForm } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import type { FC } from 'react';
@@ -42,16 +34,14 @@ const Report: FC<ReportProps> = ({ publication }) => {
     Leafwatch.track(PAGEVIEW, { page: 'report' });
   });
 
-  const [
-    createReport,
-    { data: submitData, loading: submitLoading, error: submitError }
-  ] = useReportPublicationMutation({
-    onCompleted: () => {
-      Leafwatch.track(PUBLICATION.REPORT, {
-        report_publication_id: publication?.id
-      });
-    }
-  });
+  const [createReport, { data: submitData, loading: submitLoading, error: submitError }] =
+    useReportPublicationMutation({
+      onCompleted: () => {
+        Leafwatch.track(PUBLICATION.REPORT, {
+          report_publication_id: publication?.id
+        });
+      }
+    });
 
   const form = useZodForm({
     schema: newReportSchema
@@ -91,15 +81,8 @@ const Report: FC<ReportProps> = ({ publication }) => {
               reportPublication(additionalComments);
             }}
           >
-            {submitError && (
-              <ErrorMessage title={t`Failed to report`} error={submitError} />
-            )}
-            <Reason
-              setType={setType}
-              setSubReason={setSubReason}
-              type={type}
-              subReason={subReason}
-            />
+            {submitError && <ErrorMessage title={t`Failed to report`} error={submitError} />}
+            <Reason setType={setType} setSubReason={setSubReason} type={type} subReason={subReason} />
             {subReason && (
               <>
                 <TextArea
@@ -111,13 +94,7 @@ const Report: FC<ReportProps> = ({ publication }) => {
                   <Button
                     type="submit"
                     disabled={submitLoading}
-                    icon={
-                      submitLoading ? (
-                        <Spinner size="xs" />
-                      ) : (
-                        <PencilAltIcon className="h-4 w-4" />
-                      )
-                    }
+                    icon={submitLoading ? <Spinner size="xs" /> : <PencilAltIcon className="h-4 w-4" />}
                   >
                     <Trans>Report</Trans>
                   </Button>

@@ -18,16 +18,11 @@ const Permalink: FC<PermalinkProps> = ({ publication }) => {
     <Menu.Item
       as="div"
       className={({ active }) =>
-        clsx(
-          { 'dropdown-active': active },
-          'm-2 block cursor-pointer rounded-lg px-4 py-1.5 text-sm'
-        )
+        clsx({ 'dropdown-active': active }, 'm-2 block cursor-pointer rounded-lg px-4 py-1.5 text-sm')
       }
       onClick={async (event) => {
         stopEventPropagation(event);
-        await navigator.clipboard.writeText(
-          `${location.origin}/posts/${publication?.id}`
-        );
+        await navigator.clipboard.writeText(`${location.origin}/posts/${publication?.id}`);
         toast.success(t`Copied to clipboard!`);
         Leafwatch.track(PUBLICATION.PERMALINK);
       }}

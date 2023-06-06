@@ -37,20 +37,21 @@ const TabButton: FC<TabButtonProps> = ({
         onClick();
       }}
       className={clsx(
-        { 'text-dark bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium hover:cursor-default sm:px-3 sm:py-1.5': active },
-        'flex items-center space-x-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 sm:px-3 sm:py-1.5',
-        'hover:bg-brand-100/80 dark:hover:bg-brand-300/30 justify-center',
-        className
-      ),
-      {
-        'text-dark dark:hover:text-dark hover:bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium dark:text-white sm:px-3 sm:py-1.5':
-        !active
-      }}
-      data-testid={`tab-button-${name.toLowerCase()}`}
+        {
+          'text-dark bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium hover:cursor-default sm:px-3 sm:py-1.5':
+            active
+        },
+        {
+          'text-dark dark:hover:text-dark hover:bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium dark:text-white sm:px-3 sm:py-1.5':
+            !active
+        }
+      )}
       aria-label={name}
     >
       {icon}
-      <span className={clsx({ 'hidden uppercase sm:block': !showOnSm })}>{name}</span>
+      <span className={clsx({ 'hidden uppercase sm:block': !showOnSm })}>
+        {name}
+      </span>
       {count && (
         <span
           className={clsx(

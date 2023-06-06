@@ -1,13 +1,13 @@
 mutation CreateDataAvailabilityCommentViaDispatcher(
-  $request: CreateDataAvailabilityCommentRequest!
+    $request: CreateDataAvailabilityCommentRequest!
 ) {
-  createDataAvailabilityCommentViaDispatcher(request: $request) {
-    ... on CreateDataAvailabilityPublicationResult {
-      id
-      proofs
+    createDataAvailabilityCommentViaDispatcher(request: $request) {
+        ... on CreateDataAvailabilityPublicationResult {
+            id
+            proofs
+        }
+        ... on RelayError {
+            reason
+        }
     }
-    ... on RelayError {
-      reason
-    }
-  }
 }

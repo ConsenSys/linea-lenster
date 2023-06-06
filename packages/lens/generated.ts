@@ -46,7 +46,6 @@ export type Scalars = {
   Handle: { input: any; output: any };
   HandleClaimIdScalar: { input: any; output: any };
   ImageSizeTransform: { input: any; output: any };
-  ImageSizeTransform: any;
   InternalPublicationId: { input: any; output: any };
   IpfsCid: { input: any; output: any };
   Jwt: { input: any; output: any };
@@ -345,8 +344,6 @@ export type CollectModuleParams = {
   multirecipientFeeCollectModule?: InputMaybe<MultirecipientFeeCollectModuleParams>;
   /** The collect revert collect module */
   revertCollectModule?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The collect simple fee collect module */
-  simpleCollectModule?: InputMaybe<SimpleCollectModuleParams>;
   /** The collect simple fee collect module */
   simpleCollectModule?: InputMaybe<SimpleCollectModuleParams>;
   /** The collect timed fee collect module */
@@ -1220,8 +1217,6 @@ export type Dispatcher = {
   canUseRelay: Scalars['Boolean']['output'];
   /** If the dispatcher transactions will be sponsored by lens aka cover the gas costs */
   sponsor: Scalars['Boolean']['output'];
-  /** If the dispatcher transactions will be sponsored by lens aka cover the gas costs */
-  sponsor: Scalars['Boolean'];
 };
 
 export type DoesFollow = {
@@ -2191,52 +2186,11 @@ export type ModuleFeeParams = {
   referralFee: Scalars['Float']['input'];
 };
 
-export type ModuleFeeParams = {
-  /** The fee amount */
-  amount: ModuleFeeAmountParams;
-  /** The fee recipient */
-  recipient: Scalars['EthereumAddress'];
-  /** The referral fee */
-  referralFee: Scalars['Float'];
-};
-
 export type ModuleInfo = {
   __typename?: 'ModuleInfo';
   name: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
-
-/** The momka validator error */
-export enum MomokaValidatorError {
-  BlockCantBeReadFromNode = 'BLOCK_CANT_BE_READ_FROM_NODE',
-  BlockTooFar = 'BLOCK_TOO_FAR',
-  CanNotConnectToBundlr = 'CAN_NOT_CONNECT_TO_BUNDLR',
-  ChainSignatureAlreadyUsed = 'CHAIN_SIGNATURE_ALREADY_USED',
-  DataCantBeReadFromNode = 'DATA_CANT_BE_READ_FROM_NODE',
-  EventMismatch = 'EVENT_MISMATCH',
-  GeneratedPublicationIdMismatch = 'GENERATED_PUBLICATION_ID_MISMATCH',
-  InvalidEventTimestamp = 'INVALID_EVENT_TIMESTAMP',
-  InvalidFormattedTypedData = 'INVALID_FORMATTED_TYPED_DATA',
-  InvalidPointerSetNotNeeded = 'INVALID_POINTER_SET_NOT_NEEDED',
-  InvalidSignatureSubmitter = 'INVALID_SIGNATURE_SUBMITTER',
-  InvalidTxId = 'INVALID_TX_ID',
-  InvalidTypedDataDeadlineTimestamp = 'INVALID_TYPED_DATA_DEADLINE_TIMESTAMP',
-  NotClosestBlock = 'NOT_CLOSEST_BLOCK',
-  NoSignatureSubmitter = 'NO_SIGNATURE_SUBMITTER',
-  PointerFailedVerification = 'POINTER_FAILED_VERIFICATION',
-  PotentialReorg = 'POTENTIAL_REORG',
-  PublicationNonceInvalid = 'PUBLICATION_NONCE_INVALID',
-  PublicationNoneDa = 'PUBLICATION_NONE_DA',
-  PublicationNoPointer = 'PUBLICATION_NO_POINTER',
-  PublicationSignerNotAllowed = 'PUBLICATION_SIGNER_NOT_ALLOWED',
-  SimulationFailed = 'SIMULATION_FAILED',
-  SimulationNodeCouldNotRun = 'SIMULATION_NODE_COULD_NOT_RUN',
-  TimestampProofInvalidDaId = 'TIMESTAMP_PROOF_INVALID_DA_ID',
-  TimestampProofInvalidSignature = 'TIMESTAMP_PROOF_INVALID_SIGNATURE',
-  TimestampProofInvalidType = 'TIMESTAMP_PROOF_INVALID_TYPE',
-  TimestampProofNotSubmitter = 'TIMESTAMP_PROOF_NOT_SUBMITTER',
-  Unknown = 'UNKNOWN'
-}
 
 /** The momka validator error */
 export enum MomokaValidatorError {
@@ -2348,7 +2302,6 @@ export type Mutation = {
   deleteNftGallery?: Maybe<Scalars['Void']['output']>;
   dismissRecommendedProfiles?: Maybe<Scalars['Void']['output']>;
   dss?: Maybe<Scalars['Void']['output']>;
-  dss?: Maybe<Scalars['Void']>;
   gci?: Maybe<Scalars['Void']['output']>;
   gcr?: Maybe<Scalars['Void']['output']>;
   gdi?: Maybe<Scalars['Void']['output']>;
@@ -3723,10 +3676,6 @@ export type Query = {
   dataAvailabilitySummary: DataAvailabilitySummaryResult;
   dataAvailabilityTransaction?: Maybe<DataAvailabilityTransactionUnion>;
   dataAvailabilityTransactions: DataAvailabilityTransactionsResult;
-  dataAvailabilitySubmitters: DataAvailabilitySubmittersResult;
-  dataAvailabilitySummary: DataAvailabilitySummaryResult;
-  dataAvailabilityTransaction?: Maybe<DataAvailabilityTransactionUnion>;
-  dataAvailabilityTransactions: DataAvailabilityTransactionsResult;
   defaultProfile?: Maybe<Profile>;
   doesFollow: Array<DoesFollowResponse>;
   enabledModuleCurrencies: Array<Erc20>;
@@ -3745,7 +3694,6 @@ export type Query = {
   hasTxHashBeenIndexed: TransactionResult;
   internalPublicationFilter: PaginatedPublicationResult;
   isIDKitPhoneVerified: Scalars['Boolean']['output'];
-  iss: PrfResponse;
   iss: PrfResponse;
   mutualFollowersProfiles: PaginatedProfileResult;
   /** Get all NFT galleries for a profile */
@@ -3771,7 +3719,6 @@ export type Query = {
   publications: PaginatedPublicationResult;
   recommendedProfiles: Array<Profile>;
   rel?: Maybe<Scalars['Void']['output']>;
-  relayQueues: Array<RelayQueueResult>;
   relayQueues: Array<RelayQueueResult>;
   search: SearchResult;
   txIdToTxHash: Scalars['TxHash']['output'];
@@ -4288,32 +4235,6 @@ export type SimpleCollectModuleSettings = {
   fee?: Maybe<ModuleFee>;
   /** True if only followers of publisher may collect the post. */
   followerOnly: Scalars['Boolean']['output'];
-  /** The collect modules enum */
-  type: CollectModules;
-};
-
-export type SimpleCollectModuleParams = {
-  /** The collect module limit */
-  collectLimit?: InputMaybe<Scalars['String']>;
-  /** The timestamp that this collect module will expire */
-  endTimestamp?: InputMaybe<Scalars['DateTime']>;
-  /** The collect module fee params */
-  fee?: InputMaybe<ModuleFeeParams>;
-  /** Collectible by followers only */
-  followerOnly: Scalars['Boolean'];
-};
-
-export type SimpleCollectModuleSettings = {
-  __typename?: 'SimpleCollectModuleSettings';
-  /** The maximum number of collects for this publication. 0 for no limit. */
-  collectLimit?: Maybe<Scalars['String']>;
-  contractAddress: Scalars['ContractAddress'];
-  /** The end timestamp after which collecting is impossible. 0 for no expiry. */
-  endTimestamp?: Maybe<Scalars['DateTime']>;
-  /** The collect module fee params */
-  fee?: Maybe<ModuleFee>;
-  /** True if only followers of publisher may collect the post. */
-  followerOnly: Scalars['Boolean'];
   /** The collect modules enum */
   type: CollectModules;
 };
@@ -4891,7 +4812,6 @@ export type CommentFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -5222,7 +5142,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -5558,7 +5477,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -5984,7 +5902,6 @@ export type CommentFieldsFragment = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -6327,7 +6244,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -6665,7 +6581,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -7081,7 +6996,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -7421,7 +7335,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -7876,7 +7789,6 @@ export type MirrorFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -8283,7 +8195,6 @@ export type MirrorFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -8631,7 +8542,6 @@ export type PostFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -9894,7 +9804,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10029,7 +9938,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10164,7 +10072,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10444,7 +10351,6 @@ export type CommentFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -10788,7 +10694,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -11131,7 +11036,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -11571,7 +11475,6 @@ export type CommentFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -11917,7 +11820,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -12261,7 +12163,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -12687,7 +12588,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -13033,7 +12933,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -13413,7 +13312,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -13757,7 +13655,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -14100,7 +13997,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -14540,7 +14436,6 @@ export type ExploreFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -14886,7 +14781,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -15230,7 +15124,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -15656,7 +15549,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -16002,7 +15894,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -16341,7 +16232,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -16767,7 +16657,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -17107,7 +16996,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -17462,7 +17350,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -17806,7 +17693,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -18149,7 +18035,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -18589,7 +18474,6 @@ export type FeedHighlightsQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -18935,7 +18819,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -19279,7 +19162,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -19705,7 +19587,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -20051,7 +19932,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -20390,7 +20270,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -20816,7 +20695,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -21156,7 +21034,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -21914,7 +21791,6 @@ export type NotificationsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -22054,7 +21930,6 @@ export type NotificationsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -22748,7 +22623,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -23092,7 +22966,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -23435,7 +23308,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -23875,7 +23747,6 @@ export type ProfileFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -24221,7 +24092,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -24565,7 +24435,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -24991,7 +24860,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -25337,7 +25205,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -25676,7 +25543,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -26102,7 +25968,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -26442,7 +26307,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -26927,7 +26791,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -27264,7 +27127,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -27607,7 +27469,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -28033,7 +27894,6 @@ export type PublicationQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -28379,7 +28239,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -28720,7 +28579,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -29146,7 +29004,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -29489,7 +29346,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -29834,7 +29690,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -30250,7 +30105,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -30596,7 +30450,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -31097,7 +30950,6 @@ export type SearchPublicationsQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -31441,7 +31293,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -31784,7 +31635,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -32263,7 +32113,6 @@ export type SearchPublicationsQuery = {
                                         };
                                       } | null;
                                     }
-                                  | { __typename?: 'SimpleCollectModuleSettings' }
                                   | {
                                       __typename?: 'TimedFeeCollectModuleSettings';
                                       type: CollectModules;
@@ -32595,7 +32444,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -32939,7 +32787,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -33365,7 +33212,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -33711,7 +33557,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -34055,7 +33900,6 @@ export type SearchPublicationsQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -34823,7 +34667,6 @@ export type TimelineQuery = {
                   }>;
                 }
               | { __typename?: 'RevertCollectModuleSettings' }
-              | { __typename?: 'SimpleCollectModuleSettings' }
               | {
                   __typename?: 'SimpleCollectModuleSettings';
                   type: CollectModules;
@@ -35167,7 +35010,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -35510,7 +35352,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -35960,7 +35801,6 @@ export type TimelineQuery = {
                                     }>;
                                   }
                                 | { __typename?: 'RevertCollectModuleSettings' }
-                                | { __typename?: 'SimpleCollectModuleSettings' }
                                 | {
                                     __typename?: 'SimpleCollectModuleSettings';
                                     type: CollectModules;
@@ -36308,7 +36148,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -36652,7 +36491,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -37078,7 +36916,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -37424,7 +37261,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -37765,7 +37601,6 @@ export type TimelineQuery = {
                   }>;
                 }
               | { __typename?: 'RevertCollectModuleSettings' }
-              | { __typename?: 'SimpleCollectModuleSettings' }
               | {
                   __typename?: 'SimpleCollectModuleSettings';
                   type: CollectModules;
@@ -38318,7 +38153,6 @@ export type TimelineQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -38655,7 +38489,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -38998,7 +38831,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -39424,7 +39256,6 @@ export type TimelineQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -39770,7 +39601,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -40111,7 +39941,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -40537,7 +40366,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -40880,7 +40708,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -41846,6 +41673,7 @@ export function useBroadcastDataAvailabilityMutation(
     BroadcastDataAvailabilityMutationVariables
   >(BroadcastDataAvailabilityDocument, options);
 }
+
 export type BroadcastDataAvailabilityMutationHookResult = ReturnType<
   typeof useBroadcastDataAvailabilityMutation
 >;
@@ -42217,6 +42045,7 @@ export function useCreateDataAvailabilityCommentTypedDataMutation(
     CreateDataAvailabilityCommentTypedDataMutationVariables
   >(CreateDataAvailabilityCommentTypedDataDocument, options);
 }
+
 export type CreateDataAvailabilityCommentTypedDataMutationHookResult =
   ReturnType<typeof useCreateDataAvailabilityCommentTypedDataMutation>;
 export type CreateDataAvailabilityCommentTypedDataMutationResult =
@@ -42276,6 +42105,7 @@ export function useCreateDataAvailabilityCommentViaDispatcherMutation(
     CreateDataAvailabilityCommentViaDispatcherMutationVariables
   >(CreateDataAvailabilityCommentViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityCommentViaDispatcherMutationHookResult =
   ReturnType<typeof useCreateDataAvailabilityCommentViaDispatcherMutation>;
 export type CreateDataAvailabilityCommentViaDispatcherMutationResult =
@@ -42335,6 +42165,7 @@ export function useCreateDataAvailabilityMirrorViaDispatcherMutation(
     CreateDataAvailabilityMirrorViaDispatcherMutationVariables
   >(CreateDataAvailabilityMirrorViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityMirrorViaDispatcherMutationHookResult =
   ReturnType<typeof useCreateDataAvailabilityMirrorViaDispatcherMutation>;
 export type CreateDataAvailabilityMirrorViaDispatcherMutationResult =
@@ -42413,6 +42244,7 @@ export function useCreateDataAvailabilityPostTypedDataMutation(
     CreateDataAvailabilityPostTypedDataMutationVariables
   >(CreateDataAvailabilityPostTypedDataDocument, options);
 }
+
 export type CreateDataAvailabilityPostTypedDataMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityPostTypedDataMutation
 >;
@@ -42473,6 +42305,7 @@ export function useCreateDataAvailabilityPostViaDispatcherMutation(
     CreateDataAvailabilityPostViaDispatcherMutationVariables
   >(CreateDataAvailabilityPostViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityPostViaDispatcherMutationHookResult =
   ReturnType<typeof useCreateDataAvailabilityPostViaDispatcherMutation>;
 export type CreateDataAvailabilityPostViaDispatcherMutationResult =
@@ -43584,6 +43417,7 @@ export function useDismissRecommendedProfilesMutation(
     DismissRecommendedProfilesMutationVariables
   >(DismissRecommendedProfilesDocument, options);
 }
+
 export type DismissRecommendedProfilesMutationHookResult = ReturnType<
   typeof useDismissRecommendedProfilesMutation
 >;
@@ -44401,7 +44235,6 @@ export function useCommentFeedLazyQuery(
 }
 
 export type CommentFeedQueryHookResult = ReturnType<typeof useCommentFeedQuery>;
-
 export type CommentFeedLazyQueryHookResult = ReturnType<
   typeof useCommentFeedLazyQuery
 >;
@@ -44671,10 +44504,10 @@ export function useFollowersNftOwnedTokenIdsQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<FollowersNftOwnedTokenIdsQuery, FollowersNftOwnedTokenIdsQueryVariables>(
-    FollowersNftOwnedTokenIdsDocument,
-    options
-  );
+  return Apollo.useQuery<
+    FollowersNftOwnedTokenIdsQuery,
+    FollowersNftOwnedTokenIdsQueryVariables
+  >(FollowersNftOwnedTokenIdsDocument, options);
 }
 
 export function useFollowersNftOwnedTokenIdsLazyQuery(
@@ -44684,13 +44517,15 @@ export function useFollowersNftOwnedTokenIdsLazyQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<FollowersNftOwnedTokenIdsQuery, FollowersNftOwnedTokenIdsQueryVariables>(
-    FollowersNftOwnedTokenIdsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    FollowersNftOwnedTokenIdsQuery,
+    FollowersNftOwnedTokenIdsQueryVariables
+  >(FollowersNftOwnedTokenIdsDocument, options);
 }
 
-export type FollowersNftOwnedTokenIdsQueryHookResult = ReturnType<typeof useFollowersNftOwnedTokenIdsQuery>;
+export type FollowersNftOwnedTokenIdsQueryHookResult = ReturnType<
+  typeof useFollowersNftOwnedTokenIdsQuery
+>;
 export type FollowersNftOwnedTokenIdsLazyQueryHookResult = ReturnType<
   typeof useFollowersNftOwnedTokenIdsLazyQuery
 >;
@@ -46826,6 +46661,7 @@ export function useUserSigNoncesQuery(
     options
   );
 }
+
 export function useUserSigNoncesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     UserSigNoncesQuery,
@@ -46838,6 +46674,7 @@ export function useUserSigNoncesLazyQuery(
     options
   );
 }
+
 export type UserSigNoncesQueryHookResult = ReturnType<
   typeof useUserSigNoncesQuery
 >;
@@ -46879,6 +46716,7 @@ export function useVerifyQuery(
     options
   );
 }
+
 export function useVerifyLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<VerifyQuery, VerifyQueryVariables>
 ) {
@@ -46888,6 +46726,7 @@ export function useVerifyLazyQuery(
     options
   );
 }
+
 export type VerifyQueryHookResult = ReturnType<typeof useVerifyQuery>;
 export type VerifyLazyQueryHookResult = ReturnType<typeof useVerifyLazyQuery>;
 export type VerifyQueryResult = Apollo.QueryResult<
@@ -46900,6 +46739,7 @@ export interface PossibleTypesResultData {
     [key: string]: string[];
   };
 }
+
 const result: PossibleTypesResultData = {
   possibleTypes: {
     BroadcastDataAvailabilityUnion: [

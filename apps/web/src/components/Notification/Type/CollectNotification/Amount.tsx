@@ -11,11 +11,8 @@ interface CollectedAmountProps {
 
 const CollectedAmount: FC<CollectedAmountProps> = ({ notification }) => {
   const collectModule: any = notification?.collectedPublication?.collectModule;
-  const amount =
-    collectModule?.amount?.value ?? collectModule?.fee?.amount?.value;
-  const currency =
-    collectModule?.amount?.asset?.symbol ??
-    collectModule?.fee?.amount?.asset?.symbol;
+  const amount = collectModule?.amount?.value ?? collectModule?.fee?.amount?.value;
+  const currency = collectModule?.amount?.asset?.symbol ?? collectModule?.fee?.amount?.asset?.symbol;
 
   return (
     <div className="mt-2 flex items-center space-x-1">
@@ -29,13 +26,7 @@ const CollectedAmount: FC<CollectedAmountProps> = ({ notification }) => {
               Collected for {humanize(parseFloat(amount))} {currency}
             </Trans>
           </div>
-          <img
-            className="h-5 w-5"
-            height={20}
-            width={20}
-            src={getTokenImage(currency)}
-            alt={currency}
-          />
+          <img className="h-5 w-5" height={20} width={20} src={getTokenImage(currency)} alt={currency} />
         </>
       )}
     </div>

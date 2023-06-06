@@ -29,11 +29,7 @@ const SinglePublication: FC<SinglePublicationProps> = ({
 }) => {
   const { push } = useRouter();
   const firstComment = feedItem?.comments && feedItem.comments[0];
-  const rootPublication = feedItem
-    ? firstComment
-      ? firstComment
-      : feedItem?.root
-    : publication;
+  const rootPublication = feedItem ? (firstComment ? firstComment : feedItem?.root) : publication;
 
   return (
     <article
@@ -50,11 +46,7 @@ const SinglePublication: FC<SinglePublicationProps> = ({
       {feedItem ? (
         <ActionType feedItem={feedItem} />
       ) : (
-        <PublicationType
-          publication={publication}
-          showType={showType}
-          showThread={showThread}
-        />
+        <PublicationType publication={publication} showType={showType} showThread={showThread} />
       )}
       <PublicationHeader publication={rootPublication} feedItem={feedItem} />
       <div className="ml-[53px]">
@@ -69,12 +61,7 @@ const SinglePublication: FC<SinglePublicationProps> = ({
                 electedMirror={feedItem?.electedMirror as ElectedMirror}
               />
             )}
-            {showModActions && (
-              <ModAction
-                publication={rootPublication}
-                className="mt-3 max-w-md"
-              />
-            )}
+            {showModActions && <ModAction publication={rootPublication} className="mt-3 max-w-md" />}
           </>
         )}
       </div>

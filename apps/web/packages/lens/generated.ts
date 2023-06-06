@@ -12,10 +12,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> =
   | T
   | {
@@ -46,7 +43,6 @@ export type Scalars = {
   Handle: { input: any; output: any };
   HandleClaimIdScalar: { input: any; output: any };
   ImageSizeTransform: { input: any; output: any };
-  ImageSizeTransform: any;
   InternalPublicationId: { input: any; output: any };
   IpfsCid: { input: any; output: any };
   Jwt: { input: any; output: any };
@@ -204,13 +200,9 @@ export type ApprovedModuleAllowanceAmountRequest = {
   currencies: Array<Scalars['ContractAddress']['input']>;
   followModules?: InputMaybe<Array<FollowModules>>;
   referenceModules?: InputMaybe<Array<ReferenceModules>>;
-  unknownCollectModules?: InputMaybe<
-    Array<Scalars['ContractAddress']['input']>
-  >;
+  unknownCollectModules?: InputMaybe<Array<Scalars['ContractAddress']['input']>>;
   unknownFollowModules?: InputMaybe<Array<Scalars['ContractAddress']['input']>>;
-  unknownReferenceModules?: InputMaybe<
-    Array<Scalars['ContractAddress']['input']>
-  >;
+  unknownReferenceModules?: InputMaybe<Array<Scalars['ContractAddress']['input']>>;
 };
 
 /** The Profile */
@@ -242,9 +234,7 @@ export type AuthenticationResult = {
   refreshToken: Scalars['Jwt']['output'];
 };
 
-export type BroadcastDataAvailabilityUnion =
-  | CreateDataAvailabilityPublicationResult
-  | RelayError;
+export type BroadcastDataAvailabilityUnion = CreateDataAvailabilityPublicationResult | RelayError;
 
 export type BroadcastRequest = {
   id: Scalars['BroadcastId']['input'];
@@ -345,8 +335,6 @@ export type CollectModuleParams = {
   multirecipientFeeCollectModule?: InputMaybe<MultirecipientFeeCollectModuleParams>;
   /** The collect revert collect module */
   revertCollectModule?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The collect simple fee collect module */
-  simpleCollectModule?: InputMaybe<SimpleCollectModuleParams>;
   /** The collect simple fee collect module */
   simpleCollectModule?: InputMaybe<SimpleCollectModuleParams>;
   /** The collect timed fee collect module */
@@ -1220,8 +1208,6 @@ export type Dispatcher = {
   canUseRelay: Scalars['Boolean']['output'];
   /** If the dispatcher transactions will be sponsored by lens aka cover the gas costs */
   sponsor: Scalars['Boolean']['output'];
-  /** If the dispatcher transactions will be sponsored by lens aka cover the gas costs */
-  sponsor: Scalars['Boolean'];
 };
 
 export type DoesFollow = {
@@ -2191,52 +2177,11 @@ export type ModuleFeeParams = {
   referralFee: Scalars['Float']['input'];
 };
 
-export type ModuleFeeParams = {
-  /** The fee amount */
-  amount: ModuleFeeAmountParams;
-  /** The fee recipient */
-  recipient: Scalars['EthereumAddress'];
-  /** The referral fee */
-  referralFee: Scalars['Float'];
-};
-
 export type ModuleInfo = {
   __typename?: 'ModuleInfo';
   name: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
-
-/** The momka validator error */
-export enum MomokaValidatorError {
-  BlockCantBeReadFromNode = 'BLOCK_CANT_BE_READ_FROM_NODE',
-  BlockTooFar = 'BLOCK_TOO_FAR',
-  CanNotConnectToBundlr = 'CAN_NOT_CONNECT_TO_BUNDLR',
-  ChainSignatureAlreadyUsed = 'CHAIN_SIGNATURE_ALREADY_USED',
-  DataCantBeReadFromNode = 'DATA_CANT_BE_READ_FROM_NODE',
-  EventMismatch = 'EVENT_MISMATCH',
-  GeneratedPublicationIdMismatch = 'GENERATED_PUBLICATION_ID_MISMATCH',
-  InvalidEventTimestamp = 'INVALID_EVENT_TIMESTAMP',
-  InvalidFormattedTypedData = 'INVALID_FORMATTED_TYPED_DATA',
-  InvalidPointerSetNotNeeded = 'INVALID_POINTER_SET_NOT_NEEDED',
-  InvalidSignatureSubmitter = 'INVALID_SIGNATURE_SUBMITTER',
-  InvalidTxId = 'INVALID_TX_ID',
-  InvalidTypedDataDeadlineTimestamp = 'INVALID_TYPED_DATA_DEADLINE_TIMESTAMP',
-  NotClosestBlock = 'NOT_CLOSEST_BLOCK',
-  NoSignatureSubmitter = 'NO_SIGNATURE_SUBMITTER',
-  PointerFailedVerification = 'POINTER_FAILED_VERIFICATION',
-  PotentialReorg = 'POTENTIAL_REORG',
-  PublicationNonceInvalid = 'PUBLICATION_NONCE_INVALID',
-  PublicationNoneDa = 'PUBLICATION_NONE_DA',
-  PublicationNoPointer = 'PUBLICATION_NO_POINTER',
-  PublicationSignerNotAllowed = 'PUBLICATION_SIGNER_NOT_ALLOWED',
-  SimulationFailed = 'SIMULATION_FAILED',
-  SimulationNodeCouldNotRun = 'SIMULATION_NODE_COULD_NOT_RUN',
-  TimestampProofInvalidDaId = 'TIMESTAMP_PROOF_INVALID_DA_ID',
-  TimestampProofInvalidSignature = 'TIMESTAMP_PROOF_INVALID_SIGNATURE',
-  TimestampProofInvalidType = 'TIMESTAMP_PROOF_INVALID_TYPE',
-  TimestampProofNotSubmitter = 'TIMESTAMP_PROOF_NOT_SUBMITTER',
-  Unknown = 'UNKNOWN'
-}
 
 /** The momka validator error */
 export enum MomokaValidatorError {
@@ -2348,7 +2293,6 @@ export type Mutation = {
   deleteNftGallery?: Maybe<Scalars['Void']['output']>;
   dismissRecommendedProfiles?: Maybe<Scalars['Void']['output']>;
   dss?: Maybe<Scalars['Void']['output']>;
-  dss?: Maybe<Scalars['Void']>;
   gci?: Maybe<Scalars['Void']['output']>;
   gcr?: Maybe<Scalars['Void']['output']>;
   gdi?: Maybe<Scalars['Void']['output']>;
@@ -3269,9 +3213,7 @@ export type ProfileQueryRequest = {
   /** The profile ids */
   profileIds?: InputMaybe<Array<Scalars['ProfileId']['input']>>;
   /** The mirrored publication id */
-  whoMirroredPublicationId?: InputMaybe<
-    Scalars['InternalPublicationId']['input']
-  >;
+  whoMirroredPublicationId?: InputMaybe<Scalars['InternalPublicationId']['input']>;
 };
 
 /** Profile search results */
@@ -3368,10 +3310,7 @@ export type ProxyActionStatusResult = {
   txId: Scalars['TxId']['output'];
 };
 
-export type ProxyActionStatusResultUnion =
-  | ProxyActionError
-  | ProxyActionQueued
-  | ProxyActionStatusResult;
+export type ProxyActionStatusResultUnion = ProxyActionError | ProxyActionQueued | ProxyActionStatusResult;
 
 /** The proxy action status */
 export enum ProxyActionStatusTypes {
@@ -3723,10 +3662,6 @@ export type Query = {
   dataAvailabilitySummary: DataAvailabilitySummaryResult;
   dataAvailabilityTransaction?: Maybe<DataAvailabilityTransactionUnion>;
   dataAvailabilityTransactions: DataAvailabilityTransactionsResult;
-  dataAvailabilitySubmitters: DataAvailabilitySubmittersResult;
-  dataAvailabilitySummary: DataAvailabilitySummaryResult;
-  dataAvailabilityTransaction?: Maybe<DataAvailabilityTransactionUnion>;
-  dataAvailabilityTransactions: DataAvailabilityTransactionsResult;
   defaultProfile?: Maybe<Profile>;
   doesFollow: Array<DoesFollowResponse>;
   enabledModuleCurrencies: Array<Erc20>;
@@ -3745,7 +3680,6 @@ export type Query = {
   hasTxHashBeenIndexed: TransactionResult;
   internalPublicationFilter: PaginatedPublicationResult;
   isIDKitPhoneVerified: Scalars['Boolean']['output'];
-  iss: PrfResponse;
   iss: PrfResponse;
   mutualFollowersProfiles: PaginatedProfileResult;
   /** Get all NFT galleries for a profile */
@@ -3771,7 +3705,6 @@ export type Query = {
   publications: PaginatedPublicationResult;
   recommendedProfiles: Array<Profile>;
   rel?: Maybe<Scalars['Void']['output']>;
-  relayQueues: Array<RelayQueueResult>;
   relayQueues: Array<RelayQueueResult>;
   search: SearchResult;
   txIdToTxHash: Scalars['TxHash']['output'];
@@ -4056,9 +3989,7 @@ export type RelRequest = {
   secret: Scalars['String']['input'];
 };
 
-export type RelayDataAvailabilityResult =
-  | CreateDataAvailabilityPublicationResult
-  | RelayError;
+export type RelayDataAvailabilityResult = CreateDataAvailabilityPublicationResult | RelayError;
 
 export type RelayError = {
   __typename?: 'RelayError';
@@ -4288,32 +4219,6 @@ export type SimpleCollectModuleSettings = {
   fee?: Maybe<ModuleFee>;
   /** True if only followers of publisher may collect the post. */
   followerOnly: Scalars['Boolean']['output'];
-  /** The collect modules enum */
-  type: CollectModules;
-};
-
-export type SimpleCollectModuleParams = {
-  /** The collect module limit */
-  collectLimit?: InputMaybe<Scalars['String']>;
-  /** The timestamp that this collect module will expire */
-  endTimestamp?: InputMaybe<Scalars['DateTime']>;
-  /** The collect module fee params */
-  fee?: InputMaybe<ModuleFeeParams>;
-  /** Collectible by followers only */
-  followerOnly: Scalars['Boolean'];
-};
-
-export type SimpleCollectModuleSettings = {
-  __typename?: 'SimpleCollectModuleSettings';
-  /** The maximum number of collects for this publication. 0 for no limit. */
-  collectLimit?: Maybe<Scalars['String']>;
-  contractAddress: Scalars['ContractAddress'];
-  /** The end timestamp after which collecting is impossible. 0 for no expiry. */
-  endTimestamp?: Maybe<Scalars['DateTime']>;
-  /** The collect module fee params */
-  fee?: Maybe<ModuleFee>;
-  /** True if only followers of publisher may collect the post. */
-  followerOnly: Scalars['Boolean'];
   /** The collect modules enum */
   type: CollectModules;
 };
@@ -4891,7 +4796,6 @@ export type CommentFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -5222,7 +5126,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -5558,7 +5461,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -5984,7 +5886,6 @@ export type CommentFieldsFragment = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -6327,7 +6228,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -6665,7 +6565,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -7081,7 +6980,6 @@ export type CommentFieldsFragment = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -7421,7 +7319,6 @@ export type CommentFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -7876,7 +7773,6 @@ export type MirrorFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -8283,7 +8179,6 @@ export type MirrorFieldsFragment = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -8631,7 +8526,6 @@ export type PostFieldsFragment = {
         }>;
       }
     | { __typename?: 'RevertCollectModuleSettings' }
-    | { __typename?: 'SimpleCollectModuleSettings' }
     | {
         __typename?: 'SimpleCollectModuleSettings';
         type: CollectModules;
@@ -9137,10 +9031,9 @@ export type CreateDataAvailabilityCommentTypedDataMutation = {
   };
 };
 
-export type CreateDataAvailabilityCommentViaDispatcherMutationVariables =
-  Exact<{
-    request: CreateDataAvailabilityCommentRequest;
-  }>;
+export type CreateDataAvailabilityCommentViaDispatcherMutationVariables = Exact<{
+  request: CreateDataAvailabilityCommentRequest;
+}>;
 
 export type CreateDataAvailabilityCommentViaDispatcherMutation = {
   __typename?: 'Mutation';
@@ -9894,7 +9787,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10029,7 +9921,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10164,7 +10055,6 @@ export type CollectModuleQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -10444,7 +10334,6 @@ export type CommentFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -10788,7 +10677,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -11131,7 +11019,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -11571,7 +11458,6 @@ export type CommentFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -11917,7 +11803,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -12261,7 +12146,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -12687,7 +12571,6 @@ export type CommentFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -13033,7 +12916,6 @@ export type CommentFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -13413,7 +13295,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -13757,7 +13638,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -14100,7 +13980,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -14540,7 +14419,6 @@ export type ExploreFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -14886,7 +14764,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -15230,7 +15107,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -15656,7 +15532,6 @@ export type ExploreFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -16002,7 +15877,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -16341,7 +16215,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -16767,7 +16640,6 @@ export type ExploreFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -17107,7 +16979,6 @@ export type ExploreFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -17462,7 +17333,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -17806,7 +17676,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -18149,7 +18018,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -18589,7 +18457,6 @@ export type FeedHighlightsQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -18935,7 +18802,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -19279,7 +19145,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -19705,7 +19570,6 @@ export type FeedHighlightsQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -20051,7 +19915,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -20390,7 +20253,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -20816,7 +20678,6 @@ export type FeedHighlightsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -21156,7 +21017,6 @@ export type FeedHighlightsQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -21914,7 +21774,6 @@ export type NotificationsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -22054,7 +21913,6 @@ export type NotificationsQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -22748,7 +22606,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -23092,7 +22949,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -23435,7 +23291,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -23875,7 +23730,6 @@ export type ProfileFeedQuery = {
                                   }>;
                                 }
                               | { __typename?: 'RevertCollectModuleSettings' }
-                              | { __typename?: 'SimpleCollectModuleSettings' }
                               | {
                                   __typename?: 'SimpleCollectModuleSettings';
                                   type: CollectModules;
@@ -24221,7 +24075,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -24565,7 +24418,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -24991,7 +24843,6 @@ export type ProfileFeedQuery = {
                             }>;
                           }
                         | { __typename?: 'RevertCollectModuleSettings' }
-                        | { __typename?: 'SimpleCollectModuleSettings' }
                         | {
                             __typename?: 'SimpleCollectModuleSettings';
                             type: CollectModules;
@@ -25337,7 +25188,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -25676,7 +25526,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -26102,7 +25951,6 @@ export type ProfileFeedQuery = {
                       }>;
                     }
                   | { __typename?: 'RevertCollectModuleSettings' }
-                  | { __typename?: 'SimpleCollectModuleSettings' }
                   | {
                       __typename?: 'SimpleCollectModuleSettings';
                       type: CollectModules;
@@ -26442,7 +26290,6 @@ export type ProfileFeedQuery = {
                 }>;
               }
             | { __typename?: 'RevertCollectModuleSettings' }
-            | { __typename?: 'SimpleCollectModuleSettings' }
             | {
                 __typename?: 'SimpleCollectModuleSettings';
                 type: CollectModules;
@@ -26927,7 +26774,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -27264,7 +27110,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -27607,7 +27452,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -28033,7 +27877,6 @@ export type PublicationQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -28379,7 +28222,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -28720,7 +28562,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -29146,7 +28987,6 @@ export type PublicationQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -29489,7 +29329,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -29834,7 +29673,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -30250,7 +30088,6 @@ export type PublicationQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -30596,7 +30433,6 @@ export type PublicationQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -31097,7 +30933,6 @@ export type SearchPublicationsQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -31441,7 +31276,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -31784,7 +31618,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -32264,9 +32097,6 @@ export type SearchPublicationsQuery = {
                                       } | null;
                                     }
                                   | {
-                                      __typename?: 'SimpleCollectModuleSettings';
-                                    }
-                                  | {
                                       __typename?: 'TimedFeeCollectModuleSettings';
                                       type: CollectModules;
                                       endTimestamp: any;
@@ -32357,9 +32187,7 @@ export type SearchPublicationsQuery = {
                                               collect?: {
                                                 __typename?: 'CollectConditionOutput';
                                                 publicationId?: any | null;
-                                                thisPublication?:
-                                                  | boolean
-                                                  | null;
+                                                thisPublication?: boolean | null;
                                               } | null;
                                             }>;
                                           } | null;
@@ -32393,9 +32221,7 @@ export type SearchPublicationsQuery = {
                                               collect?: {
                                                 __typename?: 'CollectConditionOutput';
                                                 publicationId?: any | null;
-                                                thisPublication?:
-                                                  | boolean
-                                                  | null;
+                                                thisPublication?: boolean | null;
                                               } | null;
                                             }>;
                                           } | null;
@@ -32597,7 +32423,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -32941,7 +32766,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -33367,7 +33191,6 @@ export type SearchPublicationsQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -33713,7 +33536,6 @@ export type SearchPublicationsQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -34057,7 +33879,6 @@ export type SearchPublicationsQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -34825,7 +34646,6 @@ export type TimelineQuery = {
                   }>;
                 }
               | { __typename?: 'RevertCollectModuleSettings' }
-              | { __typename?: 'SimpleCollectModuleSettings' }
               | {
                   __typename?: 'SimpleCollectModuleSettings';
                   type: CollectModules;
@@ -35169,7 +34989,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -35512,7 +35331,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -35962,7 +35780,6 @@ export type TimelineQuery = {
                                     }>;
                                   }
                                 | { __typename?: 'RevertCollectModuleSettings' }
-                                | { __typename?: 'SimpleCollectModuleSettings' }
                                 | {
                                     __typename?: 'SimpleCollectModuleSettings';
                                     type: CollectModules;
@@ -36310,7 +36127,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -36654,7 +36470,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -37080,7 +36895,6 @@ export type TimelineQuery = {
                               }>;
                             }
                           | { __typename?: 'RevertCollectModuleSettings' }
-                          | { __typename?: 'SimpleCollectModuleSettings' }
                           | {
                               __typename?: 'SimpleCollectModuleSettings';
                               type: CollectModules;
@@ -37426,7 +37240,6 @@ export type TimelineQuery = {
                         }>;
                       }
                     | { __typename?: 'RevertCollectModuleSettings' }
-                    | { __typename?: 'SimpleCollectModuleSettings' }
                     | {
                         __typename?: 'SimpleCollectModuleSettings';
                         type: CollectModules;
@@ -37767,7 +37580,6 @@ export type TimelineQuery = {
                   }>;
                 }
               | { __typename?: 'RevertCollectModuleSettings' }
-              | { __typename?: 'SimpleCollectModuleSettings' }
               | {
                   __typename?: 'SimpleCollectModuleSettings';
                   type: CollectModules;
@@ -38320,7 +38132,6 @@ export type TimelineQuery = {
               }>;
             }
           | { __typename?: 'RevertCollectModuleSettings' }
-          | { __typename?: 'SimpleCollectModuleSettings' }
           | {
               __typename?: 'SimpleCollectModuleSettings';
               type: CollectModules;
@@ -38657,7 +38468,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -39000,7 +38810,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -39426,7 +39235,6 @@ export type TimelineQuery = {
                                 }>;
                               }
                             | { __typename?: 'RevertCollectModuleSettings' }
-                            | { __typename?: 'SimpleCollectModuleSettings' }
                             | {
                                 __typename?: 'SimpleCollectModuleSettings';
                                 type: CollectModules;
@@ -39772,7 +39580,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -40113,7 +39920,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -40539,7 +40345,6 @@ export type TimelineQuery = {
                           }>;
                         }
                       | { __typename?: 'RevertCollectModuleSettings' }
-                      | { __typename?: 'SimpleCollectModuleSettings' }
                       | {
                           __typename?: 'SimpleCollectModuleSettings';
                           type: CollectModules;
@@ -40882,7 +40687,6 @@ export type TimelineQuery = {
                     }>;
                   }
                 | { __typename?: 'RevertCollectModuleSettings' }
-                | { __typename?: 'SimpleCollectModuleSettings' }
                 | {
                     __typename?: 'SimpleCollectModuleSettings';
                     type: CollectModules;
@@ -41084,10 +40888,7 @@ export type TrendingQuery = {
 };
 
 export type UserProfilesQueryVariables = Exact<{
-  ownedBy?: InputMaybe<
-    | Array<Scalars['EthereumAddress']['input']>
-    | Scalars['EthereumAddress']['input']
-  >;
+  ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']['input']> | Scalars['EthereumAddress']['input']>;
 }>;
 
 export type UserProfilesQuery = {
@@ -41623,23 +41424,17 @@ export type AddProfileInterestMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useAddProfileInterestMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddProfileInterestMutation,
-    AddProfileInterestMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<AddProfileInterestMutation, AddProfileInterestMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AddProfileInterestMutation,
-    AddProfileInterestMutationVariables
-  >(AddProfileInterestDocument, options);
+  return Apollo.useMutation<AddProfileInterestMutation, AddProfileInterestMutationVariables>(
+    AddProfileInterestDocument,
+    options
+  );
 }
 
-export type AddProfileInterestMutationHookResult = ReturnType<
-  typeof useAddProfileInterestMutation
->;
-export type AddProfileInterestMutationResult =
-  Apollo.MutationResult<AddProfileInterestMutation>;
+export type AddProfileInterestMutationHookResult = ReturnType<typeof useAddProfileInterestMutation>;
+export type AddProfileInterestMutationResult = Apollo.MutationResult<AddProfileInterestMutation>;
 export type AddProfileInterestMutationOptions = Apollo.BaseMutationOptions<
   AddProfileInterestMutation,
   AddProfileInterestMutationVariables
@@ -41672,23 +41467,14 @@ export type AddReactionMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useAddReactionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddReactionMutation,
-    AddReactionMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<AddReactionMutation, AddReactionMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<AddReactionMutation, AddReactionMutationVariables>(
-    AddReactionDocument,
-    options
-  );
+  return Apollo.useMutation<AddReactionMutation, AddReactionMutationVariables>(AddReactionDocument, options);
 }
 
-export type AddReactionMutationHookResult = ReturnType<
-  typeof useAddReactionMutation
->;
-export type AddReactionMutationResult =
-  Apollo.MutationResult<AddReactionMutation>;
+export type AddReactionMutationHookResult = ReturnType<typeof useAddReactionMutation>;
+export type AddReactionMutationResult = Apollo.MutationResult<AddReactionMutation>;
 export type AddReactionMutationOptions = Apollo.BaseMutationOptions<
   AddReactionMutation,
   AddReactionMutationVariables
@@ -41724,23 +41510,17 @@ export type AuthenticateMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useAuthenticateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AuthenticateMutation,
-    AuthenticateMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<AuthenticateMutation, AuthenticateMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AuthenticateMutation,
-    AuthenticateMutationVariables
-  >(AuthenticateDocument, options);
+  return Apollo.useMutation<AuthenticateMutation, AuthenticateMutationVariables>(
+    AuthenticateDocument,
+    options
+  );
 }
 
-export type AuthenticateMutationHookResult = ReturnType<
-  typeof useAuthenticateMutation
->;
-export type AuthenticateMutationResult =
-  Apollo.MutationResult<AuthenticateMutation>;
+export type AuthenticateMutationHookResult = ReturnType<typeof useAuthenticateMutation>;
+export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutation>;
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<
   AuthenticateMutation,
   AuthenticateMutationVariables
@@ -41758,10 +41538,7 @@ export const BroadcastDocument = gql`
     }
   }
 `;
-export type BroadcastMutationFn = Apollo.MutationFunction<
-  BroadcastMutation,
-  BroadcastMutationVariables
->;
+export type BroadcastMutationFn = Apollo.MutationFunction<BroadcastMutation, BroadcastMutationVariables>;
 
 /**
  * __useBroadcastMutation__
@@ -41781,21 +41558,13 @@ export type BroadcastMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useBroadcastMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    BroadcastMutation,
-    BroadcastMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<BroadcastMutation, BroadcastMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<BroadcastMutation, BroadcastMutationVariables>(
-    BroadcastDocument,
-    options
-  );
+  return Apollo.useMutation<BroadcastMutation, BroadcastMutationVariables>(BroadcastDocument, options);
 }
 
-export type BroadcastMutationHookResult = ReturnType<
-  typeof useBroadcastMutation
->;
+export type BroadcastMutationHookResult = ReturnType<typeof useBroadcastMutation>;
 export type BroadcastMutationResult = Apollo.MutationResult<BroadcastMutation>;
 export type BroadcastMutationOptions = Apollo.BaseMutationOptions<
   BroadcastMutation,
@@ -41843,10 +41612,10 @@ export function useBroadcastDataAvailabilityMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    BroadcastDataAvailabilityMutation,
-    BroadcastDataAvailabilityMutationVariables
-  >(BroadcastDataAvailabilityDocument, options);
+  return Apollo.useMutation<BroadcastDataAvailabilityMutation, BroadcastDataAvailabilityMutationVariables>(
+    BroadcastDataAvailabilityDocument,
+    options
+  );
 }
 
 export type BroadcastDataAvailabilityMutationHookResult = ReturnType<
@@ -41854,16 +41623,12 @@ export type BroadcastDataAvailabilityMutationHookResult = ReturnType<
 >;
 export type BroadcastDataAvailabilityMutationResult =
   Apollo.MutationResult<BroadcastDataAvailabilityMutation>;
-export type BroadcastDataAvailabilityMutationOptions =
-  Apollo.BaseMutationOptions<
-    BroadcastDataAvailabilityMutation,
-    BroadcastDataAvailabilityMutationVariables
-  >;
+export type BroadcastDataAvailabilityMutationOptions = Apollo.BaseMutationOptions<
+  BroadcastDataAvailabilityMutation,
+  BroadcastDataAvailabilityMutationVariables
+>;
 export const CreateBurnProfileTypedDataDocument = gql`
-  mutation CreateBurnProfileTypedData(
-    $options: TypedDataOptions
-    $request: BurnProfileRequest!
-  ) {
+  mutation CreateBurnProfileTypedData($options: TypedDataOptions, $request: BurnProfileRequest!) {
     createBurnProfileTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -41919,10 +41684,10 @@ export function useCreateBurnProfileTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateBurnProfileTypedDataMutation,
-    CreateBurnProfileTypedDataMutationVariables
-  >(CreateBurnProfileTypedDataDocument, options);
+  return Apollo.useMutation<CreateBurnProfileTypedDataMutation, CreateBurnProfileTypedDataMutationVariables>(
+    CreateBurnProfileTypedDataDocument,
+    options
+  );
 }
 
 export type CreateBurnProfileTypedDataMutationHookResult = ReturnType<
@@ -41930,16 +41695,12 @@ export type CreateBurnProfileTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateBurnProfileTypedDataMutationResult =
   Apollo.MutationResult<CreateBurnProfileTypedDataMutation>;
-export type CreateBurnProfileTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateBurnProfileTypedDataMutation,
-    CreateBurnProfileTypedDataMutationVariables
-  >;
+export type CreateBurnProfileTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateBurnProfileTypedDataMutation,
+  CreateBurnProfileTypedDataMutationVariables
+>;
 export const CreateCollectTypedDataDocument = gql`
-  mutation CreateCollectTypedData(
-    $options: TypedDataOptions
-    $request: CreateCollectRequest!
-  ) {
+  mutation CreateCollectTypedData($options: TypedDataOptions, $request: CreateCollectRequest!) {
     createCollectTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -41997,26 +41758,20 @@ export function useCreateCollectTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateCollectTypedDataMutation,
-    CreateCollectTypedDataMutationVariables
-  >(CreateCollectTypedDataDocument, options);
+  return Apollo.useMutation<CreateCollectTypedDataMutation, CreateCollectTypedDataMutationVariables>(
+    CreateCollectTypedDataDocument,
+    options
+  );
 }
 
-export type CreateCollectTypedDataMutationHookResult = ReturnType<
-  typeof useCreateCollectTypedDataMutation
->;
-export type CreateCollectTypedDataMutationResult =
-  Apollo.MutationResult<CreateCollectTypedDataMutation>;
+export type CreateCollectTypedDataMutationHookResult = ReturnType<typeof useCreateCollectTypedDataMutation>;
+export type CreateCollectTypedDataMutationResult = Apollo.MutationResult<CreateCollectTypedDataMutation>;
 export type CreateCollectTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateCollectTypedDataMutation,
   CreateCollectTypedDataMutationVariables
 >;
 export const CreateCommentTypedDataDocument = gql`
-  mutation CreateCommentTypedData(
-    $options: TypedDataOptions
-    $request: CreatePublicCommentRequest!
-  ) {
+  mutation CreateCommentTypedData($options: TypedDataOptions, $request: CreatePublicCommentRequest!) {
     createCommentTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -42080,17 +41835,14 @@ export function useCreateCommentTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateCommentTypedDataMutation,
-    CreateCommentTypedDataMutationVariables
-  >(CreateCommentTypedDataDocument, options);
+  return Apollo.useMutation<CreateCommentTypedDataMutation, CreateCommentTypedDataMutationVariables>(
+    CreateCommentTypedDataDocument,
+    options
+  );
 }
 
-export type CreateCommentTypedDataMutationHookResult = ReturnType<
-  typeof useCreateCommentTypedDataMutation
->;
-export type CreateCommentTypedDataMutationResult =
-  Apollo.MutationResult<CreateCommentTypedDataMutation>;
+export type CreateCommentTypedDataMutationHookResult = ReturnType<typeof useCreateCommentTypedDataMutation>;
+export type CreateCommentTypedDataMutationResult = Apollo.MutationResult<CreateCommentTypedDataMutation>;
 export type CreateCommentTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateCommentTypedDataMutation,
   CreateCommentTypedDataMutationVariables
@@ -42132,10 +41884,10 @@ export function useCreateCommentViaDispatcherMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateCommentViaDispatcherMutation,
-    CreateCommentViaDispatcherMutationVariables
-  >(CreateCommentViaDispatcherDocument, options);
+  return Apollo.useMutation<CreateCommentViaDispatcherMutation, CreateCommentViaDispatcherMutationVariables>(
+    CreateCommentViaDispatcherDocument,
+    options
+  );
 }
 
 export type CreateCommentViaDispatcherMutationHookResult = ReturnType<
@@ -42143,15 +41895,12 @@ export type CreateCommentViaDispatcherMutationHookResult = ReturnType<
 >;
 export type CreateCommentViaDispatcherMutationResult =
   Apollo.MutationResult<CreateCommentViaDispatcherMutation>;
-export type CreateCommentViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateCommentViaDispatcherMutation,
-    CreateCommentViaDispatcherMutationVariables
-  >;
+export type CreateCommentViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateCommentViaDispatcherMutation,
+  CreateCommentViaDispatcherMutationVariables
+>;
 export const CreateDataAvailabilityCommentTypedDataDocument = gql`
-  mutation CreateDataAvailabilityCommentTypedData(
-    $request: CreateDataAvailabilityCommentRequest!
-  ) {
+  mutation CreateDataAvailabilityCommentTypedData($request: CreateDataAvailabilityCommentRequest!) {
     createDataAvailabilityCommentTypedData(request: $request) {
       id
       expiresAt
@@ -42185,11 +41934,10 @@ export const CreateDataAvailabilityCommentTypedDataDocument = gql`
     }
   }
 `;
-export type CreateDataAvailabilityCommentTypedDataMutationFn =
-  Apollo.MutationFunction<
-    CreateDataAvailabilityCommentTypedDataMutation,
-    CreateDataAvailabilityCommentTypedDataMutationVariables
-  >;
+export type CreateDataAvailabilityCommentTypedDataMutationFn = Apollo.MutationFunction<
+  CreateDataAvailabilityCommentTypedDataMutation,
+  CreateDataAvailabilityCommentTypedDataMutationVariables
+>;
 
 /**
  * __useCreateDataAvailabilityCommentTypedDataMutation__
@@ -42221,19 +41969,17 @@ export function useCreateDataAvailabilityCommentTypedDataMutation(
   >(CreateDataAvailabilityCommentTypedDataDocument, options);
 }
 
-export type CreateDataAvailabilityCommentTypedDataMutationHookResult =
-  ReturnType<typeof useCreateDataAvailabilityCommentTypedDataMutation>;
+export type CreateDataAvailabilityCommentTypedDataMutationHookResult = ReturnType<
+  typeof useCreateDataAvailabilityCommentTypedDataMutation
+>;
 export type CreateDataAvailabilityCommentTypedDataMutationResult =
   Apollo.MutationResult<CreateDataAvailabilityCommentTypedDataMutation>;
-export type CreateDataAvailabilityCommentTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateDataAvailabilityCommentTypedDataMutation,
-    CreateDataAvailabilityCommentTypedDataMutationVariables
-  >;
+export type CreateDataAvailabilityCommentTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateDataAvailabilityCommentTypedDataMutation,
+  CreateDataAvailabilityCommentTypedDataMutationVariables
+>;
 export const CreateDataAvailabilityCommentViaDispatcherDocument = gql`
-  mutation CreateDataAvailabilityCommentViaDispatcher(
-    $request: CreateDataAvailabilityCommentRequest!
-  ) {
+  mutation CreateDataAvailabilityCommentViaDispatcher($request: CreateDataAvailabilityCommentRequest!) {
     createDataAvailabilityCommentViaDispatcher(request: $request) {
       ... on CreateDataAvailabilityPublicationResult {
         id
@@ -42245,11 +41991,10 @@ export const CreateDataAvailabilityCommentViaDispatcherDocument = gql`
     }
   }
 `;
-export type CreateDataAvailabilityCommentViaDispatcherMutationFn =
-  Apollo.MutationFunction<
-    CreateDataAvailabilityCommentViaDispatcherMutation,
-    CreateDataAvailabilityCommentViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityCommentViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateDataAvailabilityCommentViaDispatcherMutation,
+  CreateDataAvailabilityCommentViaDispatcherMutationVariables
+>;
 
 /**
  * __useCreateDataAvailabilityCommentViaDispatcherMutation__
@@ -42281,19 +42026,17 @@ export function useCreateDataAvailabilityCommentViaDispatcherMutation(
   >(CreateDataAvailabilityCommentViaDispatcherDocument, options);
 }
 
-export type CreateDataAvailabilityCommentViaDispatcherMutationHookResult =
-  ReturnType<typeof useCreateDataAvailabilityCommentViaDispatcherMutation>;
+export type CreateDataAvailabilityCommentViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateDataAvailabilityCommentViaDispatcherMutation
+>;
 export type CreateDataAvailabilityCommentViaDispatcherMutationResult =
   Apollo.MutationResult<CreateDataAvailabilityCommentViaDispatcherMutation>;
-export type CreateDataAvailabilityCommentViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateDataAvailabilityCommentViaDispatcherMutation,
-    CreateDataAvailabilityCommentViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityCommentViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateDataAvailabilityCommentViaDispatcherMutation,
+  CreateDataAvailabilityCommentViaDispatcherMutationVariables
+>;
 export const CreateDataAvailabilityMirrorViaDispatcherDocument = gql`
-  mutation CreateDataAvailabilityMirrorViaDispatcher(
-    $request: CreateDataAvailabilityMirrorRequest!
-  ) {
+  mutation CreateDataAvailabilityMirrorViaDispatcher($request: CreateDataAvailabilityMirrorRequest!) {
     createDataAvailabilityMirrorViaDispatcher(request: $request) {
       ... on CreateDataAvailabilityPublicationResult {
         id
@@ -42305,11 +42048,10 @@ export const CreateDataAvailabilityMirrorViaDispatcherDocument = gql`
     }
   }
 `;
-export type CreateDataAvailabilityMirrorViaDispatcherMutationFn =
-  Apollo.MutationFunction<
-    CreateDataAvailabilityMirrorViaDispatcherMutation,
-    CreateDataAvailabilityMirrorViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityMirrorViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateDataAvailabilityMirrorViaDispatcherMutation,
+  CreateDataAvailabilityMirrorViaDispatcherMutationVariables
+>;
 
 /**
  * __useCreateDataAvailabilityMirrorViaDispatcherMutation__
@@ -42341,19 +42083,17 @@ export function useCreateDataAvailabilityMirrorViaDispatcherMutation(
   >(CreateDataAvailabilityMirrorViaDispatcherDocument, options);
 }
 
-export type CreateDataAvailabilityMirrorViaDispatcherMutationHookResult =
-  ReturnType<typeof useCreateDataAvailabilityMirrorViaDispatcherMutation>;
+export type CreateDataAvailabilityMirrorViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateDataAvailabilityMirrorViaDispatcherMutation
+>;
 export type CreateDataAvailabilityMirrorViaDispatcherMutationResult =
   Apollo.MutationResult<CreateDataAvailabilityMirrorViaDispatcherMutation>;
-export type CreateDataAvailabilityMirrorViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateDataAvailabilityMirrorViaDispatcherMutation,
-    CreateDataAvailabilityMirrorViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityMirrorViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateDataAvailabilityMirrorViaDispatcherMutation,
+  CreateDataAvailabilityMirrorViaDispatcherMutationVariables
+>;
 export const CreateDataAvailabilityPostTypedDataDocument = gql`
-  mutation CreateDataAvailabilityPostTypedData(
-    $request: CreateDataAvailabilityPostRequest!
-  ) {
+  mutation CreateDataAvailabilityPostTypedData($request: CreateDataAvailabilityPostRequest!) {
     createDataAvailabilityPostTypedData(request: $request) {
       id
       expiresAt
@@ -42384,11 +42124,10 @@ export const CreateDataAvailabilityPostTypedDataDocument = gql`
     }
   }
 `;
-export type CreateDataAvailabilityPostTypedDataMutationFn =
-  Apollo.MutationFunction<
-    CreateDataAvailabilityPostTypedDataMutation,
-    CreateDataAvailabilityPostTypedDataMutationVariables
-  >;
+export type CreateDataAvailabilityPostTypedDataMutationFn = Apollo.MutationFunction<
+  CreateDataAvailabilityPostTypedDataMutation,
+  CreateDataAvailabilityPostTypedDataMutationVariables
+>;
 
 /**
  * __useCreateDataAvailabilityPostTypedDataMutation__
@@ -42425,15 +42164,12 @@ export type CreateDataAvailabilityPostTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateDataAvailabilityPostTypedDataMutationResult =
   Apollo.MutationResult<CreateDataAvailabilityPostTypedDataMutation>;
-export type CreateDataAvailabilityPostTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateDataAvailabilityPostTypedDataMutation,
-    CreateDataAvailabilityPostTypedDataMutationVariables
-  >;
+export type CreateDataAvailabilityPostTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateDataAvailabilityPostTypedDataMutation,
+  CreateDataAvailabilityPostTypedDataMutationVariables
+>;
 export const CreateDataAvailabilityPostViaDispatcherDocument = gql`
-  mutation CreateDataAvailabilityPostViaDispatcher(
-    $request: CreateDataAvailabilityPostRequest!
-  ) {
+  mutation CreateDataAvailabilityPostViaDispatcher($request: CreateDataAvailabilityPostRequest!) {
     createDataAvailabilityPostViaDispatcher(request: $request) {
       ... on CreateDataAvailabilityPublicationResult {
         id
@@ -42445,11 +42181,10 @@ export const CreateDataAvailabilityPostViaDispatcherDocument = gql`
     }
   }
 `;
-export type CreateDataAvailabilityPostViaDispatcherMutationFn =
-  Apollo.MutationFunction<
-    CreateDataAvailabilityPostViaDispatcherMutation,
-    CreateDataAvailabilityPostViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityPostViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateDataAvailabilityPostViaDispatcherMutation,
+  CreateDataAvailabilityPostViaDispatcherMutationVariables
+>;
 
 /**
  * __useCreateDataAvailabilityPostViaDispatcherMutation__
@@ -42481,20 +42216,17 @@ export function useCreateDataAvailabilityPostViaDispatcherMutation(
   >(CreateDataAvailabilityPostViaDispatcherDocument, options);
 }
 
-export type CreateDataAvailabilityPostViaDispatcherMutationHookResult =
-  ReturnType<typeof useCreateDataAvailabilityPostViaDispatcherMutation>;
+export type CreateDataAvailabilityPostViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateDataAvailabilityPostViaDispatcherMutation
+>;
 export type CreateDataAvailabilityPostViaDispatcherMutationResult =
   Apollo.MutationResult<CreateDataAvailabilityPostViaDispatcherMutation>;
-export type CreateDataAvailabilityPostViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateDataAvailabilityPostViaDispatcherMutation,
-    CreateDataAvailabilityPostViaDispatcherMutationVariables
-  >;
+export type CreateDataAvailabilityPostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateDataAvailabilityPostViaDispatcherMutation,
+  CreateDataAvailabilityPostViaDispatcherMutationVariables
+>;
 export const CreateFollowTypedDataDocument = gql`
-  mutation CreateFollowTypedData(
-    $options: TypedDataOptions
-    $request: FollowRequest!
-  ) {
+  mutation CreateFollowTypedData($options: TypedDataOptions, $request: FollowRequest!) {
     createFollowTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -42551,26 +42283,20 @@ export function useCreateFollowTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateFollowTypedDataMutation,
-    CreateFollowTypedDataMutationVariables
-  >(CreateFollowTypedDataDocument, options);
+  return Apollo.useMutation<CreateFollowTypedDataMutation, CreateFollowTypedDataMutationVariables>(
+    CreateFollowTypedDataDocument,
+    options
+  );
 }
 
-export type CreateFollowTypedDataMutationHookResult = ReturnType<
-  typeof useCreateFollowTypedDataMutation
->;
-export type CreateFollowTypedDataMutationResult =
-  Apollo.MutationResult<CreateFollowTypedDataMutation>;
+export type CreateFollowTypedDataMutationHookResult = ReturnType<typeof useCreateFollowTypedDataMutation>;
+export type CreateFollowTypedDataMutationResult = Apollo.MutationResult<CreateFollowTypedDataMutation>;
 export type CreateFollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateFollowTypedDataMutation,
   CreateFollowTypedDataMutationVariables
 >;
 export const CreateMirrorTypedDataDocument = gql`
-  mutation CreateMirrorTypedData(
-    $options: TypedDataOptions
-    $request: CreateMirrorRequest!
-  ) {
+  mutation CreateMirrorTypedData($options: TypedDataOptions, $request: CreateMirrorRequest!) {
     createMirrorTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -42631,17 +42357,14 @@ export function useCreateMirrorTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateMirrorTypedDataMutation,
-    CreateMirrorTypedDataMutationVariables
-  >(CreateMirrorTypedDataDocument, options);
+  return Apollo.useMutation<CreateMirrorTypedDataMutation, CreateMirrorTypedDataMutationVariables>(
+    CreateMirrorTypedDataDocument,
+    options
+  );
 }
 
-export type CreateMirrorTypedDataMutationHookResult = ReturnType<
-  typeof useCreateMirrorTypedDataMutation
->;
-export type CreateMirrorTypedDataMutationResult =
-  Apollo.MutationResult<CreateMirrorTypedDataMutation>;
+export type CreateMirrorTypedDataMutationHookResult = ReturnType<typeof useCreateMirrorTypedDataMutation>;
+export type CreateMirrorTypedDataMutationResult = Apollo.MutationResult<CreateMirrorTypedDataMutation>;
 export type CreateMirrorTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateMirrorTypedDataMutation,
   CreateMirrorTypedDataMutationVariables
@@ -42683,10 +42406,10 @@ export function useCreateMirrorViaDispatcherMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateMirrorViaDispatcherMutation,
-    CreateMirrorViaDispatcherMutationVariables
-  >(CreateMirrorViaDispatcherDocument, options);
+  return Apollo.useMutation<CreateMirrorViaDispatcherMutation, CreateMirrorViaDispatcherMutationVariables>(
+    CreateMirrorViaDispatcherDocument,
+    options
+  );
 }
 
 export type CreateMirrorViaDispatcherMutationHookResult = ReturnType<
@@ -42694,11 +42417,10 @@ export type CreateMirrorViaDispatcherMutationHookResult = ReturnType<
 >;
 export type CreateMirrorViaDispatcherMutationResult =
   Apollo.MutationResult<CreateMirrorViaDispatcherMutation>;
-export type CreateMirrorViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateMirrorViaDispatcherMutation,
-    CreateMirrorViaDispatcherMutationVariables
-  >;
+export type CreateMirrorViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateMirrorViaDispatcherMutation,
+  CreateMirrorViaDispatcherMutationVariables
+>;
 export const CreateNftGalleryDocument = gql`
   mutation CreateNftGallery($request: NftGalleryCreateRequest!) {
     createNftGallery(request: $request)
@@ -42727,32 +42449,23 @@ export type CreateNftGalleryMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateNftGalleryMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateNftGalleryMutation,
-    CreateNftGalleryMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<CreateNftGalleryMutation, CreateNftGalleryMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateNftGalleryMutation,
-    CreateNftGalleryMutationVariables
-  >(CreateNftGalleryDocument, options);
+  return Apollo.useMutation<CreateNftGalleryMutation, CreateNftGalleryMutationVariables>(
+    CreateNftGalleryDocument,
+    options
+  );
 }
 
-export type CreateNftGalleryMutationHookResult = ReturnType<
-  typeof useCreateNftGalleryMutation
->;
-export type CreateNftGalleryMutationResult =
-  Apollo.MutationResult<CreateNftGalleryMutation>;
+export type CreateNftGalleryMutationHookResult = ReturnType<typeof useCreateNftGalleryMutation>;
+export type CreateNftGalleryMutationResult = Apollo.MutationResult<CreateNftGalleryMutation>;
 export type CreateNftGalleryMutationOptions = Apollo.BaseMutationOptions<
   CreateNftGalleryMutation,
   CreateNftGalleryMutationVariables
 >;
 export const CreatePostTypedDataDocument = gql`
-  mutation CreatePostTypedData(
-    $options: TypedDataOptions
-    $request: CreatePublicPostRequest!
-  ) {
+  mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
     createPostTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -42807,23 +42520,17 @@ export type CreatePostTypedDataMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreatePostTypedDataMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreatePostTypedDataMutation,
-    CreatePostTypedDataMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreatePostTypedDataMutation,
-    CreatePostTypedDataMutationVariables
-  >(CreatePostTypedDataDocument, options);
+  return Apollo.useMutation<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>(
+    CreatePostTypedDataDocument,
+    options
+  );
 }
 
-export type CreatePostTypedDataMutationHookResult = ReturnType<
-  typeof useCreatePostTypedDataMutation
->;
-export type CreatePostTypedDataMutationResult =
-  Apollo.MutationResult<CreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationHookResult = ReturnType<typeof useCreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePostTypedDataMutation>;
 export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreatePostTypedDataMutation,
   CreatePostTypedDataMutationVariables
@@ -42865,17 +42572,14 @@ export function useCreatePostViaDispatcherMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreatePostViaDispatcherMutation,
-    CreatePostViaDispatcherMutationVariables
-  >(CreatePostViaDispatcherDocument, options);
+  return Apollo.useMutation<CreatePostViaDispatcherMutation, CreatePostViaDispatcherMutationVariables>(
+    CreatePostViaDispatcherDocument,
+    options
+  );
 }
 
-export type CreatePostViaDispatcherMutationHookResult = ReturnType<
-  typeof useCreatePostViaDispatcherMutation
->;
-export type CreatePostViaDispatcherMutationResult =
-  Apollo.MutationResult<CreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationHookResult = ReturnType<typeof useCreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationResult = Apollo.MutationResult<CreatePostViaDispatcherMutation>;
 export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
   CreatePostViaDispatcherMutation,
   CreatePostViaDispatcherMutationVariables
@@ -42911,23 +42615,17 @@ export type CreateProfileMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateProfileMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateProfileMutation,
-    CreateProfileMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<CreateProfileMutation, CreateProfileMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateProfileMutation,
-    CreateProfileMutationVariables
-  >(CreateProfileDocument, options);
+  return Apollo.useMutation<CreateProfileMutation, CreateProfileMutationVariables>(
+    CreateProfileDocument,
+    options
+  );
 }
 
-export type CreateProfileMutationHookResult = ReturnType<
-  typeof useCreateProfileMutation
->;
-export type CreateProfileMutationResult =
-  Apollo.MutationResult<CreateProfileMutation>;
+export type CreateProfileMutationHookResult = ReturnType<typeof useCreateProfileMutation>;
+export type CreateProfileMutationResult = Apollo.MutationResult<CreateProfileMutation>;
 export type CreateProfileMutationOptions = Apollo.BaseMutationOptions<
   CreateProfileMutation,
   CreateProfileMutationVariables
@@ -42963,11 +42661,10 @@ export const CreateSetDefaultProfileTypedDataDocument = gql`
     }
   }
 `;
-export type CreateSetDefaultProfileTypedDataMutationFn =
-  Apollo.MutationFunction<
-    CreateSetDefaultProfileTypedDataMutation,
-    CreateSetDefaultProfileTypedDataMutationVariables
-  >;
+export type CreateSetDefaultProfileTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetDefaultProfileTypedDataMutation,
+  CreateSetDefaultProfileTypedDataMutationVariables
+>;
 
 /**
  * __useCreateSetDefaultProfileTypedDataMutation__
@@ -43005,16 +42702,12 @@ export type CreateSetDefaultProfileTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateSetDefaultProfileTypedDataMutationResult =
   Apollo.MutationResult<CreateSetDefaultProfileTypedDataMutation>;
-export type CreateSetDefaultProfileTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetDefaultProfileTypedDataMutation,
-    CreateSetDefaultProfileTypedDataMutationVariables
-  >;
+export type CreateSetDefaultProfileTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetDefaultProfileTypedDataMutation,
+  CreateSetDefaultProfileTypedDataMutationVariables
+>;
 export const CreateSetDispatcherTypedDataDocument = gql`
-  mutation CreateSetDispatcherTypedData(
-    $options: TypedDataOptions
-    $request: SetDispatcherRequest!
-  ) {
+  mutation CreateSetDispatcherTypedData($options: TypedDataOptions, $request: SetDispatcherRequest!) {
     createSetDispatcherTypedData(options: $options, request: $request) {
       id
       expiresAt
@@ -43082,11 +42775,10 @@ export type CreateSetDispatcherTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateSetDispatcherTypedDataMutationResult =
   Apollo.MutationResult<CreateSetDispatcherTypedDataMutation>;
-export type CreateSetDispatcherTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetDispatcherTypedDataMutation,
-    CreateSetDispatcherTypedDataMutationVariables
-  >;
+export type CreateSetDispatcherTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetDispatcherTypedDataMutation,
+  CreateSetDispatcherTypedDataMutationVariables
+>;
 export const CreateSetFollowModuleTypedDataDocument = gql`
   mutation CreateSetFollowModuleTypedData(
     $options: TypedDataOptions
@@ -43160,11 +42852,10 @@ export type CreateSetFollowModuleTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateSetFollowModuleTypedDataMutationResult =
   Apollo.MutationResult<CreateSetFollowModuleTypedDataMutation>;
-export type CreateSetFollowModuleTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetFollowModuleTypedDataMutation,
-    CreateSetFollowModuleTypedDataMutationVariables
-  >;
+export type CreateSetFollowModuleTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetFollowModuleTypedDataMutation,
+  CreateSetFollowModuleTypedDataMutationVariables
+>;
 export const CreateSetProfileImageUriTypedDataDocument = gql`
   mutation CreateSetProfileImageURITypedData(
     $options: TypedDataOptions
@@ -43196,11 +42887,10 @@ export const CreateSetProfileImageUriTypedDataDocument = gql`
     }
   }
 `;
-export type CreateSetProfileImageUriTypedDataMutationFn =
-  Apollo.MutationFunction<
-    CreateSetProfileImageUriTypedDataMutation,
-    CreateSetProfileImageUriTypedDataMutationVariables
-  >;
+export type CreateSetProfileImageUriTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriTypedDataMutationVariables
+>;
 
 /**
  * __useCreateSetProfileImageUriTypedDataMutation__
@@ -43238,26 +42928,22 @@ export type CreateSetProfileImageUriTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateSetProfileImageUriTypedDataMutationResult =
   Apollo.MutationResult<CreateSetProfileImageUriTypedDataMutation>;
-export type CreateSetProfileImageUriTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetProfileImageUriTypedDataMutation,
-    CreateSetProfileImageUriTypedDataMutationVariables
-  >;
+export type CreateSetProfileImageUriTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriTypedDataMutationVariables
+>;
 export const CreateSetProfileImageUriViaDispatcherDocument = gql`
-  mutation CreateSetProfileImageURIViaDispatcher(
-    $request: UpdateProfileImageRequest!
-  ) {
+  mutation CreateSetProfileImageURIViaDispatcher($request: UpdateProfileImageRequest!) {
     createSetProfileImageURIViaDispatcher(request: $request) {
       ...RelayerResultFields
     }
   }
   ${RelayerResultFieldsFragmentDoc}
 `;
-export type CreateSetProfileImageUriViaDispatcherMutationFn =
-  Apollo.MutationFunction<
-    CreateSetProfileImageUriViaDispatcherMutation,
-    CreateSetProfileImageUriViaDispatcherMutationVariables
-  >;
+export type CreateSetProfileImageUriViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateSetProfileImageUriViaDispatcherMutation,
+  CreateSetProfileImageUriViaDispatcherMutationVariables
+>;
 
 /**
  * __useCreateSetProfileImageUriViaDispatcherMutation__
@@ -43289,15 +42975,15 @@ export function useCreateSetProfileImageUriViaDispatcherMutation(
   >(CreateSetProfileImageUriViaDispatcherDocument, options);
 }
 
-export type CreateSetProfileImageUriViaDispatcherMutationHookResult =
-  ReturnType<typeof useCreateSetProfileImageUriViaDispatcherMutation>;
+export type CreateSetProfileImageUriViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateSetProfileImageUriViaDispatcherMutation
+>;
 export type CreateSetProfileImageUriViaDispatcherMutationResult =
   Apollo.MutationResult<CreateSetProfileImageUriViaDispatcherMutation>;
-export type CreateSetProfileImageUriViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetProfileImageUriViaDispatcherMutation,
-    CreateSetProfileImageUriViaDispatcherMutationVariables
-  >;
+export type CreateSetProfileImageUriViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileImageUriViaDispatcherMutation,
+  CreateSetProfileImageUriViaDispatcherMutationVariables
+>;
 export const CreateSetProfileMetadataTypedDataDocument = gql`
   mutation CreateSetProfileMetadataTypedData(
     $options: TypedDataOptions
@@ -43329,11 +43015,10 @@ export const CreateSetProfileMetadataTypedDataDocument = gql`
     }
   }
 `;
-export type CreateSetProfileMetadataTypedDataMutationFn =
-  Apollo.MutationFunction<
-    CreateSetProfileMetadataTypedDataMutation,
-    CreateSetProfileMetadataTypedDataMutationVariables
-  >;
+export type CreateSetProfileMetadataTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataTypedDataMutationVariables
+>;
 
 /**
  * __useCreateSetProfileMetadataTypedDataMutation__
@@ -43371,26 +43056,22 @@ export type CreateSetProfileMetadataTypedDataMutationHookResult = ReturnType<
 >;
 export type CreateSetProfileMetadataTypedDataMutationResult =
   Apollo.MutationResult<CreateSetProfileMetadataTypedDataMutation>;
-export type CreateSetProfileMetadataTypedDataMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetProfileMetadataTypedDataMutation,
-    CreateSetProfileMetadataTypedDataMutationVariables
-  >;
+export type CreateSetProfileMetadataTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataTypedDataMutationVariables
+>;
 export const CreateSetProfileMetadataViaDispatcherDocument = gql`
-  mutation CreateSetProfileMetadataViaDispatcher(
-    $request: CreatePublicSetProfileMetadataURIRequest!
-  ) {
+  mutation CreateSetProfileMetadataViaDispatcher($request: CreatePublicSetProfileMetadataURIRequest!) {
     createSetProfileMetadataViaDispatcher(request: $request) {
       ...RelayerResultFields
     }
   }
   ${RelayerResultFieldsFragmentDoc}
 `;
-export type CreateSetProfileMetadataViaDispatcherMutationFn =
-  Apollo.MutationFunction<
-    CreateSetProfileMetadataViaDispatcherMutation,
-    CreateSetProfileMetadataViaDispatcherMutationVariables
-  >;
+export type CreateSetProfileMetadataViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateSetProfileMetadataViaDispatcherMutation,
+  CreateSetProfileMetadataViaDispatcherMutationVariables
+>;
 
 /**
  * __useCreateSetProfileMetadataViaDispatcherMutation__
@@ -43422,15 +43103,15 @@ export function useCreateSetProfileMetadataViaDispatcherMutation(
   >(CreateSetProfileMetadataViaDispatcherDocument, options);
 }
 
-export type CreateSetProfileMetadataViaDispatcherMutationHookResult =
-  ReturnType<typeof useCreateSetProfileMetadataViaDispatcherMutation>;
+export type CreateSetProfileMetadataViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateSetProfileMetadataViaDispatcherMutation
+>;
 export type CreateSetProfileMetadataViaDispatcherMutationResult =
   Apollo.MutationResult<CreateSetProfileMetadataViaDispatcherMutation>;
-export type CreateSetProfileMetadataViaDispatcherMutationOptions =
-  Apollo.BaseMutationOptions<
-    CreateSetProfileMetadataViaDispatcherMutation,
-    CreateSetProfileMetadataViaDispatcherMutationVariables
-  >;
+export type CreateSetProfileMetadataViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileMetadataViaDispatcherMutation,
+  CreateSetProfileMetadataViaDispatcherMutationVariables
+>;
 export const CreateUnfollowTypedDataDocument = gql`
   mutation CreateUnfollowTypedData($request: UnfollowRequest!) {
     createUnfollowTypedData(request: $request) {
@@ -43487,17 +43168,14 @@ export function useCreateUnfollowTypedDataMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateUnfollowTypedDataMutation,
-    CreateUnfollowTypedDataMutationVariables
-  >(CreateUnfollowTypedDataDocument, options);
+  return Apollo.useMutation<CreateUnfollowTypedDataMutation, CreateUnfollowTypedDataMutationVariables>(
+    CreateUnfollowTypedDataDocument,
+    options
+  );
 }
 
-export type CreateUnfollowTypedDataMutationHookResult = ReturnType<
-  typeof useCreateUnfollowTypedDataMutation
->;
-export type CreateUnfollowTypedDataMutationResult =
-  Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationHookResult = ReturnType<typeof useCreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
 export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateUnfollowTypedDataMutation,
   CreateUnfollowTypedDataMutationVariables
@@ -43530,31 +43208,23 @@ export type DeleteNftGalleryMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useDeleteNftGalleryMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteNftGalleryMutation,
-    DeleteNftGalleryMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<DeleteNftGalleryMutation, DeleteNftGalleryMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DeleteNftGalleryMutation,
-    DeleteNftGalleryMutationVariables
-  >(DeleteNftGalleryDocument, options);
+  return Apollo.useMutation<DeleteNftGalleryMutation, DeleteNftGalleryMutationVariables>(
+    DeleteNftGalleryDocument,
+    options
+  );
 }
 
-export type DeleteNftGalleryMutationHookResult = ReturnType<
-  typeof useDeleteNftGalleryMutation
->;
-export type DeleteNftGalleryMutationResult =
-  Apollo.MutationResult<DeleteNftGalleryMutation>;
+export type DeleteNftGalleryMutationHookResult = ReturnType<typeof useDeleteNftGalleryMutation>;
+export type DeleteNftGalleryMutationResult = Apollo.MutationResult<DeleteNftGalleryMutation>;
 export type DeleteNftGalleryMutationOptions = Apollo.BaseMutationOptions<
   DeleteNftGalleryMutation,
   DeleteNftGalleryMutationVariables
 >;
 export const DismissRecommendedProfilesDocument = gql`
-  mutation DismissRecommendedProfiles(
-    $request: DismissRecommendedProfilesRequest!
-  ) {
+  mutation DismissRecommendedProfiles($request: DismissRecommendedProfilesRequest!) {
     dismissRecommendedProfiles(request: $request)
   }
 `;
@@ -43587,10 +43257,10 @@ export function useDismissRecommendedProfilesMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DismissRecommendedProfilesMutation,
-    DismissRecommendedProfilesMutationVariables
-  >(DismissRecommendedProfilesDocument, options);
+  return Apollo.useMutation<DismissRecommendedProfilesMutation, DismissRecommendedProfilesMutationVariables>(
+    DismissRecommendedProfilesDocument,
+    options
+  );
 }
 
 export type DismissRecommendedProfilesMutationHookResult = ReturnType<
@@ -43598,11 +43268,10 @@ export type DismissRecommendedProfilesMutationHookResult = ReturnType<
 >;
 export type DismissRecommendedProfilesMutationResult =
   Apollo.MutationResult<DismissRecommendedProfilesMutation>;
-export type DismissRecommendedProfilesMutationOptions =
-  Apollo.BaseMutationOptions<
-    DismissRecommendedProfilesMutation,
-    DismissRecommendedProfilesMutationVariables
-  >;
+export type DismissRecommendedProfilesMutationOptions = Apollo.BaseMutationOptions<
+  DismissRecommendedProfilesMutation,
+  DismissRecommendedProfilesMutationVariables
+>;
 export const HidePublicationDocument = gql`
   mutation HidePublication($request: HidePublicationRequest!) {
     hidePublication(request: $request)
@@ -43631,23 +43300,17 @@ export type HidePublicationMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useHidePublicationMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    HidePublicationMutation,
-    HidePublicationMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<HidePublicationMutation, HidePublicationMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    HidePublicationMutation,
-    HidePublicationMutationVariables
-  >(HidePublicationDocument, options);
+  return Apollo.useMutation<HidePublicationMutation, HidePublicationMutationVariables>(
+    HidePublicationDocument,
+    options
+  );
 }
 
-export type HidePublicationMutationHookResult = ReturnType<
-  typeof useHidePublicationMutation
->;
-export type HidePublicationMutationResult =
-  Apollo.MutationResult<HidePublicationMutation>;
+export type HidePublicationMutationHookResult = ReturnType<typeof useHidePublicationMutation>;
+export type HidePublicationMutationResult = Apollo.MutationResult<HidePublicationMutation>;
 export type HidePublicationMutationOptions = Apollo.BaseMutationOptions<
   HidePublicationMutation,
   HidePublicationMutationVariables
@@ -43680,23 +43343,14 @@ export type ProxyActionMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useProxyActionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ProxyActionMutation,
-    ProxyActionMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<ProxyActionMutation, ProxyActionMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ProxyActionMutation, ProxyActionMutationVariables>(
-    ProxyActionDocument,
-    options
-  );
+  return Apollo.useMutation<ProxyActionMutation, ProxyActionMutationVariables>(ProxyActionDocument, options);
 }
 
-export type ProxyActionMutationHookResult = ReturnType<
-  typeof useProxyActionMutation
->;
-export type ProxyActionMutationResult =
-  Apollo.MutationResult<ProxyActionMutation>;
+export type ProxyActionMutationHookResult = ReturnType<typeof useProxyActionMutation>;
+export type ProxyActionMutationResult = Apollo.MutationResult<ProxyActionMutation>;
 export type ProxyActionMutationOptions = Apollo.BaseMutationOptions<
   ProxyActionMutation,
   ProxyActionMutationVariables
@@ -43735,17 +43389,14 @@ export function useRemoveProfileInterestMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    RemoveProfileInterestMutation,
-    RemoveProfileInterestMutationVariables
-  >(RemoveProfileInterestDocument, options);
+  return Apollo.useMutation<RemoveProfileInterestMutation, RemoveProfileInterestMutationVariables>(
+    RemoveProfileInterestDocument,
+    options
+  );
 }
 
-export type RemoveProfileInterestMutationHookResult = ReturnType<
-  typeof useRemoveProfileInterestMutation
->;
-export type RemoveProfileInterestMutationResult =
-  Apollo.MutationResult<RemoveProfileInterestMutation>;
+export type RemoveProfileInterestMutationHookResult = ReturnType<typeof useRemoveProfileInterestMutation>;
+export type RemoveProfileInterestMutationResult = Apollo.MutationResult<RemoveProfileInterestMutation>;
 export type RemoveProfileInterestMutationOptions = Apollo.BaseMutationOptions<
   RemoveProfileInterestMutation,
   RemoveProfileInterestMutationVariables
@@ -43778,23 +43429,17 @@ export type RemoveReactionMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useRemoveReactionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RemoveReactionMutation,
-    RemoveReactionMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<RemoveReactionMutation, RemoveReactionMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    RemoveReactionMutation,
-    RemoveReactionMutationVariables
-  >(RemoveReactionDocument, options);
+  return Apollo.useMutation<RemoveReactionMutation, RemoveReactionMutationVariables>(
+    RemoveReactionDocument,
+    options
+  );
 }
 
-export type RemoveReactionMutationHookResult = ReturnType<
-  typeof useRemoveReactionMutation
->;
-export type RemoveReactionMutationResult =
-  Apollo.MutationResult<RemoveReactionMutation>;
+export type RemoveReactionMutationHookResult = ReturnType<typeof useRemoveReactionMutation>;
+export type RemoveReactionMutationResult = Apollo.MutationResult<RemoveReactionMutation>;
 export type RemoveReactionMutationOptions = Apollo.BaseMutationOptions<
   RemoveReactionMutation,
   RemoveReactionMutationVariables
@@ -43827,23 +43472,17 @@ export type ReportPublicationMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useReportPublicationMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ReportPublicationMutation,
-    ReportPublicationMutationVariables
-  >
+  baseOptions?: Apollo.MutationHookOptions<ReportPublicationMutation, ReportPublicationMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    ReportPublicationMutation,
-    ReportPublicationMutationVariables
-  >(ReportPublicationDocument, options);
+  return Apollo.useMutation<ReportPublicationMutation, ReportPublicationMutationVariables>(
+    ReportPublicationDocument,
+    options
+  );
 }
 
-export type ReportPublicationMutationHookResult = ReturnType<
-  typeof useReportPublicationMutation
->;
-export type ReportPublicationMutationResult =
-  Apollo.MutationResult<ReportPublicationMutation>;
+export type ReportPublicationMutationHookResult = ReturnType<typeof useReportPublicationMutation>;
+export type ReportPublicationMutationResult = Apollo.MutationResult<ReportPublicationMutation>;
 export type ReportPublicationMutationOptions = Apollo.BaseMutationOptions<
   ReportPublicationMutation,
   ReportPublicationMutationVariables
@@ -43882,17 +43521,14 @@ export function useUpdateNftGalleryInfoMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdateNftGalleryInfoMutation,
-    UpdateNftGalleryInfoMutationVariables
-  >(UpdateNftGalleryInfoDocument, options);
+  return Apollo.useMutation<UpdateNftGalleryInfoMutation, UpdateNftGalleryInfoMutationVariables>(
+    UpdateNftGalleryInfoDocument,
+    options
+  );
 }
 
-export type UpdateNftGalleryInfoMutationHookResult = ReturnType<
-  typeof useUpdateNftGalleryInfoMutation
->;
-export type UpdateNftGalleryInfoMutationResult =
-  Apollo.MutationResult<UpdateNftGalleryInfoMutation>;
+export type UpdateNftGalleryInfoMutationHookResult = ReturnType<typeof useUpdateNftGalleryInfoMutation>;
+export type UpdateNftGalleryInfoMutationResult = Apollo.MutationResult<UpdateNftGalleryInfoMutation>;
 export type UpdateNftGalleryInfoMutationOptions = Apollo.BaseMutationOptions<
   UpdateNftGalleryInfoMutation,
   UpdateNftGalleryInfoMutationVariables
@@ -43931,17 +43567,14 @@ export function useUpdateNftGalleryItemsMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdateNftGalleryItemsMutation,
-    UpdateNftGalleryItemsMutationVariables
-  >(UpdateNftGalleryItemsDocument, options);
+  return Apollo.useMutation<UpdateNftGalleryItemsMutation, UpdateNftGalleryItemsMutationVariables>(
+    UpdateNftGalleryItemsDocument,
+    options
+  );
 }
 
-export type UpdateNftGalleryItemsMutationHookResult = ReturnType<
-  typeof useUpdateNftGalleryItemsMutation
->;
-export type UpdateNftGalleryItemsMutationResult =
-  Apollo.MutationResult<UpdateNftGalleryItemsMutation>;
+export type UpdateNftGalleryItemsMutationHookResult = ReturnType<typeof useUpdateNftGalleryItemsMutation>;
+export type UpdateNftGalleryItemsMutationResult = Apollo.MutationResult<UpdateNftGalleryItemsMutation>;
 export type UpdateNftGalleryItemsMutationOptions = Apollo.BaseMutationOptions<
   UpdateNftGalleryItemsMutation,
   UpdateNftGalleryItemsMutationVariables
@@ -43980,25 +43613,20 @@ export function useUpdateNftGalleryOrderMutation(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdateNftGalleryOrderMutation,
-    UpdateNftGalleryOrderMutationVariables
-  >(UpdateNftGalleryOrderDocument, options);
+  return Apollo.useMutation<UpdateNftGalleryOrderMutation, UpdateNftGalleryOrderMutationVariables>(
+    UpdateNftGalleryOrderDocument,
+    options
+  );
 }
 
-export type UpdateNftGalleryOrderMutationHookResult = ReturnType<
-  typeof useUpdateNftGalleryOrderMutation
->;
-export type UpdateNftGalleryOrderMutationResult =
-  Apollo.MutationResult<UpdateNftGalleryOrderMutation>;
+export type UpdateNftGalleryOrderMutationHookResult = ReturnType<typeof useUpdateNftGalleryOrderMutation>;
+export type UpdateNftGalleryOrderMutationResult = Apollo.MutationResult<UpdateNftGalleryOrderMutation>;
 export type UpdateNftGalleryOrderMutationOptions = Apollo.BaseMutationOptions<
   UpdateNftGalleryOrderMutation,
   UpdateNftGalleryOrderMutationVariables
 >;
 export const ApprovedModuleAllowanceAmountDocument = gql`
-  query ApprovedModuleAllowanceAmount(
-    $request: ApprovedModuleAllowanceAmountRequest!
-  ) {
+  query ApprovedModuleAllowanceAmount($request: ApprovedModuleAllowanceAmountRequest!) {
     approvedModuleAllowanceAmount(request: $request) {
       currency
       module
@@ -44031,10 +43659,10 @@ export function useApprovedModuleAllowanceAmountQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    ApprovedModuleAllowanceAmountQuery,
-    ApprovedModuleAllowanceAmountQueryVariables
-  >(ApprovedModuleAllowanceAmountDocument, options);
+  return Apollo.useQuery<ApprovedModuleAllowanceAmountQuery, ApprovedModuleAllowanceAmountQueryVariables>(
+    ApprovedModuleAllowanceAmountDocument,
+    options
+  );
 }
 
 export function useApprovedModuleAllowanceAmountLazyQuery(
@@ -44044,10 +43672,10 @@ export function useApprovedModuleAllowanceAmountLazyQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    ApprovedModuleAllowanceAmountQuery,
-    ApprovedModuleAllowanceAmountQueryVariables
-  >(ApprovedModuleAllowanceAmountDocument, options);
+  return Apollo.useLazyQuery<ApprovedModuleAllowanceAmountQuery, ApprovedModuleAllowanceAmountQueryVariables>(
+    ApprovedModuleAllowanceAmountDocument,
+    options
+  );
 }
 
 export type ApprovedModuleAllowanceAmountQueryHookResult = ReturnType<
@@ -44061,10 +43689,7 @@ export type ApprovedModuleAllowanceAmountQueryResult = Apollo.QueryResult<
   ApprovedModuleAllowanceAmountQueryVariables
 >;
 export const CanDecryptStatusDocument = gql`
-  query CanDecryptStatus(
-    $request: PublicationQueryRequest!
-    $profileId: ProfileId
-  ) {
+  query CanDecryptStatus($request: PublicationQueryRequest!, $profileId: ProfileId) {
     publication(request: $request) {
       ... on Post {
         id
@@ -44109,10 +43734,7 @@ export const CanDecryptStatusDocument = gql`
  * });
  */
 export function useCanDecryptStatusQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    CanDecryptStatusQuery,
-    CanDecryptStatusQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<CanDecryptStatusQuery, CanDecryptStatusQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CanDecryptStatusQuery, CanDecryptStatusQueryVariables>(
@@ -44122,24 +43744,17 @@ export function useCanDecryptStatusQuery(
 }
 
 export function useCanDecryptStatusLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CanDecryptStatusQuery,
-    CanDecryptStatusQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<CanDecryptStatusQuery, CanDecryptStatusQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    CanDecryptStatusQuery,
-    CanDecryptStatusQueryVariables
-  >(CanDecryptStatusDocument, options);
+  return Apollo.useLazyQuery<CanDecryptStatusQuery, CanDecryptStatusQueryVariables>(
+    CanDecryptStatusDocument,
+    options
+  );
 }
 
-export type CanDecryptStatusQueryHookResult = ReturnType<
-  typeof useCanDecryptStatusQuery
->;
-export type CanDecryptStatusLazyQueryHookResult = ReturnType<
-  typeof useCanDecryptStatusLazyQuery
->;
+export type CanDecryptStatusQueryHookResult = ReturnType<typeof useCanDecryptStatusQuery>;
+export type CanDecryptStatusLazyQueryHookResult = ReturnType<typeof useCanDecryptStatusLazyQuery>;
 export type CanDecryptStatusQueryResult = Apollo.QueryResult<
   CanDecryptStatusQuery,
   CanDecryptStatusQueryVariables
@@ -44172,33 +43787,19 @@ export function useChallengeQuery(
   baseOptions: Apollo.QueryHookOptions<ChallengeQuery, ChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ChallengeQuery, ChallengeQueryVariables>(
-    ChallengeDocument,
-    options
-  );
+  return Apollo.useQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
 }
 
 export function useChallengeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ChallengeQuery,
-    ChallengeQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ChallengeQuery, ChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ChallengeQuery, ChallengeQueryVariables>(
-    ChallengeDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
 }
 
 export type ChallengeQueryHookResult = ReturnType<typeof useChallengeQuery>;
-export type ChallengeLazyQueryHookResult = ReturnType<
-  typeof useChallengeLazyQuery
->;
-export type ChallengeQueryResult = Apollo.QueryResult<
-  ChallengeQuery,
-  ChallengeQueryVariables
->;
+export type ChallengeLazyQueryHookResult = ReturnType<typeof useChallengeLazyQuery>;
+export type ChallengeQueryResult = Apollo.QueryResult<ChallengeQuery, ChallengeQueryVariables>;
 export const CollectModuleDocument = gql`
   query CollectModule($request: PublicationQueryRequest!) {
     publication(request: $request) {
@@ -44242,41 +43843,22 @@ export const CollectModuleDocument = gql`
  * });
  */
 export function useCollectModuleQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    CollectModuleQuery,
-    CollectModuleQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<CollectModuleQuery, CollectModuleQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CollectModuleQuery, CollectModuleQueryVariables>(
-    CollectModuleDocument,
-    options
-  );
+  return Apollo.useQuery<CollectModuleQuery, CollectModuleQueryVariables>(CollectModuleDocument, options);
 }
 
 export function useCollectModuleLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CollectModuleQuery,
-    CollectModuleQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<CollectModuleQuery, CollectModuleQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CollectModuleQuery, CollectModuleQueryVariables>(
-    CollectModuleDocument,
-    options
-  );
+  return Apollo.useLazyQuery<CollectModuleQuery, CollectModuleQueryVariables>(CollectModuleDocument, options);
 }
 
-export type CollectModuleQueryHookResult = ReturnType<
-  typeof useCollectModuleQuery
->;
-export type CollectModuleLazyQueryHookResult = ReturnType<
-  typeof useCollectModuleLazyQuery
->;
-export type CollectModuleQueryResult = Apollo.QueryResult<
-  CollectModuleQuery,
-  CollectModuleQueryVariables
->;
+export type CollectModuleQueryHookResult = ReturnType<typeof useCollectModuleQuery>;
+export type CollectModuleLazyQueryHookResult = ReturnType<typeof useCollectModuleLazyQuery>;
+export type CollectModuleQueryResult = Apollo.QueryResult<CollectModuleQuery, CollectModuleQueryVariables>;
 export const CollectorsDocument = gql`
   query Collectors($request: WhoCollectedPublicationRequest!) {
     whoCollectedPublication(request: $request) {
@@ -44312,39 +43894,22 @@ export const CollectorsDocument = gql`
  * });
  */
 export function useCollectorsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    CollectorsQuery,
-    CollectorsQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<CollectorsQuery, CollectorsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CollectorsQuery, CollectorsQueryVariables>(
-    CollectorsDocument,
-    options
-  );
+  return Apollo.useQuery<CollectorsQuery, CollectorsQueryVariables>(CollectorsDocument, options);
 }
 
 export function useCollectorsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CollectorsQuery,
-    CollectorsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<CollectorsQuery, CollectorsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CollectorsQuery, CollectorsQueryVariables>(
-    CollectorsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<CollectorsQuery, CollectorsQueryVariables>(CollectorsDocument, options);
 }
 
 export type CollectorsQueryHookResult = ReturnType<typeof useCollectorsQuery>;
-export type CollectorsLazyQueryHookResult = ReturnType<
-  typeof useCollectorsLazyQuery
->;
-export type CollectorsQueryResult = Apollo.QueryResult<
-  CollectorsQuery,
-  CollectorsQueryVariables
->;
+export type CollectorsLazyQueryHookResult = ReturnType<typeof useCollectorsLazyQuery>;
+export type CollectorsQueryResult = Apollo.QueryResult<CollectorsQuery, CollectorsQueryVariables>;
 export const CommentFeedDocument = gql`
   query CommentFeed(
     $request: PublicationsQueryRequest!
@@ -44384,40 +43949,22 @@ export const CommentFeedDocument = gql`
  * });
  */
 export function useCommentFeedQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    CommentFeedQuery,
-    CommentFeedQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<CommentFeedQuery, CommentFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CommentFeedQuery, CommentFeedQueryVariables>(
-    CommentFeedDocument,
-    options
-  );
+  return Apollo.useQuery<CommentFeedQuery, CommentFeedQueryVariables>(CommentFeedDocument, options);
 }
 
 export function useCommentFeedLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CommentFeedQuery,
-    CommentFeedQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<CommentFeedQuery, CommentFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CommentFeedQuery, CommentFeedQueryVariables>(
-    CommentFeedDocument,
-    options
-  );
+  return Apollo.useLazyQuery<CommentFeedQuery, CommentFeedQueryVariables>(CommentFeedDocument, options);
 }
 
 export type CommentFeedQueryHookResult = ReturnType<typeof useCommentFeedQuery>;
-
-export type CommentFeedLazyQueryHookResult = ReturnType<
-  typeof useCommentFeedLazyQuery
->;
-export type CommentFeedQueryResult = Apollo.QueryResult<
-  CommentFeedQuery,
-  CommentFeedQueryVariables
->;
+export type CommentFeedLazyQueryHookResult = ReturnType<typeof useCommentFeedLazyQuery>;
+export type CommentFeedQueryResult = Apollo.QueryResult<CommentFeedQuery, CommentFeedQueryVariables>;
 export const EnabledModulesDocument = gql`
   query EnabledModules {
     enabledModules {
@@ -44451,23 +43998,14 @@ export const EnabledModulesDocument = gql`
  * });
  */
 export function useEnabledModulesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    EnabledModulesQuery,
-    EnabledModulesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<EnabledModulesQuery, EnabledModulesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<EnabledModulesQuery, EnabledModulesQueryVariables>(
-    EnabledModulesDocument,
-    options
-  );
+  return Apollo.useQuery<EnabledModulesQuery, EnabledModulesQueryVariables>(EnabledModulesDocument, options);
 }
 
 export function useEnabledModulesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    EnabledModulesQuery,
-    EnabledModulesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<EnabledModulesQuery, EnabledModulesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<EnabledModulesQuery, EnabledModulesQueryVariables>(
@@ -44476,16 +44014,9 @@ export function useEnabledModulesLazyQuery(
   );
 }
 
-export type EnabledModulesQueryHookResult = ReturnType<
-  typeof useEnabledModulesQuery
->;
-export type EnabledModulesLazyQueryHookResult = ReturnType<
-  typeof useEnabledModulesLazyQuery
->;
-export type EnabledModulesQueryResult = Apollo.QueryResult<
-  EnabledModulesQuery,
-  EnabledModulesQueryVariables
->;
+export type EnabledModulesQueryHookResult = ReturnType<typeof useEnabledModulesQuery>;
+export type EnabledModulesLazyQueryHookResult = ReturnType<typeof useEnabledModulesLazyQuery>;
+export type EnabledModulesQueryResult = Apollo.QueryResult<EnabledModulesQuery, EnabledModulesQueryVariables>;
 export const ExploreFeedDocument = gql`
   query ExploreFeed(
     $request: ExplorePublicationRequest!
@@ -44533,39 +44064,22 @@ export const ExploreFeedDocument = gql`
  * });
  */
 export function useExploreFeedQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    ExploreFeedQuery,
-    ExploreFeedQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<ExploreFeedQuery, ExploreFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(
-    ExploreFeedDocument,
-    options
-  );
+  return Apollo.useQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(ExploreFeedDocument, options);
 }
 
 export function useExploreFeedLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ExploreFeedQuery,
-    ExploreFeedQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ExploreFeedQuery, ExploreFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(
-    ExploreFeedDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(ExploreFeedDocument, options);
 }
 
 export type ExploreFeedQueryHookResult = ReturnType<typeof useExploreFeedQuery>;
-export type ExploreFeedLazyQueryHookResult = ReturnType<
-  typeof useExploreFeedLazyQuery
->;
-export type ExploreFeedQueryResult = Apollo.QueryResult<
-  ExploreFeedQuery,
-  ExploreFeedQueryVariables
->;
+export type ExploreFeedLazyQueryHookResult = ReturnType<typeof useExploreFeedLazyQuery>;
+export type ExploreFeedQueryResult = Apollo.QueryResult<ExploreFeedQuery, ExploreFeedQueryVariables>;
 export const FeedHighlightsDocument = gql`
   query FeedHighlights(
     $request: FeedHighlightsRequest!
@@ -44613,23 +44127,14 @@ export const FeedHighlightsDocument = gql`
  * });
  */
 export function useFeedHighlightsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    FeedHighlightsQuery,
-    FeedHighlightsQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<FeedHighlightsQuery, FeedHighlightsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<FeedHighlightsQuery, FeedHighlightsQueryVariables>(
-    FeedHighlightsDocument,
-    options
-  );
+  return Apollo.useQuery<FeedHighlightsQuery, FeedHighlightsQueryVariables>(FeedHighlightsDocument, options);
 }
 
 export function useFeedHighlightsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    FeedHighlightsQuery,
-    FeedHighlightsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<FeedHighlightsQuery, FeedHighlightsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<FeedHighlightsQuery, FeedHighlightsQueryVariables>(
@@ -44638,16 +44143,9 @@ export function useFeedHighlightsLazyQuery(
   );
 }
 
-export type FeedHighlightsQueryHookResult = ReturnType<
-  typeof useFeedHighlightsQuery
->;
-export type FeedHighlightsLazyQueryHookResult = ReturnType<
-  typeof useFeedHighlightsLazyQuery
->;
-export type FeedHighlightsQueryResult = Apollo.QueryResult<
-  FeedHighlightsQuery,
-  FeedHighlightsQueryVariables
->;
+export type FeedHighlightsQueryHookResult = ReturnType<typeof useFeedHighlightsQuery>;
+export type FeedHighlightsLazyQueryHookResult = ReturnType<typeof useFeedHighlightsLazyQuery>;
+export type FeedHighlightsQueryResult = Apollo.QueryResult<FeedHighlightsQuery, FeedHighlightsQueryVariables>;
 export const FollowersNftOwnedTokenIdsDocument = gql`
   query FollowersNftOwnedTokenIds($request: FollowerNftOwnedTokenIdsRequest!) {
     followerNftOwnedTokenIds(request: $request) {
@@ -44680,10 +44178,10 @@ export function useFollowersNftOwnedTokenIdsQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    FollowersNftOwnedTokenIdsQuery,
-    FollowersNftOwnedTokenIdsQueryVariables
-  >(FollowersNftOwnedTokenIdsDocument, options);
+  return Apollo.useQuery<FollowersNftOwnedTokenIdsQuery, FollowersNftOwnedTokenIdsQueryVariables>(
+    FollowersNftOwnedTokenIdsDocument,
+    options
+  );
 }
 
 export function useFollowersNftOwnedTokenIdsLazyQuery(
@@ -44693,15 +44191,13 @@ export function useFollowersNftOwnedTokenIdsLazyQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    FollowersNftOwnedTokenIdsQuery,
-    FollowersNftOwnedTokenIdsQueryVariables
-  >(FollowersNftOwnedTokenIdsDocument, options);
+  return Apollo.useLazyQuery<FollowersNftOwnedTokenIdsQuery, FollowersNftOwnedTokenIdsQueryVariables>(
+    FollowersNftOwnedTokenIdsDocument,
+    options
+  );
 }
 
-export type FollowersNftOwnedTokenIdsQueryHookResult = ReturnType<
-  typeof useFollowersNftOwnedTokenIdsQuery
->;
+export type FollowersNftOwnedTokenIdsQueryHookResult = ReturnType<typeof useFollowersNftOwnedTokenIdsQuery>;
 export type FollowersNftOwnedTokenIdsLazyQueryHookResult = ReturnType<
   typeof useFollowersNftOwnedTokenIdsLazyQuery
 >;
@@ -44750,33 +44246,19 @@ export function useFollowersQuery(
   baseOptions: Apollo.QueryHookOptions<FollowersQuery, FollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(
-    FollowersDocument,
-    options
-  );
+  return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
 
 export function useFollowersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    FollowersQuery,
-    FollowersQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<FollowersQuery, FollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(
-    FollowersDocument,
-    options
-  );
+  return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
 
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
-export type FollowersLazyQueryHookResult = ReturnType<
-  typeof useFollowersLazyQuery
->;
-export type FollowersQueryResult = Apollo.QueryResult<
-  FollowersQuery,
-  FollowersQueryVariables
->;
+export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
+export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
 export const FollowingDocument = gql`
   query Following($request: FollowingRequest!) {
     following(request: $request) {
@@ -44815,37 +44297,21 @@ export function useFollowingQuery(
   baseOptions: Apollo.QueryHookOptions<FollowingQuery, FollowingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<FollowingQuery, FollowingQueryVariables>(
-    FollowingDocument,
-    options
-  );
+  return Apollo.useQuery<FollowingQuery, FollowingQueryVariables>(FollowingDocument, options);
 }
 
 export function useFollowingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    FollowingQuery,
-    FollowingQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<FollowingQuery, FollowingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<FollowingQuery, FollowingQueryVariables>(
-    FollowingDocument,
-    options
-  );
+  return Apollo.useLazyQuery<FollowingQuery, FollowingQueryVariables>(FollowingDocument, options);
 }
 
 export type FollowingQueryHookResult = ReturnType<typeof useFollowingQuery>;
-export type FollowingLazyQueryHookResult = ReturnType<
-  typeof useFollowingLazyQuery
->;
-export type FollowingQueryResult = Apollo.QueryResult<
-  FollowingQuery,
-  FollowingQueryVariables
->;
+export type FollowingLazyQueryHookResult = ReturnType<typeof useFollowingLazyQuery>;
+export type FollowingQueryResult = Apollo.QueryResult<FollowingQuery, FollowingQueryVariables>;
 export const GenerateModuleCurrencyApprovalDataDocument = gql`
-  query GenerateModuleCurrencyApprovalData(
-    $request: GenerateModuleCurrencyApprovalDataRequest!
-  ) {
+  query GenerateModuleCurrencyApprovalData($request: GenerateModuleCurrencyApprovalDataRequest!) {
     generateModuleCurrencyApprovalData(request: $request) {
       to
       from
@@ -44940,37 +44406,27 @@ export const HasTxHashBeenIndexedDocument = gql`
  * });
  */
 export function useHasTxHashBeenIndexedQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    HasTxHashBeenIndexedQuery,
-    HasTxHashBeenIndexedQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    HasTxHashBeenIndexedQuery,
-    HasTxHashBeenIndexedQueryVariables
-  >(HasTxHashBeenIndexedDocument, options);
+  return Apollo.useQuery<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>(
+    HasTxHashBeenIndexedDocument,
+    options
+  );
 }
 
 export function useHasTxHashBeenIndexedLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    HasTxHashBeenIndexedQuery,
-    HasTxHashBeenIndexedQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    HasTxHashBeenIndexedQuery,
-    HasTxHashBeenIndexedQueryVariables
-  >(HasTxHashBeenIndexedDocument, options);
+  return Apollo.useLazyQuery<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>(
+    HasTxHashBeenIndexedDocument,
+    options
+  );
 }
 
-export type HasTxHashBeenIndexedQueryHookResult = ReturnType<
-  typeof useHasTxHashBeenIndexedQuery
->;
-export type HasTxHashBeenIndexedLazyQueryHookResult = ReturnType<
-  typeof useHasTxHashBeenIndexedLazyQuery
->;
+export type HasTxHashBeenIndexedQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedQuery>;
+export type HasTxHashBeenIndexedLazyQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedLazyQuery>;
 export type HasTxHashBeenIndexedQueryResult = Apollo.QueryResult<
   HasTxHashBeenIndexedQuery,
   HasTxHashBeenIndexedQueryVariables
@@ -45006,41 +44462,22 @@ export const LensterStatsDocument = gql`
  * });
  */
 export function useLensterStatsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    LensterStatsQuery,
-    LensterStatsQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<LensterStatsQuery, LensterStatsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<LensterStatsQuery, LensterStatsQueryVariables>(
-    LensterStatsDocument,
-    options
-  );
+  return Apollo.useQuery<LensterStatsQuery, LensterStatsQueryVariables>(LensterStatsDocument, options);
 }
 
 export function useLensterStatsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    LensterStatsQuery,
-    LensterStatsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<LensterStatsQuery, LensterStatsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<LensterStatsQuery, LensterStatsQueryVariables>(
-    LensterStatsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<LensterStatsQuery, LensterStatsQueryVariables>(LensterStatsDocument, options);
 }
 
-export type LensterStatsQueryHookResult = ReturnType<
-  typeof useLensterStatsQuery
->;
-export type LensterStatsLazyQueryHookResult = ReturnType<
-  typeof useLensterStatsLazyQuery
->;
-export type LensterStatsQueryResult = Apollo.QueryResult<
-  LensterStatsQuery,
-  LensterStatsQueryVariables
->;
+export type LensterStatsQueryHookResult = ReturnType<typeof useLensterStatsQuery>;
+export type LensterStatsLazyQueryHookResult = ReturnType<typeof useLensterStatsLazyQuery>;
+export type LensterStatsQueryResult = Apollo.QueryResult<LensterStatsQuery, LensterStatsQueryVariables>;
 export const LikesDocument = gql`
   query Likes($request: WhoReactedPublicationRequest!) {
     whoReactedPublication(request: $request) {
@@ -45075,32 +44512,21 @@ export const LikesDocument = gql`
  *   },
  * });
  */
-export function useLikesQuery(
-  baseOptions: Apollo.QueryHookOptions<LikesQuery, LikesQueryVariables>
-) {
+export function useLikesQuery(baseOptions: Apollo.QueryHookOptions<LikesQuery, LikesQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<LikesQuery, LikesQueryVariables>(
-    LikesDocument,
-    options
-  );
+  return Apollo.useQuery<LikesQuery, LikesQueryVariables>(LikesDocument, options);
 }
 
 export function useLikesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<LikesQuery, LikesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<LikesQuery, LikesQueryVariables>(
-    LikesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<LikesQuery, LikesQueryVariables>(LikesDocument, options);
 }
 
 export type LikesQueryHookResult = ReturnType<typeof useLikesQuery>;
 export type LikesLazyQueryHookResult = ReturnType<typeof useLikesLazyQuery>;
-export type LikesQueryResult = Apollo.QueryResult<
-  LikesQuery,
-  LikesQueryVariables
->;
+export type LikesQueryResult = Apollo.QueryResult<LikesQuery, LikesQueryVariables>;
 export const MutualFollowersDocument = gql`
   query MutualFollowers($request: MutualFollowersProfilesQueryRequest!) {
     mutualFollowersProfiles(request: $request) {
@@ -45134,10 +44560,7 @@ export const MutualFollowersDocument = gql`
  * });
  */
 export function useMutualFollowersQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    MutualFollowersQuery,
-    MutualFollowersQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<MutualFollowersQuery, MutualFollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<MutualFollowersQuery, MutualFollowersQueryVariables>(
@@ -45147,24 +44570,17 @@ export function useMutualFollowersQuery(
 }
 
 export function useMutualFollowersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    MutualFollowersQuery,
-    MutualFollowersQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<MutualFollowersQuery, MutualFollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    MutualFollowersQuery,
-    MutualFollowersQueryVariables
-  >(MutualFollowersDocument, options);
+  return Apollo.useLazyQuery<MutualFollowersQuery, MutualFollowersQueryVariables>(
+    MutualFollowersDocument,
+    options
+  );
 }
 
-export type MutualFollowersQueryHookResult = ReturnType<
-  typeof useMutualFollowersQuery
->;
-export type MutualFollowersLazyQueryHookResult = ReturnType<
-  typeof useMutualFollowersLazyQuery
->;
+export type MutualFollowersQueryHookResult = ReturnType<typeof useMutualFollowersQuery>;
+export type MutualFollowersLazyQueryHookResult = ReturnType<typeof useMutualFollowersLazyQuery>;
 export type MutualFollowersQueryResult = Apollo.QueryResult<
   MutualFollowersQuery,
   MutualFollowersQueryVariables
@@ -45195,41 +44611,22 @@ export const NftChallengeDocument = gql`
  * });
  */
 export function useNftChallengeQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    NftChallengeQuery,
-    NftChallengeQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<NftChallengeQuery, NftChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<NftChallengeQuery, NftChallengeQueryVariables>(
-    NftChallengeDocument,
-    options
-  );
+  return Apollo.useQuery<NftChallengeQuery, NftChallengeQueryVariables>(NftChallengeDocument, options);
 }
 
 export function useNftChallengeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    NftChallengeQuery,
-    NftChallengeQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<NftChallengeQuery, NftChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<NftChallengeQuery, NftChallengeQueryVariables>(
-    NftChallengeDocument,
-    options
-  );
+  return Apollo.useLazyQuery<NftChallengeQuery, NftChallengeQueryVariables>(NftChallengeDocument, options);
 }
 
-export type NftChallengeQueryHookResult = ReturnType<
-  typeof useNftChallengeQuery
->;
-export type NftChallengeLazyQueryHookResult = ReturnType<
-  typeof useNftChallengeLazyQuery
->;
-export type NftChallengeQueryResult = Apollo.QueryResult<
-  NftChallengeQuery,
-  NftChallengeQueryVariables
->;
+export type NftChallengeQueryHookResult = ReturnType<typeof useNftChallengeQuery>;
+export type NftChallengeLazyQueryHookResult = ReturnType<typeof useNftChallengeLazyQuery>;
+export type NftChallengeQueryResult = Apollo.QueryResult<NftChallengeQuery, NftChallengeQueryVariables>;
 export const NftFeedDocument = gql`
   query NftFeed($request: NFTsRequest!) {
     nfts(request: $request) {
@@ -45267,32 +44664,21 @@ export const NftFeedDocument = gql`
  *   },
  * });
  */
-export function useNftFeedQuery(
-  baseOptions: Apollo.QueryHookOptions<NftFeedQuery, NftFeedQueryVariables>
-) {
+export function useNftFeedQuery(baseOptions: Apollo.QueryHookOptions<NftFeedQuery, NftFeedQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<NftFeedQuery, NftFeedQueryVariables>(
-    NftFeedDocument,
-    options
-  );
+  return Apollo.useQuery<NftFeedQuery, NftFeedQueryVariables>(NftFeedDocument, options);
 }
 
 export function useNftFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NftFeedQuery, NftFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<NftFeedQuery, NftFeedQueryVariables>(
-    NftFeedDocument,
-    options
-  );
+  return Apollo.useLazyQuery<NftFeedQuery, NftFeedQueryVariables>(NftFeedDocument, options);
 }
 
 export type NftFeedQueryHookResult = ReturnType<typeof useNftFeedQuery>;
 export type NftFeedLazyQueryHookResult = ReturnType<typeof useNftFeedLazyQuery>;
-export type NftFeedQueryResult = Apollo.QueryResult<
-  NftFeedQuery,
-  NftFeedQueryVariables
->;
+export type NftFeedQueryResult = Apollo.QueryResult<NftFeedQuery, NftFeedQueryVariables>;
 export const NftGalleriesDocument = gql`
   query NftGalleries($request: NftGalleriesRequest!) {
     nftGalleries(request: $request) {
@@ -45332,41 +44718,22 @@ export const NftGalleriesDocument = gql`
  * });
  */
 export function useNftGalleriesQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    NftGalleriesQuery,
-    NftGalleriesQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<NftGalleriesQuery, NftGalleriesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(
-    NftGalleriesDocument,
-    options
-  );
+  return Apollo.useQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(NftGalleriesDocument, options);
 }
 
 export function useNftGalleriesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    NftGalleriesQuery,
-    NftGalleriesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<NftGalleriesQuery, NftGalleriesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(
-    NftGalleriesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(NftGalleriesDocument, options);
 }
 
-export type NftGalleriesQueryHookResult = ReturnType<
-  typeof useNftGalleriesQuery
->;
-export type NftGalleriesLazyQueryHookResult = ReturnType<
-  typeof useNftGalleriesLazyQuery
->;
-export type NftGalleriesQueryResult = Apollo.QueryResult<
-  NftGalleriesQuery,
-  NftGalleriesQueryVariables
->;
+export type NftGalleriesQueryHookResult = ReturnType<typeof useNftGalleriesQuery>;
+export type NftGalleriesLazyQueryHookResult = ReturnType<typeof useNftGalleriesLazyQuery>;
+export type NftGalleriesQueryResult = Apollo.QueryResult<NftGalleriesQuery, NftGalleriesQueryVariables>;
 export const NotificationCountDocument = gql`
   query NotificationCount($request: NotificationRequest!) {
     notifications(request: $request) {
@@ -45394,37 +44761,27 @@ export const NotificationCountDocument = gql`
  * });
  */
 export function useNotificationCountQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    NotificationCountQuery,
-    NotificationCountQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<NotificationCountQuery, NotificationCountQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    NotificationCountQuery,
-    NotificationCountQueryVariables
-  >(NotificationCountDocument, options);
+  return Apollo.useQuery<NotificationCountQuery, NotificationCountQueryVariables>(
+    NotificationCountDocument,
+    options
+  );
 }
 
 export function useNotificationCountLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    NotificationCountQuery,
-    NotificationCountQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<NotificationCountQuery, NotificationCountQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    NotificationCountQuery,
-    NotificationCountQueryVariables
-  >(NotificationCountDocument, options);
+  return Apollo.useLazyQuery<NotificationCountQuery, NotificationCountQueryVariables>(
+    NotificationCountDocument,
+    options
+  );
 }
 
-export type NotificationCountQueryHookResult = ReturnType<
-  typeof useNotificationCountQuery
->;
-export type NotificationCountLazyQueryHookResult = ReturnType<
-  typeof useNotificationCountLazyQuery
->;
+export type NotificationCountQueryHookResult = ReturnType<typeof useNotificationCountQuery>;
+export type NotificationCountLazyQueryHookResult = ReturnType<typeof useNotificationCountLazyQuery>;
 export type NotificationCountQueryResult = Apollo.QueryResult<
   NotificationCountQuery,
   NotificationCountQueryVariables
@@ -45596,41 +44953,22 @@ export const NotificationsDocument = gql`
  * });
  */
 export function useNotificationsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    NotificationsQuery,
-    NotificationsQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<NotificationsQuery, NotificationsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<NotificationsQuery, NotificationsQueryVariables>(
-    NotificationsDocument,
-    options
-  );
+  return Apollo.useQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
 }
 
 export function useNotificationsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    NotificationsQuery,
-    NotificationsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<NotificationsQuery, NotificationsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<NotificationsQuery, NotificationsQueryVariables>(
-    NotificationsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
 }
 
-export type NotificationsQueryHookResult = ReturnType<
-  typeof useNotificationsQuery
->;
-export type NotificationsLazyQueryHookResult = ReturnType<
-  typeof useNotificationsLazyQuery
->;
-export type NotificationsQueryResult = Apollo.QueryResult<
-  NotificationsQuery,
-  NotificationsQueryVariables
->;
+export type NotificationsQueryHookResult = ReturnType<typeof useNotificationsQuery>;
+export type NotificationsLazyQueryHookResult = ReturnType<typeof useNotificationsLazyQuery>;
+export type NotificationsQueryResult = Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>;
 export const ProfileDocument = gql`
   query Profile($request: SingleProfileQueryRequest!, $who: ProfileId) {
     profile(request: $request) {
@@ -45682,32 +45020,21 @@ export const ProfileDocument = gql`
  *   },
  * });
  */
-export function useProfileQuery(
-  baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>
-) {
+export function useProfileQuery(baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
+  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
 
 export function useProfileLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
 
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
-export type ProfileQueryResult = Apollo.QueryResult<
-  ProfileQuery,
-  ProfileQueryVariables
->;
+export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const ProfileFeedDocument = gql`
   query ProfileFeed(
     $request: PublicationsQueryRequest!
@@ -45755,39 +45082,22 @@ export const ProfileFeedDocument = gql`
  * });
  */
 export function useProfileFeedQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    ProfileFeedQuery,
-    ProfileFeedQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<ProfileFeedQuery, ProfileFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(
-    ProfileFeedDocument,
-    options
-  );
+  return Apollo.useQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(ProfileFeedDocument, options);
 }
 
 export function useProfileFeedLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ProfileFeedQuery,
-    ProfileFeedQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileFeedQuery, ProfileFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(
-    ProfileFeedDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(ProfileFeedDocument, options);
 }
 
 export type ProfileFeedQueryHookResult = ReturnType<typeof useProfileFeedQuery>;
-export type ProfileFeedLazyQueryHookResult = ReturnType<
-  typeof useProfileFeedLazyQuery
->;
-export type ProfileFeedQueryResult = Apollo.QueryResult<
-  ProfileFeedQuery,
-  ProfileFeedQueryVariables
->;
+export type ProfileFeedLazyQueryHookResult = ReturnType<typeof useProfileFeedLazyQuery>;
+export type ProfileFeedQueryResult = Apollo.QueryResult<ProfileFeedQuery, ProfileFeedQueryVariables>;
 export const ProfileInterestsDocument = gql`
   query ProfileInterests {
     profileInterests
@@ -45810,10 +45120,7 @@ export const ProfileInterestsDocument = gql`
  * });
  */
 export function useProfileInterestsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    ProfileInterestsQuery,
-    ProfileInterestsQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<ProfileInterestsQuery, ProfileInterestsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfileInterestsQuery, ProfileInterestsQueryVariables>(
@@ -45823,24 +45130,17 @@ export function useProfileInterestsQuery(
 }
 
 export function useProfileInterestsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ProfileInterestsQuery,
-    ProfileInterestsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileInterestsQuery, ProfileInterestsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    ProfileInterestsQuery,
-    ProfileInterestsQueryVariables
-  >(ProfileInterestsDocument, options);
+  return Apollo.useLazyQuery<ProfileInterestsQuery, ProfileInterestsQueryVariables>(
+    ProfileInterestsDocument,
+    options
+  );
 }
 
-export type ProfileInterestsQueryHookResult = ReturnType<
-  typeof useProfileInterestsQuery
->;
-export type ProfileInterestsLazyQueryHookResult = ReturnType<
-  typeof useProfileInterestsLazyQuery
->;
+export type ProfileInterestsQueryHookResult = ReturnType<typeof useProfileInterestsQuery>;
+export type ProfileInterestsLazyQueryHookResult = ReturnType<typeof useProfileInterestsLazyQuery>;
 export type ProfileInterestsQueryResult = Apollo.QueryResult<
   ProfileInterestsQuery,
   ProfileInterestsQueryVariables
@@ -45871,10 +45171,7 @@ export const ProfileSettingsDocument = gql`
  * });
  */
 export function useProfileSettingsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    ProfileSettingsQuery,
-    ProfileSettingsQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<ProfileSettingsQuery, ProfileSettingsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfileSettingsQuery, ProfileSettingsQueryVariables>(
@@ -45884,24 +45181,17 @@ export function useProfileSettingsQuery(
 }
 
 export function useProfileSettingsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ProfileSettingsQuery,
-    ProfileSettingsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileSettingsQuery, ProfileSettingsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    ProfileSettingsQuery,
-    ProfileSettingsQueryVariables
-  >(ProfileSettingsDocument, options);
+  return Apollo.useLazyQuery<ProfileSettingsQuery, ProfileSettingsQueryVariables>(
+    ProfileSettingsDocument,
+    options
+  );
 }
 
-export type ProfileSettingsQueryHookResult = ReturnType<
-  typeof useProfileSettingsQuery
->;
-export type ProfileSettingsLazyQueryHookResult = ReturnType<
-  typeof useProfileSettingsLazyQuery
->;
+export type ProfileSettingsQueryHookResult = ReturnType<typeof useProfileSettingsQuery>;
+export type ProfileSettingsLazyQueryHookResult = ReturnType<typeof useProfileSettingsLazyQuery>;
 export type ProfileSettingsQueryResult = Apollo.QueryResult<
   ProfileSettingsQuery,
   ProfileSettingsQueryVariables
@@ -45942,33 +45232,19 @@ export function useProfilesQuery(
   baseOptions: Apollo.QueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ProfilesQuery, ProfilesQueryVariables>(
-    ProfilesDocument,
-    options
-  );
+  return Apollo.useQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
 }
 
 export function useProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ProfilesQuery,
-    ProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ProfilesQuery, ProfilesQueryVariables>(
-    ProfilesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
 }
 
 export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
-export type ProfilesLazyQueryHookResult = ReturnType<
-  typeof useProfilesLazyQuery
->;
-export type ProfilesQueryResult = Apollo.QueryResult<
-  ProfilesQuery,
-  ProfilesQueryVariables
->;
+export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
+export type ProfilesQueryResult = Apollo.QueryResult<ProfilesQuery, ProfilesQueryVariables>;
 export const PublicationDocument = gql`
   query Publication(
     $request: PublicationQueryRequest!
@@ -46032,39 +45308,22 @@ export const PublicationDocument = gql`
  * });
  */
 export function usePublicationQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    PublicationQuery,
-    PublicationQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<PublicationQuery, PublicationQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<PublicationQuery, PublicationQueryVariables>(
-    PublicationDocument,
-    options
-  );
+  return Apollo.useQuery<PublicationQuery, PublicationQueryVariables>(PublicationDocument, options);
 }
 
 export function usePublicationLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PublicationQuery,
-    PublicationQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<PublicationQuery, PublicationQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<PublicationQuery, PublicationQueryVariables>(
-    PublicationDocument,
-    options
-  );
+  return Apollo.useLazyQuery<PublicationQuery, PublicationQueryVariables>(PublicationDocument, options);
 }
 
 export type PublicationQueryHookResult = ReturnType<typeof usePublicationQuery>;
-export type PublicationLazyQueryHookResult = ReturnType<
-  typeof usePublicationLazyQuery
->;
-export type PublicationQueryResult = Apollo.QueryResult<
-  PublicationQuery,
-  PublicationQueryVariables
->;
+export type PublicationLazyQueryHookResult = ReturnType<typeof usePublicationLazyQuery>;
+export type PublicationQueryResult = Apollo.QueryResult<PublicationQuery, PublicationQueryVariables>;
 export const PublicationRevenueDocument = gql`
   query PublicationRevenue($request: PublicationRevenueQueryRequest!) {
     publicationRevenue(request: $request) {
@@ -46094,37 +45353,27 @@ export const PublicationRevenueDocument = gql`
  * });
  */
 export function usePublicationRevenueQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    PublicationRevenueQuery,
-    PublicationRevenueQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<PublicationRevenueQuery, PublicationRevenueQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    PublicationRevenueQuery,
-    PublicationRevenueQueryVariables
-  >(PublicationRevenueDocument, options);
+  return Apollo.useQuery<PublicationRevenueQuery, PublicationRevenueQueryVariables>(
+    PublicationRevenueDocument,
+    options
+  );
 }
 
 export function usePublicationRevenueLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PublicationRevenueQuery,
-    PublicationRevenueQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<PublicationRevenueQuery, PublicationRevenueQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    PublicationRevenueQuery,
-    PublicationRevenueQueryVariables
-  >(PublicationRevenueDocument, options);
+  return Apollo.useLazyQuery<PublicationRevenueQuery, PublicationRevenueQueryVariables>(
+    PublicationRevenueDocument,
+    options
+  );
 }
 
-export type PublicationRevenueQueryHookResult = ReturnType<
-  typeof usePublicationRevenueQuery
->;
-export type PublicationRevenueLazyQueryHookResult = ReturnType<
-  typeof usePublicationRevenueLazyQuery
->;
+export type PublicationRevenueQueryHookResult = ReturnType<typeof usePublicationRevenueQuery>;
+export type PublicationRevenueLazyQueryHookResult = ReturnType<typeof usePublicationRevenueLazyQuery>;
 export type PublicationRevenueQueryResult = Apollo.QueryResult<
   PublicationRevenueQuery,
   PublicationRevenueQueryVariables
@@ -46156,37 +45405,27 @@ export const RecommendedProfilesDocument = gql`
  * });
  */
 export function useRecommendedProfilesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    RecommendedProfilesQuery,
-    RecommendedProfilesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<RecommendedProfilesQuery, RecommendedProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    RecommendedProfilesQuery,
-    RecommendedProfilesQueryVariables
-  >(RecommendedProfilesDocument, options);
+  return Apollo.useQuery<RecommendedProfilesQuery, RecommendedProfilesQueryVariables>(
+    RecommendedProfilesDocument,
+    options
+  );
 }
 
 export function useRecommendedProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    RecommendedProfilesQuery,
-    RecommendedProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<RecommendedProfilesQuery, RecommendedProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    RecommendedProfilesQuery,
-    RecommendedProfilesQueryVariables
-  >(RecommendedProfilesDocument, options);
+  return Apollo.useLazyQuery<RecommendedProfilesQuery, RecommendedProfilesQueryVariables>(
+    RecommendedProfilesDocument,
+    options
+  );
 }
 
-export type RecommendedProfilesQueryHookResult = ReturnType<
-  typeof useRecommendedProfilesQuery
->;
-export type RecommendedProfilesLazyQueryHookResult = ReturnType<
-  typeof useRecommendedProfilesLazyQuery
->;
+export type RecommendedProfilesQueryHookResult = ReturnType<typeof useRecommendedProfilesQuery>;
+export type RecommendedProfilesLazyQueryHookResult = ReturnType<typeof useRecommendedProfilesLazyQuery>;
 export type RecommendedProfilesQueryResult = Apollo.QueryResult<
   RecommendedProfilesQuery,
   RecommendedProfilesQueryVariables
@@ -46217,39 +45456,22 @@ export const RelayQueuesDocument = gql`
  * });
  */
 export function useRelayQueuesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    RelayQueuesQuery,
-    RelayQueuesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<RelayQueuesQuery, RelayQueuesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(
-    RelayQueuesDocument,
-    options
-  );
+  return Apollo.useQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(RelayQueuesDocument, options);
 }
 
 export function useRelayQueuesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    RelayQueuesQuery,
-    RelayQueuesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<RelayQueuesQuery, RelayQueuesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(
-    RelayQueuesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(RelayQueuesDocument, options);
 }
 
 export type RelayQueuesQueryHookResult = ReturnType<typeof useRelayQueuesQuery>;
-export type RelayQueuesLazyQueryHookResult = ReturnType<
-  typeof useRelayQueuesLazyQuery
->;
-export type RelayQueuesQueryResult = Apollo.QueryResult<
-  RelayQueuesQuery,
-  RelayQueuesQueryVariables
->;
+export type RelayQueuesLazyQueryHookResult = ReturnType<typeof useRelayQueuesLazyQuery>;
+export type RelayQueuesQueryResult = Apollo.QueryResult<RelayQueuesQuery, RelayQueuesQueryVariables>;
 export const SearchProfilesDocument = gql`
   query SearchProfiles($request: SearchQueryRequest!) {
     search(request: $request) {
@@ -46283,23 +45505,14 @@ export const SearchProfilesDocument = gql`
  * });
  */
 export function useSearchProfilesQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    SearchProfilesQuery,
-    SearchProfilesQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<SearchProfilesQuery, SearchProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(
-    SearchProfilesDocument,
-    options
-  );
+  return Apollo.useQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(SearchProfilesDocument, options);
 }
 
 export function useSearchProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SearchProfilesQuery,
-    SearchProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<SearchProfilesQuery, SearchProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(
@@ -46308,16 +45521,9 @@ export function useSearchProfilesLazyQuery(
   );
 }
 
-export type SearchProfilesQueryHookResult = ReturnType<
-  typeof useSearchProfilesQuery
->;
-export type SearchProfilesLazyQueryHookResult = ReturnType<
-  typeof useSearchProfilesLazyQuery
->;
-export type SearchProfilesQueryResult = Apollo.QueryResult<
-  SearchProfilesQuery,
-  SearchProfilesQueryVariables
->;
+export type SearchProfilesQueryHookResult = ReturnType<typeof useSearchProfilesQuery>;
+export type SearchProfilesLazyQueryHookResult = ReturnType<typeof useSearchProfilesLazyQuery>;
+export type SearchProfilesQueryResult = Apollo.QueryResult<SearchProfilesQuery, SearchProfilesQueryVariables>;
 export const SearchPublicationsDocument = gql`
   query SearchPublications(
     $request: SearchQueryRequest!
@@ -46363,37 +45569,27 @@ export const SearchPublicationsDocument = gql`
  * });
  */
 export function useSearchPublicationsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    SearchPublicationsQuery,
-    SearchPublicationsQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<SearchPublicationsQuery, SearchPublicationsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    SearchPublicationsQuery,
-    SearchPublicationsQueryVariables
-  >(SearchPublicationsDocument, options);
+  return Apollo.useQuery<SearchPublicationsQuery, SearchPublicationsQueryVariables>(
+    SearchPublicationsDocument,
+    options
+  );
 }
 
 export function useSearchPublicationsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SearchPublicationsQuery,
-    SearchPublicationsQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<SearchPublicationsQuery, SearchPublicationsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    SearchPublicationsQuery,
-    SearchPublicationsQueryVariables
-  >(SearchPublicationsDocument, options);
+  return Apollo.useLazyQuery<SearchPublicationsQuery, SearchPublicationsQueryVariables>(
+    SearchPublicationsDocument,
+    options
+  );
 }
 
-export type SearchPublicationsQueryHookResult = ReturnType<
-  typeof useSearchPublicationsQuery
->;
-export type SearchPublicationsLazyQueryHookResult = ReturnType<
-  typeof useSearchPublicationsLazyQuery
->;
+export type SearchPublicationsQueryHookResult = ReturnType<typeof useSearchPublicationsQuery>;
+export type SearchPublicationsLazyQueryHookResult = ReturnType<typeof useSearchPublicationsLazyQuery>;
 export type SearchPublicationsQueryResult = Apollo.QueryResult<
   SearchPublicationsQuery,
   SearchPublicationsQueryVariables
@@ -46462,37 +45658,27 @@ export const SeeThroughProfilesDocument = gql`
  * });
  */
 export function useSeeThroughProfilesQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    SeeThroughProfilesQuery,
-    SeeThroughProfilesQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<SeeThroughProfilesQuery, SeeThroughProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    SeeThroughProfilesQuery,
-    SeeThroughProfilesQueryVariables
-  >(SeeThroughProfilesDocument, options);
+  return Apollo.useQuery<SeeThroughProfilesQuery, SeeThroughProfilesQueryVariables>(
+    SeeThroughProfilesDocument,
+    options
+  );
 }
 
 export function useSeeThroughProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SeeThroughProfilesQuery,
-    SeeThroughProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<SeeThroughProfilesQuery, SeeThroughProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    SeeThroughProfilesQuery,
-    SeeThroughProfilesQueryVariables
-  >(SeeThroughProfilesDocument, options);
+  return Apollo.useLazyQuery<SeeThroughProfilesQuery, SeeThroughProfilesQueryVariables>(
+    SeeThroughProfilesDocument,
+    options
+  );
 }
 
-export type SeeThroughProfilesQueryHookResult = ReturnType<
-  typeof useSeeThroughProfilesQuery
->;
-export type SeeThroughProfilesLazyQueryHookResult = ReturnType<
-  typeof useSeeThroughProfilesLazyQuery
->;
+export type SeeThroughProfilesQueryHookResult = ReturnType<typeof useSeeThroughProfilesQuery>;
+export type SeeThroughProfilesLazyQueryHookResult = ReturnType<typeof useSeeThroughProfilesLazyQuery>;
 export type SeeThroughProfilesQueryResult = Apollo.QueryResult<
   SeeThroughProfilesQuery,
   SeeThroughProfilesQueryVariables
@@ -46536,39 +45722,22 @@ export const SuperFollowDocument = gql`
  * });
  */
 export function useSuperFollowQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    SuperFollowQuery,
-    SuperFollowQueryVariables
-  >
+  baseOptions: Apollo.QueryHookOptions<SuperFollowQuery, SuperFollowQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SuperFollowQuery, SuperFollowQueryVariables>(
-    SuperFollowDocument,
-    options
-  );
+  return Apollo.useQuery<SuperFollowQuery, SuperFollowQueryVariables>(SuperFollowDocument, options);
 }
 
 export function useSuperFollowLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SuperFollowQuery,
-    SuperFollowQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<SuperFollowQuery, SuperFollowQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SuperFollowQuery, SuperFollowQueryVariables>(
-    SuperFollowDocument,
-    options
-  );
+  return Apollo.useLazyQuery<SuperFollowQuery, SuperFollowQueryVariables>(SuperFollowDocument, options);
 }
 
 export type SuperFollowQueryHookResult = ReturnType<typeof useSuperFollowQuery>;
-export type SuperFollowLazyQueryHookResult = ReturnType<
-  typeof useSuperFollowLazyQuery
->;
-export type SuperFollowQueryResult = Apollo.QueryResult<
-  SuperFollowQuery,
-  SuperFollowQueryVariables
->;
+export type SuperFollowLazyQueryHookResult = ReturnType<typeof useSuperFollowLazyQuery>;
+export type SuperFollowQueryResult = Apollo.QueryResult<SuperFollowQuery, SuperFollowQueryVariables>;
 export const TimelineDocument = gql`
   query Timeline(
     $request: FeedRequest!
@@ -46647,33 +45816,19 @@ export function useTimelineQuery(
   baseOptions: Apollo.QueryHookOptions<TimelineQuery, TimelineQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<TimelineQuery, TimelineQueryVariables>(
-    TimelineDocument,
-    options
-  );
+  return Apollo.useQuery<TimelineQuery, TimelineQueryVariables>(TimelineDocument, options);
 }
 
 export function useTimelineLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    TimelineQuery,
-    TimelineQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<TimelineQuery, TimelineQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<TimelineQuery, TimelineQueryVariables>(
-    TimelineDocument,
-    options
-  );
+  return Apollo.useLazyQuery<TimelineQuery, TimelineQueryVariables>(TimelineDocument, options);
 }
 
 export type TimelineQueryHookResult = ReturnType<typeof useTimelineQuery>;
-export type TimelineLazyQueryHookResult = ReturnType<
-  typeof useTimelineLazyQuery
->;
-export type TimelineQueryResult = Apollo.QueryResult<
-  TimelineQuery,
-  TimelineQueryVariables
->;
+export type TimelineLazyQueryHookResult = ReturnType<typeof useTimelineLazyQuery>;
+export type TimelineQueryResult = Apollo.QueryResult<TimelineQuery, TimelineQueryVariables>;
 export const TrendingDocument = gql`
   query Trending($request: AllPublicationsTagsRequest!) {
     allPublicationsTags(request: $request) {
@@ -46705,33 +45860,19 @@ export function useTrendingQuery(
   baseOptions: Apollo.QueryHookOptions<TrendingQuery, TrendingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<TrendingQuery, TrendingQueryVariables>(
-    TrendingDocument,
-    options
-  );
+  return Apollo.useQuery<TrendingQuery, TrendingQueryVariables>(TrendingDocument, options);
 }
 
 export function useTrendingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    TrendingQuery,
-    TrendingQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<TrendingQuery, TrendingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<TrendingQuery, TrendingQueryVariables>(
-    TrendingDocument,
-    options
-  );
+  return Apollo.useLazyQuery<TrendingQuery, TrendingQueryVariables>(TrendingDocument, options);
 }
 
 export type TrendingQueryHookResult = ReturnType<typeof useTrendingQuery>;
-export type TrendingLazyQueryHookResult = ReturnType<
-  typeof useTrendingLazyQuery
->;
-export type TrendingQueryResult = Apollo.QueryResult<
-  TrendingQuery,
-  TrendingQueryVariables
->;
+export type TrendingLazyQueryHookResult = ReturnType<typeof useTrendingLazyQuery>;
+export type TrendingQueryResult = Apollo.QueryResult<TrendingQuery, TrendingQueryVariables>;
 export const UserProfilesDocument = gql`
   query UserProfiles($ownedBy: [EthereumAddress!]) {
     profiles(request: { ownedBy: $ownedBy }) {
@@ -46767,41 +45908,22 @@ export const UserProfilesDocument = gql`
  * });
  */
 export function useUserProfilesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    UserProfilesQuery,
-    UserProfilesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<UserProfilesQuery, UserProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<UserProfilesQuery, UserProfilesQueryVariables>(
-    UserProfilesDocument,
-    options
-  );
+  return Apollo.useQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
 }
 
 export function useUserProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    UserProfilesQuery,
-    UserProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<UserProfilesQuery, UserProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<UserProfilesQuery, UserProfilesQueryVariables>(
-    UserProfilesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
 }
 
-export type UserProfilesQueryHookResult = ReturnType<
-  typeof useUserProfilesQuery
->;
-export type UserProfilesLazyQueryHookResult = ReturnType<
-  typeof useUserProfilesLazyQuery
->;
-export type UserProfilesQueryResult = Apollo.QueryResult<
-  UserProfilesQuery,
-  UserProfilesQueryVariables
->;
+export type UserProfilesQueryHookResult = ReturnType<typeof useUserProfilesQuery>;
+export type UserProfilesLazyQueryHookResult = ReturnType<typeof useUserProfilesLazyQuery>;
+export type UserProfilesQueryResult = Apollo.QueryResult<UserProfilesQuery, UserProfilesQueryVariables>;
 export const UserSigNoncesDocument = gql`
   query UserSigNonces {
     userSigNonces {
@@ -46826,41 +45948,22 @@ export const UserSigNoncesDocument = gql`
  * });
  */
 export function useUserSigNoncesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    UserSigNoncesQuery,
-    UserSigNoncesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<UserSigNoncesQuery, UserSigNoncesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(
-    UserSigNoncesDocument,
-    options
-  );
+  return Apollo.useQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(UserSigNoncesDocument, options);
 }
 
 export function useUserSigNoncesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    UserSigNoncesQuery,
-    UserSigNoncesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<UserSigNoncesQuery, UserSigNoncesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(
-    UserSigNoncesDocument,
-    options
-  );
+  return Apollo.useLazyQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(UserSigNoncesDocument, options);
 }
 
-export type UserSigNoncesQueryHookResult = ReturnType<
-  typeof useUserSigNoncesQuery
->;
-export type UserSigNoncesLazyQueryHookResult = ReturnType<
-  typeof useUserSigNoncesLazyQuery
->;
-export type UserSigNoncesQueryResult = Apollo.QueryResult<
-  UserSigNoncesQuery,
-  UserSigNoncesQueryVariables
->;
+export type UserSigNoncesQueryHookResult = ReturnType<typeof useUserSigNoncesQuery>;
+export type UserSigNoncesLazyQueryHookResult = ReturnType<typeof useUserSigNoncesLazyQuery>;
+export type UserSigNoncesQueryResult = Apollo.QueryResult<UserSigNoncesQuery, UserSigNoncesQueryVariables>;
 export const VerifyDocument = gql`
   query Verify($request: VerifyRequest!) {
     verify(request: $request)
@@ -46883,32 +45986,21 @@ export const VerifyDocument = gql`
  *   },
  * });
  */
-export function useVerifyQuery(
-  baseOptions: Apollo.QueryHookOptions<VerifyQuery, VerifyQueryVariables>
-) {
+export function useVerifyQuery(baseOptions: Apollo.QueryHookOptions<VerifyQuery, VerifyQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<VerifyQuery, VerifyQueryVariables>(
-    VerifyDocument,
-    options
-  );
+  return Apollo.useQuery<VerifyQuery, VerifyQueryVariables>(VerifyDocument, options);
 }
 
 export function useVerifyLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<VerifyQuery, VerifyQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<VerifyQuery, VerifyQueryVariables>(
-    VerifyDocument,
-    options
-  );
+  return Apollo.useLazyQuery<VerifyQuery, VerifyQueryVariables>(VerifyDocument, options);
 }
 
 export type VerifyQueryHookResult = ReturnType<typeof useVerifyQuery>;
 export type VerifyLazyQueryHookResult = ReturnType<typeof useVerifyLazyQuery>;
-export type VerifyQueryResult = Apollo.QueryResult<
-  VerifyQuery,
-  VerifyQueryVariables
->;
+export type VerifyQueryResult = Apollo.QueryResult<VerifyQuery, VerifyQueryVariables>;
 
 export interface PossibleTypesResultData {
   possibleTypes: {
@@ -46918,10 +46010,7 @@ export interface PossibleTypesResultData {
 
 const result: PossibleTypesResultData = {
   possibleTypes: {
-    BroadcastDataAvailabilityUnion: [
-      'CreateDataAvailabilityPublicationResult',
-      'RelayError'
-    ],
+    BroadcastDataAvailabilityUnion: ['CreateDataAvailabilityPublicationResult', 'RelayError'],
     CollectModule: [
       'AaveFeeCollectModuleSettings',
       'ERC4626FeeCollectModuleSettings',
@@ -46963,11 +46052,7 @@ const result: PossibleTypesResultData = {
       'NewReactionNotification'
     ],
     ProfileMedia: ['MediaSet', 'NftImage'],
-    ProxyActionStatusResultUnion: [
-      'ProxyActionError',
-      'ProxyActionQueued',
-      'ProxyActionStatusResult'
-    ],
+    ProxyActionStatusResultUnion: ['ProxyActionError', 'ProxyActionQueued', 'ProxyActionStatusResult'],
     Publication: ['Comment', 'Mirror', 'Post'],
     PublicationForSale: ['Comment', 'Post'],
     PublicationSearchResultItem: ['Comment', 'Post'],
@@ -46976,10 +46061,7 @@ const result: PossibleTypesResultData = {
       'FollowOnlyReferenceModuleSettings',
       'UnknownReferenceModuleSettings'
     ],
-    RelayDataAvailabilityResult: [
-      'CreateDataAvailabilityPublicationResult',
-      'RelayError'
-    ],
+    RelayDataAvailabilityResult: ['CreateDataAvailabilityPublicationResult', 'RelayError'],
     RelayResult: ['RelayError', 'RelayerResult'],
     SearchResult: ['ProfileSearchResult', 'PublicationSearchResult'],
     TransactionResult: ['TransactionError', 'TransactionIndexedResult']

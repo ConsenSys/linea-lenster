@@ -50,12 +50,15 @@
 
 ## 🌿 About Lenster
 
-Lenster is a cutting-edge social media application that leverages the power of [Lens Protocol](http://lens.xyz) 🌿 to create a decentralized and permissionless platform for users to interact, share, and engage with one another. With a focus on privacy, security, and user control, Lenster aims to revolutionize the social media landscape by providing a more transparent and equitable digital environment for its users.
+Lenster is a cutting-edge social media application that leverages the power of [Lens Protocol](http://lens.xyz) 🌿 to
+create a decentralized and permissionless platform for users to interact, share, and engage with one another. With a
+focus on privacy, security, and user control, Lenster aims to revolutionize the social media landscape by providing a
+more transparent and equitable digital environment for its users.
 
 ## 📦 Environments
 
 | Name            | Link                                |
-| --------------- | ----------------------------------- |
+|-----------------|-------------------------------------|
 | Mainnet         | https://lenster.xyz                 |
 | Testnet         | https://testnet.lenster.xyz         |
 | Staging         | https://staging.lenster.xyz         |
@@ -64,7 +67,8 @@ Lenster is a cutting-edge social media application that leverages the power of [
 
 ## ✅ Community
 
-For a place to have open discussions on features, voice your ideas, or get help with general questions please visit our community at [Discord](https://lenster.xyz/discord).
+For a place to have open discussions on features, voice your ideas, or get help with general questions please visit our
+community at [Discord](https://lenster.xyz/discord).
 
 ## 📊 Repo Activity
 
@@ -72,7 +76,9 @@ For a place to have open discussions on features, voice your ideas, or get help 
 
 ## 💕 Contributors
 
-We love contributors! Feel free to contribute to this project but please read the [Contributing Guidelines](CONTRIBUTING.md) before opening an issue or PR so you understand the branching strategy and local development environment.
+We love contributors! Feel free to contribute to this project but please read
+the [Contributing Guidelines](CONTRIBUTING.md) before opening an issue or PR so you understand the branching strategy
+and local development environment.
 
 <a href="https://github.com/lensterxyz/lenster/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=lensterxyz/lenster" />

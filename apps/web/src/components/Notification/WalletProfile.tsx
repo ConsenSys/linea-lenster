@@ -10,15 +10,9 @@ interface NotificationWalletProfileProps {
   wallet: Wallet;
 }
 
-export const NotificationWalletProfileAvatar: FC<
-  NotificationWalletProfileProps
-> = ({ wallet }) => {
+export const NotificationWalletProfileAvatar: FC<NotificationWalletProfileProps> = ({ wallet }) => {
   return (
-    <Link
-      href={`${LINEA_EXPLORER_URL}/address/${wallet?.address}`}
-      target="_blank"
-      rel="noreferrer noopener"
-    >
+    <Link href={`${LINEA_EXPLORER_URL}/address/${wallet?.address}`} target="_blank" rel="noreferrer noopener">
       <Image
         onError={({ currentTarget }) => {
           currentTarget.src = getStampFyiURL(wallet?.address);
@@ -33,9 +27,7 @@ export const NotificationWalletProfileAvatar: FC<
   );
 };
 
-export const NotificationWalletProfileName: FC<
-  NotificationWalletProfileProps
-> = ({ wallet }) => {
+export const NotificationWalletProfileName: FC<NotificationWalletProfileProps> = ({ wallet }) => {
   return (
     <Link
       className="inline-flex items-center space-x-1 font-bold"

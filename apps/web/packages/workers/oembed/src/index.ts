@@ -18,11 +18,7 @@ router.get('/image', getImage);
 const routerHandleStack = (request: Request, env: Env, ctx: ExecutionContext) =>
   router.handle(request, env, ctx).then(json);
 
-const handleFetch = async (
-  request: Request,
-  env: Env,
-  ctx: ExecutionContext
-) => {
+const handleFetch = async (request: Request, env: Env, ctx: ExecutionContext) => {
   try {
     return await routerHandleStack(request, env, ctx);
   } catch (error_) {

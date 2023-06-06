@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import { gql } from '@apollo/client';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -656,6 +657,7 @@ export function useSnapshotQuery(
     options
   );
 }
+
 export function useSnapshotLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     SnapshotQuery,
@@ -668,6 +670,7 @@ export function useSnapshotLazyQuery(
     options
   );
 }
+
 export type SnapshotQueryHookResult = ReturnType<typeof useSnapshotQuery>;
 export type SnapshotLazyQueryHookResult = ReturnType<
   typeof useSnapshotLazyQuery
@@ -711,6 +714,7 @@ export function useSpaceQuery(
     options
   );
 }
+
 export function useSpaceLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SpaceQuery, SpaceQueryVariables>
 ) {
@@ -720,6 +724,7 @@ export function useSpaceLazyQuery(
     options
   );
 }
+
 export type SpaceQueryHookResult = ReturnType<typeof useSpaceQuery>;
 export type SpaceLazyQueryHookResult = ReturnType<typeof useSpaceLazyQuery>;
 export type SpaceQueryResult = Apollo.QueryResult<
@@ -732,6 +737,7 @@ export interface PossibleTypesResultData {
     [key: string]: string[];
   };
 }
+
 const result: PossibleTypesResultData = {
   possibleTypes: {}
 };

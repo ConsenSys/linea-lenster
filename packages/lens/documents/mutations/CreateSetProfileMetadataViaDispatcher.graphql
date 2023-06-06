@@ -1,7 +1,7 @@
 mutation CreateSetProfileMetadataViaDispatcher(
-  $request: CreatePublicSetProfileMetadataURIRequest!
+    $request: CreatePublicSetProfileMetadataURIRequest!
 ) {
-  createSetProfileMetadataViaDispatcher(request: $request) {
-    ...RelayerResultFields
-  }
+    createSetProfileMetadataViaDispatcher(request: $request) {
+        ...RelayerResultFields
+    }
 }

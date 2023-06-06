@@ -4,9 +4,7 @@ import { persist } from 'zustand/middleware';
 
 interface PreferencesState {
   highSignalNotificationFilter: boolean;
-  setHighSignalNotificationFilter: (
-    highSignalNotificationFilter: boolean
-  ) => void;
+  setHighSignalNotificationFilter: (highSignalNotificationFilter: boolean) => void;
 }
 
 export const usePreferencesStore = create(

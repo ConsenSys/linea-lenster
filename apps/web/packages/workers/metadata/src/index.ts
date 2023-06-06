@@ -44,18 +44,12 @@ const handleRequest = async (request: Request, env: EnvType) => {
         headers
       });
     } else {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Bundlr error!', bundlrRes }),
-        {
-          headers
-        }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Bundlr error!', bundlrRes }), {
+        headers
+      });
     }
   } catch {
-    return new Response(
-      JSON.stringify({ success: false, message: 'Something went wrong!' }),
-      { headers }
-    );
+    return new Response(JSON.stringify({ success: false, message: 'Something went wrong!' }), { headers });
   }
 };
 

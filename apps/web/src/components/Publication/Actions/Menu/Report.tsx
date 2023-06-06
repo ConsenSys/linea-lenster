@@ -11,9 +11,7 @@ interface ReportProps {
 }
 
 const Report: FC<ReportProps> = ({ publication }) => {
-  const setShowReportModal = useGlobalModalStateStore(
-    (state) => state.setShowReportModal
-  );
+  const setShowReportModal = useGlobalModalStateStore((state) => state.setShowReportModal);
 
   return (
     <Menu.Item

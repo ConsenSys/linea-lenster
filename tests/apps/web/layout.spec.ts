@@ -15,9 +15,7 @@ test('should have global search', async ({ page }) => {
   const searchProfilesDropdown = page.getByTestId('search-profiles-dropdown');
   await expect(
     searchProfilesDropdown.getByTestId('search-profile-alainnicolas')
-  ).toContainText(
-    'alainnicolas'
-  );
+  ).toContainText('alainnicolas');
 });
 
 test('should have login button', async ({ page }) => {

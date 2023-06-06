@@ -3,10 +3,7 @@ import type { Profile } from '@lenster/lens';
 import { useProfilesLazyQuery } from '@lenster/lens';
 import buildConversationId from '@lib/buildConversationId';
 import chunkArray from '@lib/chunkArray';
-import {
-  buildConversationKey,
-  parseConversationKey
-} from '@lib/conversationKey';
+import { buildConversationKey, parseConversationKey } from '@lib/conversationKey';
 import { resolveEns } from '@lib/resolveEns';
 import type { Conversation, Stream } from '@xmtp/xmtp-js';
 import { DecodedMessage } from '@xmtp/xmtp-js';
@@ -27,20 +24,14 @@ const useMessagePreviews = () => {
   const setConversations = useMessageStore((state) => state.setConversations);
   const previewMessages = useMessageStore((state) => state.previewMessages);
   const selectedProfileId = useMessageStore((state) => state.selectedProfileId);
-  const setPreviewMessages = useMessageStore(
-    (state) => state.setPreviewMessages
-  );
-  const setSelectedProfileId = useMessageStore(
-    (state) => state.setSelectedProfileId
-  );
+  const setPreviewMessages = useMessageStore((state) => state.setPreviewMessages);
+  const setSelectedProfileId = useMessageStore((state) => state.setSelectedProfileId);
   const reset = useMessageStore((state) => state.reset);
   const syncedProfiles = useMessageStore((state) => state.syncedProfiles);
   const addSyncedProfiles = useMessageStore((state) => state.addSyncedProfiles);
   const { client, loading: creatingXmtpClient } = useXmtpClient();
   const [profileIds, setProfileIds] = useState<Set<string>>(new Set<string>());
-  const [nonLensProfiles, setNonLensProfiles] = useState<Set<string>>(
-    new Set<string>()
-  );
+  const [nonLensProfiles, setNonLensProfiles] = useState<Set<string>>(new Set<string>());
 
   const [messagesLoading, setMessagesLoading] = useState<boolean>(true);
   const [profilesLoading, setProfilesLoading] = useState<boolean>(false);
@@ -49,9 +40,7 @@ const useMessagePreviews = () => {
   const selectedTab = useMessageStore((state) => state.selectedTab);
   const setEnsNames = useMessageStore((state) => state.setEnsNames);
   const ensNames = useMessageStore((state) => state.ensNames);
-  const [profilesToShow, setProfilesToShow] = useState<Map<string, Profile>>(
-    new Map()
-  );
+  const [profilesToShow, setProfilesToShow] = useState<Map<string, Profile>>(new Map());
 
   const [requestedCount, setRequestedCount] = useState(0);
 
@@ -82,10 +71,7 @@ const useMessagePreviews = () => {
         const existing = newPreviewMessages.get(msg.conversationKey);
         // Only update the cache if the new messsage is newer
         if (!existing || msg.sent > existing.sent) {
-          const message = await DecodedMessage.fromBytes(
-            msg.messageBytes,
-            client
-          );
+          const message = await DecodedMessage.fromBytes(msg.messageBytes, client);
           const { conversationKey } = msg;
           newPreviewMessages.set(conversationKey, message);
         }
@@ -99,14 +85,8 @@ const useMessagePreviews = () => {
 
   useEffect(() => {
     const getEns = async () => {
-      if (
-        (selectedTab === 'Other' || selectedTab === 'All') &&
-        ensNames.size < nonLensProfiles.size
-      ) {
-        const chunks = chunkArray(
-          Array.from(nonLensProfiles),
-          MAX_PROFILES_PER_REQUEST
-        );
+      if ((selectedTab === 'Other' || selectedTab === 'All') && ensNames.size < nonLensProfiles.size) {
+        const chunks = chunkArray(Array.from(nonLensProfiles), MAX_PROFILES_PER_REQUEST);
         let newEnsNames = new Map();
         for (const chunk of chunks) {
           const ensResponse = await resolveEns(chunk);
@@ -189,10 +169,7 @@ const useMessagePreviews = () => {
       for await (const message of messageStream) {
         const conversationId = message.conversation.context?.conversationId;
 
-        const key = buildConversationKey(
-          message.conversation.peerAddress,
-          conversationId ?? ''
-        );
+        const key = buildConversationKey(message.conversation.peerAddress, conversationId ?? '');
         persistPreviewMessage(key, message);
       }
     };
@@ -205,10 +182,7 @@ const useMessagePreviews = () => {
       const convos = await client.conversations.list();
 
       for (const convo of convos) {
-        const key = buildConversationKey(
-          convo.peerAddress,
-          (convo.context?.conversationId as string) ?? ''
-        );
+        const key = buildConversationKey(convo.peerAddress, (convo.context?.conversationId as string) ?? '');
         const profileId = getProfileFromKey(key);
         if (profileId) {
           newProfileIds.add(profileId);
@@ -251,10 +225,7 @@ const useMessagePreviews = () => {
         const newConversations = new Map(conversations);
         const newProfileIds = new Set(profileIds);
         const newNonLensProfiles = new Set(nonLensProfiles);
-        const key = buildConversationKey(
-          convo.peerAddress,
-          convo?.context?.conversationId ?? ''
-        );
+        const key = buildConversationKey(convo.peerAddress, convo?.context?.conversationId ?? '');
         newConversations.set(key, convo);
         const profileId = getProfileFromKey(key);
         if (profileId && !profileIds.has(profileId)) {

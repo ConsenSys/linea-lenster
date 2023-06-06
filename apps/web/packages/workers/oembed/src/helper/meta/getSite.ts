@@ -2,8 +2,7 @@ import type { Document } from 'linkedom';
 
 const getSite = (document: Document): string | null => {
   const lens =
-    document.querySelector('meta[name="lens:site"]') ||
-    document.querySelector('meta[property="lens:site"]');
+    document.querySelector('meta[name="lens:site"]') || document.querySelector('meta[property="lens:site"]');
   const og =
     document.querySelector('meta[name="og:site_name"]') ||
     document.querySelector('meta[property="og:site_name"]');

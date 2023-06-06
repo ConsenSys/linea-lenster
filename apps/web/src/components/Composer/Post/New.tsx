@@ -14,15 +14,9 @@ import NewPublication from '../NewPublication';
 const NewPost: FC = () => {
   const { query, isReady, push } = useRouter();
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const showNewPostModal = usePublicationStore(
-    (state) => state.showNewPostModal
-  );
-  const setShowNewPostModal = usePublicationStore(
-    (state) => state.setShowNewPostModal
-  );
-  const setPublicationContent = usePublicationStore(
-    (state) => state.setPublicationContent
-  );
+  const showNewPostModal = usePublicationStore((state) => state.showNewPostModal);
+  const setShowNewPostModal = usePublicationStore((state) => state.setShowNewPostModal);
+  const setPublicationContent = usePublicationStore((state) => state.setPublicationContent);
 
   const openModal = () => {
     setShowNewPostModal(true);
@@ -40,9 +34,9 @@ const NewPost: FC = () => {
           .join('');
       }
 
-      const content = `${text}${
-        processedHashtags ? ` ${processedHashtags} ` : ''
-      }${url ? `\n\n${url}` : ''}${via ? `\n\nvia @${via}` : ''}`;
+      const content = `${text}${processedHashtags ? ` ${processedHashtags} ` : ''}${url ? `\n\n${url}` : ''}${
+        via ? `\n\nvia @${via}` : ''
+      }`;
 
       setShowNewPostModal(true);
       setPublicationContent(content);

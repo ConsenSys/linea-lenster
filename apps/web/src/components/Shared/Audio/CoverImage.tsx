@@ -17,13 +17,7 @@ interface CoverImageProps {
   expandCover: (url: string) => void;
 }
 
-const CoverImage: FC<CoverImageProps> = ({
-  isNew = false,
-  cover,
-  setCover,
-  imageRef,
-  expandCover
-}) => {
+const CoverImage: FC<CoverImageProps> = ({ isNew = false, cover, setCover, imageRef, expandCover }) => {
   const [loading, setLoading] = useState(false);
 
   const onError = (error: any) => {
@@ -77,12 +71,7 @@ const CoverImage: FC<CoverImageProps> = ({
               <span>Add cover</span>
             </div>
           )}
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg, .svg"
-            className="hidden w-full"
-            onChange={onChange}
-          />
+          <input type="file" accept=".png, .jpg, .jpeg, .svg" className="hidden w-full" onChange={onChange} />
         </label>
       )}
     </div>

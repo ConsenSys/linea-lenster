@@ -47,10 +47,7 @@ const Giphy: FC<GiphyProps> = ({ setGifAttachment }) => {
         show={showModal}
         onClose={() => setShowModal(false)}
       >
-        <GifSelector
-          setShowModal={setShowModal}
-          setGifAttachment={setGifAttachment}
-        />
+        <GifSelector setShowModal={setShowModal} setGifAttachment={setGifAttachment} />
       </Modal>
     </>
   );

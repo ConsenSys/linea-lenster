@@ -12,10 +12,8 @@ interface UniswapProps {
 
 const Uniswap: FC<UniswapProps> = ({ module }) => {
   const amount = module?.amount?.value ?? module?.fee?.amount?.value;
-  const currency =
-    module?.amount?.asset?.symbol ?? module?.fee?.amount?.asset?.symbol;
-  const assetAddress =
-    module?.amount?.asset?.address ?? module?.fee?.amount?.asset?.address;
+  const currency = module?.amount?.asset?.symbol ?? module?.fee?.amount?.asset?.symbol;
+  const assetAddress = module?.amount?.asset?.address ?? module?.fee?.amount?.asset?.address;
 
   return (
     <div className="space-y-1">

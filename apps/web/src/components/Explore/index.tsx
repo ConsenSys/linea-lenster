@@ -26,9 +26,7 @@ const Explore: NextPage = () => {
   const router = useRouter();
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [focus, setFocus] = useState<PublicationMainFocus>();
-  const { on: isTrendingWidgetEnabled } = Growthbook.feature(
-    FeatureFlag.TrendingWidget
-  );
+  const { on: isTrendingWidgetEnabled } = Growthbook.feature(FeatureFlag.TrendingWidget);
 
   useEffectOnce(() => {
     Leafwatch.track(PAGEVIEW, { page: 'explore' });
@@ -51,11 +49,7 @@ const Explore: NextPage = () => {
         <Tab.Group
           defaultIndex={Number(router.query.tab)}
           onChange={(index) => {
-            router.replace(
-              { query: { ...router.query, tab: index } },
-              undefined,
-              { shallow: true }
-            );
+            router.replace({ query: { ...router.query, tab: index } }, undefined, { shallow: true });
           }}
         >
           <Tab.List className="divider space-x-8">
@@ -71,8 +65,7 @@ const Explore: NextPage = () => {
                 className={({ selected }) =>
                   clsx(
                     {
-                      'border-brand-500 border-b-2 !text-black dark:!text-white':
-                        selected
+                      'border-brand-500 border-b-2 !text-black dark:!text-white': selected
                     },
                     'lt-text-gray-500 px-4 pb-2 text-xs font-medium outline-none sm:text-sm'
                   )

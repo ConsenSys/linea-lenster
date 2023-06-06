@@ -20,9 +20,7 @@ export const useNotificationPersistStore = create(
           return;
         }
 
-        const index = notificationCountMap.findIndex(
-          (item) => item.profileId === profileId
-        );
+        const index = notificationCountMap.findIndex((item) => item.profileId === profileId);
         if (index > -1) {
           notificationCountMap[index].count = count;
         } else {
@@ -37,9 +35,7 @@ export const useNotificationPersistStore = create(
           return 0;
         }
 
-        const index = notificationCountMap.findIndex(
-          (item) => item.profileId === profileId
-        );
+        const index = notificationCountMap.findIndex((item) => item.profileId === profileId);
         return index > -1 ? notificationCountMap[index].count : 0;
       }
     }),

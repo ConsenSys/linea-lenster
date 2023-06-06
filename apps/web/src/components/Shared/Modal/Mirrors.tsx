@@ -62,11 +62,7 @@ const Mirrors: FC<MirrorsProps> = ({ publicationId }) => {
 
   return (
     <div className="max-h-[80vh] overflow-y-auto" data-testid="mirrors-modal">
-      <ErrorMessage
-        className="m-5"
-        title={t`Failed to load mirrors`}
-        error={error}
-      />
+      <ErrorMessage className="m-5" title={t`Failed to load mirrors`} error={error} />
       <Virtuoso
         className="virtual-profile-list"
         data={profiles}

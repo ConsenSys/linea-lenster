@@ -8,12 +8,8 @@ import type { ChangeEvent } from 'react';
 import { useProfileFeedStore } from 'src/store/profile-feed';
 
 const MediaFilter = () => {
-  const mediaFeedFilters = useProfileFeedStore(
-    (state) => state.mediaFeedFilters
-  );
-  const setMediaFeedFilters = useProfileFeedStore(
-    (state) => state.setMediaFeedFilters
-  );
+  const mediaFeedFilters = useProfileFeedStore((state) => state.mediaFeedFilters);
+  const setMediaFeedFilters = useProfileFeedStore((state) => state.setMediaFeedFilters);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMediaFeedFilters({

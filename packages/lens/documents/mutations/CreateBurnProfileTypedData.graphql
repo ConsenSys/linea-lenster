@@ -1,28 +1,28 @@
 mutation CreateBurnProfileTypedData(
-  $options: TypedDataOptions
-  $request: BurnProfileRequest!
+    $options: TypedDataOptions
+    $request: BurnProfileRequest!
 ) {
-  createBurnProfileTypedData(options: $options, request: $request) {
-    id
-    expiresAt
-    typedData {
-      domain {
-        name
-        chainId
-        version
-        verifyingContract
-      }
-      types {
-        BurnWithSig {
-          name
-          type
+    createBurnProfileTypedData(options: $options, request: $request) {
+        id
+        expiresAt
+        typedData {
+            domain {
+                name
+                chainId
+                version
+                verifyingContract
+            }
+            types {
+                BurnWithSig {
+                    name
+                    type
+                }
+            }
+            value {
+                nonce
+                deadline
+                tokenId
+            }
         }
-      }
-      value {
-        nonce
-        deadline
-        tokenId
-      }
     }
-  }
 }

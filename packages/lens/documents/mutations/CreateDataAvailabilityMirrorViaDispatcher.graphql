@@ -1,13 +1,13 @@
 mutation CreateDataAvailabilityMirrorViaDispatcher(
-  $request: CreateDataAvailabilityMirrorRequest!
+    $request: CreateDataAvailabilityMirrorRequest!
 ) {
-  createDataAvailabilityMirrorViaDispatcher(request: $request) {
-    ... on CreateDataAvailabilityPublicationResult {
-      id
-      proofs
+    createDataAvailabilityMirrorViaDispatcher(request: $request) {
+        ... on CreateDataAvailabilityPublicationResult {
+            id
+            proofs
+        }
+        ... on RelayError {
+            reason
+        }
     }
-    ... on RelayError {
-      reason
-    }
-  }
 }

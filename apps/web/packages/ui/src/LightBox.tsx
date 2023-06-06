@@ -13,11 +13,7 @@ interface LightBoxProps {
 export const LightBox: FC<LightBoxProps> = ({ show, url, onClose }) => {
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog
-        as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
-        onClose={onClose}
-      >
+      <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={onClose}>
         <div className="text-center">
           <Transition.Child
             as={Fragment}
@@ -30,10 +26,7 @@ export const LightBox: FC<LightBoxProps> = ({ show, url, onClose }) => {
           >
             <Dialog.Overlay className="fixed inset-0 bg-gray-500/75 transition-opacity" />
           </Transition.Child>
-          <span
-            className="hidden sm:inline-block sm:h-screen sm:align-middle"
-            aria-hidden="true"
-          />
+          <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true" />
           <Transition.Child
             as="div"
             className="inline-block p-8 text-left align-middle transition-all sm:max-w-3xl"

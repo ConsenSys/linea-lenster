@@ -11,17 +11,11 @@ import { ContentTypeText } from '@xmtp/xmtp-js';
 import type { ChangeEvent, FC } from 'react';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import {
-  useAttachmentCachePersistStore,
-  useAttachmentStore
-} from 'src/store/attachment';
+import { useAttachmentCachePersistStore, useAttachmentStore } from 'src/store/attachment';
 import { useMessagePersistStore } from 'src/store/message';
 import { MESSAGES } from 'src/tracking';
 import { useUpdateEffect, useWindowSize } from 'usehooks-ts';
-import type {
-  Attachment as TAttachment,
-  RemoteAttachment
-} from 'xmtp-content-type-remote-attachment';
+import type { Attachment as TAttachment, RemoteAttachment } from 'xmtp-content-type-remote-attachment';
 import {
   AttachmentCodec,
   ContentTypeRemoteAttachment,
@@ -46,11 +40,7 @@ interface AttachmentPreviewProps {
   attachment: TAttachment;
 }
 
-const AttachmentPreview: FC<AttachmentPreviewProps> = ({
-  onDismiss,
-  dismissDisabled,
-  attachment
-}) => {
+const AttachmentPreview: FC<AttachmentPreviewProps> = ({ onDismiss, dismissDisabled, attachment }) => {
   return (
     <div className="relative ml-12 inline-block rounded pt-6">
       <button
@@ -66,31 +56,18 @@ const AttachmentPreview: FC<AttachmentPreviewProps> = ({
   );
 };
 
-const Composer: FC<ComposerProps> = ({
-  sendMessage,
-  conversationKey,
-  disabledInput
-}) => {
+const Composer: FC<ComposerProps> = ({ sendMessage, conversationKey, disabledInput }) => {
   const [message, setMessage] = useState<string>('');
   const [sending, setSending] = useState<boolean>(false);
   const [attachment, setAttachment] = useState<TAttachment | null>(null);
   const { width } = useWindowSize();
-  const unsentMessage = useMessagePersistStore((state) =>
-    state.unsentMessages.get(conversationKey)
-  );
-  const setUnsentMessage = useMessagePersistStore(
-    (state) => state.setUnsentMessage
-  );
+  const unsentMessage = useMessagePersistStore((state) => state.unsentMessages.get(conversationKey));
+  const setUnsentMessage = useMessagePersistStore((state) => state.setUnsentMessage);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const addLoadedAttachmentURL = useAttachmentStore(
-    (state) => state.addLoadedAttachmentURL
-  );
-  const cacheAttachment = useAttachmentCachePersistStore(
-    (state) => state.cacheAttachment
-  );
+  const addLoadedAttachmentURL = useAttachmentStore((state) => state.addLoadedAttachmentURL);
+  const cacheAttachment = useAttachmentCachePersistStore((state) => state.cacheAttachment);
 
-  const canSendMessage =
-    !sending && (attachment || (!disabledInput && message.length > 0));
+  const canSendMessage = !sending && (attachment || (!disabledInput && message.length > 0));
 
   const handleSend = async () => {
     if (!canSendMessage) {
@@ -99,19 +76,14 @@ const Composer: FC<ComposerProps> = ({
     setSending(true);
 
     if (attachment) {
-      const encryptedEncodedContent =
-        await RemoteAttachmentCodec.encodeEncrypted(
-          attachment,
-          new AttachmentCodec()
-        );
-
-      const file = new File(
-        [encryptedEncodedContent.payload],
-        'XMTPEncryptedContent',
-        {
-          type: attachment.mimeType
-        }
+      const encryptedEncodedContent = await RemoteAttachmentCodec.encodeEncrypted(
+        attachment,
+        new AttachmentCodec()
       );
+
+      const file = new File([encryptedEncodedContent.payload], 'XMTPEncryptedContent', {
+        type: attachment.mimeType
+      });
 
       const uploadedAttachment = await uploadFileToIPFS(file);
       const url = sanitizeDStorageUrl(uploadedAttachment.original.url);
@@ -214,11 +186,7 @@ const Composer: FC<ComposerProps> = ({
   return (
     <div className="bg-brand-100/75">
       {attachment ? (
-        <AttachmentPreview
-          onDismiss={onDismiss}
-          dismissDisabled={!canSendMessage}
-          attachment={attachment}
-        />
+        <AttachmentPreview onDismiss={onDismiss} dismissDisabled={!canSendMessage} attachment={attachment} />
       ) : null}
       <div className="flex space-x-4 p-4">
         <label className="flex cursor-pointer items-center">
@@ -240,23 +208,14 @@ const Composer: FC<ComposerProps> = ({
           onKeyDown={handleKeyDown}
           onChange={(event) => onChangeCallback(event.target.value)}
         />
-        <Button
-          disabled={!canSendMessage}
-          onClick={handleSend}
-          variant="primary"
-          aria-label="Send message"
-        >
+        <Button disabled={!canSendMessage} onClick={handleSend} variant="primary" aria-label="Send message">
           <div className="flex items-center space-x-2">
             {Number(width) > MIN_WIDTH_DESKTOP ? (
               <span>
                 <Trans>Send</Trans>
               </span>
             ) : null}
-            {sending ? (
-              <Spinner size="sm" className="h-5 w-5" />
-            ) : (
-              <ArrowRightIcon className="h-5 w-5" />
-            )}
+            {sending ? <Spinner size="sm" className="h-5 w-5" /> : <ArrowRightIcon className="h-5 w-5" />}
           </div>
         </Button>
       </div>

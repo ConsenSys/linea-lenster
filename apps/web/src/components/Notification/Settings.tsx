@@ -7,14 +7,11 @@ import { useState } from 'react';
 import { usePreferencesStore } from 'src/store/preferences';
 
 const Settings: FC = () => {
-  const highSignalNotificationFilter = usePreferencesStore(
-    (state) => state.highSignalNotificationFilter
-  );
+  const highSignalNotificationFilter = usePreferencesStore((state) => state.highSignalNotificationFilter);
   const setHighSignalNotificationFilter = usePreferencesStore(
     (state) => state.setHighSignalNotificationFilter
   );
-  const [showNotificationSettings, setShowNotificationSettings] =
-    useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
 
   return (
     <>

@@ -5,11 +5,7 @@ import { Errors, Regex } from '@lenster/data';
 import { APP_NAME, COVER, HANDLE_SUFFIX, LENS_PERIPHERY } from '@lenster/data/constants';
 import { getCroppedImg } from '@lenster/image-cropper/cropUtils';
 import type { Area } from '@lenster/image-cropper/types';
-import type {
-  CreatePublicSetProfileMetadataUriRequest,
-  MediaSet,
-  Profile
-} from '@lenster/lens';
+import type { CreatePublicSetProfileMetadataUriRequest, MediaSet, Profile } from '@lenster/lens';
 import {
   useBroadcastMutation,
   useCreateSetProfileMetadataTypedDataMutation,
@@ -60,10 +56,7 @@ const editProfileSchema = object({
   location: string().max(100, {
     message: t`Location should not exceed 100 characters`
   }),
-  website: union([
-    string().regex(Regex.url, { message: t`Invalid website` }),
-    string().max(0)
-  ]),
+  website: union([string().regex(Regex.url, { message: t`Invalid website` }), string().max(0)]),
   twitter: string().max(100, {
     message: t`Twitter should not exceed 100 characters`
   }),
@@ -116,38 +109,32 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetProfileMetadataTypedData] =
-    useCreateSetProfileMetadataTypedDataMutation({
-      onCompleted: async ({ createSetProfileMetadataTypedData }) => {
-        const { id, typedData } = createSetProfileMetadataTypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
-        });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, metadata } = typedData.value;
-          return write?.({ args: [profileId, metadata] });
-        }
-      },
-      onError
-    });
+  const [createSetProfileMetadataTypedData] = useCreateSetProfileMetadataTypedDataMutation({
+    onCompleted: async ({ createSetProfileMetadataTypedData }) => {
+      const { id, typedData } = createSetProfileMetadataTypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, metadata } = typedData.value;
+        return write?.({ args: [profileId, metadata] });
+      }
+    },
+    onError
+  });
 
-  const [createSetProfileMetadataViaDispatcher] =
-    useCreateSetProfileMetadataViaDispatcherMutation({
-      onCompleted: ({ createSetProfileMetadataViaDispatcher }) =>
-        onCompleted(createSetProfileMetadataViaDispatcher.__typename),
-      onError
-    });
+  const [createSetProfileMetadataViaDispatcher] = useCreateSetProfileMetadataViaDispatcherMutation({
+    onCompleted: ({ createSetProfileMetadataViaDispatcher }) =>
+      onCompleted(createSetProfileMetadataViaDispatcher.__typename),
+    onError
+  });
 
-  const createViaDispatcher = async (
-    request: CreatePublicSetProfileMetadataUriRequest
-  ) => {
+  const createViaDispatcher = async (request: CreatePublicSetProfileMetadataUriRequest) => {
     const { data } = await createSetProfileMetadataViaDispatcher({
       variables: { request }
     });
-    if (
-      data?.createSetProfileMetadataViaDispatcher?.__typename === 'RelayError'
-    ) {
+    if (data?.createSetProfileMetadataViaDispatcher?.__typename === 'RelayError') {
       return await createSetProfileMetadataTypedData({
         variables: { request }
       });
@@ -267,9 +254,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
   };
 
   const coverPictureUrl = profile?.coverPicture?.original?.url;
-  const coverPictureIpfsUrl = coverPictureUrl
-    ? imageKit(sanitizeDStorageUrl(coverPictureUrl), COVER)
-    : '';
+  const coverPictureIpfsUrl = coverPictureUrl ? imageKit(sanitizeDStorageUrl(coverPictureUrl), COVER) : '';
 
   return (
     <>
@@ -281,31 +266,10 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
             editProfile(name, location, website, twitter, bio);
           }}
         >
-          {error && (
-            <ErrorMessage
-              className="mb-3"
-              title={t`Transaction failed!`}
-              error={error}
-            />
-          )}
-          <Input
-            label={t`Profile Id`}
-            type="text"
-            value={currentProfile?.id}
-            disabled
-          />
-          <Input
-            label={t`Name`}
-            type="text"
-            placeholder="Gavin"
-            {...form.register('name')}
-          />
-          <Input
-            label={t`Location`}
-            type="text"
-            placeholder="Miami"
-            {...form.register('location')}
-          />
+          {error && <ErrorMessage className="mb-3" title={t`Transaction failed!`} error={error} />}
+          <Input label={t`Profile Id`} type="text" value={currentProfile?.id} disabled />
+          <Input label={t`Name`} type="text" placeholder="Gavin" {...form.register('name')} />
+          <Input label={t`Location`} type="text" placeholder="Miami" {...form.register('location')} />
           <Input
             label={t`Website`}
             type="text"
@@ -319,11 +283,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
             placeholder="gavin"
             {...form.register('twitter')}
           />
-          <TextArea
-            label={t`Bio`}
-            placeholder={t`Tell us something about you!`}
-            {...form.register('bio')}
-          />
+          <TextArea label={t`Bio`} placeholder={t`Tell us something about you!`} {...form.register('bio')} />
           <div className="space-y-1.5">
             <div className="label">Cover</div>
             <div className="space-y-3">
@@ -353,10 +313,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
             <div className="flex items-center space-x-2">
               <Toggle on={pride} setOn={setPride} />
               <div className="lt-text-gray-500">
-                <Trans>
-                  Turn this on to show your pride and turn the {APP_NAME} logo
-                  rainbow every day.
-                </Trans>
+                <Trans>Turn this on to show your pride and turn the {APP_NAME} logo rainbow every day.</Trans>
               </div>
             </div>
           </div>
@@ -364,13 +321,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
             className="ml-auto"
             type="submit"
             disabled={isLoading}
-            icon={
-              isLoading ? (
-                <Spinner size="xs" />
-              ) : (
-                <PencilIcon className="h-4 w-4" />
-              )
-            }
+            icon={isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
           >
             <Trans>Save</Trans>
           </Button>
@@ -399,13 +350,7 @@ const ProfileSettingsForm: FC<ProfileSettingsFormProps> = ({ profile }) => {
             type="submit"
             disabled={uploading || !imageSrc}
             onClick={uploadAndSave}
-            icon={
-              uploading ? (
-                <Spinner size="xs" />
-              ) : (
-                <PencilIcon className="h-4 w-4" />
-              )
-            }
+            icon={uploading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
           >
             <Trans>Upload</Trans>
           </Button>

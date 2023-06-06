@@ -1,10 +1,6 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  extends: [
-    require.resolve('./base.js'),
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended'
-  ],
+  extends: [require.resolve('./base.js'), 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
   rules: {
     'react/prop-types': 'off',
     'react/no-unescaped-entities': 'off',

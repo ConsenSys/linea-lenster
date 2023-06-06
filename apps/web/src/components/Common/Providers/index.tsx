@@ -1,19 +1,13 @@
-import { IS_MAINNET, WALLETCONNECT_PROJECT_ID } from '@lenster/data/constants';
 import { ApolloProvider, webClient } from '@lenster/lens/apollo';
 import getRpc from '@lenster/lib/getRpc';
 import getLivepeerTheme from '@lib/getLivepeerTheme';
-import {
-  createReactClient,
-  LivepeerConfig,
-  studioProvider
-} from '@livepeer/react';
+import { createReactClient, LivepeerConfig, studioProvider } from '@livepeer/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { lineaTestnet } from '@wagmi/chains';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, polygonMumbai } from 'wagmi/chains';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 import ErrorBoundary from '../ErrorBoundary';
@@ -24,17 +18,11 @@ import LeafwatchProvider from './LeafwatchProvider';
 import UserSigNoncesProvider from './UserSigNoncesProvider';
 
 const { chains, publicClient } = configureChains(
-  [IS_MAINNET ? polygon : polygonMumbai, mainnet],
+  [lineaTestnet],
   [jsonRpcProvider({ rpc: (chain) => ({ http: getRpc(chain.id) }) })]
 );
 
-const connectors = [
-  new InjectedConnector({ chains, options: { shimDisconnect: true } }),
-  new WalletConnectConnector({
-    options: { projectId: WALLETCONNECT_PROJECT_ID },
-    chains
-  })
-];
+const connectors = [new InjectedConnector({ chains, options: { shimDisconnect: true } })];
 
 const wagmiConfig = createConfig({
   autoConnect: true,

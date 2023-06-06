@@ -12,11 +12,10 @@ interface CardProps {
 }
 
 const DraggableCard: FC<CardProps> = ({ id, nft }) => {
-  const { attributes, setNodeRef, listeners, transform, isDragging } =
-    useSortable({
-      id,
-      transition: null
-    });
+  const { attributes, setNodeRef, listeners, transform, isDragging } = useSortable({
+    id,
+    transition: null
+  });
 
   const animateStyles = transform
     ? {

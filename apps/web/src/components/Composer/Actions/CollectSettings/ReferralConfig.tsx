@@ -41,9 +41,7 @@ const ReferralConfig: FC<ReferralConfigProps> = ({ setCollectType }) => {
             value={collectModule.referralFee}
             onChange={(event) => {
               setCollectType({
-                referralFee: parseInt(
-                  event.target.value ? event.target.value : '0'
-                )
+                referralFee: parseInt(event.target.value ? event.target.value : '0')
               });
             }}
           />

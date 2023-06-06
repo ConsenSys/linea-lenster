@@ -6,9 +6,7 @@ interface HiddenPublicationProps {
   type?: string;
 }
 
-const HiddenPublication: FC<HiddenPublicationProps> = ({
-  type = 'Publication'
-}) => {
+const HiddenPublication: FC<HiddenPublicationProps> = ({ type = 'Publication' }) => {
   return (
     <Card className="!bg-gray-100 dark:!bg-gray-800">
       <div className="px-4 py-3 text-sm">

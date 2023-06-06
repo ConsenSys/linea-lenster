@@ -5,9 +5,7 @@ export const resolverAbi = [
     type: 'constructor'
   },
   {
-    inputs: [
-      { internalType: 'address[]', name: 'addresses', type: 'address[]' }
-    ],
+    inputs: [{ internalType: 'address[]', name: 'addresses', type: 'address[]' }],
     name: 'getNames',
     outputs: [{ internalType: 'string[]', name: 'r', type: 'string[]' }],
     stateMutability: 'view',

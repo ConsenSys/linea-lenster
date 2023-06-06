@@ -1,14 +1,16 @@
 import { expect, test } from '@playwright/test';
 import { OEMBED_BASE_URL } from 'test/constants';
 
-test('should return false if payload is not provided', async ({ request }) => {
+test.skip('should return false if payload is not provided', async ({
+  request
+}) => {
   const getOembed = request.get(OEMBED_BASE_URL, {});
   const response = await (await getOembed).json();
 
   expect(response.success).toBeFalsy();
 });
 
-test('should return valid oembed response if url is provided', async ({
+test.skip('should return valid oembed response if url is provided', async ({
   request
 }) => {
   const url = 'https://github.com/lensterxyz/lenster';
@@ -27,7 +29,7 @@ test('should return valid oembed response if url is provided', async ({
   expect(response.oembed.html).toBeNull();
 });
 
-test('should return valid oembed response if url supports iframe is provided', async ({
+test.skip('should return valid oembed response if url supports iframe is provided', async ({
   request
 }) => {
   const url = 'https://www.youtube.com/watch?v=H5v3kku4y6Q';

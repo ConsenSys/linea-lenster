@@ -41,10 +41,8 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
 
   const { cache } = useApolloClient();
   const [createGallery, { loading }] = useCreateNftGalleryMutation();
-  const [updateGallery, { loading: updating }] =
-    useUpdateNftGalleryItemsMutation();
-  const [renameGallery, { loading: renaming }] =
-    useUpdateNftGalleryInfoMutation();
+  const [updateGallery, { loading: updating }] = useUpdateNftGalleryItemsMutation();
+  const [renameGallery, { loading: renaming }] = useUpdateNftGalleryInfoMutation();
   const [fetchNftGalleries] = useNftGalleriesLazyQuery();
 
   const closeModal = () => {
@@ -126,15 +124,11 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
     try {
       const newlyAddedItems = gallery.toAdd?.filter(
         (value) =>
-          value.itemId !==
-          gallery.alreadySelectedItems.find((t) => t.itemId === value.itemId)
-            ?.itemId
+          value.itemId !== gallery.alreadySelectedItems.find((t) => t.itemId === value.itemId)?.itemId
       );
       const newlyRemovedItems = gallery.toRemove?.filter(
         (value) =>
-          value.itemId ===
-          gallery.alreadySelectedItems.find((t) => t.itemId === value.itemId)
-            ?.itemId
+          value.itemId === gallery.alreadySelectedItems.find((t) => t.itemId === value.itemId)?.itemId
       );
       const sanitizedAddItems = newlyAddedItems?.map((el) => {
         return {
@@ -193,8 +187,7 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
       return toast.error(t`Gallery name required`);
     } else if (
       !gallery.items.length &&
-      (currentStep === CreateSteps.REVIEW ||
-        currentStep === CreateSteps.PICK_NFTS)
+      (currentStep === CreateSteps.REVIEW || currentStep === CreateSteps.PICK_NFTS)
     ) {
       return toast.error(t`Select collectibles for your gallery`);
     }
@@ -225,10 +218,7 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
   };
 
   const getModalTitle = () => {
-    if (
-      currentStep === CreateSteps.PICK_NFTS ||
-      currentStep === CreateSteps.REVIEW
-    ) {
+    if (currentStep === CreateSteps.PICK_NFTS || currentStep === CreateSteps.REVIEW) {
       return (
         <div className="flex items-center space-x-1">
           <button type="button" onClick={() => setCurrentStep(getBackStep())}>

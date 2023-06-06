@@ -35,12 +35,10 @@ const getMetadata = async (url: string, env: Env): Promise<any> => {
   const isLarge = getIsLarge(document);
   const image = getImage(document);
   const isProduction = env.WORKER_ENV === 'production';
-  const workerUrl = isProduction
-    ? 'https://oembed.lenster.xyz'
-    : 'http://localhost:8087';
-  const proxiedUrl = `${workerUrl}/image?hash=${encode(
-    image || ''
-  )}&transform=${isLarge ? 'large' : 'square'}`;
+  const workerUrl = isProduction ? 'https://oembed.lenster.xyz' : 'http://localhost:8087';
+  const proxiedUrl = `${workerUrl}/image?hash=${encode(image || '')}&transform=${
+    isLarge ? 'large' : 'square'
+  }`;
   const metadata: Metadata = {
     url,
     title: getTitle(document),

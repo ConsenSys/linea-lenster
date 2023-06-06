@@ -1,6 +1,13 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
 import { Regex } from '@lenster/data';
+import {
+  APP_NAME,
+  IS_RELAYER_AVAILABLE,
+  LENS_PROFILE_CREATOR,
+  LENS_PROFILE_CREATOR_ABI,
+  ZERO_ADDRESS
+} from '@lenster/data/constants';
 import { useCreateProfileMutation } from '@lenster/lens';
 import getStampFyiURL from '@lenster/lib/getStampFyiURL';
 import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from '@lenster/ui';
@@ -11,21 +18,14 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 import { object, string } from 'zod';
 
 import Pending from './Pending';
-import {
-  APP_NAME,
-  IS_RELAYER_AVAILABLE,
-  LENS_PROFILE_CREATOR,
-  LENS_PROFILE_CREATOR_ABI,
-  ZERO_ADDRESS,
-} from '@lenster/data/constants';
 
 const newUserSchema = object({
   handle: string()
     .min(5, { message: t`Handle should be at least 5 characters` })
     .max(26, { message: t`Handle should not exceed 26 characters` })
     .regex(Regex.handle, {
-      message: t`Handle should only contain lowercase alphanumeric characters`,
-    }),
+      message: t`Handle should only contain lowercase alphanumeric characters`
+    })
 });
 
 interface NewProfileProps {
@@ -44,7 +44,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
   const debouncedHandle = useSimpleDebounce(handle);
 
   const form = useZodForm({
-    schema: newUserSchema,
+    schema: newUserSchema
   });
 
   const { config, error: contractError } = usePrepareContractWrite({
@@ -58,15 +58,15 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
         imageURI: avatar,
         followModule: ZERO_ADDRESS,
         followModuleInitData: '0x',
-        followNFTURI: '',
-      },
+        followNFTURI: ''
+      }
     ],
-    enabled: Boolean(debouncedHandle),
+    enabled: Boolean(debouncedHandle)
   });
   const { data: txData, write } = useContractWrite(config);
 
   const { isLoading, error } = useWaitForTransaction({
-    hash: txData?.hash,
+    hash: txData?.hash
   });
 
   const handleCreateProfile = async () => {
@@ -75,12 +75,12 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
 
   useEffect(() => {
     setIsCreationLoading(
-      IS_RELAYER_AVAILABLE ? data?.createProfile.__typename === 'RelayerResult' : !!txData?.hash,
+      IS_RELAYER_AVAILABLE ? data?.createProfile.__typename === 'RelayerResult' : !!txData?.hash
     );
   }, [data, txData]);
 
   const handleContractError = (error: { message: string; data: string }) => {
-    if (error.message.includes('Doesn\'t have an ENS token')) {
+    if (error.message.includes("Doesn't have an ENS token")) {
       return 'You need a Linea ENS domain before creating a Lineaster handle';
     } else if (error.message.includes('Already has a Lens handle')) {
       return 'You already have a Lineaster handle';
@@ -105,7 +105,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
   ) : (
     <Form
       form={form}
-      className='space-y-4'
+      className="space-y-4"
       onSubmit={({ handle }) => {
         if (IS_RELAYER_AVAILABLE) {
           const username = handle.toLowerCase();
@@ -113,84 +113,65 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
             variables: {
               request: {
                 handle: username,
-                profilePictureUri: avatar,
-              },
-            },
+                profilePictureUri: avatar
+              }
+            }
           });
         } else {
           handleCreateProfile();
         }
       }}
     >
-      {data?.createProfile.__typename === 'RelayError' &&
-        data?.createProfile.reason && (
-          <ErrorMessage
-            className='mb-3'
-            title='Create profile failed!'
-            error={{
-              name: 'Create profile failed!',
-              message: relayErrorToString(data?.createProfile?.reason),
-            }}
-          />
-        )}
       {data?.createProfile.__typename === 'RelayError' && (data?.createProfile.reason || error) && (
         <ErrorMessage
-          className='mb-3'
-          title='Create profile failed!'
+          className="mb-3"
+          title="Create profile failed!"
           error={{
             name: 'Create profile failed!',
-            message: IS_RELAYER_AVAILABLE ? data?.createProfile?.reason : error?.message || '',
+            message: IS_RELAYER_AVAILABLE ? data?.createProfile?.reason : error?.message || ''
           }}
         />
       )}
       {(contractError as any) && (
         <ErrorMessage
-          className='mb-3'
-          title='Unable to create your handle'
+          className="mb-3"
+          title="Unable to create your handle"
           error={{
             name: 'Create profile failed!',
-            message: handleContractError((contractError as any).data),
+            message: handleContractError((contractError as any).data)
           }}
         />
       )}
       {isModal && (
-        <div className='mb-2 space-y-4'>
-          <div className='text-xl font-medium text-white'>
+        <div className="mb-2 space-y-4">
+          <div className="text-xl font-medium text-white">
             <Trans>Sign up to {APP_NAME}</Trans>
           </div>
         </div>
       )}
       <Input
         label={t`Handle`}
-        type='text'
-        placeholder='gavin'
+        type="text"
+        placeholder="gavin"
         {...form.register('handle', {
-          onChange: (e) => setHandle(e.target.value),
+          onChange: (e) => setHandle(e.target.value)
         })}
       />
-      <div className='space-y-1.5'>
-        <div className='font-medium text-white'>Avatar</div>
-        <div className='space-y-3'>
+      <div className="space-y-1.5">
+        <div className="font-medium text-white">Avatar</div>
+        <div className="space-y-3">
           {avatar && (
             <div>
-              <img
-                className='h-60 w-60 rounded-lg'
-                height={240}
-                width={240}
-                src={avatar}
-                alt={avatar}
-              />
+              <img className="h-60 w-60 rounded-lg" height={240} width={240} src={avatar} alt={avatar} />
             </div>
           )}
         </div>
       </div>
       <Button
-        className='ml-auto rounded-full'
-        type='submit'
+        className="ml-auto rounded-full"
+        type="submit"
         disabled={isLoading || !isConnected}
-        icon={
-          isLoading ? <Spinner size='xs' /> : <PlusIcon className='h-4 w-4' />
-        }
+        icon={isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />}
       >
         <Trans>{isConnected ? 'Sign up' : 'Connect your wallet'}</Trans>
       </Button>

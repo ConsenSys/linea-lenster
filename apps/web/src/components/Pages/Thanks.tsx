@@ -27,19 +27,12 @@ const Brand: FC<BrandProps> = ({ name, logo, url, size, type, children }) => {
       <img
         className="mx-auto"
         style={{ height: size }}
-        src={`${STATIC_IMAGES_URL}/thanks/${logo}-${
-          resolvedTheme === 'dark' ? 'dark' : 'light'
-        }.${type}`}
+        src={`${STATIC_IMAGES_URL}/thanks/${logo}-${resolvedTheme === 'dark' ? 'dark' : 'light'}.${type}`}
         alt={`${name}'s Logo`}
       />
       <div className="mx-auto pt-2 sm:w-2/3">{children}</div>
       <div>
-        <Link
-          className="font-bold"
-          href={url}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
+        <Link className="font-bold" href={url} target="_blank" rel="noreferrer noopener">
           ➜ Go to {name}
         </Link>
       </div>
@@ -75,19 +68,12 @@ const Thanks: FC = () => {
                 size={40}
                 type="svg"
               >
-                Vercel combines the best developer experience with an obsessive
-                focus on end-user performance. Vercel platform enables frontend
-                teams to do their best work.
+                Vercel combines the best developer experience with an obsessive focus on end-user performance.
+                Vercel platform enables frontend teams to do their best work.
               </Brand>
-              <Brand
-                name="4EVERLAND"
-                logo="4everland"
-                url="https://4everland.org"
-                size={50}
-                type="png"
-              >
-                4EVERLAND is a Web 3.0 cloud computing platform that integrates
-                storage, computing, and network core capabilities.
+              <Brand name="4EVERLAND" logo="4everland" url="https://4everland.org" size={50} type="png">
+                4EVERLAND is a Web 3.0 cloud computing platform that integrates storage, computing, and
+                network core capabilities.
               </Brand>
             </div>
           </div>

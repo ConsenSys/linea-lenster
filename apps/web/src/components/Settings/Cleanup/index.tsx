@@ -2,13 +2,7 @@ import MetaTags from '@components/Common/MetaTags';
 import { useDisconnectXmtp } from '@components/utils/hooks/useXmtpClient';
 import { Localstorage } from '@lenster/data';
 import { APP_NAME } from '@lenster/data/constants';
-import {
-  Button,
-  Card,
-  GridItemEight,
-  GridItemFour,
-  GridLayout
-} from '@lenster/ui';
+import { Button, Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import type { NextPage } from 'next';
@@ -51,9 +45,8 @@ const CleanupSettings: NextPage = () => {
             </div>
             <p>
               <Trans>
-                If you stuck with some issues, you can try to clean up the
-                localstorage. This will remove all the data stored in your
-                browser.
+                If you stuck with some issues, you can try to clean up the localstorage. This will remove all
+                the data stored in your browser.
               </Trans>
             </p>
           </div>
@@ -65,9 +58,7 @@ const CleanupSettings: NextPage = () => {
                   <Trans>Optimistic publications</Trans>
                 </b>
                 <div className="lt-text-gray-500 text-xs font-bold">
-                  <Trans>
-                    Clean your posts or comments that are not indexed
-                  </Trans>
+                  <Trans>Clean your posts or comments that are not indexed</Trans>
                 </div>
               </div>
               <Button onClick={() => cleanup(Localstorage.TransactionStore)}>

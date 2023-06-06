@@ -16,15 +16,9 @@ const Module: FC<ModuleProps> = ({ module }) => {
   const [allowed, setAllowed] = useState(module?.allowance !== '0x00');
 
   return (
-    <Card
-      key={module?.module}
-      className="block items-center justify-between p-5 sm:flex"
-      forceRounded
-    >
+    <Card key={module?.module} className="block items-center justify-between p-5 sm:flex" forceRounded>
       <div className="mb-3 mr-1.5 overflow-hidden sm:mb-0">
-        <div className="whitespace-nowrap font-bold">
-          {getAllowanceModule(module?.module).name}
-        </div>
+        <div className="whitespace-nowrap font-bold">{getAllowanceModule(module?.module).name}</div>
         <Link
           href={`${LINEA_EXPLORER_URL}/address/${module?.contractAddress}`}
           className="lt-text-gray-500 truncate text-sm"
@@ -34,11 +28,7 @@ const Module: FC<ModuleProps> = ({ module }) => {
           {module?.contractAddress}
         </Link>
       </div>
-      <AllowanceButton
-        module={module}
-        allowed={allowed}
-        setAllowed={setAllowed}
-      />
+      <AllowanceButton module={module} allowed={allowed} setAllowed={setAllowed} />
     </Card>
   );
 };

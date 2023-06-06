@@ -18,14 +18,7 @@ const initialConfig = {
     link: 'text-brand',
     hashtag: 'text-brand'
   },
-  nodes: [
-    CodeNode,
-    MentionNode,
-    HashtagNode,
-    AutoLinkNode,
-    LinkNode,
-    EmojiNode
-  ],
+  nodes: [CodeNode, MentionNode, HashtagNode, AutoLinkNode, LinkNode, EmojiNode],
   editorState: null,
   onError: (error: Error) => {
     console.error(error);

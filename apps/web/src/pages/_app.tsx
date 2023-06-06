@@ -1,12 +1,14 @@
 import '../styles.css';
+
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 import atypFont from '../font/atyp';
 import atypTextFont from '../font/atypText';
 
 const Providers = dynamic(() => import('@components/Common/Providers'), {
-  ssr: false,
+  ssr: false
 });
 
 const App = ({ Component, pageProps }: AppProps) => {

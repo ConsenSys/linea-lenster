@@ -28,11 +28,7 @@ interface PublicationState {
     type?: string;
     uploading?: boolean;
   };
-  setVideoThumbnail: (videoThumbnail: {
-    url?: string;
-    type?: string;
-    uploading?: boolean;
-  }) => void;
+  setVideoThumbnail: (videoThumbnail: { url?: string; type?: string; uploading?: boolean }) => void;
   videoDurationInSeconds: string;
   setVideoDurationInSeconds: (videoDurationInSeconds: string) => void;
   isUploading: boolean;
@@ -51,8 +47,7 @@ export const usePublicationStore = create<PublicationState>((set) => ({
   showNewPostModal: false,
   setShowNewPostModal: (showNewPostModal) => set(() => ({ showNewPostModal })),
   publicationContent: '',
-  setPublicationContent: (publicationContent) =>
-    set(() => ({ publicationContent })),
+  setPublicationContent: (publicationContent) => set(() => ({ publicationContent })),
   audioPublication: {
     title: '',
     author: '',
@@ -91,14 +86,12 @@ export const usePublicationStore = create<PublicationState>((set) => ({
   videoThumbnail: { url: '', type: '', uploading: false },
   setVideoThumbnail: (videoThumbnail) => set(() => ({ videoThumbnail })),
   videoDurationInSeconds: '',
-  setVideoDurationInSeconds: (videoDurationInSeconds) =>
-    set(() => ({ videoDurationInSeconds })),
+  setVideoDurationInSeconds: (videoDurationInSeconds) => set(() => ({ videoDurationInSeconds })),
   isUploading: false,
   setIsUploading: (isUploading) => set(() => ({ isUploading })),
   showPollEditor: false,
   setShowPollEditor: (showPollEditor) => set(() => ({ showPollEditor })),
   pollConfig: { length: 7, choices: ['', ''] },
   setPollConfig: (pollConfig) => set(() => ({ pollConfig })),
-  resetPollConfig: () =>
-    set(() => ({ pollConfig: { length: 1, choices: ['', ''] } }))
+  resetPollConfig: () => set(() => ({ pollConfig: { length: 1, choices: ['', ''] } }))
 }));

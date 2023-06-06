@@ -12,10 +12,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> =
   | T
   | {
@@ -652,33 +649,19 @@ export function useSnapshotQuery(
   baseOptions?: Apollo.QueryHookOptions<SnapshotQuery, SnapshotQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SnapshotQuery, SnapshotQueryVariables>(
-    SnapshotDocument,
-    options
-  );
+  return Apollo.useQuery<SnapshotQuery, SnapshotQueryVariables>(SnapshotDocument, options);
 }
 
 export function useSnapshotLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SnapshotQuery,
-    SnapshotQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<SnapshotQuery, SnapshotQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SnapshotQuery, SnapshotQueryVariables>(
-    SnapshotDocument,
-    options
-  );
+  return Apollo.useLazyQuery<SnapshotQuery, SnapshotQueryVariables>(SnapshotDocument, options);
 }
 
 export type SnapshotQueryHookResult = ReturnType<typeof useSnapshotQuery>;
-export type SnapshotLazyQueryHookResult = ReturnType<
-  typeof useSnapshotLazyQuery
->;
-export type SnapshotQueryResult = Apollo.QueryResult<
-  SnapshotQuery,
-  SnapshotQueryVariables
->;
+export type SnapshotLazyQueryHookResult = ReturnType<typeof useSnapshotLazyQuery>;
+export type SnapshotQueryResult = Apollo.QueryResult<SnapshotQuery, SnapshotQueryVariables>;
 export const SpaceDocument = gql`
   query Space($id: String) {
     proposal(id: $id) {
@@ -705,32 +688,21 @@ export const SpaceDocument = gql`
  *   },
  * });
  */
-export function useSpaceQuery(
-  baseOptions?: Apollo.QueryHookOptions<SpaceQuery, SpaceQueryVariables>
-) {
+export function useSpaceQuery(baseOptions?: Apollo.QueryHookOptions<SpaceQuery, SpaceQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SpaceQuery, SpaceQueryVariables>(
-    SpaceDocument,
-    options
-  );
+  return Apollo.useQuery<SpaceQuery, SpaceQueryVariables>(SpaceDocument, options);
 }
 
 export function useSpaceLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SpaceQuery, SpaceQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SpaceQuery, SpaceQueryVariables>(
-    SpaceDocument,
-    options
-  );
+  return Apollo.useLazyQuery<SpaceQuery, SpaceQueryVariables>(SpaceDocument, options);
 }
 
 export type SpaceQueryHookResult = ReturnType<typeof useSpaceQuery>;
 export type SpaceLazyQueryHookResult = ReturnType<typeof useSpaceLazyQuery>;
-export type SpaceQueryResult = Apollo.QueryResult<
-  SpaceQuery,
-  SpaceQueryVariables
->;
+export type SpaceQueryResult = Apollo.QueryResult<SpaceQuery, SpaceQueryVariables>;
 
 export interface PossibleTypesResultData {
   possibleTypes: {

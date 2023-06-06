@@ -19,11 +19,7 @@ interface WrapperProps {
 }
 
 const Wrapper: FC<WrapperProps> = ({ children, dataTestId = '' }) => (
-  <Card
-    className="mt-3 cursor-auto p-5"
-    dataTestId={dataTestId}
-    onClick={stopEventPropagation}
-  >
+  <Card className="mt-3 cursor-auto p-5" dataTestId={dataTestId} onClick={stopEventPropagation}>
     {children}
   </Card>
 );
@@ -84,11 +80,7 @@ const Snapshot: FC<SnapshotProps> = ({ proposalId }) => {
 
   if (isLensterPoll) {
     return (
-      <span
-        onClick={stopEventPropagation}
-        data-testid={`poll-${proposal.id}`}
-        aria-hidden="true"
-      >
+      <span onClick={stopEventPropagation} data-testid={`poll-${proposal.id}`} aria-hidden="true">
         <Choices
           proposal={proposal as Proposal}
           votes={votes as Vote[]}
@@ -102,11 +94,7 @@ const Snapshot: FC<SnapshotProps> = ({ proposalId }) => {
   return (
     <Wrapper dataTestId={`snapshot-${proposal.id}`}>
       <Header proposal={proposal as Proposal} />
-      <Choices
-        proposal={proposal as Proposal}
-        votes={votes as Vote[]}
-        refetch={refetch}
-      />
+      <Choices proposal={proposal as Proposal} votes={votes as Vote[]} refetch={refetch} />
     </Wrapper>
   );
 };

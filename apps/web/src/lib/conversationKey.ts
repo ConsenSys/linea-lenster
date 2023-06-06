@@ -9,13 +9,8 @@ const CONVERSATION_KEY_RE = /^(.*)\/lens\.dev\/dm\/(.*)-(.*)$/;
  * @param conversationId The conversation id
  * @returns The conversation key
  */
-export const buildConversationKey = (
-  peerAddress: string,
-  conversationId: string
-): string =>
-  conversationId
-    ? `${peerAddress.toLowerCase()}/${conversationId}`
-    : peerAddress.toLowerCase();
+export const buildConversationKey = (peerAddress: string, conversationId: string): string =>
+  conversationId ? `${peerAddress.toLowerCase()}/${conversationId}` : peerAddress.toLowerCase();
 
 /**
  * Parses a conversation key into its peer address, members, and conversation id

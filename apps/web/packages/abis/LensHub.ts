@@ -587,9 +587,7 @@ export const LensHub = [
       { internalType: 'uint256', name: 'pubId', type: 'uint256' }
     ],
     name: 'getPubType',
-    outputs: [
-      { internalType: 'enum DataTypes.PubType', name: '', type: 'uint8' }
-    ],
+    outputs: [{ internalType: 'enum DataTypes.PubType', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function'
   },
@@ -606,9 +604,7 @@ export const LensHub = [
   {
     inputs: [],
     name: 'getState',
-    outputs: [
-      { internalType: 'enum DataTypes.ProtocolState', name: '', type: 'uint8' }
-    ],
+    outputs: [{ internalType: 'enum DataTypes.ProtocolState', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function'
   },
@@ -634,36 +630,28 @@ export const LensHub = [
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'collectModule', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'collectModule', type: 'address' }],
     name: 'isCollectModuleWhitelisted',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'followModule', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'followModule', type: 'address' }],
     name: 'isFollowModuleWhitelisted',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'profileCreator', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'profileCreator', type: 'address' }],
     name: 'isProfileCreatorWhitelisted',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'referenceModule', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'referenceModule', type: 'address' }],
     name: 'isReferenceModuleWhitelisted',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
@@ -1058,9 +1046,7 @@ export const LensHub = [
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'newEmergencyAdmin', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'newEmergencyAdmin', type: 'address' }],
     name: 'setEmergencyAdmin',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -1149,9 +1135,7 @@ export const LensHub = [
     type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'address', name: 'newGovernance', type: 'address' }
-    ],
+    inputs: [{ internalType: 'address', name: 'newGovernance', type: 'address' }],
     name: 'setGovernance',
     outputs: [],
     stateMutability: 'nonpayable',

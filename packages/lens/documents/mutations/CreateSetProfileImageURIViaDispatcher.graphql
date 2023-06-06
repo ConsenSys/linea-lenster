@@ -1,7 +1,7 @@
 mutation CreateSetProfileImageURIViaDispatcher(
-  $request: UpdateProfileImageRequest!
+    $request: UpdateProfileImageRequest!
 ) {
-  createSetProfileImageURIViaDispatcher(request: $request) {
-    ...RelayerResultFields
-  }
+    createSetProfileImageURIViaDispatcher(request: $request) {
+        ...RelayerResultFields
+    }
 }

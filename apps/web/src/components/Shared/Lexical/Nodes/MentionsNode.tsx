@@ -18,6 +18,11 @@ export type SerializedMentionNode = Spread<
 export class MentionNode extends TextNode {
   __mention: string;
 
+  constructor(mentionName: string, text?: string, key?: NodeKey) {
+    super(text ?? `@${mentionName}`, key);
+    this.__mention = `@${mentionName}`;
+  }
+
   static getType(): string {
     return 'mention';
   }
@@ -25,6 +30,7 @@ export class MentionNode extends TextNode {
   static clone(node: MentionNode): MentionNode {
     return new MentionNode(node.__mention, node.__text, node.__key);
   }
+
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
     // eslint-disable-next-line no-use-before-define
     const node = $createMentionNode(serializedNode.mentionName);
@@ -37,9 +43,20 @@ export class MentionNode extends TextNode {
     return node;
   }
 
-  constructor(mentionName: string, text?: string, key?: NodeKey) {
-    super(text ?? `@${mentionName}`, key);
-    this.__mention = `@${mentionName}`;
+  static importDOM(): DOMConversionMap | null {
+    return {
+      span: (domNode: HTMLElement) => {
+        if (!domNode.hasAttribute('data-lexical-mention')) {
+          return null;
+        }
+
+        return {
+          // eslint-disable-next-line no-use-before-define
+          conversion: convertMentionElement,
+          priority: 1
+        };
+      }
+    };
   }
 
   exportJSON(): SerializedMentionNode {
@@ -66,22 +83,6 @@ export class MentionNode extends TextNode {
     return { element };
   }
 
-  static importDOM(): DOMConversionMap | null {
-    return {
-      span: (domNode: HTMLElement) => {
-        if (!domNode.hasAttribute('data-lexical-mention')) {
-          return null;
-        }
-
-        return {
-          // eslint-disable-next-line no-use-before-define
-          conversion: convertMentionElement,
-          priority: 1
-        };
-      }
-    };
-  }
-
   isTextEntity(): true {
     return true;
   }
@@ -94,9 +95,7 @@ export const $createMentionNode = (mentionName: string): MentionNode => {
   return mentionNode;
 };
 
-const convertMentionElement = (
-  domNode: HTMLElement
-): DOMConversionOutput | null => {
+const convertMentionElement = (domNode: HTMLElement): DOMConversionOutput | null => {
   const { textContent } = domNode;
 
   if (textContent !== null) {
@@ -107,8 +106,6 @@ const convertMentionElement = (
   return null;
 };
 
-export const $isMentionNode = (
-  node: LexicalNode | null | undefined
-): node is MentionNode => {
+export const $isMentionNode = (node: LexicalNode | null | undefined): node is MentionNode => {
   return node instanceof MentionNode;
 };

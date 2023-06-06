@@ -14,8 +14,7 @@ interface RelevantPeopleProps {
 }
 
 const RelevantPeople: FC<RelevantPeopleProps> = ({ publication }) => {
-  const mentions =
-    publication?.metadata?.content?.match(Regex.allHandles, '$1[~$2]') ?? [];
+  const mentions = publication?.metadata?.content?.match(Regex.allHandles, '$1[~$2]') ?? [];
 
   const processedMentions = mentions.map((mention: string) => {
     const trimmedMention = mention.trim().replace('@', '').replace("'s", '');
@@ -27,16 +26,13 @@ const RelevantPeople: FC<RelevantPeopleProps> = ({ publication }) => {
     return formatHandle(publication?.profile?.handle);
   });
 
-  const cleanedMentions = processedMentions.reduce(
-    (handles: string[], handle: string) => {
-      if (!handles.includes(handle)) {
-        handles.push(handle);
-      }
+  const cleanedMentions = processedMentions.reduce((handles: string[], handle: string) => {
+    if (!handles.includes(handle)) {
+      handles.push(handle);
+    }
 
-      return handles;
-    },
-    []
-  );
+    return handles;
+  }, []);
 
   const { data, loading, error } = useProfilesQuery({
     variables: { request: { handles: cleanedMentions.slice(0, 5) } },

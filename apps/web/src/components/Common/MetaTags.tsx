@@ -7,10 +7,7 @@ interface MetaTagsProps {
   description?: string;
 }
 
-const MetaTags: FC<MetaTagsProps> = ({
-  title = APP_NAME,
-  description = DESCRIPTION
-}) => {
+const MetaTags: FC<MetaTagsProps> = ({ title = APP_NAME, description = DESCRIPTION }) => {
   return (
     <Head>
       <title>{title}</title>

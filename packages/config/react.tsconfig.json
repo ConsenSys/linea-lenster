@@ -7,7 +7,14 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "preserve",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ]
   },
-  "exclude": [".next", ".turbo"]
+  "exclude": [
+    ".next",
+    ".turbo"
+  ]
 }

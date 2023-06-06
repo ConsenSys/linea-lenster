@@ -10,6 +10,7 @@ export const ethereumRpcs = [
   'https://ethereum.rpc.thirdweb.com',
   'https://rpc.ankr.com/eth'
 ];
+export const lineaRpcs = ['https://rpc.goerli.linea.build'];
 
 /**
  * Get RPC URL based on chainId
@@ -22,6 +23,8 @@ const getRpc = (chainId: number) => {
       return polygonRpcs[Math.floor(Math.random() * polygonRpcs.length)];
     case 80001:
       return mumbaiRpcs[Math.floor(Math.random() * mumbaiRpcs.length)];
+    case 59140:
+      return lineaRpcs[Math.floor(Math.random() * lineaRpcs.length)];
     default:
       return ethereumRpcs[Math.floor(Math.random() * ethereumRpcs.length)];
   }

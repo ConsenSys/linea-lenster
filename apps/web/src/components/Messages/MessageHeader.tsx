@@ -20,17 +20,13 @@ interface MessageHeaderProps {
   conversationKey?: string;
 }
 
-const MessageHeader: FC<MessageHeaderProps> = ({
-  profile,
-  conversationKey
-}) => {
+const MessageHeader: FC<MessageHeaderProps> = ({ profile, conversationKey }) => {
   const router = useRouter();
   const [following, setFollowing] = useState(true);
   const unsyncProfile = useMessageStore((state) => state.unsyncProfile);
   const ensNames = useMessageStore((state) => state.ensNames);
   const ensName = ensNames.get(conversationKey?.split('/')[0] ?? '');
-  const url =
-    (ensName && getStampFyiURL(conversationKey?.split('/')[0] ?? '')) ?? '';
+  const url = (ensName && getStampFyiURL(conversationKey?.split('/')[0] ?? '')) ?? '';
 
   const setFollowingWrapped = useCallback(
     (following: boolean) => {
@@ -55,10 +51,7 @@ const MessageHeader: FC<MessageHeaderProps> = ({
   return (
     <div className="divider flex items-center justify-between px-4 py-2">
       <div className="flex items-center">
-        <ChevronLeftIcon
-          onClick={onBackClick}
-          className="mr-1 h-6 w-6 cursor-pointer lg:hidden"
-        />
+        <ChevronLeftIcon onClick={onBackClick} className="mr-1 h-6 w-6 cursor-pointer lg:hidden" />
         {profile ? (
           <UserProfile profile={profile} />
         ) : (
@@ -85,11 +78,7 @@ const MessageHeader: FC<MessageHeaderProps> = ({
               followSource={FollowSource.DIRECT_MESSAGE_HEADER}
             />
           ) : (
-            <Unfollow
-              showText
-              profile={profile}
-              setFollowing={setFollowingWrapped}
-            />
+            <Unfollow showText profile={profile} setFollowing={setFollowingWrapped} />
           )}
         </div>
       )}

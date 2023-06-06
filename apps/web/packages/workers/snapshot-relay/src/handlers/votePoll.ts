@@ -44,17 +44,14 @@ export default async (request: IRequest) => {
     return error(400, 'Bad request!');
   }
 
-  const { isMainnet, accessToken, choice, profileId, snapshotId } =
-    body as ExtensionRequest;
+  const { isMainnet, accessToken, choice, profileId, snapshotId } = body as ExtensionRequest;
 
   const missingKeysError = keysValidator(requiredKeys, body);
   if (missingKeysError) {
     return missingKeysError;
   }
 
-  const sequencerUrl = isMainnet
-    ? MAINNET_SNAPSHOT_SEQUNECER_API
-    : TESTNET_SNAPSHOT_SEQUNECER_API;
+  const sequencerUrl = isMainnet ? MAINNET_SNAPSHOT_SEQUNECER_API : TESTNET_SNAPSHOT_SEQUNECER_API;
 
   try {
     const { payload } = jwt.decode(accessToken);
@@ -66,9 +63,7 @@ export default async (request: IRequest) => {
 
     const isAuthenticated = await validateLensAccount(accessToken, isMainnet);
     if (!isAuthenticated) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Invalid access token!' })
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Invalid access token!' }));
     }
 
     const client = walletClient(privateKey, isMainnet);
@@ -117,18 +112,12 @@ export default async (request: IRequest) => {
     const snapshotResponse: SnapshotResponse = await response.json();
 
     if (!snapshotResponse.id) {
-      return new Response(
-        JSON.stringify({ success: false, response: snapshotResponse })
-      );
+      return new Response(JSON.stringify({ success: false, response: snapshotResponse }));
     }
 
-    return new Response(
-      JSON.stringify({ success: true, id: snapshotResponse.id })
-    );
+    return new Response(JSON.stringify({ success: true, id: snapshotResponse.id }));
   } catch (error) {
     console.error('Failed to vote on snapshot', error);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Something went wrong!' })
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Something went wrong!' }));
   }
 };

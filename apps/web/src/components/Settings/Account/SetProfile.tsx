@@ -4,10 +4,7 @@ import { LensHub } from '@lenster/abis';
 import { Errors } from '@lenster/data';
 import { APP_NAME, LENSHUB_PROXY } from '@lenster/data/constants';
 import type { CreateSetDefaultProfileRequest, Profile } from '@lenster/lens';
-import {
-  useBroadcastMutation,
-  useCreateSetDefaultProfileTypedDataMutation
-} from '@lenster/lens';
+import { useBroadcastMutation, useCreateSetDefaultProfileTypedDataMutation } from '@lenster/lens';
 import formatHandle from '@lenster/lib/formatHandle';
 import getSignature from '@lenster/lib/getSignature';
 import { Button, Card, ErrorMessage, Spinner } from '@lenster/ui';
@@ -74,21 +71,20 @@ const SetProfile: FC = () => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetDefaultProfileTypedData] =
-    useCreateSetDefaultProfileTypedDataMutation({
-      onCompleted: async ({ createSetDefaultProfileTypedData }) => {
-        const { id, typedData } = createSetDefaultProfileTypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
-        });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId } = typedData.value;
-          return write?.({ args: [profileId] });
-        }
-      },
-      onError
-    });
+  const [createSetDefaultProfileTypedData] = useCreateSetDefaultProfileTypedDataMutation({
+    onCompleted: async ({ createSetDefaultProfileTypedData }) => {
+      const { id, typedData } = createSetDefaultProfileTypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId } = typedData.value;
+        return write?.({ args: [profileId] });
+      }
+    },
+    onError
+  });
 
   const setDefaultProfile = async () => {
     if (!currentProfile) {
@@ -138,8 +134,8 @@ const SetProfile: FC = () => {
       </div>
       <p>
         <Trans>
-          Selecting your default account helps to display the selected profile
-          across {APP_NAME}, you can change your default profile anytime.
+          Selecting your default account helps to display the selected profile across {APP_NAME}, you can
+          change your default profile anytime.
         </Trans>
       </p>
       <div className="text-lg font-bold">
@@ -148,8 +144,7 @@ const SetProfile: FC = () => {
       <div className="lt-text-gray-500 divide-y text-sm dark:divide-gray-700">
         <p className="pb-3">
           <Trans>
-            Only the default profile will be visible across the {APP_NAME},
-            example notifications, follow etc.
+            Only the default profile will be visible across the {APP_NAME}, example notifications, follow etc.
           </Trans>
         </p>
         <p className="py-3">
@@ -176,9 +171,7 @@ const SetProfile: FC = () => {
         type="submit"
         disabled={isLoading}
         onClick={setDefaultProfile}
-        icon={
-          isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />
-        }
+        icon={isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
       >
         <Trans>Save</Trans>
       </Button>

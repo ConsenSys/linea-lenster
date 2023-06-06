@@ -37,10 +37,7 @@ const Logout: FC<LogoutProps> = ({ onClick, className = '' }) => {
         logout();
         onClick?.();
       }}
-      className={clsx(
-        'flex w-full px-4 py-1.5',
-        className
-      )}
+      className={clsx('flex w-full px-4 py-1.5', className)}
     >
       <div className="flex items-center space-x-1.5">
         <LogoutIcon className="h-4 w-4" />

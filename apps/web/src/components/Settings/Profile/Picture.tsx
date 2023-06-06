@@ -5,12 +5,7 @@ import { Errors } from '@lenster/data';
 import { AVATAR, LENSHUB_PROXY } from '@lenster/data/constants';
 import { getCroppedImg } from '@lenster/image-cropper/cropUtils';
 import type { Area } from '@lenster/image-cropper/types';
-import type {
-  MediaSet,
-  NftImage,
-  Profile,
-  UpdateProfileImageRequest
-} from '@lenster/lens';
+import type { MediaSet, NftImage, Profile, UpdateProfileImageRequest } from '@lenster/lens';
 import {
   useBroadcastMutation,
   useCreateSetProfileImageUriTypedDataMutation,
@@ -85,36 +80,32 @@ const Picture: FC<PictureProps> = ({ profile }) => {
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createSetProfileImageURITypedData] =
-    useCreateSetProfileImageUriTypedDataMutation({
-      onCompleted: async ({ createSetProfileImageURITypedData }) => {
-        const { id, typedData } = createSetProfileImageURITypedData;
-        const signature = await signTypedDataAsync(getSignature(typedData));
-        const { data } = await broadcast({
-          variables: { request: { id, signature } }
-        });
-        if (data?.broadcast.__typename === 'RelayError') {
-          const { profileId, imageURI } = typedData.value;
-          return write?.({ args: [profileId, imageURI] });
-        }
-      },
-      onError
-    });
+  const [createSetProfileImageURITypedData] = useCreateSetProfileImageUriTypedDataMutation({
+    onCompleted: async ({ createSetProfileImageURITypedData }) => {
+      const { id, typedData } = createSetProfileImageURITypedData;
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
+      if (data?.broadcast.__typename === 'RelayError') {
+        const { profileId, imageURI } = typedData.value;
+        return write?.({ args: [profileId, imageURI] });
+      }
+    },
+    onError
+  });
 
-  const [createSetProfileImageURIViaDispatcher] =
-    useCreateSetProfileImageUriViaDispatcherMutation({
-      onCompleted: ({ createSetProfileImageURIViaDispatcher }) =>
-        onCompleted(createSetProfileImageURIViaDispatcher.__typename),
-      onError
-    });
+  const [createSetProfileImageURIViaDispatcher] = useCreateSetProfileImageUriViaDispatcherMutation({
+    onCompleted: ({ createSetProfileImageURIViaDispatcher }) =>
+      onCompleted(createSetProfileImageURIViaDispatcher.__typename),
+    onError
+  });
 
   const createViaDispatcher = async (request: UpdateProfileImageRequest) => {
     const { data } = await createSetProfileImageURIViaDispatcher({
       variables: { request }
     });
-    if (
-      data?.createSetProfileImageURIViaDispatcher?.__typename === 'RelayError'
-    ) {
+    if (data?.createSetProfileImageURIViaDispatcher?.__typename === 'RelayError') {
       return await createSetProfileImageURITypedData({
         variables: {
           options: { overrideSigNonce: userSigNonce },
@@ -168,8 +159,7 @@ const Picture: FC<PictureProps> = ({ profile }) => {
     }
   };
 
-  const profilePictureUrl =
-    profile?.picture?.original?.url ?? profile?.picture?.uri;
+  const profilePictureUrl = profile?.picture?.original?.url ?? profile?.picture?.uri;
   const profilePictureIpfsUrl = profilePictureUrl
     ? imageKit(sanitizeDStorageUrl(profilePictureUrl), AVATAR)
     : '';
@@ -199,26 +189,14 @@ const Picture: FC<PictureProps> = ({ profile }) => {
             type="submit"
             disabled={isLoading || !imageSrc}
             onClick={() => uploadAndSave()}
-            icon={
-              isLoading ? (
-                <Spinner size="xs" />
-              ) : (
-                <PencilIcon className="h-4 w-4" />
-              )
-            }
+            icon={isLoading ? <Spinner size="xs" /> : <PencilIcon className="h-4 w-4" />}
           >
             <Trans>Save</Trans>
           </Button>
         </div>
       </Modal>
       <div className="space-y-1.5">
-        {error && (
-          <ErrorMessage
-            className="mb-3"
-            title={t`Transaction failed!`}
-            error={error}
-          />
-        )}
+        {error && <ErrorMessage className="mb-3" title={t`Transaction failed!`} error={error} />}
         <div className="space-y-3">
           <div>
             <Image

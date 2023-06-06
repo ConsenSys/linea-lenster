@@ -1,9 +1,9 @@
 import { UserRemoveIcon } from '@heroicons/react/outline';
-import { t } from '@lingui/macro';
 import { FollowNft } from '@lenster/abis';
 import type { Profile } from '@lenster/lens';
 import { useFollowersNftOwnedTokenIdsQuery } from '@lenster/lens';
 import { Button, Spinner } from '@lenster/ui';
+import { t } from '@lingui/macro';
 import type { Dispatch, FC } from 'react';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';

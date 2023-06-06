@@ -8,14 +8,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: [
-    '@typescript-eslint',
-    'unused-imports',
-    'simple-import-sort',
-    'prettier',
-    'unicorn',
-    'import'
-  ],
+  plugins: ['@typescript-eslint', 'unused-imports', 'simple-import-sort', 'prettier', 'unicorn', 'import'],
   rules: {
     curly: 'error',
     'no-unused-vars': 'off',

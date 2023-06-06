@@ -14,7 +14,7 @@ COPY --from=deps packages ./packages
 COPY src ./src
 COPY public ./public
 COPY .env.example ./.env
-COPY package.json next.config.js next-env.d.ts tsconfig.json tailwind.config.js .prettierrc .prettierignore .linguirc postcss.config.js .eslintrc.js ./
+COPY package.json next.config.js next-env.d.ts tsconfig.json tailwind.config.js .prettierrc .prettierignore postcss.config.js .eslintrc.js ./
 RUN pnpm build
 
 # Stage 3: run

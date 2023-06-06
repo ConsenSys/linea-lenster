@@ -16,10 +16,7 @@ const humanFileSize = (bytes: number) => {
   do {
     bytes /= thresh;
     ++u;
-  } while (
-    Math.round(Math.abs(bytes) * 10) / 10 >= thresh &&
-    u < units.length - 1
-  );
+  } while (Math.round(Math.abs(bytes) * 10) / 10 >= thresh && u < units.length - 1);
 
   return bytes.toFixed(1) + ' ' + units[u];
 };

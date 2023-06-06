@@ -31,9 +31,7 @@ const useGetMessagePreviews = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const { batchPersistPreviewMessages } = useMessageDb();
   const hasSyncedMessages = useMessageStore((state) => state.hasSyncedMessages);
-  const setHasSyncedMessages = useMessageStore(
-    (state) => state.setHasSyncedMessages
-  );
+  const setHasSyncedMessages = useMessageStore((state) => state.setHasSyncedMessages);
   const [loading, setLoading] = useState<boolean>(false);
   const loadingRef = useRef<boolean>(false);
   const countRef = useRef<number>(0);
@@ -63,19 +61,11 @@ const useGetMessagePreviews = () => {
                 (convo.context?.conversationId as string) ?? ''
               );
               const existingValue = previewMessages.get(key)?.sent;
-              const latestMessage = await fetchMostRecentMessage(
-                convo,
-                existingValue
-              );
+              const latestMessage = await fetchMostRecentMessage(convo, existingValue);
               countRef.current = countRef.current + 1;
-              setProgress(
-                Math.round((countRef.current / needsSync.length) * 100)
-              );
+              setProgress(Math.round((countRef.current / needsSync.length) * 100));
 
-              if (
-                latestMessage &&
-                (!existingValue || latestMessage.sent > existingValue)
-              ) {
+              if (latestMessage && (!existingValue || latestMessage.sent > existingValue)) {
                 return [key, latestMessage];
               }
             })

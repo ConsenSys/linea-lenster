@@ -120,42 +120,30 @@ const DeleteSettings: FC = () => {
           </div>
           <p>
             <Trans>
-              This will permanently delete your Profile NFT on the Lens
-              Protocol. You will not be able to use any apps built on Lens,
-              including Lenster. All your data will be wiped out immediately and
-              you won't be able to get it back.
+              This will permanently delete your Profile NFT on the Lens Protocol. You will not be able to use
+              any apps built on Lens, including Lenster. All your data will be wiped out immediately and you
+              won't be able to get it back.
             </Trans>
           </p>
           <div className="text-lg font-bold">What else you should know</div>
           <div className="lt-text-gray-500 divide-y text-sm dark:divide-gray-700">
             <p className="pb-3">
               <Trans>
-                You cannot restore your Lens profile if it was accidentally or
-                wrongfully deleted.
+                You cannot restore your Lens profile if it was accidentally or wrongfully deleted.
               </Trans>
             </p>
             <p className="py-3">
               <Trans>
-                Some account information may still be available in search
-                engines, such as Google or Bing.
+                Some account information may still be available in search engines, such as Google or Bing.
               </Trans>
             </p>
             <p className="py-3">
-              <Trans>
-                Your @handle will be released immediately after deleting the
-                account.
-              </Trans>
+              <Trans>Your @handle will be released immediately after deleting the account.</Trans>
             </p>
           </div>
           <Button
             variant="danger"
-            icon={
-              isLoading ? (
-                <Spinner variant="danger" size="xs" />
-              ) : (
-                <TrashIcon className="h-5 w-5" />
-              )
-            }
+            icon={isLoading ? <Spinner variant="danger" size="xs" /> : <TrashIcon className="h-5 w-5" />}
             disabled={isLoading}
             onClick={() => setShowWarningModal(true)}
           >
@@ -173,8 +161,7 @@ const DeleteSettings: FC = () => {
                 message={
                   <div className="leading-6">
                     <Trans>
-                      Confirm that you have read all consequences and want to
-                      delete your account anyway
+                      Confirm that you have read all consequences and want to delete your account anyway
                     </Trans>
                   </div>
                 }

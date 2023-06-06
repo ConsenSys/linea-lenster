@@ -1,12 +1,8 @@
 import { SearchIcon, XIcon } from '@heroicons/react/outline';
 import type { Profile, ProfileSearchResult } from '@lenster/lens';
-import {
-  CustomFiltersTypes,
-  SearchRequestTypes,
-  useSearchProfilesLazyQuery
-} from '@lenster/lens';
+import { CustomFiltersTypes, SearchRequestTypes, useSearchProfilesLazyQuery } from '@lenster/lens';
 import formatHandle from '@lenster/lib/formatHandle';
-import { Card, Input, Spinner } from '@lenster/ui';
+import { Input, Spinner } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
@@ -35,8 +31,7 @@ const Search: FC<SearchProps> = ({
 
   useOnClickOutside(dropdownRef, () => setSearchText(''));
 
-  const [searchUsers, { data: searchUsersData, loading: searchUsersLoading }] =
-    useSearchProfilesLazyQuery();
+  const [searchUsers, { data: searchUsersData, loading: searchUsersLoading }] = useSearchProfilesLazyQuery();
 
   const handleSearch = (evt: ChangeEvent<HTMLInputElement>) => {
     const keyword = evt.target.value;
@@ -66,8 +61,7 @@ const Search: FC<SearchProps> = ({
   };
 
   const searchResult = searchUsersData?.search as ProfileSearchResult;
-  const isProfileSearchResult =
-    searchResult && searchResult.hasOwnProperty('items');
+  const isProfileSearchResult = searchResult && searchResult.hasOwnProperty('items');
   const profiles = isProfileSearchResult ? searchResult.items : [];
 
   return (
@@ -82,10 +76,7 @@ const Search: FC<SearchProps> = ({
           autoComplete="off"
           iconRight={
             <XIcon
-              className={clsx(
-                'cursor-pointer',
-                searchText ? 'visible' : 'invisible'
-              )}
+              className={clsx('cursor-pointer', searchText ? 'visible' : 'invisible')}
               onClick={() => setSearchText('')}
             />
           }
@@ -94,10 +85,7 @@ const Search: FC<SearchProps> = ({
       </form>
       {pathname !== '/search' && !hideDropdown && searchText.length > 0 && (
         <div
-          className={clsx(
-            'absolute mt-2 flex w-[94%] flex-col',
-            modalWidthClassName
-          )}
+          className={clsx('absolute mt-2 flex w-[94%] flex-col', modalWidthClassName)}
           ref={dropdownRef}
           data-testid="search-profiles-dropdown"
         >
@@ -119,9 +107,7 @@ const Search: FC<SearchProps> = ({
                       }
                       setSearchText('');
                     }}
-                    data-testid={`search-profile-${formatHandle(
-                      profile?.handle
-                    )}`}
+                    data-testid={`search-profile-${formatHandle(profile?.handle)}`}
                     aria-hidden="true"
                   >
                     <UserProfile

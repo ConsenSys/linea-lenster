@@ -24,7 +24,7 @@ contract MockProfileCreationProxy {
     }
 
     function proxyCreateProfile(DataTypes.CreateProfileData memory vars) external {
-        uint256  balanceLens = LENS_HUB.balanceOf(msg.sender);
+        uint256 balanceLens = LENS_HUB.balanceOf(msg.sender);
         require(balanceLens == 0, "Already has a Lens handle");
 
         uint256 balanceEns = LINEA_RESOLVER.balanceOf(msg.sender);
@@ -37,7 +37,7 @@ contract MockProfileCreationProxy {
         if (firstByte == '-' || firstByte == '_' || firstByte == '.')
             revert Errors.HandleFirstCharInvalid();
 
-        for (uint256 i = 1; i < handleLength; ) {
+        for (uint256 i = 1; i < handleLength;) {
             if (bytes(vars.handle)[i] == '.') revert Errors.HandleContainsInvalidCharacters();
             unchecked {
                 ++i;

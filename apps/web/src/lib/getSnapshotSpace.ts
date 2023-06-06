@@ -9,9 +9,7 @@ import axios from 'axios';
 const getSnapshotSpace = async (proposalId: string) => {
   try {
     const response = await axios(
-      `${SNAPSHOR_RELAY_WORKER_URL}/getSpaceId/${
-        IS_MAINNET ? 'mainnet' : 'testnet'
-      }/${proposalId}`
+      `${SNAPSHOR_RELAY_WORKER_URL}/getSpaceId/${IS_MAINNET ? 'mainnet' : 'testnet'}/${proposalId}`
     );
 
     return response.data;

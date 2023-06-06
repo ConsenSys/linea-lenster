@@ -27,9 +27,7 @@ import YourProfile from './NavItems/YourProfile';
 const MobileDrawerMenu: FC = () => {
   const profiles = useAppStore((state) => state.profiles);
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowMobileDrawer = useGlobalModalStateStore(
-    (state) => state.setShowMobileDrawer
-  );
+  const setShowMobileDrawer = useGlobalModalStateStore((state) => state.setShowMobileDrawer);
 
   const closeDrawer = () => {
     setShowMobileDrawer(false);
@@ -76,10 +74,7 @@ const MobileDrawerMenu: FC = () => {
         <div className="bg-white dark:bg-gray-900">
           <div className="divider" />
           <div>
-            <Link
-              href={`/u/${formatHandle(currentProfile?.handle)}`}
-              onClick={closeDrawer}
-            >
+            <Link href={`/u/${formatHandle(currentProfile?.handle)}`} onClick={closeDrawer}>
               <YourProfile className="text-dark px-4 py-3 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800" />
             </Link>
             <Link href={'/settings'} onClick={closeDrawer}>

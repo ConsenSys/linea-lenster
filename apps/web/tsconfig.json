@@ -3,12 +3,26 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components*": ["src/components*"],
-      "@lib*": ["src/lib*"],
-      "@gql*": ["src/graphql*"],
-      "@generated*": ["src/generated*"]
+      "@components*": [
+        "src/components*"
+      ],
+      "@lib*": [
+        "src/lib*"
+      ],
+      "@gql*": [
+        "src/graphql*"
+      ],
+      "@generated*": [
+        "src/generated*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["packages/*"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "packages/*"
+  ]
 }

@@ -20,11 +20,9 @@ interface PublicationBodyProps {
 
 const PublicationBody: FC<PublicationBodyProps> = ({ publication }) => {
   const { pathname } = useRouter();
-  const showMore =
-    publication?.metadata?.content?.length > 450 && pathname !== '/posts/[id]';
+  const showMore = publication?.metadata?.content?.length > 450 && pathname !== '/posts/[id]';
   const hasURLs = getURLs(publication?.metadata?.content)?.length > 0;
-  const snapshotProposalId =
-    hasURLs && getSnapshotProposalId(getURLs(publication?.metadata?.content));
+  const snapshotProposalId = hasURLs && getSnapshotProposalId(getURLs(publication?.metadata?.content));
   let content = publication?.metadata?.content;
   if (snapshotProposalId) {
     for (const url of getURLs(publication?.metadata?.content)) {
@@ -44,12 +42,7 @@ const PublicationBody: FC<PublicationBodyProps> = ({ publication }) => {
 
   return (
     <div className="break-words">
-      <Markup
-        className={clsx(
-          { 'line-clamp-5': showMore },
-          'markup linkify text-md break-words'
-        )}
-      >
+      <Markup className={clsx({ 'line-clamp-5': showMore }, 'markup linkify text-md break-words')}>
         {content}
       </Markup>
       {showMore && (
@@ -62,15 +55,10 @@ const PublicationBody: FC<PublicationBodyProps> = ({ publication }) => {
       )}
       {/* Snapshot, Attachments and Opengraph */}
       {showAttachments ? (
-        <Attachments
-          attachments={publication?.metadata?.media}
-          publication={publication}
-        />
+        <Attachments attachments={publication?.metadata?.media} publication={publication} />
       ) : null}
       {showSnapshot ? <Snapshot proposalId={snapshotProposalId} /> : null}
-      {showOembed ? (
-        <Oembed url={getURLs(publication?.metadata?.content)[0]} />
-      ) : null}
+      {showOembed ? <Oembed url={getURLs(publication?.metadata?.content)[0]} /> : null}
     </div>
   );
 };

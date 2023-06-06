@@ -25,8 +25,7 @@ const ImageCropperController: FC<ImageCropperControllerProps> = ({
   const [maxZoom, setMaxZoom] = useState(1);
   const cropper = useRef<ImageCropper>(null);
   const [cropSize, setCropSize] = useState<Size>(targetSize);
-  const { ref: divref, width: divWidth = cropSize.width } =
-    useResizeObserver<HTMLDivElement>();
+  const { ref: divref, width: divWidth = cropSize.width } = useResizeObserver<HTMLDivElement>();
 
   const onSliderChange = (value: number | number[]) => {
     const logarithmicZoomValue = Array.isArray(value) ? value[0] : value;
@@ -62,10 +61,7 @@ const ImageCropperController: FC<ImageCropperControllerProps> = ({
           setMaxZoom(maxZoomValue);
         }}
       />
-      <div
-        className="flex py-2"
-        style={{ width: cropSize.width + borderSize * 2 }}
-      >
+      <div className="flex py-2" style={{ width: cropSize.width + borderSize * 2 }}>
         <ZoomOutIcon className="m-1 h-6 w-6" />
         <Slider
           className="m-2"

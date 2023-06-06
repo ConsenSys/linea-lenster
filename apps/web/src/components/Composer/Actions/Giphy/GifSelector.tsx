@@ -15,10 +15,7 @@ interface GifSelectorProps {
   setShowModal: Dispatch<boolean>;
 }
 
-const GifSelector: FC<GifSelectorProps> = ({
-  setShowModal,
-  setGifAttachment
-}) => {
+const GifSelector: FC<GifSelectorProps> = ({ setShowModal, setGifAttachment }) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [searchText, setSearchText] = useState('');
   const debouncedGifInput = useDebounce<string>(searchText, 500);
@@ -51,12 +48,7 @@ const GifSelector: FC<GifSelectorProps> = ({
   return (
     <div>
       <div className="m-3">
-        <Input
-          type="text"
-          placeholder={t`Search for GIFs`}
-          value={searchText}
-          onChange={handleSearch}
-        />
+        <Input type="text" placeholder={t`Search for GIFs`} value={searchText} onChange={handleSearch} />
       </div>
       <div className="flex h-[45vh] overflow-y-auto overflow-x-hidden">
         {debouncedGifInput ? (

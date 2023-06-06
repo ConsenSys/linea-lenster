@@ -25,11 +25,7 @@ const Mention: FC<MarkupLinkProps> = ({ href, title = href }) => {
   return (
     <Link href={`/u/${formatHandle(handle)}`} onClick={stopEventPropagation}>
       {profile?.handle ? (
-        <UserPreview
-          isBig={false}
-          profile={profile as Profile}
-          followStatusLoading={false}
-        >
+        <UserPreview isBig={false} profile={profile as Profile} followStatusLoading={false}>
           <Slug slug={formatHandle(handle)} prefix="@" />
         </UserPreview>
       ) : (

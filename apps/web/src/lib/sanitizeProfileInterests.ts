@@ -12,14 +12,10 @@ const sanitizeProfileInterests = (profileInterests: string[]) => {
   }
 
   const interests: ProfileInterest[] = [];
-  const categories = profileInterests.filter(
-    (interest) => !interest.includes('__')
-  );
+  const categories = profileInterests.filter((interest) => !interest.includes('__'));
   for (const category of categories) {
     const subCategories = profileInterests
-      .filter(
-        (interest) => interest.includes(category) && interest.includes('__')
-      )
+      .filter((interest) => interest.includes(category) && interest.includes('__'))
       .map((item) => {
         return {
           label: item.toLowerCase().split('__')[1].replaceAll('_', ' '),

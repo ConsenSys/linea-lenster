@@ -14,9 +14,7 @@ import MenuTransition from '../MenuTransition';
 
 const Locale: FC = () => {
   const { i18n } = useLingui();
-  const { on: isGatedLocalesEnabled } = Growthbook.feature(
-    FeatureFlag.GatedLocales
-  );
+  const { on: isGatedLocalesEnabled } = Growthbook.feature(FeatureFlag.GatedLocales);
   const gatedLocales = ['fr', 'ru', 'ta'];
   const locales = Object.fromEntries(
     Object.entries(SUPPORTED_LOCALES).filter(([key]) =>
@@ -31,10 +29,7 @@ const Locale: FC = () => {
 
   return (
     <Menu as="span">
-      <Menu.Button
-        className="inline-flex items-center space-x-1"
-        data-testid="locale-selector"
-      >
+      <Menu.Button className="inline-flex items-center space-x-1" data-testid="locale-selector">
         <GlobeAltIcon className="h-4 w-4" />
         <span>{locales[i18n.locale]}</span>
       </Menu.Button>

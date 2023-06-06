@@ -5,13 +5,11 @@ import formatHandle from '@lenster/lib/formatHandle';
 import { EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-
+import axios from 'axios';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 
-
 import type { NftLinea, RawNfts } from '../../types';
-import axios from 'axios';
 
 interface NftFeedProps {
   profile: Profile;
@@ -28,8 +26,8 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
         page: 0,
         sort_by: 'minted_newest',
         contract_addresses: '',
-        name: '',
-      },
+        name: ''
+      }
     });
 
     return response.data;
@@ -38,7 +36,7 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
   const {
     data: rawNfts,
     error: nftsError,
-    isLoading: isGalleryLoading,
+    isLoading: isGalleryLoading
   } = useQuery([], () => getNfts().then((res) => res));
 
   const collections = useMemo(() => {
@@ -46,7 +44,7 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
       return Object.entries(rawNfts.contracts['59140']).map((entry) => {
         return {
           contract_address: entry[0],
-          collection_info: entry[1].collection_info,
+          collection_info: entry[1].collection_info
         };
       });
     }
@@ -55,21 +53,21 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
   const ownedNfts: NftLinea[] = useMemo(() => {
     return rawNfts
       ? rawNfts.tokens['59140']?.map((nft) => {
-        const collection = collections?.find((collection) => {
-          return collection.contract_address === nft?.contract_address;
-        });
+          const collection = collections?.find((collection) => {
+            return collection.contract_address === nft?.contract_address;
+          });
 
-        return {
-          contractAddress: collection?.contract_address,
-          collectionName: collection?.collection_info?.name,
-          contractName: collection?.collection_info?.name,
-          chainId: 59140,
-          tokenId: parseInt(nft.token_id, 16),
-          name: nft.token_info?.metadata?.name,
-          description: nft.token_info?.metadata?.description,
-          originalContent: { uri: nft.token_info?.metadata?.image },
-        };
-      })
+          return {
+            contractAddress: collection?.contract_address,
+            collectionName: collection?.collection_info?.name,
+            contractName: collection?.collection_info?.name,
+            chainId: 59140,
+            tokenId: parseInt(nft.token_id, 16),
+            name: nft.token_info?.metadata?.name,
+            description: nft.token_info?.metadata?.description,
+            originalContent: { uri: nft.token_info?.metadata?.image }
+          };
+        })
       : [];
   }, [rawNfts, collections]);
   if (!ownedNfts || ownedNfts?.length === 0) {
@@ -82,16 +80,14 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
             </span>
           ) : (
             <div>
-              <span className='mr-1 font-bold'>
-              @{formatHandle(profile?.handle)}
-            </span>
+              <span className="mr-1 font-bold">@{formatHandle(profile?.handle)}</span>
               <span>
                 <Trans>doesn’t have any NFTs!</Trans>
               </span>
             </div>
           )
         }
-        icon={<CollectionIcon className='text-brand h-8 w-8' />}
+        icon={<CollectionIcon className="text-brand h-8 w-8" />}
       />
     );
   }
@@ -101,7 +97,7 @@ const NftFeed: FC<NftFeedProps> = ({ profile }) => {
   }
 
   return (
-    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {ownedNfts?.map((nft) => (
         <div key={`${nft?.chainId}_${nft?.contractAddress}_${nft?.tokenId}`}>
           <SingleNft nft={nft} />

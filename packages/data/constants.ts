@@ -16,7 +16,8 @@ export const LIT_PROTOCOL_ENVIRONMENT = getEnvConfig().litProtocolEnvironment;
 export const IS_RELAYER_AVAILABLE = getEnvConfig().isRelayerAvailable;
 export const IS_RARIBLE_AVAILABLE = getEnvConfig().isRaribleAvailable;
 export const IS_LIT_AVAILABLE = getEnvConfig().isLitAvailable;
-export const LENS_PROFILE_CREATOR = '0xfA91DD7A9CBbBC48a85b42745d9394c3938E90bE';
+export const LENS_PROFILE_CREATOR =
+  '0xfA91DD7A9CBbBC48a85b42745d9394c3938E90bE';
 export const LENS_PROFILE_CREATOR_ABI = [
   {
     inputs: [
@@ -114,9 +115,24 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'Approval',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'approved', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'approved',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -124,8 +140,18 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'ApprovalForAll',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'operator', internalType: 'address', indexed: true },
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'operator',
+        internalType: 'address',
+        indexed: true
+      },
       { type: 'bool', name: 'approved', internalType: 'bool', indexed: false }
     ],
     anonymous: false
@@ -134,8 +160,18 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'OwnershipTransferred',
     inputs: [
-      { type: 'address', name: 'previousOwner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'newOwner', internalType: 'address', indexed: true }
+      {
+        type: 'address',
+        name: 'previousOwner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'newOwner',
+        internalType: 'address',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -145,7 +181,12 @@ export const LINEA_RESOLVER_ABI = [
     inputs: [
       { type: 'address', name: 'from', internalType: 'address', indexed: true },
       { type: 'address', name: 'to', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -242,7 +283,13 @@ export const LINEA_RESOLVER_ABI = [
     name: 'ownerOf',
     inputs: [{ type: 'uint256', name: 'tokenId', internalType: 'uint256' }]
   },
-  { type: 'function', stateMutability: 'nonpayable', outputs: [], name: 'renounceOwnership', inputs: [] },
+  {
+    type: 'function',
+    stateMutability: 'nonpayable',
+    outputs: [],
+    name: 'renounceOwnership',
+    inputs: []
+  },
   {
     type: 'function',
     stateMutability: 'view',
@@ -418,13 +465,18 @@ export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
 export const LINEA_EXPLORER_URL = IS_MAINNET
   ? 'https://explorer.linea.build'
   : 'https://explorer.goerli.linea.build';
-export const RARIBLE_URL = IS_MAINNET ? 'https://rarible.com' : 'https://testnet.rarible.com';
-export const ZONIC_URL = IS_MAINNET ? 'https://zonic.app' : 'https://testnet.zonic.app';
+export const RARIBLE_URL = IS_MAINNET
+  ? 'https://rarible.com'
+  : 'https://testnet.rarible.com';
+export const ZONIC_URL = IS_MAINNET
+  ? 'https://zonic.app'
+  : 'https://testnet.zonic.app';
 export const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
 export const ARWEAVE_GATEWAY = 'https://arweave.net/';
 export const EVER_API = 'https://endpoint.4everland.co';
 export const DEFAULT_OG = `${STATIC_IMAGES_URL}/og/logo.jpeg`;
-export const ENS_FRONT_DEV_LINEA_URL = 'https://ensfront.dev.linea.build/metadata';
+export const ENS_FRONT_DEV_LINEA_URL =
+  'https://ensfront.dev.linea.build/metadata';
 
 // Workers
 export const STS_GENERATOR_WORKER_URL = IS_PRODUCTION
@@ -452,7 +504,8 @@ export const LEAFWATCH_WORKER_URL = IS_PRODUCTION
 // Tokens / Keys
 export const ALCHEMY_KEY = '7jxlM7yIx-aJXDivcEZxsLFFRKQS6-ue';
 export const WALLETCONNECT_PROJECT_ID =
-  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'cd542acc70c2b548030f9901a52e70c8';
+  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ||
+  'cd542acc70c2b548030f9901a52e70c8';
 export const GROWTHBOOK_KEY = IS_MAINNET
   ? 'sdk-fDLRMwvpyh4Kq3b'
   : 'sdk-STENQl8vU1da648';

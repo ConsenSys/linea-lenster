@@ -17,11 +17,7 @@ import { CheckCircleIcon } from '@heroicons/react/solid';
 import { LensHub } from '@lenster/abis';
 import { Errors } from '@lenster/data';
 import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY, LINEA_EXPLORER_URL } from '@lenster/data/constants';
-import type {
-  ApprovedAllowanceAmount,
-  ElectedMirror,
-  Publication
-} from '@lenster/lens';
+import type { ApprovedAllowanceAmount, ElectedMirror, Publication } from '@lenster/lens';
 import {
   CollectModules,
   useApprovedModuleAllowanceAmountQuery,
@@ -53,12 +49,7 @@ import { useAppStore } from 'src/store/app';
 import { useNonceStore } from 'src/store/nonce';
 import { PUBLICATION } from 'src/tracking';
 import { useUpdateEffect } from 'usehooks-ts';
-import {
-  useAccount,
-  useBalance,
-  useContractWrite,
-  useSignTypedData
-} from 'wagmi';
+import { useAccount, useBalance, useContractWrite, useSignTypedData } from 'wagmi';
 
 import Splits from './Splits';
 
@@ -69,20 +60,13 @@ interface CollectModuleProps {
   electedMirror?: ElectedMirror;
 }
 
-const CollectModule: FC<CollectModuleProps> = ({
-  count,
-  setCount,
-  publication,
-  electedMirror
-}) => {
+const CollectModule: FC<CollectModuleProps> = ({ count, setCount, publication, electedMirror }) => {
   const userSigNonce = useNonceStore((state) => state.userSigNonce);
   const setUserSigNonce = useNonceStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [isLoading, setIsLoading] = useState(false);
   const [revenue, setRevenue] = useState(0);
-  const [hasCollectedByMe, setHasCollectedByMe] = useState(
-    publication?.hasCollectedByMe
-  );
+  const [hasCollectedByMe, setHasCollectedByMe] = useState(publication?.hasCollectedByMe);
   const [showCollectorsModal, setShowCollectorsModal] = useState(false);
   const [allowed, setAllowed] = useState(true);
   const { address } = useAccount();
@@ -93,32 +77,19 @@ const CollectModule: FC<CollectModuleProps> = ({
 
   const collectModule: any = data?.publication?.collectModule;
 
-  const endTimestamp =
-    collectModule?.endTimestamp ?? collectModule?.optionalEndTimestamp;
-  const collectLimit =
-    collectModule?.collectLimit ?? collectModule?.optionalCollectLimit;
-  const amount =
-    collectModule?.amount?.value ?? collectModule?.fee?.amount?.value;
-  const currency =
-    collectModule?.amount?.asset?.symbol ??
-    collectModule?.fee?.amount?.asset?.symbol;
-  const assetAddress =
-    collectModule?.amount?.asset?.address ??
-    collectModule?.fee?.amount?.asset?.address;
-  const assetDecimals =
-    collectModule?.amount?.asset?.decimals ??
-    collectModule?.fee?.amount?.asset?.decimals;
-  const referralFee =
-    collectModule?.referralFee ?? collectModule?.fee?.referralFee;
+  const endTimestamp = collectModule?.endTimestamp ?? collectModule?.optionalEndTimestamp;
+  const collectLimit = collectModule?.collectLimit ?? collectModule?.optionalCollectLimit;
+  const amount = collectModule?.amount?.value ?? collectModule?.fee?.amount?.value;
+  const currency = collectModule?.amount?.asset?.symbol ?? collectModule?.fee?.amount?.asset?.symbol;
+  const assetAddress = collectModule?.amount?.asset?.address ?? collectModule?.fee?.amount?.asset?.address;
+  const assetDecimals = collectModule?.amount?.asset?.decimals ?? collectModule?.fee?.amount?.asset?.decimals;
+  const referralFee = collectModule?.referralFee ?? collectModule?.fee?.referralFee;
 
-  const isRevertCollectModule =
-    collectModule?.type === CollectModules.RevertCollectModule;
+  const isRevertCollectModule = collectModule?.type === CollectModules.RevertCollectModule;
   const isMultirecipientFeeCollectModule =
     collectModule?.type === CollectModules.MultirecipientFeeCollectModule;
-  const isFreeCollectModule =
-    collectModule?.type === CollectModules.FreeCollectModule;
-  const isSimpleFreeCollectModule =
-    collectModule?.type === CollectModules.SimpleCollectModule && !amount;
+  const isFreeCollectModule = collectModule?.type === CollectModules.FreeCollectModule;
+  const isSimpleFreeCollectModule = collectModule?.type === CollectModules.SimpleCollectModule && !amount;
 
   const onCompleted = (__typename?: 'RelayError' | 'RelayerResult') => {
     if (__typename === 'RelayError') {
@@ -164,35 +135,30 @@ const CollectModule: FC<CollectModuleProps> = ({
 
   const percentageCollected = (count / parseInt(collectLimit)) * 100;
 
-  const { data: allowanceData, loading: allowanceLoading } =
-    useApprovedModuleAllowanceAmountQuery({
-      variables: {
-        request: {
-          currencies: assetAddress,
-          followModules: [],
-          collectModules: collectModule?.type,
-          referenceModules: []
-        }
-      },
-      skip: !assetAddress || !currentProfile,
-      onCompleted: ({ approvedModuleAllowanceAmount }) => {
-        setAllowed(approvedModuleAllowanceAmount[0]?.allowance !== '0x00');
+  const { data: allowanceData, loading: allowanceLoading } = useApprovedModuleAllowanceAmountQuery({
+    variables: {
+      request: {
+        currencies: assetAddress,
+        followModules: [],
+        collectModules: collectModule?.type,
+        referenceModules: []
       }
-    });
+    },
+    skip: !assetAddress || !currentProfile,
+    onCompleted: ({ approvedModuleAllowanceAmount }) => {
+      setAllowed(approvedModuleAllowanceAmount[0]?.allowance !== '0x00');
+    }
+  });
 
-  const { data: revenueData, loading: revenueLoading } =
-    usePublicationRevenueQuery({
-      variables: {
-        request: {
-          publicationId:
-            publication.__typename === 'Mirror'
-              ? publication?.mirrorOf?.id
-              : publication?.id
-        }
-      },
-      pollInterval: 5000,
-      skip: !publication?.id || isFreeCollectModule || isSimpleFreeCollectModule
-    });
+  const { data: revenueData, loading: revenueLoading } = usePublicationRevenueQuery({
+    variables: {
+      request: {
+        publicationId: publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
+      }
+    },
+    pollInterval: 5000,
+    skip: !publication?.id || isFreeCollectModule || isSimpleFreeCollectModule
+  });
 
   const { data: usdPrice } = useQuery(
     ['coingeckoData'],
@@ -201,11 +167,7 @@ const CollectModule: FC<CollectModuleProps> = ({
   );
 
   useUpdateEffect(() => {
-    setRevenue(
-      parseFloat(
-        (revenueData?.publicationRevenue?.revenue?.total?.value as any) ?? 0
-      )
-    );
+    setRevenue(parseFloat((revenueData?.publicationRevenue?.revenue?.total?.value as any) ?? 0));
   }, [revenueData]);
 
   const { data: balanceData, isLoading: balanceLoading } = useBalance({
@@ -215,9 +177,7 @@ const CollectModule: FC<CollectModuleProps> = ({
     watch: true
   });
 
-  let hasAmount = !(
-    balanceData && parseFloat(balanceData?.formatted) < parseFloat(amount)
-  );
+  let hasAmount = !(balanceData && parseFloat(balanceData?.formatted) < parseFloat(amount));
 
   const [broadcast] = useBroadcastMutation({
     onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
@@ -245,9 +205,7 @@ const CollectModule: FC<CollectModuleProps> = ({
   const createViaProxyAction = async (variables: any) => {
     const { data, errors } = await createCollectProxyAction({ variables });
 
-    if (
-      errors?.toString().includes('You have already collected this publication')
-    ) {
+    if (errors?.toString().includes('You have already collected this publication')) {
       return;
     }
 
@@ -268,9 +226,7 @@ const CollectModule: FC<CollectModuleProps> = ({
 
     try {
       setIsLoading(true);
-      const canUseProxy =
-        (isSimpleFreeCollectModule || isFreeCollectModule) &&
-        !collectModule?.followerOnly;
+      const canUseProxy = (isSimpleFreeCollectModule || isFreeCollectModule) && !collectModule?.followerOnly;
       if (IS_RELAYER_AVAILABLE && canUseProxy) {
         return await createViaProxyAction({
           request: {
@@ -283,9 +239,7 @@ const CollectModule: FC<CollectModuleProps> = ({
         variables: {
           options: { overrideSigNonce: userSigNonce },
           request: {
-            publicationId: electedMirror
-              ? electedMirror.mirrorId
-              : publication?.id
+            publicationId: electedMirror ? electedMirror.mirrorId : publication?.id
           }
         }
       });
@@ -298,9 +252,7 @@ const CollectModule: FC<CollectModuleProps> = ({
     return <Loader message={t`Loading collect`} />;
   }
 
-  const isLimitedCollectAllCollected = collectLimit
-    ? count >= parseInt(collectLimit)
-    : false;
+  const isLimitedCollectAllCollected = collectLimit ? count >= parseInt(collectLimit) : false;
   const isCollectExpired = endTimestamp
     ? new Date(endTimestamp).getTime() / 1000 < new Date().getTime() / 1000
     : false;
@@ -308,15 +260,9 @@ const CollectModule: FC<CollectModuleProps> = ({
   return (
     <>
       {Boolean(collectLimit) && (
-        <Tooltip
-          placement="top"
-          content={`${percentageCollected.toFixed(0)}% Collected`}
-        >
+        <Tooltip placement="top" content={`${percentageCollected.toFixed(0)}% Collected`}>
           <div className="h-2.5 w-full bg-gray-200 dark:bg-gray-700">
-            <div
-              className="bg-brand-500 h-2.5"
-              style={{ width: `${percentageCollected}%` }}
-            />
+            <div className="bg-brand-500 h-2.5" style={{ width: `${percentageCollected}%` }} />
           </div>
         </Tooltip>
       )}
@@ -325,29 +271,18 @@ const CollectModule: FC<CollectModuleProps> = ({
           <div className="pb-5">
             <CollectWarning
               handle={formatHandle(publication?.profile?.handle)}
-              isSuperFollow={
-                publication?.profile?.followModule?.__typename ===
-                'FeeFollowModuleSettings'
-              }
+              isSuperFollow={publication?.profile?.followModule?.__typename === 'FeeFollowModuleSettings'}
             />
           </div>
         )}
         <div className="space-y-1.5 pb-2">
           {publication?.metadata?.name && (
-            <div className="text-xl font-bold">
-              {publication?.metadata?.name}
-            </div>
+            <div className="text-xl font-bold">{publication?.metadata?.name}</div>
           )}
           {publication?.metadata?.content && (
-            <Markup className="lt-text-gray-500 line-clamp-2">
-              {publication?.metadata?.content}
-            </Markup>
+            <Markup className="lt-text-gray-500 line-clamp-2">{publication?.metadata?.content}</Markup>
           )}
-          <ReferralAlert
-            electedMirror={electedMirror}
-            mirror={publication}
-            referralFee={referralFee}
-          />
+          <ReferralAlert electedMirror={electedMirror} mirror={publication} referralFee={referralFee} />
         </div>
         {amount && (
           <div className="flex items-center space-x-1.5 py-2">
@@ -382,13 +317,7 @@ const CollectModule: FC<CollectModuleProps> = ({
                 type="button"
                 onClick={() => setShowCollectorsModal(!showCollectorsModal)}
               >
-                {humanize(count)}{' '}
-                <Plural
-                  value={count}
-                  zero="collector"
-                  one="collector"
-                  other="collectors"
-                />
+                {humanize(count)} <Plural value={count} zero="collector" one="collector" other="collectors" />
               </button>
               <Modal
                 title={t`Collected by`}
@@ -398,9 +327,7 @@ const CollectModule: FC<CollectModuleProps> = ({
               >
                 <Collectors
                   publicationId={
-                    publication.__typename === 'Mirror'
-                      ? publication?.mirrorOf?.id
-                      : publication?.id
+                    publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
                   }
                 />
               </Modal>
@@ -461,12 +388,8 @@ const CollectModule: FC<CollectModuleProps> = ({
                 <span>
                   <Trans>Sale Ends:</Trans>
                 </span>
-                <span
-                  className="font-bold text-gray-600"
-                  title={formatTime(endTimestamp)}
-                >
-                  {dayjs(endTimestamp).format('MMMM DD, YYYY')} at{' '}
-                  {dayjs(endTimestamp).format('hh:mm a')}
+                <span className="font-bold text-gray-600" title={formatTime(endTimestamp)}>
+                  {dayjs(endTimestamp).format('MMMM DD, YYYY')} at {dayjs(endTimestamp).format('hh:mm a')}
                 </span>
               </div>
             </div>
@@ -489,14 +412,10 @@ const CollectModule: FC<CollectModuleProps> = ({
               </div>
             </div>
           )}
-          {isMultirecipientFeeCollectModule && (
-            <Splits recipients={collectModule?.recipients} />
-          )}
+          {isMultirecipientFeeCollectModule && <Splits recipients={collectModule?.recipients} />}
         </div>
         <div className="flex items-center space-x-2">
-          {currentProfile &&
-          (!hasCollectedByMe ||
-            (!isFreeCollectModule && !isSimpleFreeCollectModule)) ? (
+          {currentProfile && (!hasCollectedByMe || (!isFreeCollectModule && !isSimpleFreeCollectModule)) ? (
             allowanceLoading || balanceLoading ? (
               <div className="shimmer mt-5 h-[34px] w-28 rounded-lg" />
             ) : allowed ? (
@@ -506,31 +425,19 @@ const CollectModule: FC<CollectModuleProps> = ({
                     className="mt-5"
                     onClick={createCollect}
                     disabled={isLoading}
-                    icon={
-                      isLoading ? (
-                        <Spinner size="xs" />
-                      ) : (
-                        <CollectionIcon className="h-4 w-4" />
-                      )
-                    }
+                    icon={isLoading ? <Spinner size="xs" /> : <CollectionIcon className="h-4 w-4" />}
                   >
                     <Trans>Collect now</Trans>
                   </Button>
                 ) : null
               ) : (
-                <WarningMessage
-                  className="mt-5 w-full"
-                  message={<Uniswap module={collectModule} />}
-                />
+                <WarningMessage className="mt-5 w-full" message={<Uniswap module={collectModule} />} />
               )
             ) : (
               <span className="mt-5">
                 <AllowanceButton
                   title="Allow collect module"
-                  module={
-                    allowanceData
-                      ?.approvedModuleAllowanceAmount[0] as ApprovedAllowanceAmount
-                  }
+                  module={allowanceData?.approvedModuleAllowanceAmount[0] as ApprovedAllowanceAmount}
                   allowed={allowed}
                   setAllowed={setAllowed}
                 />

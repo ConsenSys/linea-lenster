@@ -40,13 +40,9 @@ const useNft = ({
     return response.data;
   };
 
-  const { data, error } = useQuery(
-    ['nftData'],
-    () => loadContractDetails().then((res) => res),
-    {
-      enabled
-    }
-  );
+  const { data, error } = useQuery(['nftData'], () => loadContractDetails().then((res) => res), {
+    enabled
+  });
 
   return { data, error };
 };

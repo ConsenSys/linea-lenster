@@ -11,11 +11,7 @@ interface ReferralAlertProps {
   electedMirror?: ElectedMirror;
 }
 
-const ReferralAlert: FC<ReferralAlertProps> = ({
-  mirror,
-  electedMirror,
-  referralFee = 0
-}) => {
+const ReferralAlert: FC<ReferralAlertProps> = ({ mirror, electedMirror, referralFee = 0 }) => {
   if ((mirror.__typename !== 'Mirror' && !electedMirror) || referralFee === 0) {
     return null;
   }

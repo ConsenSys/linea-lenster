@@ -1,5 +1,5 @@
 import { createPublicClient, http } from 'viem';
-import { polygon, polygonMumbai } from 'viem/chains';
+import { lineaTestnet } from 'viem/chains';
 
 /**
  * Create a public client for Polygon and Polygon Mumbai
@@ -8,7 +8,7 @@ import { polygon, polygonMumbai } from 'viem/chains';
  */
 const publicClient = (isMainnet: boolean): any => {
   return createPublicClient({
-    chain: isMainnet ? polygon : polygonMumbai,
+    chain: lineaTestnet,
     transport: http()
   });
 };

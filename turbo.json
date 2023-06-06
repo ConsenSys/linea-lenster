@@ -2,19 +2,46 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     },
-    "lint": { "outputs": [] },
-    "lint:fix": { "outputs": [] },
-    "prettier": { "outputs": [] },
-    "prettier:fix": { "outputs": [] },
-    "typecheck": { "outputs": [] },
-    "codegen": { "outputs": [] },
-    "extract": { "outputs": [] },
-    "worker:deploy": { "outputs": [] },
-    "dev": { "cache": false },
-    "start": { "cache": false },
-    "test:dev": { "cache": false },
-    "test:nightly": { "cache": false }
+    "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
+      "outputs": []
+    },
+    "prettier": {
+      "outputs": []
+    },
+    "prettier:fix": {
+      "outputs": []
+    },
+    "typecheck": {
+      "outputs": []
+    },
+    "codegen": {
+      "outputs": []
+    },
+    "extract": {
+      "outputs": []
+    },
+    "worker:deploy": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "start": {
+      "cache": false
+    },
+    "test:dev": {
+      "cache": false
+    },
+    "test:nightly": {
+      "cache": false
+    }
   }
 }

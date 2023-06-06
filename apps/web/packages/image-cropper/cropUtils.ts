@@ -14,27 +14,15 @@ const restrictPositionCoord = (
   return restrictValue(position, -maxPosition, maxPosition);
 };
 
-export const restrictPosition = (
-  position: Point,
-  mediaSize: Size,
-  cropSize: Size,
-  zoom: number
-): Point => {
+export const restrictPosition = (position: Point, mediaSize: Size, cropSize: Size, zoom: number): Point => {
   return {
     x: restrictPositionCoord(position.x, mediaSize.width, cropSize.width, zoom),
-    y: restrictPositionCoord(
-      position.y,
-      mediaSize.height,
-      cropSize.height,
-      zoom
-    )
+    y: restrictPositionCoord(position.y, mediaSize.height, cropSize.height, zoom)
   };
 };
 
 export const getDistanceBetweenPoints = (pointA: Point, pointB: Point) => {
-  return Math.sqrt(
-    Math.pow(pointA.y - pointB.y, 2) + Math.pow(pointA.x - pointB.x, 2)
-  );
+  return Math.sqrt(Math.pow(pointA.y - pointB.y, 2) + Math.pow(pointA.x - pointB.x, 2));
 };
 
 export const computeCroppedArea = (
@@ -44,17 +32,14 @@ export const computeCroppedArea = (
   zoom: number
 ): { croppedAreaPixels: Area } => {
   const mediaScale = mediaSize.naturalWidth / mediaSize.width;
-  const fitWidth =
-    mediaSize.width / mediaSize.height < cropSize.width / cropSize.height;
+  const fitWidth = mediaSize.width / mediaSize.height < cropSize.width / cropSize.height;
   const cropSizePixels = fitWidth
     ? {
         width: mediaSize.naturalWidth / zoom,
-        height:
-          (mediaSize.naturalWidth * (cropSize.height / cropSize.width)) / zoom
+        height: (mediaSize.naturalWidth * (cropSize.height / cropSize.width)) / zoom
       }
     : {
-        width:
-          (mediaSize.naturalHeight * (cropSize.width / cropSize.height)) / zoom,
+        width: (mediaSize.naturalHeight * (cropSize.width / cropSize.height)) / zoom,
         height: mediaSize.naturalHeight / zoom
       };
 
@@ -62,14 +47,8 @@ export const computeCroppedArea = (
   const cropAreaCenterPixelY = (-cropPosition.y * mediaScale) / zoom;
   const croppedAreaPixels = {
     ...cropSizePixels,
-    x:
-      cropAreaCenterPixelX -
-      cropSizePixels.width / 2 +
-      mediaSize.naturalWidth / 2,
-    y:
-      cropAreaCenterPixelY -
-      cropSizePixels.height / 2 +
-      mediaSize.naturalHeight / 2
+    x: cropAreaCenterPixelX - cropSizePixels.width / 2 + mediaSize.naturalWidth / 2,
+    y: cropAreaCenterPixelY - cropSizePixels.height / 2 + mediaSize.naturalHeight / 2
   };
   return { croppedAreaPixels };
 };
@@ -104,12 +83,7 @@ export const getCroppedImg = async (
   canvas.height = image.height;
   ctx.drawImage(image, 0, 0);
 
-  const data = ctx.getImageData(
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height
-  );
+  const data = ctx.getImageData(pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height);
 
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;

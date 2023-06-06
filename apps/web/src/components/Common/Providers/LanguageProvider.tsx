@@ -20,9 +20,7 @@ const getLocale = (): string => {
 };
 
 const dynamicActivate = async (locale: string) => {
-  const { messages } = await import(
-    `@lingui/loader!../../../locales/${locale}/messages.po`
-  );
+  const { messages } = await import(`@lingui/loader!../../../locales/${locale}/messages.po`);
   i18n.load(locale, messages);
   i18n.activate(locale);
   dayjs.locale(locale);

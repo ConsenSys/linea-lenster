@@ -59,8 +59,7 @@ const NoGallery: FC<NoGalleryProps> = ({ profile }) => {
         {!isOwner ? (
           <>
             <h5 className="mb-2 text-xl">
-              {sanitizeDisplayName(profile.name) ?? profile.handle} hasn't setup
-              gallery yet!
+              {sanitizeDisplayName(profile.name) ?? profile.handle} hasn't setup gallery yet!
             </h5>
             <p className="text-sm opacity-60">Check again later</p>
           </>
@@ -70,9 +69,7 @@ const NoGallery: FC<NoGalleryProps> = ({ profile }) => {
               <Trans>Welcome to your gallery</Trans>
             </h5>
             <p className="text-sm opacity-60">
-              <Trans>
-                Create a curated space for your digital collectibles
-              </Trans>
+              <Trans>Create a curated space for your digital collectibles</Trans>
             </p>
           </>
         )}

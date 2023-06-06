@@ -2,11 +2,7 @@ import SwitchNetwork from '@components/Shared/SwitchNetwork';
 import { KeyIcon } from '@heroicons/react/outline';
 import { XCircleIcon } from '@heroicons/react/solid';
 import { Errors } from '@lenster/data';
-import {
-  useAuthenticateMutation,
-  useChallengeLazyQuery,
-  useUserProfilesLazyQuery
-} from '@lenster/lens';
+import { useAuthenticateMutation, useChallengeLazyQuery, useUserProfilesLazyQuery } from '@lenster/lens';
 import getWalletDetails from '@lenster/lib/getWalletDetails';
 import { Button, Spinner } from '@lenster/ui';
 import errorToast from '@lib/errorToast';
@@ -22,23 +18,14 @@ import { useAuthStore } from 'src/store/auth';
 import { AUTH } from 'src/tracking';
 import { useIsMounted } from 'usehooks-ts';
 import type { Connector } from 'wagmi';
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useNetwork,
-  useSignMessage
-} from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from 'wagmi';
 
 interface WalletSelectorProps {
   setHasConnected: Dispatch<boolean>;
   setHasProfile: Dispatch<boolean>;
 }
 
-const WalletSelector: FC<WalletSelectorProps> = ({
-  setHasConnected,
-  setHasProfile
-}) => {
+const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfile }) => {
   const setProfiles = useAppStore((state) => state.setProfiles);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
@@ -59,8 +46,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
   const [loadChallenge, { error: errorChallenge }] = useChallengeLazyQuery({
     fetchPolicy: 'no-cache'
   });
-  const [authenticate, { error: errorAuthenticate }] =
-    useAuthenticateMutation();
+  const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
   const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery();
 
   const onConnect = async (connector: Connector) => {
@@ -100,10 +86,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
         variables: { request: { address, signature } }
       });
       localStorage.setItem('accessToken', auth.data?.authenticate.accessToken);
-      localStorage.setItem(
-        'refreshToken',
-        auth.data?.authenticate.refreshToken
-      );
+      localStorage.setItem('refreshToken', auth.data?.authenticate.refreshToken);
 
       // Get authed profiles
       const { data: profilesData } = await getProfiles({
@@ -117,9 +100,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
         const profiles: any = profilesData?.profiles?.items
           ?.slice()
           ?.sort((a, b) => Number(a.id) - Number(b.id))
-          ?.sort((a, b) =>
-            a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1
-          );
+          ?.sort((a, b) => (a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1));
         const currentProfile = profiles[0];
         setProfiles(profiles);
         setCurrentProfile(currentProfile);
@@ -141,9 +122,9 @@ const WalletSelector: FC<WalletSelectorProps> = ({
       <div className="space-y-2.5">
         {chain?.id === CHAIN_ID ? (
           <Button
-            disabled={loading}
+            disabled={isLoading}
             className="rounded-full"
-            icon={loading && <Spinner className="mr-0.5" size="xs" />}
+            icon={isLoading && <Spinner className="mr-0.5" size="xs" />}
             onClick={handleSign}
           >
             <Trans>Sign-In with Lens</Trans>
@@ -180,17 +161,12 @@ const WalletSelector: FC<WalletSelectorProps> = ({
             key={connector.id}
             className={clsx(
               {
-                'hover:bg-brand-500':
-                  connector.id !== activeConnector?.id
+                'hover:bg-brand-500': connector.id !== activeConnector?.id
               },
               'flex w-full dark:text-darker hitems-center justify-between overflow-hidden rounded-full bg-white px-3 py-2 outline-none'
             )}
             onClick={() => onConnect(connector)}
-            disabled={
-              isMounted()
-                ? !connector.ready || connector.id === activeConnector?.id
-                : false
-            }
+            disabled={isMounted() ? !connector.ready || connector.id === activeConnector?.id : false}
           >
             <span>
               {isMounted()

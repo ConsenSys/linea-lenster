@@ -1,9 +1,9 @@
 query PublicationRevenue($request: PublicationRevenueQueryRequest!) {
-  publicationRevenue(request: $request) {
-    revenue {
-      total {
-        value
-      }
+    publicationRevenue(request: $request) {
+        revenue {
+            total {
+                value
+            }
+        }
     }
-  }
 }
