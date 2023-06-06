@@ -24,8 +24,10 @@ contract MockProfileCreationProxy {
     }
 
     function proxyCreateProfile(DataTypes.CreateProfileData memory vars) external {
-        uint256  balanceLens = LENS_HUB.balanceOf(msg.sender);
-        require(balanceLens == 0, "Already has a Lens handle");
+        require(tx.origin == msg.sender, 'Please refrain from creating multiple smart contracts that continuously request a handle');
+
+        uint256 balanceLens = LENS_HUB.balanceOf(msg.sender);
+        require(balanceLens == 0, 'Already has a Lens handle');
 
         uint256 balanceEns = LINEA_RESOLVER.balanceOf(msg.sender);
         require(balanceEns > 0, "Doesn't have an ENS token");
