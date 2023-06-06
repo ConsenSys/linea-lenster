@@ -3,7 +3,10 @@ import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 import { forwardRef } from 'react';
 
 export interface ButtonProps
-  extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'warning' | 'super' | 'danger';
   outline?: boolean;
@@ -13,15 +16,23 @@ export interface ButtonProps
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { className = '', size = 'md', variant = 'primary', outline, icon, children, ...rest },
-  ref
+  {
+    className = '',
+    size = 'md',
+    variant = 'primary',
+    outline,
+    icon,
+    children,
+    ...rest
+  },
+  ref,
 ) {
   return (
     <button
       ref={ref}
       className={clsx(
         {
-          'bg-brand-500 text-darker rounded-full border-none text-sm font-medium uppercase hover:bg-white':
+          'bg-brand-500 text-darker rounded-full border-none border text-white':
             !outline && variant === 'primary',
           'border border-gray-600 bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-400':
             !outline && variant === 'secondary',
@@ -44,10 +55,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
           'px-3 py-0.5 text-sm': size === 'sm',
           'px-3 py-1': size === 'md',
           'px-4 py-1.5': size === 'lg',
-          'inline-flex items-center space-x-1.5': icon && children
+          'inline-flex items-center space-x-1.5': icon && children,
         },
         className,
-        'font-medium shadow-sm outline-none disabled:opacity-50'
+        'font-medium shadow-sm outline-none disabled:opacity-50',
       )}
       type={rest.type}
       {...rest}

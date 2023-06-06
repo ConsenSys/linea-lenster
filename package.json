@@ -1,33 +1,38 @@
 {
   "name": "lineaster",
-  "version": "1.0.8-beta",
+  "version": "1.1.0-beta",
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
     "build": "turbo run build --parallel",
+    "codegen": "turbo run codegen --parallel",
     "dev": "turbo run dev --parallel",
-    "start": "turbo run start --parallel",
+    "i18n:extract": "turbo run extract",
+    "preinstall": "npx only-allow pnpm",
     "lint": "turbo run lint --parallel",
     "lint:fix": "turbo run lint:fix --parallel",
-    "typecheck": "turbo run typecheck --parallel",
-    "codegen": "turbo run codegen --parallel",
-    "i18n:extract": "turbo run extract",
-    "workers:deploy": "turbo run worker:deploy --parallel",
-    "prettier": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "prettier:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
+    "prettier": "turbo run prettier --parallel",
+    "prettier:fix": "turbo run prettier:fix --parallel",
+    "start": "turbo run start --parallel",
     "test:dev": "turbo run test:dev",
-    "test:e2e": "start-server-and-test start '4783|4784|8083' test:dev",
-    "test:nightly": "turbo run test:nightly"
+    "test:e2e": "start-server-and-test start '4783|4784|8083|8085|8087' test:dev",
+    "test:nightly": "turbo run test:nightly",
+    "typecheck": "turbo run typecheck --parallel",
+    "workers:deploy": "turbo run worker:deploy --parallel"
+  },
+  "eslintConfig": {
+    "root": true
   },
   "devDependencies": {
     "husky": "^8.0.3",
-    "prettier": "^2.8.7",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "start-server-and-test": "^2.0.0",
-    "turbo": "canary"
+    "turbo": "^1.10.1"
   },
+  "packageManager": "pnpm@8.5.0",
   "engines": {
     "node": ">=18.0.0"
-  },
-  "packageManager": "pnpm@8.2.0"
+  }
 }

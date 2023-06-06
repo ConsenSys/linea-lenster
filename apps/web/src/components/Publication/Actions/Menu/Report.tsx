@@ -1,8 +1,8 @@
 import { Menu } from '@headlessui/react';
 import { ShieldExclamationIcon } from '@heroicons/react/outline';
+import type { Publication } from '@lenster/lens';
+import stopEventPropagation from '@lenster/lib/stopEventPropagation';
 import clsx from 'clsx';
-import type { Publication } from 'lens';
-import { stopEventPropagation } from 'lib/stopEventPropagation';
 import type { FC } from 'react';
 import { useGlobalModalStateStore } from 'src/store/modals';
 
@@ -11,7 +11,9 @@ interface ReportProps {
 }
 
 const Report: FC<ReportProps> = ({ publication }) => {
-  const setShowReportModal = useGlobalModalStateStore((state) => state.setShowReportModal);
+  const setShowReportModal = useGlobalModalStateStore(
+    (state) => state.setShowReportModal
+  );
 
   return (
     <Menu.Item

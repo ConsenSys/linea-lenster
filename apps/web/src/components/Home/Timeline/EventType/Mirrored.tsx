@@ -1,7 +1,7 @@
 import Profiles from '@components/Shared/Profiles';
 import { SwitchHorizontalIcon } from '@heroicons/react/outline';
+import type { MirrorEvent } from '@lenster/lens';
 import { t } from '@lingui/macro';
-import type { MirrorEvent } from 'lens';
 import type { FC } from 'react';
 
 interface MirroredProps {
@@ -12,7 +12,8 @@ const Mirrored: FC<MirroredProps> = ({ mirrors }) => {
   const getMirroredProfiles = () => {
     let profiles = mirrors.map((event) => event.profile);
     profiles = profiles.filter(
-      (profile, index, self) => index === self.findIndex((t) => t.id === profile.id)
+      (profile, index, self) =>
+        index === self.findIndex((t) => t.id === profile.id)
     );
     return profiles;
   };

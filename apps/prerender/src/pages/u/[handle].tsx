@@ -1,7 +1,11 @@
 import Profile from '@components/Profile';
-import { HANDLE_SUFFIX, LENSPROTOCOL_HANDLE } from 'data/constants';
-import { CustomFiltersTypes, ProfileDocument, ProfileFeedDocument } from 'lens';
-import { nodeClient } from 'lens/apollo';
+import { HANDLE_SUFFIX, LENSPROTOCOL_HANDLE } from '@lenster/data/constants';
+import {
+  CustomFiltersTypes,
+  ProfileDocument,
+  ProfileFeedDocument
+} from '@lenster/lens';
+import { nodeClient } from '@lenster/lens/apollo';
 import type { GetServerSidePropsContext } from 'next';
 
 export const config = {
@@ -24,7 +28,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (handle.includes(HANDLE_SUFFIX)) {
     processedHandle = handle;
   } else {
-    processedHandle = handle === LENSPROTOCOL_HANDLE ? handle : handle.concat(HANDLE_SUFFIX);
+    processedHandle =
+      handle === LENSPROTOCOL_HANDLE ? handle : handle.concat(HANDLE_SUFFIX);
   }
   const { data: profileData } = await nodeClient.query({
     query: ProfileDocument,
@@ -38,14 +43,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { data: profilePublicationsData } = await nodeClient.query({
       query: ProfileFeedDocument,
       variables: {
-        request: { profileId, customFilters: [CustomFiltersTypes.Gardeners], limit: 30 },
+        request: {
+          profileId,
+          customFilters: [CustomFiltersTypes.Gardeners],
+          limit: 30
+        },
         reactionRequest,
         profileId
       }
     });
 
     return {
-      props: { profile: profileData.profile, publications: profilePublicationsData.publications?.items }
+      props: {
+        profile: profileData.profile,
+        publications: profilePublicationsData.publications?.items
+      }
     };
   }
 

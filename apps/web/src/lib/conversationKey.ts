@@ -1,4 +1,4 @@
-import { XMTP_PREFIX } from 'data/constants';
+import { XMTP_PREFIX } from '@lenster/data/constants';
 
 const CONVERSATION_KEY_RE = /^(.*)\/lens\.dev\/dm\/(.*)-(.*)$/;
 
@@ -9,8 +9,13 @@ const CONVERSATION_KEY_RE = /^(.*)\/lens\.dev\/dm\/(.*)-(.*)$/;
  * @param conversationId The conversation id
  * @returns The conversation key
  */
-export const buildConversationKey = (peerAddress: string, conversationId: string): string =>
-  `${peerAddress.toLowerCase()}/${conversationId}`;
+export const buildConversationKey = (
+  peerAddress: string,
+  conversationId: string
+): string =>
+  conversationId
+    ? `${peerAddress.toLowerCase()}/${conversationId}`
+    : peerAddress.toLowerCase();
 
 /**
  * Parses a conversation key into its peer address, members, and conversation id
@@ -20,10 +25,18 @@ export const buildConversationKey = (peerAddress: string, conversationId: string
  */
 export const parseConversationKey = (
   conversationKey: string
-): { peerAddress: string; members: string[]; conversationId: string } | null => {
+): {
+  peerAddress: string;
+  members: string[];
+  conversationId?: string;
+} | null => {
   const matches = conversationKey.match(CONVERSATION_KEY_RE);
+
   if (!matches || matches.length !== 4) {
-    return null;
+    return {
+      peerAddress: conversationKey,
+      members: []
+    };
   }
 
   const [, peerAddress, memberA, memberB] = Array.from(matches);

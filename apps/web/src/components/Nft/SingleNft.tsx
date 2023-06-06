@@ -1,10 +1,11 @@
-import { IS_RARIBLE_AVAILABLE, RARIBLE_URL, STATIC_IMAGES_URL, ZONIC_URL } from 'data/constants';
-import type { Nft } from 'lens';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
+import { IS_RARIBLE_AVAILABLE, RARIBLE_URL, STATIC_IMAGES_URL, ZONIC_URL } from '@lenster/data/constants';
+import type { Nft } from '@lenster/lens';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
+import { Card } from '@lenster/ui';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { CHAIN_ID } from 'src/constants';
-import { Card } from 'ui';
 
 import type { NftLinea } from '../../types';
 
@@ -17,8 +18,9 @@ const SingleNft: FC<SingleNftProps> = ({ nft, linkToDetail = true }) => {
   const nftUrl = useMemo(() => {
     if (linkToDetail) {
       if (IS_RARIBLE_AVAILABLE) {
-        return `${RARIBLE_URL}/token/${nft.chainId === CHAIN_ID ? 'linea/' : ''}${nft.contractAddress}:${
-          nft.tokenId
+        return `${RARIBLE_URL}/token/${nft.chainId === CHAIN_ID ? 'linea/' : ''}${
+        nft.contractAddress
+          }:${nft.tokenId
         }`.toLowerCase();
       } else {
         return `${ZONIC_URL}/asset/linea_goerli/${nft.contractAddress}/${nft.tokenId}`.toLowerCase();
@@ -42,11 +44,15 @@ const SingleNft: FC<SingleNftProps> = ({ nft, linkToDetail = true }) => {
         />
       </a>
       <div className="space-y-1 p-5">
-        {nft.collectionName && <div className="lt-text-gray-500 truncate text-sm">{nft.collectionName}</div>}
+        {nft.collectionName && (
+          <div className="lt-text-gray-500 truncate text-sm">
+            {nft.collectionName}
+          </div>
+        )}
         <div className="truncate">
-          <a className="font-bold" href={nftUrl} target="_blank" rel="noreferrer noopener">
+          <Link className="font-bold" href={nftUrl} target="_blank" rel="noreferrer noopener">
             {nft.name ? nft.name : `#${nft.tokenId}`}
-          </a>
+          </Link>
         </div>
       </div>
     </Card>

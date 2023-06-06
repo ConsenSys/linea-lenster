@@ -1,29 +1,29 @@
 mutation CreateSetProfileMetadataTypedData(
-  $options: TypedDataOptions
-  $request: CreatePublicSetProfileMetadataURIRequest!
+    $options: TypedDataOptions
+    $request: CreatePublicSetProfileMetadataURIRequest!
 ) {
-  createSetProfileMetadataTypedData(options: $options, request: $request) {
-    id
-    expiresAt
-    typedData {
-      types {
-        SetProfileMetadataURIWithSig {
-          name
-          type
+    createSetProfileMetadataTypedData(options: $options, request: $request) {
+        id
+        expiresAt
+        typedData {
+            types {
+                SetProfileMetadataURIWithSig {
+                    name
+                    type
+                }
+            }
+            domain {
+                name
+                chainId
+                version
+                verifyingContract
+            }
+            value {
+                nonce
+                deadline
+                profileId
+                metadata
+            }
         }
-      }
-      domain {
-        name
-        chainId
-        version
-        verifyingContract
-      }
-      value {
-        nonce
-        deadline
-        profileId
-        metadata
-      }
     }
-  }
 }

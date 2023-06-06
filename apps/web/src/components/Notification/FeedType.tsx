@@ -1,10 +1,16 @@
-import { AtSymbolIcon, BellIcon, ChatAlt2Icon, CollectionIcon, HeartIcon } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
+import {
+  AtSymbolIcon,
+  BellIcon,
+  ChatAlt2Icon,
+  CollectionIcon,
+  HeartIcon
+} from '@heroicons/react/outline';
+import { TabButton } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import type { Dispatch, FC } from 'react';
 import { NotificationType } from 'src/enums';
 import { NOTIFICATION } from 'src/tracking';
-import { TabButton } from 'ui';
 
 interface FeedTypeProps {
   setFeedType: Dispatch<string>;
@@ -14,7 +20,7 @@ interface FeedTypeProps {
 const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
   const switchTab = (type: string) => {
     setFeedType(type);
-    Mixpanel.track(NOTIFICATION.SWITCH_NOTIFICATION_TAB, {
+    Leafwatch.track(NOTIFICATION.SWITCH_NOTIFICATION_TAB, {
       notification_type: type.toLowerCase()
     });
   };

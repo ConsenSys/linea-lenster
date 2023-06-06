@@ -1,14 +1,14 @@
 import TrendingTagShimmer from '@components/Shared/Shimmer/TrendingTagShimmer';
 import { TrendingUpIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import { t, Trans } from '@lingui/macro';
-import type { TagResult } from 'lens';
-import { TagSortCriteria, useTrendingQuery } from 'lens';
-import nFormatter from 'lib/nFormatter';
+import type { TagResult } from '@lenster/lens';
+import { TagSortCriteria, useTrendingQuery } from '@lenster/lens';
+import nFormatter from '@lenster/lib/nFormatter';
+import { Card, ErrorMessage } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { Plural, t, Trans } from '@lingui/macro';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { MISCELLANEOUS } from 'src/tracking';
-import { Card, ErrorMessage } from 'ui';
 
 const Title = () => {
   return (
@@ -53,14 +53,20 @@ const Trending: FC = () => {
               <Link
                 href={`/search?q=${tag?.tag}&type=pubs`}
                 onClick={() =>
-                  Mixpanel.track(MISCELLANEOUS.OPEN_TRENDING_TAG, {
+                  Leafwatch.track(MISCELLANEOUS.OPEN_TRENDING_TAG, {
                     trending_tag: tag?.tag
                   })
                 }
               >
                 <div className="font-bold">{tag?.tag}</div>
                 <div className="lt-text-gray-500 text-[12px]">
-                  <Trans>{nFormatter(tag?.total)} Publications</Trans>
+                  {nFormatter(tag?.total)}{' '}
+                  <Plural
+                    value={tag?.total}
+                    zero="Publication"
+                    one="Publication"
+                    other="Publications"
+                  />
                 </div>
               </Link>
             </div>

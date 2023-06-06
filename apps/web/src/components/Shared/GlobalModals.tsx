@@ -1,10 +1,14 @@
 import Report from '@components/Shared/Modal/Report';
-import { ArrowCircleRightIcon, EmojiHappyIcon, ShieldCheckIcon } from '@heroicons/react/outline';
+import {
+  ArrowCircleRightIcon,
+  EmojiHappyIcon,
+  ShieldCheckIcon
+} from '@heroicons/react/outline';
+import { Modal } from '@lenster/ui';
 import { t } from '@lingui/macro';
 import type { FC } from 'react';
 import { useAuthStore } from 'src/store/auth';
 import { useGlobalModalStateStore } from 'src/store/modals';
-import { Modal } from 'ui';
 
 import Login from './Login';
 import Status from './Status';
@@ -12,13 +16,27 @@ import SwitchProfiles from './SwitchProfiles';
 
 const GlobalModals: FC = () => {
   // Report modal state
-  const showReportModal = useGlobalModalStateStore((state) => state.showReportModal);
-  const reportingPublication = useGlobalModalStateStore((state) => state.reportingPublication);
-  const setShowReportModal = useGlobalModalStateStore((state) => state.setShowReportModal);
-  const showStatusModal = useGlobalModalStateStore((state) => state.showStatusModal);
-  const setShowStatusModal = useGlobalModalStateStore((state) => state.setShowStatusModal);
-  const showProfileSwitchModal = useGlobalModalStateStore((state) => state.showProfileSwitchModal);
-  const setShowProfileSwitchModal = useGlobalModalStateStore((state) => state.setShowProfileSwitchModal);
+  const showReportModal = useGlobalModalStateStore(
+    (state) => state.showReportModal
+  );
+  const reportingPublication = useGlobalModalStateStore(
+    (state) => state.reportingPublication
+  );
+  const setShowReportModal = useGlobalModalStateStore(
+    (state) => state.setShowReportModal
+  );
+  const showStatusModal = useGlobalModalStateStore(
+    (state) => state.showStatusModal
+  );
+  const setShowStatusModal = useGlobalModalStateStore(
+    (state) => state.setShowStatusModal
+  );
+  const showProfileSwitchModal = useGlobalModalStateStore(
+    (state) => state.showProfileSwitchModal
+  );
+  const setShowProfileSwitchModal = useGlobalModalStateStore(
+    (state) => state.setShowProfileSwitchModal
+  );
   const showAuthModal = useAuthStore((state) => state.showAuthModal);
   const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
 

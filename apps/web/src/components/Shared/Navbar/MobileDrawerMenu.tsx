@@ -1,15 +1,15 @@
 import { XIcon } from '@heroicons/react/outline';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import isGardener from '@lenster/lib/isGardener';
+import isStaff from '@lenster/lib/isStaff';
+import { Image } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import isGardener from 'lib/isGardener';
-import isStaff from 'lib/isStaff';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
-import { Image } from 'ui';
 
 import Slug from '../Slug';
 import AppVersion from './NavItems/AppVersion';
@@ -27,7 +27,9 @@ import YourProfile from './NavItems/YourProfile';
 const MobileDrawerMenu: FC = () => {
   const profiles = useAppStore((state) => state.profiles);
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowMobileDrawer = useGlobalModalStateStore((state) => state.setShowMobileDrawer);
+  const setShowMobileDrawer = useGlobalModalStateStore(
+    (state) => state.setShowMobileDrawer
+  );
 
   const closeDrawer = () => {
     setShowMobileDrawer(false);
@@ -46,9 +48,6 @@ const MobileDrawerMenu: FC = () => {
         >
           <div className="flex w-full space-x-1.5">
             <Image
-              onError={({ currentTarget }) => {
-                currentTarget.src = getAvatar(currentProfile, false);
-              }}
               src={getAvatar(currentProfile as Profile)}
               className="h-12 w-12 cursor-pointer rounded-full border dark:border-gray-700"
               alt={formatHandle(currentProfile?.handle)}
@@ -77,7 +76,10 @@ const MobileDrawerMenu: FC = () => {
         <div className="bg-white dark:bg-gray-900">
           <div className="divider" />
           <div>
-            <Link href={`/u/${formatHandle(currentProfile?.handle)}`} onClick={closeDrawer}>
+            <Link
+              href={`/u/${formatHandle(currentProfile?.handle)}`}
+              onClick={closeDrawer}
+            >
               <YourProfile className="text-dark px-4 py-3 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800" />
             </Link>
             <Link href={'/settings'} onClick={closeDrawer}>
@@ -114,7 +116,11 @@ const MobileDrawerMenu: FC = () => {
           <div className="divider" />
           {isGardener(currentProfile?.id) && (
             <>
-              <div onClick={closeDrawer} className="hover:bg-gray-200 dark:hover:bg-gray-800">
+              <div
+                onClick={closeDrawer}
+                className="hover:bg-gray-200 dark:hover:bg-gray-800"
+                aria-hidden="true"
+              >
                 <ModMode className="text-dark py-3 dark:text-white" />
               </div>
               <div className="divider" />
@@ -122,7 +128,11 @@ const MobileDrawerMenu: FC = () => {
           )}
           {isStaff(currentProfile?.id) && (
             <>
-              <div onClick={closeDrawer} className="hover:bg-gray-200 dark:hover:bg-gray-800">
+              <div
+                onClick={closeDrawer}
+                className="hover:bg-gray-200 dark:hover:bg-gray-800"
+                aria-hidden="true"
+              >
                 <StaffMode className="text-dark py-3 dark:text-white" />
               </div>
               <div className="divider" />

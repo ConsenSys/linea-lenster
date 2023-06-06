@@ -2,7 +2,6 @@ import { SwitchHorizontalIcon } from '@heroicons/react/outline';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
 import type { FC } from 'react';
-import React from 'react';
 import { useGlobalModalStateStore } from 'src/store/modals';
 
 interface SwitchProfileProps {
@@ -10,7 +9,9 @@ interface SwitchProfileProps {
 }
 
 const SwitchProfile: FC<SwitchProfileProps> = ({ className = '' }) => {
-  const setShowProfileSwitchModal = useGlobalModalStateStore((state) => state.setShowProfileSwitchModal);
+  const setShowProfileSwitchModal = useGlobalModalStateStore(
+    (state) => state.setShowProfileSwitchModal
+  );
 
   return (
     <button

@@ -1,16 +1,14 @@
 query UserProfiles($ownedBy: [EthereumAddress!]) {
-  profiles(request: { ownedBy: $ownedBy }) {
-    items {
-      ...ProfileFields
-      interests
-      isDefault
-      dispatcher {
-        address
-        canUseRelay
-      }
+    profiles(request: { ownedBy: $ownedBy }) {
+        items {
+            ...ProfileFields
+            interests
+            isDefault
+            dispatcher {
+                address
+                canUseRelay
+                sponsor
+            }
+        }
     }
-  }
-  userSigNonces {
-    lensHubOnChainSigNonce
-  }
 }

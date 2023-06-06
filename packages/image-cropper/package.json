@@ -1,24 +1,26 @@
 {
-  "name": "image-cropper",
-  "version": "1.0.0",
-  "license": "MIT",
+  "name": "@lenster/image-cropper",
+  "version": "0.0.0",
+  "private": true,
+  "license": "GPL-3.0",
   "scripts": {
-    "typecheck": "tsc --pretty --noEmit",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --fix --ext .ts"
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --fix --ext .ts,.tsx",
+    "prettier": "prettier --check \"**/*.{js,ts,tsx,md}\"  --cache",
+    "prettier:fix": "prettier --write \"**/*.{js,ts,tsx,md}\"  --cache",
+    "typecheck": "tsc --pretty"
   },
   "dependencies": {
     "clsx": "^1.2.1",
     "normalize-wheel": "^1.0.1",
-    "rc-slider": "^10.1.1",
+    "rc-slider": "^10.2.0",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
+    "@lenster/config": "workspace:*",
+    "@types/node": "^20.2.5",
     "@types/normalize-wheel": "^1.0.1",
-    "@types/react": "^18.0.35",
-    "eslint-config-weblint": "workspace:*",
-    "tsconfig": "workspace:*",
-    "typescript": "^5.0.4"
+    "@types/react": "^18.2.8",
+    "typescript": "^5.1.3"
   }
 }

@@ -1,4 +1,4 @@
-import { ADDRESS_REGEX } from 'data/constants';
+import { Regex } from '@lenster/data';
 
 /**
  * Format the given Ethereum address by displaying only the first and last few characters.
@@ -12,8 +12,10 @@ const formatAddress = (address: string | null, slice = 4): string => {
     return '';
   }
 
-  if (address.match(ADDRESS_REGEX)) {
-    return `${address.slice(0, slice + 2)}…${address.slice(address.length - slice)}`;
+  if (address.match(Regex.ethereumAddress)) {
+    return `${address.slice(0, slice + 2)}…${address.slice(
+      address.length - slice
+    )}`;
   }
 
   return address;

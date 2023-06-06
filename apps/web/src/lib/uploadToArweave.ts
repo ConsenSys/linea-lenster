@@ -1,6 +1,6 @@
+import { Errors } from '@lenster/data';
+import { METADATA_WORKER_URL } from '@lenster/data/constants';
 import axios from 'axios';
-import { METADATA_WORKER_URL } from 'data/constants';
-import Errors from 'data/errors';
 import toast from 'react-hot-toast';
 
 /**
@@ -23,7 +23,8 @@ const uploadToArweave = async (data: any): Promise<string> => {
     const { id }: { id: string } = upload?.data;
 
     return id;
-  } catch {
+  } catch (error) {
+    console.error('Failed to upload to Arweave', error);
     toast.error(Errors.SomethingWentWrong);
     throw new Error(Errors.SomethingWentWrong);
   }

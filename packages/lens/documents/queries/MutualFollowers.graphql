@@ -1,20 +1,11 @@
 query MutualFollowers($request: MutualFollowersProfilesQueryRequest!) {
   mutualFollowersProfiles(request: $request) {
     items {
-      handle
-      name
-      picture {
-        ... on MediaSet {
-          original {
-            url
-          }
-        }
-        ... on NftImage {
-          uri
-        }
-      }
+      ...ProfileFields
+      isFollowedByMe
     }
     pageInfo {
+      next
       totalCount
     }
   }

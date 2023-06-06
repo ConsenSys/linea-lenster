@@ -1,12 +1,12 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
 import { CollectionIcon, UsersIcon } from '@heroicons/react/outline';
+import { CollectModules } from '@lenster/lens';
+import { Button, Card } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
-import { CollectModules } from 'lens';
 import type { Dispatch, FC } from 'react';
 import toast from 'react-hot-toast';
 import { useAccessSettingsStore } from 'src/store/access-settings';
 import { useCollectModuleStore } from 'src/store/collect-module';
-import { Button, Card } from 'ui';
 
 interface BasicSettingsProps {
   setShowModal: Dispatch<boolean>;
@@ -16,12 +16,16 @@ const BasicSettings: FC<BasicSettingsProps> = ({ setShowModal }) => {
   const restricted = useAccessSettingsStore((state) => state.restricted);
   const setRestricted = useAccessSettingsStore((state) => state.setRestricted);
   const followToView = useAccessSettingsStore((state) => state.followToView);
-  const setFollowToView = useAccessSettingsStore((state) => state.setFollowToView);
+  const setFollowToView = useAccessSettingsStore(
+    (state) => state.setFollowToView
+  );
   const collectToView = useAccessSettingsStore((state) => state.collectToView);
-  const setCollectToView = useAccessSettingsStore((state) => state.setCollectToView);
+  const setCollectToView = useAccessSettingsStore(
+    (state) => state.setCollectToView
+  );
   const hasConditions = useAccessSettingsStore((state) => state.hasConditions);
   const reset = useAccessSettingsStore((state) => state.reset);
-  const selectedCollectModule = useCollectModuleStore((state) => state.selectedCollectModule);
+  const collectModule = useCollectModuleStore((state) => state.collectModule);
 
   const onSave = () => {
     if (!hasConditions()) {
@@ -48,8 +52,13 @@ const BasicSettings: FC<BasicSettingsProps> = ({ setShowModal }) => {
             <ToggleWithHelper
               on={collectToView}
               setOn={() => {
-                if (!collectToView && selectedCollectModule === CollectModules.RevertCollectModule) {
-                  return toast.error(t`Enable collect first to use collect based token gating`);
+                if (
+                  !collectToView &&
+                  collectModule.type === CollectModules.RevertCollectModule
+                ) {
+                  return toast.error(
+                    t`Enable collect first to use collect based token gating`
+                  );
                 }
                 setCollectToView(!collectToView);
               }}

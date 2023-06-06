@@ -1,13 +1,13 @@
 import MetaTags from '@components/Common/MetaTags';
-import { Mixpanel } from '@lib/mixpanel';
+import { APP_NAME } from '@lenster/data/constants';
+import { Card, GridItemEight, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import { APP_NAME } from 'data/constants';
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
 import Custom404 from 'src/pages/404';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import PreviewList from './PreviewList';
 
@@ -20,7 +20,10 @@ const NoConversationSelected = () => {
           <Trans>Select a conversation</Trans>
         </h3>
         <p className="text-md lt-text-gray-500 max-w-xs">
-          <Trans>Choose an existing conversation or create a new one to start messaging</Trans>
+          <Trans>
+            Choose an existing conversation or create a new one to start
+            messaging
+          </Trans>
         </p>
       </div>
     </div>
@@ -30,9 +33,9 @@ const NoConversationSelected = () => {
 const Messages: NextPage = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'messages' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'messages' });
+  });
 
   if (!currentProfile) {
     return <Custom404 />;

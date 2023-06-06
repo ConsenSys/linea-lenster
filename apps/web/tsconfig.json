@@ -1,8 +1,7 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "@lenster/config/react.tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "noEmit": true,
     "paths": {
       "@components*": ["src/components*"],
       "@lib*": ["src/lib*"],

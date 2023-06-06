@@ -1,9 +1,8 @@
-import { STATIC_IMAGES_URL } from 'data/constants';
-import type { Nft } from 'lens';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
+import { STATIC_IMAGES_URL } from '@lenster/data/constants';
+import type { Nft } from '@lenster/lens';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
 import Link from 'next/link';
-import type { FC } from 'react';
-import React from 'react';
+import { type FC, memo } from 'react';
 
 interface NFTProps {
   nft: Nft;
@@ -50,7 +49,10 @@ const NFTImage: FC<NFTProps> = ({ nft }) => {
 
 const NftCard: FC<NFTProps> = ({ nft, linkToDetail = false }) => {
   return linkToDetail ? (
-    <Link href={`/nft/${nft.contractAddress}/${nft.tokenId}`} className="w-full">
+    <Link
+      href={`/nft/${nft.contractAddress}/${nft.tokenId}`}
+      className="w-full"
+    >
       <NFTImage nft={nft} />
     </Link>
   ) : (
@@ -60,4 +62,4 @@ const NftCard: FC<NFTProps> = ({ nft, linkToDetail = false }) => {
   );
 };
 
-export default React.memo(NftCard);
+export default memo(NftCard);

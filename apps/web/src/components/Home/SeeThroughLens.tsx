@@ -3,31 +3,41 @@ import UserProfile from '@components/Shared/UserProfile';
 import { Menu } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import { t, Trans } from '@lingui/macro';
-import clsx from 'clsx';
-import type { FeedItem, FeedRequest, Profile, ProfileSearchResult } from 'lens';
+import type {
+  FeedItem,
+  FeedRequest,
+  Profile,
+  ProfileSearchResult
+} from '@lenster/lens';
 import {
   CustomFiltersTypes,
   SearchRequestTypes,
   useSearchProfilesLazyQuery,
   useSeeThroughProfilesLazyQuery
-} from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
+} from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import { Image, Input, Spinner } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
+import clsx from 'clsx';
 import type { ChangeEvent, FC } from 'react';
 import { Fragment, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useTimelineStore } from 'src/store/timeline';
 import { MISCELLANEOUS } from 'src/tracking';
-import { Image, Input, Spinner } from 'ui';
 
 const SeeThroughLens: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const seeThroughProfile = useTimelineStore((state) => state.seeThroughProfile);
-  const setSeeThroughProfile = useTimelineStore((state) => state.setSeeThroughProfile);
+  const seeThroughProfile = useTimelineStore(
+    (state) => state.seeThroughProfile
+  );
+  const setSeeThroughProfile = useTimelineStore(
+    (state) => state.setSeeThroughProfile
+  );
 
-  const [recommendedProfilesToSeeThrough, setRecommendedProfilesToSeeThrough] = useState<Profile[]>([]);
+  const [recommendedProfilesToSeeThrough, setRecommendedProfilesToSeeThrough] =
+    useState<Profile[]>([]);
   const [searchText, setSearchText] = useState('');
 
   const setRecommendedProfiles = (feedItems: FeedItem[]) => {
@@ -50,15 +60,17 @@ const SeeThroughLens: FC = () => {
   const profile = seeThroughProfile ?? currentProfile;
   const request: FeedRequest = { profileId: profile?.id, limit: 50 };
 
-  const [searchUsers, { data: searchUsersData, loading: searchUsersLoading }] = useSearchProfilesLazyQuery();
+  const [searchUsers, { data: searchUsersData, loading: searchUsersLoading }] =
+    useSearchProfilesLazyQuery();
 
-  const [fetchRecommendedProfiles, { loading, error }] = useSeeThroughProfilesLazyQuery({
-    variables: { request },
-    onCompleted: ({ feed }) => {
-      const feedItems = feed?.items as FeedItem[];
-      setRecommendedProfiles(feedItems);
-    }
-  });
+  const [fetchRecommendedProfiles, { loading, error }] =
+    useSeeThroughProfilesLazyQuery({
+      variables: { request },
+      onCompleted: ({ feed }) => {
+        const feedItems = feed?.items as FeedItem[];
+        setRecommendedProfiles(feedItems);
+      }
+    });
 
   const handleSearch = (evt: ChangeEvent<HTMLInputElement>) => {
     const keyword = evt.target.value;
@@ -80,19 +92,18 @@ const SeeThroughLens: FC = () => {
   const recommendedProfiles = recommendedProfilesToSeeThrough ?? [];
 
   const profiles =
-    searchProfiles.length && searchText.length ? searchProfiles : recommendedProfiles.slice(0, 5);
+    searchProfiles.length && searchText.length
+      ? searchProfiles
+      : recommendedProfiles.slice(0, 5);
 
   return (
     <Menu as="div" className="relative">
       <Menu.Button as={Fragment}>
         <button
-          className="flex items-center space-x-1 rounded-md p-1 pl-1 text-sm hover:bg-gray-300 hover:bg-opacity-20"
+          className="flex items-center space-x-1 rounded-md p-1 text-sm hover:bg-gray-300/20"
           onClick={() => fetchRecommendedProfiles()}
         >
           <Image
-            onError={({ currentTarget }) => {
-              currentTarget.src = getAvatar(profile, false);
-            }}
             src={getAvatar(profile)}
             loading="lazy"
             width={20}
@@ -100,7 +111,11 @@ const SeeThroughLens: FC = () => {
             className="h-5 w-5 rounded-full border bg-gray-200 dark:border-gray-700"
             alt={formatHandle(profile?.handle)}
           />
-          <span>{seeThroughProfile ? `@${formatHandle(profile?.handle)}` : t`My Feed`}</span>
+          <span>
+            {seeThroughProfile
+              ? `@${formatHandle(profile?.handle)}`
+              : t`My Feed`}
+          </span>
           <ChevronDownIcon className="h-4 w-4" />
         </button>
       </Menu.Button>
@@ -121,7 +136,10 @@ const SeeThroughLens: FC = () => {
               autoComplete="off"
               iconRight={
                 <XIcon
-                  className={clsx('cursor-pointer', searchText ? 'visible' : 'invisible')}
+                  className={clsx(
+                    'cursor-pointer',
+                    searchText ? 'visible' : 'invisible'
+                  )}
                   onClick={() => setSearchText('')}
                 />
               }
@@ -150,18 +168,25 @@ const SeeThroughLens: FC = () => {
                   <Menu.Item
                     as="div"
                     className={({ active }) =>
-                      clsx({ 'dropdown-active': active }, 'cursor-pointer overflow-hidden rounded-lg p-1')
+                      clsx(
+                        { 'dropdown-active': active },
+                        'cursor-pointer overflow-hidden rounded-lg p-1'
+                      )
                     }
                     key={profile?.handle}
                     onClick={() => {
                       setSeeThroughProfile(profile);
                       setSearchText('');
-                      Mixpanel.track(MISCELLANEOUS.SELECT_USER_FEED, {
+                      Leafwatch.track(MISCELLANEOUS.SELECT_USER_FEED, {
                         see_through_profile: profile?.id
                       });
                     }}
                   >
-                    <UserProfile linkToProfile={false} profile={profile} showUserPreview={false} />
+                    <UserProfile
+                      linkToProfile={false}
+                      profile={profile}
+                      showUserPreview={false}
+                    />
                   </Menu.Item>
                 ))}
                 {(profiles.length === 0 || error) && (

@@ -1,8 +1,8 @@
-import { apps } from 'data/apps';
-import { STATIC_IMAGES_URL } from 'data/constants';
-import type { Publication } from 'lens';
+import { apps } from '@lenster/data';
+import { STATIC_IMAGES_URL } from '@lenster/data/constants';
+import type { Publication } from '@lenster/lens';
+import { Tooltip } from '@lenster/ui';
 import type { FC } from 'react';
-import { Tooltip } from 'ui';
 
 interface SourceProps {
   publication: Publication;
@@ -18,7 +18,11 @@ const Source: FC<SourceProps> = ({ publication }) => {
 
   return (
     <Tooltip content={appId} placement="top">
-      <img className="h-4 w-4 rounded-full" src={`${STATIC_IMAGES_URL}/source/${appId}.jpeg`} alt={appId} />
+      <img
+        className="h-4 w-4 rounded-full"
+        src={`${STATIC_IMAGES_URL}/source/${appId}.jpeg`}
+        alt={appId}
+      />
     </Tooltip>
   );
 };

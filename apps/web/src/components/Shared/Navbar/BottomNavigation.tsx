@@ -1,4 +1,9 @@
-import { BellIcon, HomeIcon, MailIcon, ViewGridIcon } from '@heroicons/react/outline';
+import {
+  BellIcon,
+  HomeIcon,
+  MailIcon,
+  ViewGridIcon
+} from '@heroicons/react/outline';
 import {
   BellIcon as BellIconSolid,
   HomeIcon as HomeIconSolid,
@@ -7,7 +12,6 @@ import {
 } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 const BottomNavigation = () => {
   const router = useRouter();

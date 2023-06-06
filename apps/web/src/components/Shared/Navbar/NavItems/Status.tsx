@@ -1,9 +1,8 @@
 import { EmojiHappyIcon } from '@heroicons/react/outline';
+import getProfileAttribute from '@lenster/lib/getProfileAttribute';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import getProfileAttribute from 'lib/getProfileAttribute';
 import type { FC } from 'react';
-import React from 'react';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
 
@@ -13,10 +12,18 @@ interface StatusProps {
 
 const Status: FC<StatusProps> = ({ className = '' }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowStatusModal = useGlobalModalStateStore((state) => state.setShowStatusModal);
+  const setShowStatusModal = useGlobalModalStateStore(
+    (state) => state.setShowStatusModal
+  );
 
-  const statusEmoji = getProfileAttribute(currentProfile?.attributes, 'statusEmoji');
-  const statusMessage = getProfileAttribute(currentProfile?.attributes, 'statusMessage');
+  const statusEmoji = getProfileAttribute(
+    currentProfile?.attributes,
+    'statusEmoji'
+  );
+  const statusMessage = getProfileAttribute(
+    currentProfile?.attributes,
+    'statusMessage'
+  );
   const hasStatus = statusEmoji && statusMessage;
 
   return (

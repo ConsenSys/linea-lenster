@@ -1,9 +1,10 @@
 import { ExternalLinkIcon } from '@heroicons/react/outline';
+import { IPFS_GATEWAY, LINEA_EXPLORER_URL } from '@lenster/data/constants';
+import type { Publication } from '@lenster/lens';
+import { Card } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import { IPFS_GATEWAY, LINEA_EXPLORER_URL } from 'data/constants';
-import type { Publication } from 'lens';
+import Link from 'next/link';
 import type { FC } from 'react';
-import { Card } from 'ui';
 
 interface MetaProps {
   name: string;
@@ -13,13 +14,18 @@ interface MetaProps {
 
 const Meta: FC<MetaProps> = ({ name, uri, hash }) => (
   <div className="px-5 py-3">
-    <a href={uri} className="space-y-1" target="_blank" rel="noreferrer noopener">
+    <Link
+      href={uri}
+      className="space-y-1"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
       <div className="flex items-center space-x-1">
         <div className="text-[10px]">{name}</div>
         <ExternalLinkIcon className="h-4 w-4" />
       </div>
       <div className="truncate text-xs">{hash}</div>
-    </a>
+    </Link>
   </div>
 );
 
@@ -47,9 +53,30 @@ const OnchainMeta: FC<OnchainMetaProps> = ({ publication }) => {
     <Card as="aside" dataTestId="onchain-meta">
       <div className="lt-text-gray-500 divide-y dark:divide-gray-700">
         {isArweaveHash ? (
-          <Meta name={t`ARWEAVE TRANSACTION`} uri={`https://arweave.app/tx/${hash}`} hash={hash} />
+          <Meta
+            name={t`ARWEAVE TRANSACTION`}
+            uri={`https://arweave.app/tx/${hash}`}
+            hash={hash}
+          />
         ) : null}
-        {isIPFSHash ? <Meta name="IPFS TRANSACTION" uri={`${IPFS_GATEWAY}${hash}`} hash={hash} /> : null}
+        {publication?.isDataAvailability ? (
+          <Meta
+            name={t`MOMOKA PROOF`}
+            uri={`https://momoka.lens.xyz/tx/${publication.dataAvailabilityProofs
+              ?.split('/')
+              .pop()}`}
+            hash={
+              publication.dataAvailabilityProofs?.split('/').pop() as string
+            }
+          />
+        ) : null}
+        {isIPFSHash ? (
+          <Meta
+            name="IPFS TRANSACTION"
+            uri={`${IPFS_GATEWAY}${hash}`}
+            hash={hash}
+          />
+        ) : null}
         {collectNftAddress ? (
           <Meta
             name={t`NFT ADDRESS`}

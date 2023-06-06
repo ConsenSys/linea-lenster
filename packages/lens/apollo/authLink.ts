@@ -1,7 +1,7 @@
 import { ApolloLink, fromPromise, toPromise } from '@apollo/client';
+import { Localstorage } from '@lenster/data';
+import { API_URL } from '@lenster/data/constants';
 import axios from 'axios';
-import { API_URL } from 'data/constants';
-import { Localstorage } from 'data/storage';
 
 import { parseJwt } from './lib';
 
@@ -20,6 +20,8 @@ const clearStorage = () => {
   localStorage.removeItem(Localstorage.LensterStore);
   localStorage.removeItem(Localstorage.TransactionStore);
   localStorage.removeItem(Localstorage.MessageStore);
+  localStorage.removeItem(Localstorage.AttachmentCache);
+  localStorage.removeItem(Localstorage.AttachmentStore);
 };
 
 const authLink = new ApolloLink((operation, forward) => {

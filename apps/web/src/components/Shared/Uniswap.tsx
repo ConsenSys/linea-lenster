@@ -1,7 +1,8 @@
-import { Mixpanel } from '@lib/mixpanel';
+import { STATIC_IMAGES_URL } from '@lenster/data/constants';
+import getUniswapURL from '@lenster/lib/getUniswapURL';
+import { Leafwatch } from '@lib/leafwatch';
 import { Trans } from '@lingui/macro';
-import { STATIC_IMAGES_URL } from 'data/constants';
-import getUniswapURL from 'lib/getUniswapURL';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { PUBLICATION } from 'src/tracking';
 
@@ -10,17 +11,23 @@ interface UniswapProps {
 }
 
 const Uniswap: FC<UniswapProps> = ({ module }) => {
+  const amount = module?.amount?.value ?? module?.fee?.amount?.value;
+  const currency =
+    module?.amount?.asset?.symbol ?? module?.fee?.amount?.asset?.symbol;
+  const assetAddress =
+    module?.amount?.asset?.address ?? module?.fee?.amount?.asset?.address;
+
   return (
     <div className="space-y-1">
       <div className="text-sm">
         <Trans>
-          You don't have enough <b>{module?.amount?.asset?.symbol}</b>
+          You don't have enough <b>{currency}</b>
         </Trans>
       </div>
-      <a
-        href={getUniswapURL(parseFloat(module?.amount?.value), module?.amount?.asset?.address)}
+      <Link
+        href={getUniswapURL(parseFloat(amount), assetAddress)}
         onClick={() => {
-          Mixpanel.track(PUBLICATION.COLLECT_MODULE.OPEN_UNISWAP);
+          Leafwatch.track(PUBLICATION.COLLECT_MODULE.OPEN_UNISWAP);
         }}
         className="flex items-center space-x-1.5 text-xs font-bold text-pink-500"
         target="_blank"
@@ -36,7 +43,7 @@ const Uniswap: FC<UniswapProps> = ({ module }) => {
         <div>
           <Trans>Swap in Uniswap</Trans>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { AVATAR, DEFAULT_OG, USER_CONTENT_URL } from 'data/constants';
-import type { Comment } from 'lens';
-import { Publication } from 'lens';
-import getStampFyiURL from 'lib/getStampFyiURL';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
-import truncateByWords from 'lib/truncateByWords';
+import { DEFAULT_OG } from '@lenster/data/constants';
+import type { Comment } from '@lenster/lens';
+import { Publication } from '@lenster/lens';
+import getStampFyiURL from '@lenster/lib/getStampFyiURL';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
+import truncateByWords from '@lenster/lib/truncateByWords';
 import type { FC } from 'react';
 import { BASE_URL } from 'src/constants';
 
@@ -23,17 +23,26 @@ const Publication: FC<PublicationProps> = ({ publication, comments }) => {
 
   const { metadata, __typename } = publication;
   const hasMedia = metadata?.media.length;
-  const profile: any = __typename === 'Mirror' ? publication?.mirrorOf?.profile : publication.profile;
-  const title = `${__typename === 'Post' ? 'Post' : __typename === 'Mirror' ? 'Mirror' : 'Comment'} by @${
-    publication.profile.handle
-  } • Lineaster`;
+  const profile: any =
+    __typename === 'Mirror'
+      ? publication?.mirrorOf?.profile
+      : publication.profile;
+  const title = `${
+    __typename === 'Post'
+      ? 'Post'
+      : __typename === 'Mirror'
+      ? 'Mirror'
+      : 'Comment'
+  } by @${publication.profile.handle} • Lineaster`;
   const description = truncateByWords(metadata?.content, 30);
   const image = hasMedia
     ? sanitizeDStorageUrl(metadata?.media[0].original.url)
     : profile
-    ? `${USER_CONTENT_URL}/${AVATAR}/${sanitizeDStorageUrl(
-        profile?.picture?.original?.url ?? profile?.picture?.uri ?? getStampFyiURL(profile?.ownedBy)
-      )}`
+    ? sanitizeDStorageUrl(
+        profile?.picture?.original?.url ??
+          profile?.picture?.uri ??
+          getStampFyiURL(profile?.ownedBy)
+      )
     : DEFAULT_OG;
 
   return (

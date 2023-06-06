@@ -1,25 +1,31 @@
 import { HeartIcon, SunIcon } from '@heroicons/react/outline';
-import { HeartIcon as HeartIconSolid, SunIcon as SunIconSolid } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
+import {
+  HeartIcon as HeartIconSolid,
+  SunIcon as SunIconSolid
+} from '@heroicons/react/solid';
+import { Errors } from '@lenster/data';
+import type { Publication } from '@lenster/lens';
+import {
+  ReactionTypes,
+  useAddReactionMutation,
+  useRemoveReactionMutation
+} from '@lenster/lens';
+import type { ApolloCache } from '@lenster/lens/apollo';
+import { publicationKeyFields } from '@lenster/lens/apollo/lib';
+import hasGm from '@lenster/lib/hasGm';
+import nFormatter from '@lenster/lib/nFormatter';
+import { Tooltip } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import clsx from 'clsx';
-import Errors from 'data/errors';
 import { motion } from 'framer-motion';
-import type { Publication } from 'lens';
-import { ReactionTypes, useAddReactionMutation, useRemoveReactionMutation } from 'lens';
-import type { ApolloCache } from 'lens/apollo';
-import { publicationKeyFields } from 'lens/apollo/lib';
-import hasGm from 'lib/hasGm';
-import nFormatter from 'lib/nFormatter';
 import { useRouter } from 'next/router';
 import type { FC } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAppStore } from 'src/store/app';
-import { usePreferencesStore } from 'src/store/preferences';
 import { PUBLICATION } from 'src/tracking';
-import { Tooltip } from 'ui';
 
 interface LikeProps {
   publication: Publication;
@@ -30,22 +36,36 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
   const { pathname } = useRouter();
   const isMirror = publication.__typename === 'Mirror';
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const hideLikesCount = usePreferencesStore((state) => state.hideLikesCount);
   const [liked, setLiked] = useState(
-    (isMirror ? publication?.mirrorOf?.reaction : publication?.reaction) === 'UPVOTE'
+    (isMirror ? publication?.mirrorOf?.reaction : publication?.reaction) ===
+      'UPVOTE'
   );
   const [count, setCount] = useState(
-    isMirror ? publication?.mirrorOf?.stats?.totalUpvotes : publication?.stats?.totalUpvotes
+    isMirror
+      ? publication?.mirrorOf?.stats?.totalUpvotes
+      : publication?.stats?.totalUpvotes
   );
 
-  const updateCache = (cache: ApolloCache<any>, type: ReactionTypes.Upvote | ReactionTypes.Downvote) => {
-    if (showCount || hideLikesCount) {
+  const onError = (error: any) => {
+    errorToast(error);
+  };
+
+  const updateCache = (
+    cache: ApolloCache<any>,
+    type: ReactionTypes.Upvote | ReactionTypes.Downvote
+  ) => {
+    if (showCount) {
       cache.modify({
-        id: publicationKeyFields(isMirror ? publication?.mirrorOf : publication),
+        id: publicationKeyFields(
+          isMirror ? publication?.mirrorOf : publication
+        ),
         fields: {
           stats: (stats) => ({
             ...stats,
-            totalUpvotes: type === ReactionTypes.Upvote ? stats.totalUpvotes + 1 : stats.totalUpvotes - 1
+            totalUpvotes:
+              type === ReactionTypes.Upvote
+                ? stats.totalUpvotes + 1
+                : stats.totalUpvotes - 1
           })
         }
       });
@@ -66,7 +86,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
     }
   };
 
-  const getEventProperties = (type: 'like' | 'dislike') => {
+  const getEventProperties = (type: 'like' | 'unlike') => {
     return {
       [`${type}_publication`]: publication?.id,
       [`${type}_source`]: getLikeSource()
@@ -75,7 +95,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
 
   const [addReaction] = useAddReactionMutation({
     onCompleted: () => {
-      Mixpanel.track(PUBLICATION.LIKE, getEventProperties('like'));
+      Leafwatch.track(PUBLICATION.LIKE, getEventProperties('like'));
     },
     onError: (error) => {
       setLiked(!liked);
@@ -87,7 +107,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
 
   const [removeReaction] = useRemoveReactionMutation({
     onCompleted: () => {
-      Mixpanel.track(PUBLICATION.DISLIKE, getEventProperties('dislike'));
+      Leafwatch.track(PUBLICATION.UNLIKE, getEventProperties('unlike'));
     },
     onError: (error) => {
       setLiked(!liked);
@@ -107,7 +127,10 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
         request: {
           profileId: currentProfile?.id,
           reaction: ReactionTypes.Upvote,
-          publicationId: publication.__typename === 'Mirror' ? publication?.mirrorOf?.id : publication?.id
+          publicationId:
+            publication.__typename === 'Mirror'
+              ? publication?.mirrorOf?.id
+              : publication?.id
         }
       }
     };
@@ -123,12 +146,19 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
     }
   };
 
-  const iconClassName = showCount ? 'w-[17px] sm:w-[20px]' : 'w-[15px] sm:w-[18px]';
+  const iconClassName = showCount
+    ? 'w-[17px] sm:w-[20px]'
+    : 'w-[15px] sm:w-[18px]';
   const { content } = publication.metadata;
   const isGM = hasGm(content);
 
   return (
-    <div className={clsx(isGM ? 'text-yellow-600' : 'text-pink-500', 'flex items-center space-x-1')}>
+    <div
+      className={clsx(
+        isGM ? 'text-yellow-600' : 'text-pink-500',
+        'flex items-center space-x-1'
+      )}
+    >
       <motion.button
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -139,11 +169,15 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
       >
         <div
           className={clsx(
-            isGM ? 'hover:bg-yellow-400' : 'hover:bg-pink-300',
-            'rounded-full p-1.5 hover:bg-opacity-20'
+            isGM ? 'hover:bg-yellow-400/20' : 'hover:bg-pink-300/20',
+            'rounded-full p-1.5'
           )}
         >
-          <Tooltip placement="top" content={liked ? t`Dislike` : t`Like`} withDelay>
+          <Tooltip
+            placement="top"
+            content={liked ? t`Unlike` : t`Like`}
+            withDelay
+          >
             {liked ? (
               isGM ? (
                 <SunIconSolid className={iconClassName} />
@@ -158,7 +192,7 @@ const Like: FC<LikeProps> = ({ publication, showCount }) => {
           </Tooltip>
         </div>
       </motion.button>
-      {count > 0 && !showCount && !hideLikesCount && (
+      {count > 0 && !showCount && (
         <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>
       )}
     </div>

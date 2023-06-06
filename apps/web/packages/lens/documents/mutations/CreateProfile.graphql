@@ -1,5 +1,5 @@
 mutation CreateProfile($request: CreateProfileRequest!) {
-  createProfile(request: $request) {
-    ...RelayerResultFields
-  }
+    createProfile(request: $request) {
+        ...RelayerResultFields
+    }
 }

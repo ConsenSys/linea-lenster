@@ -2,8 +2,12 @@ name: Nightly CI
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: '0 * * * *'
   workflow_dispatch:
+
+env:
+  CI: true
+  NIGHTLY: true
 
 jobs:
   ci:
@@ -19,13 +23,11 @@ jobs:
       - name: Setup node 🍀
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Bootstrap 📦
         run: script/bootstrap
 
       - name: Run Tests 🧪
         run: pnpm test:nightly
-        env:
-          NIGHTLY: true

@@ -1,15 +1,24 @@
 import { PencilAltIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
+import type { Publication } from '@lenster/lens';
+import { useReportPublicationMutation } from '@lenster/lens';
+import stopEventPropagation from '@lenster/lib/stopEventPropagation';
+import {
+  Button,
+  EmptyState,
+  ErrorMessage,
+  Form,
+  Spinner,
+  TextArea,
+  useZodForm
+} from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import type { Publication } from 'lens';
-import { useReportPublicationMutation } from 'lens';
-import { stopEventPropagation } from 'lib/stopEventPropagation';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGlobalModalStateStore } from 'src/store/modals';
 import { PAGEVIEW, PUBLICATION } from 'src/tracking';
-import { Button, EmptyState, ErrorMessage, Form, Spinner, TextArea, useZodForm } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 import { object, string } from 'zod';
 
 import Reason from './Reason';
@@ -29,18 +38,20 @@ const Report: FC<ReportProps> = ({ publication }) => {
   const [type, setType] = useState(reportConfig?.type ?? '');
   const [subReason, setSubReason] = useState(reportConfig?.subReason ?? '');
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'report' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'report' });
+  });
 
-  const [createReport, { data: submitData, loading: submitLoading, error: submitError }] =
-    useReportPublicationMutation({
-      onCompleted: () => {
-        Mixpanel.track(PUBLICATION.REPORT, {
-          report_publication_id: publication?.id
-        });
-      }
-    });
+  const [
+    createReport,
+    { data: submitData, loading: submitLoading, error: submitError }
+  ] = useReportPublicationMutation({
+    onCompleted: () => {
+      Leafwatch.track(PUBLICATION.REPORT, {
+        report_publication_id: publication?.id
+      });
+    }
+  });
 
   const form = useZodForm({
     schema: newReportSchema
@@ -64,7 +75,7 @@ const Report: FC<ReportProps> = ({ publication }) => {
   };
 
   return (
-    <div onClick={stopEventPropagation}>
+    <div onClick={stopEventPropagation} aria-hidden="true">
       {submitData?.reportPublication === null ? (
         <EmptyState
           message={t`Publication reported successfully!`}
@@ -80,8 +91,15 @@ const Report: FC<ReportProps> = ({ publication }) => {
               reportPublication(additionalComments);
             }}
           >
-            {submitError && <ErrorMessage title={t`Failed to report`} error={submitError} />}
-            <Reason setType={setType} setSubReason={setSubReason} type={type} subReason={subReason} />
+            {submitError && (
+              <ErrorMessage title={t`Failed to report`} error={submitError} />
+            )}
+            <Reason
+              setType={setType}
+              setSubReason={setSubReason}
+              type={type}
+              subReason={subReason}
+            />
             {subReason && (
               <>
                 <TextArea
@@ -93,7 +111,13 @@ const Report: FC<ReportProps> = ({ publication }) => {
                   <Button
                     type="submit"
                     disabled={submitLoading}
-                    icon={submitLoading ? <Spinner size="xs" /> : <PencilAltIcon className="h-4 w-4" />}
+                    icon={
+                      submitLoading ? (
+                        <Spinner size="xs" />
+                      ) : (
+                        <PencilAltIcon className="h-4 w-4" />
+                      )
+                    }
                   >
                     <Trans>Report</Trans>
                   </Button>

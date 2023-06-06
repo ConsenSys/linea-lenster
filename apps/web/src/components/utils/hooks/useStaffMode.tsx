@@ -1,10 +1,12 @@
-import isStaff from 'lib/isStaff';
+import isStaff from '@lenster/lib/isStaff';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
 
 const useStaffMode = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const staffMode = useAppPersistStore((state) => state.staffMode);
-  const allowed = currentProfile ? isStaff(currentProfile?.id) && staffMode : false;
+  const allowed = currentProfile
+    ? isStaff(currentProfile?.id) && staffMode
+    : false;
 
   return { allowed };
 };

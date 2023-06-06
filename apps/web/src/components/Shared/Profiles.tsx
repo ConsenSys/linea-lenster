@@ -1,5 +1,5 @@
 import ProfileNameOrHandle from '@components/Shared/ProfileNameOrHandle';
-import type { Profile } from 'lens';
+import type { Profile } from '@lenster/lens';
 import type { FC, ReactNode } from 'react';
 
 interface ProfileCirclesProps {
@@ -43,14 +43,18 @@ const Profiles: FC<ProfileCirclesProps> = ({ profiles, context }) => {
     return (
       <Wrapper>
         <ProfileNameOrHandle profile={profileOne} separator=", " />
-        <ProfileNameOrHandle profile={profileTwo} separator={isZero ? ' and ' : ', '} />
+        <ProfileNameOrHandle
+          profile={profileTwo}
+          separator={isZero ? ' and ' : ', '}
+        />
         <ProfileNameOrHandle
           profile={profileThree}
           separator={
             !isZero && (
               <span className="whitespace-nowrap">
                 {' '}
-                and {calculatedCount} {calculatedCount === 1 ? 'other' : 'others'}
+                and {calculatedCount}{' '}
+                {calculatedCount === 1 ? 'other' : 'others'}
               </span>
             )
           }

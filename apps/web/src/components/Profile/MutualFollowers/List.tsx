@@ -1,14 +1,17 @@
 import Loader from '@components/Shared/Loader';
 import UserProfile from '@components/Shared/UserProfile';
+import type {
+  MutualFollowersProfilesQueryRequest,
+  Profile
+} from '@lenster/lens';
+import { useMutualFollowersQuery } from '@lenster/lens';
+import { ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import type { MutualFollowersProfilesQueryRequest, Profile } from 'lens';
-import { useMutualFollowersListQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { useAppStore } from 'src/store/app';
 import { FollowSource } from 'src/tracking';
-import { ErrorMessage } from 'ui';
 
 interface MutualFollowersListProps {
   profileId: string;
@@ -25,7 +28,7 @@ const MutualFollowersList: FC<MutualFollowersListProps> = ({ profileId }) => {
     limit: 10
   };
 
-  const { data, loading, error, fetchMore } = useMutualFollowersListQuery({
+  const { data, loading, error, fetchMore } = useMutualFollowersQuery({
     variables: { request },
     skip: !profileId
   });
@@ -53,7 +56,11 @@ const MutualFollowersList: FC<MutualFollowersListProps> = ({ profileId }) => {
 
   return (
     <div className="max-h-[80vh] overflow-y-auto">
-      <ErrorMessage className="m-5" title={t`Failed to load mutual followers`} error={error} />
+      <ErrorMessage
+        className="m-5"
+        title={t`Failed to load mutual followers`}
+        error={error}
+      />
 
       <div className="divide-y dark:divide-gray-700">
         {profiles?.map((profile, index) => (

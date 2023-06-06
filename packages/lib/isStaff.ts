@@ -1,5 +1,5 @@
-import { IS_MAINNET } from 'data/constants';
-import { mainnetStaffs, testnetStaffs } from 'data/staffs';
+import { mainnetStaffs, testnetStaffs } from '@lenster/data';
+import { IS_MAINNET } from '@lenster/data/constants';
 
 /**
  * Checks if a given profile ID belongs to a staff member.

@@ -1,12 +1,11 @@
+import { Localstorage } from '@lenster/data';
 import getUniqueMessages from '@lib/getUniqueMessages';
 import type { Client, Conversation, DecodedMessage } from '@xmtp/xmtp-js';
 import { toNanoString } from '@xmtp/xmtp-js';
-import { Localstorage } from 'data/storage';
-import type { Profile } from 'lens';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type TabValues = 'Following' | 'Requested';
+export type TabValues = 'All' | 'Lens' | 'Other' | 'Requests';
 
 interface MessageState {
   client: Client | undefined;
@@ -15,19 +14,25 @@ interface MessageState {
   setConversations: (conversations: Map<string, Conversation>) => void;
   addConversation: (key: string, newConversation: Conversation) => void;
   messages: Map<string, DecodedMessage[]>;
-  setMessages: (messages: Map<string, DecodedMessage[]>) => void;
   addMessages: (key: string, newMessages: DecodedMessage[]) => number;
-  messageProfiles: Map<string, Profile>;
-  setMessageProfiles: (messageProfiles: Map<string, Profile>) => void;
-  addProfileAndSelectTab: (key: string, profile: Profile) => void;
+  hasSyncedMessages: boolean;
+  setHasSyncedMessages: (hasSyncedMessages: boolean) => void;
   previewMessages: Map<string, DecodedMessage>;
-  setPreviewMessage: (key: string, message: DecodedMessage) => void;
   setPreviewMessages: (previewMessages: Map<string, DecodedMessage>) => void;
-  reset: () => void;
+  ensNames: Map<string, string>;
+  setEnsNames: (ensNames: Map<string, string>) => void;
+  previewMessagesNonLens: Map<string, DecodedMessage>;
+  setPreviewMessagesNonLens: (
+    previewMessagesNonLens: Map<string, DecodedMessage>
+  ) => void;
   selectedProfileId: string;
   setSelectedProfileId: (selectedProfileId: string) => void;
   selectedTab: TabValues;
   setSelectedTab: (selectedTab: TabValues) => void;
+  syncedProfiles: Set<string>;
+  addSyncedProfiles: (profileIds: string[]) => void;
+  unsyncProfile: (profileId: string) => void;
+  reset: () => void;
 }
 
 export const useMessageStore = create<MessageState>((set) => ({
@@ -43,7 +48,6 @@ export const useMessageStore = create<MessageState>((set) => ({
     });
   },
   messages: new Map(),
-  setMessages: (messages) => set(() => ({ messages })),
   addMessages: (key: string, newMessages: DecodedMessage[]) => {
     let numAdded = 0;
     set((state) => {
@@ -60,32 +64,32 @@ export const useMessageStore = create<MessageState>((set) => ({
     });
     return numAdded;
   },
-  messageProfiles: new Map(),
-  setMessageProfiles: (messageProfiles) => set(() => ({ messageProfiles })),
-  addProfileAndSelectTab: (key, profile) =>
-    set((state) => {
-      let profiles: Map<string, Profile>;
-      if (!state.messageProfiles.get(key)) {
-        profiles = new Map(state.messageProfiles);
-        profiles.set(key, profile);
-      } else {
-        profiles = state.messageProfiles;
-      }
-      const selectedTab: TabValues = profile.isFollowedByMe ? 'Following' : 'Requested';
-      return { messageProfiles: profiles, selectedTab: selectedTab };
-    }),
+  hasSyncedMessages: false,
+  setHasSyncedMessages: (hasSyncedMessages) =>
+    set(() => ({ hasSyncedMessages })),
   previewMessages: new Map(),
-  setPreviewMessage: (key: string, message: DecodedMessage) =>
-    set((state) => {
-      const newPreviewMessages = new Map(state.previewMessages);
-      newPreviewMessages.set(key, message);
-      return { previewMessages: newPreviewMessages };
-    }),
   setPreviewMessages: (previewMessages) => set(() => ({ previewMessages })),
+  ensNames: new Map(),
+  setEnsNames: (ensNames) => set(() => ({ ensNames })),
+  previewMessagesNonLens: new Map(),
+  setPreviewMessagesNonLens: (previewMessagesNonLens) =>
+    set(() => ({ previewMessagesNonLens })),
   selectedProfileId: '',
-  setSelectedProfileId: (selectedProfileId) => set(() => ({ selectedProfileId })),
-  selectedTab: 'Following',
+  setSelectedProfileId: (selectedProfileId) =>
+    set(() => ({ selectedProfileId })),
+  selectedTab: 'All',
   setSelectedTab: (selectedTab) => set(() => ({ selectedTab })),
+  syncedProfiles: new Set(),
+  addSyncedProfiles: (profileIds) =>
+    set(({ syncedProfiles }) => ({
+      syncedProfiles: new Set([...syncedProfiles, ...profileIds])
+    })),
+  unsyncProfile: (profileId: string) =>
+    set(({ syncedProfiles }) => ({
+      syncedProfiles: new Set(
+        [...syncedProfiles].filter((id) => id !== profileId)
+      )
+    })),
   reset: () =>
     set((state) => {
       return {
@@ -94,7 +98,9 @@ export const useMessageStore = create<MessageState>((set) => ({
         messages: new Map(),
         messageProfiles: new Map(),
         previewMessages: new Map(),
-        selectedTab: 'Following'
+        selectedTab: 'All',
+        previewMessagesNonLens: new Map(),
+        ensNames: new Map()
       };
     })
 }));
@@ -115,7 +121,8 @@ export const useMessagePersistStore = create(
     (set) => ({
       viewedMessagesAtNs: new Map(),
       showMessagesBadge: new Map(),
-      setShowMessagesBadge: (showMessagesBadge) => set(() => ({ showMessagesBadge })),
+      setShowMessagesBadge: (showMessagesBadge) =>
+        set(() => ({ showMessagesBadge })),
       clearMessagesBadge: (profileId: string) => {
         set((state) => {
           const viewedAt = new Map(state.viewedMessagesAtNs);
@@ -164,7 +171,9 @@ export const useMessagePersistStore = create(
             return null;
           }
           const data = JSON.parse(jsonData);
-          data.state.viewedMessagesAtNs = new Map(data.state.viewedMessagesAtNs);
+          data.state.viewedMessagesAtNs = new Map(
+            data.state.viewedMessagesAtNs
+          );
           data.state.showMessagesBadge = new Map(data.state.showMessagesBadge);
           data.state.unsentMessages = new Map(data.state.unsentMessages);
           return data;

@@ -1,13 +1,11 @@
-export interface LensterAttachment {
-  item: string;
-  type: string;
-  altTag: string;
-}
+import type { MediaSet } from '@lenster/lens';
 
-export interface NewLensterAttachment extends Omit<LensterAttachment, 'item'> {
+export interface MediaSetWithoutOnChain extends Omit<MediaSet, 'onChain'> {}
+
+export interface NewLensterAttachment extends MediaSetWithoutOnChain {
   id: string;
-  item?: string;
-  previewItem?: string;
+  file?: File;
+  previewItem: string;
 }
 
 export interface UserSuggestion {
@@ -25,7 +23,7 @@ export interface OG {
   url: string;
   favicon: string;
   thumbnail: string;
-  isSquare: boolean;
+  isLarge: boolean;
   html: string;
 }
 
@@ -57,7 +55,7 @@ export interface OptimisticTransaction {
   cover?: string;
   author?: string;
   content: string;
-  attachments: LensterAttachment[];
+  attachments: MediaSet[];
 }
 
 export interface MarkupLinkProps {

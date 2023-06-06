@@ -1,40 +1,44 @@
 import UserProfileShimmer from '@components/Shared/Shimmer/UserProfileShimmer';
 import UserProfile from '@components/Shared/UserProfile';
+import { Regex } from '@lenster/data';
+import type { Profile, Publication } from '@lenster/lens';
+import { useProfilesQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { Card, ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import { ALL_HANDLES_REGEX, HANDLE_SANITIZE_REGEX } from 'data/constants';
-import type { Profile, Publication } from 'lens';
-import { useRelevantPeopleQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
 import { FollowSource } from 'src/tracking';
-import { Card, ErrorMessage } from 'ui';
 
 interface RelevantPeopleProps {
   publication: Publication;
 }
 
 const RelevantPeople: FC<RelevantPeopleProps> = ({ publication }) => {
-  const mentions = publication?.metadata?.content?.match(ALL_HANDLES_REGEX, '$1[~$2]') ?? [];
+  const mentions =
+    publication?.metadata?.content?.match(Regex.allHandles, '$1[~$2]') ?? [];
 
   const processedMentions = mentions.map((mention: string) => {
     const trimmedMention = mention.trim().replace('@', '').replace("'s", '');
 
     if (trimmedMention.length > 9) {
-      return mention.trim().replace("'s", '').replace(HANDLE_SANITIZE_REGEX, '');
+      return mention.trim().replace("'s", '').replace(Regex.santiizeHandle, '');
     }
 
     return formatHandle(publication?.profile?.handle);
   });
 
-  const cleanedMentions = processedMentions.reduce((handles: string[], handle: string) => {
-    if (!handles.includes(handle)) {
-      handles.push(handle);
-    }
+  const cleanedMentions = processedMentions.reduce(
+    (handles: string[], handle: string) => {
+      if (!handles.includes(handle)) {
+        handles.push(handle);
+      }
 
-    return handles;
-  }, []);
+      return handles;
+    },
+    []
+  );
 
-  const { data, loading, error } = useRelevantPeopleQuery({
+  const { data, loading, error } = useProfilesQuery({
     variables: { request: { handles: cleanedMentions.slice(0, 5) } },
     skip: mentions.length <= 0
   });

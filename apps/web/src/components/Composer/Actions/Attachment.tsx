@@ -1,21 +1,25 @@
 import MenuTransition from '@components/Shared/MenuTransition';
-import useOnClickOutside from '@components/utils/hooks/useOnClickOutside';
 import useUploadAttachments from '@components/utils/hooks/useUploadAttachments';
 import { Menu } from '@headlessui/react';
-import { MusicNoteIcon, PhotographIcon, VideoCameraIcon } from '@heroicons/react/outline';
-import { t } from '@lingui/macro';
-import clsx from 'clsx';
+import {
+  MusicNoteIcon,
+  PhotographIcon,
+  VideoCameraIcon
+} from '@heroicons/react/outline';
 import {
   ALLOWED_AUDIO_TYPES,
   ALLOWED_IMAGE_TYPES,
   ALLOWED_MEDIA_TYPES,
   ALLOWED_VIDEO_TYPES
-} from 'data/constants';
+} from '@lenster/data/constants';
+import { Spinner, Tooltip } from '@lenster/ui';
+import { t } from '@lingui/macro';
+import clsx from 'clsx';
 import type { ChangeEvent, FC } from 'react';
 import { Fragment, useId, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { usePublicationStore } from 'src/store/publication';
-import { Spinner, Tooltip } from 'ui';
+import { useOnClickOutside } from 'usehooks-ts';
 const Attachment: FC = () => {
   const attachments = usePublicationStore((state) => state.attachments);
   const isUploading = usePublicationStore((state) => state.isUploading);
@@ -45,7 +49,9 @@ const Attachment: FC = () => {
   };
 
   const disableImageUpload = () => {
-    const notImage = attachments[0] && attachments[0].type.slice(0, 5) !== 'image';
+    const notImage =
+      attachments[0] &&
+      attachments[0].original.mimeType.slice(0, 5) !== 'image';
     const isLimit = !notImage && attachments.length >= 4;
     return notImage || isLimit;
   };
@@ -66,7 +72,8 @@ const Attachment: FC = () => {
       } else {
         return toast.error(t`File format not allowed.`);
       }
-    } catch {
+    } catch (error) {
+      console.error('Failed to upload attachments', error);
       toast.error(t`Something went wrong while uploading!`);
     }
   };
@@ -78,7 +85,7 @@ const Attachment: FC = () => {
           {isUploading ? (
             <Spinner size="sm" />
           ) : (
-            <Tooltip placement="top" content="Media">
+            <Tooltip placement="top" content={t`Media`}>
               <PhotographIcon className="text-brand-600 dark:text-brand-400/80 h-5 w-5" />
             </Tooltip>
           )}

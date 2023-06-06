@@ -5,18 +5,18 @@ import Footer from '@components/Shared/Footer';
 import UserProfile from '@components/Shared/UserProfile';
 import PublicationStaffTool from '@components/StaffTools/Panels/Publication';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
-import { Mixpanel } from '@lib/mixpanel';
-import { APP_NAME } from 'data/constants';
-import { usePublicationQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
+import { APP_NAME } from '@lenster/data/constants';
+import { usePublicationQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import Custom404 from 'src/pages/404';
 import Custom500 from 'src/pages/500';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import FullPublication from './FullPublication';
 import OnchainMeta from './OnchainMeta';
@@ -30,14 +30,16 @@ const ViewPublication: NextPage = () => {
     query: { id }
   } = useRouter();
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'publication' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'publication' });
+  });
 
   const { data, loading, error } = usePublicationQuery({
     variables: {
       request: { publicationId: id },
-      reactionRequest: currentProfile ? { profileId: currentProfile?.id } : null,
+      reactionRequest: currentProfile
+        ? { profileId: currentProfile?.id }
+        : null,
       profileId: currentProfile?.id ?? null
     },
     skip: !id
@@ -62,7 +64,9 @@ const ViewPublication: NextPage = () => {
       <MetaTags
         title={
           publication.__typename && publication?.profile?.handle
-            ? `${publication.__typename} by @${formatHandle(publication.profile.handle)} • ${APP_NAME}`
+            ? `${publication.__typename} by @${formatHandle(
+                publication.profile.handle
+              )} • ${APP_NAME}`
             : APP_NAME
         }
       />
@@ -77,7 +81,9 @@ const ViewPublication: NextPage = () => {
         <Card as="aside" className="p-5" dataTestId="poster-profile">
           <UserProfile
             profile={
-              publication.__typename === 'Mirror' ? publication?.mirrorOf?.profile : publication?.profile
+              publication.__typename === 'Mirror'
+                ? publication?.mirrorOf?.profile
+                : publication?.profile
             }
             showBio
           />

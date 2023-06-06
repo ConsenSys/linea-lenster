@@ -1,9 +1,9 @@
 import { CurrencyDollarIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { Card } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
-import { Card } from 'ui';
 
 const SetDefaultProfile: FC = () => {
   const profiles = useAppStore((state) => state.profiles);
@@ -28,7 +28,8 @@ const SetDefaultProfile: FC = () => {
       </div>
       <p className="text-sm leading-[22px]">
         <Trans>
-          You own {count} {count === 1 ? 'profile' : 'profiles'} but you don't have a default one.
+          You own {count} {count === 1 ? 'profile' : 'profiles'} but you don't
+          have a default one.
         </Trans>
       </p>
       <div className="flex items-center space-x-1.5 text-sm font-bold">

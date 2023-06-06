@@ -2,13 +2,7 @@ import MetaTags from '@components/Common/MetaTags';
 import SettingsHelper from '@components/Shared/SettingsHelper';
 import { PencilAltIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import { t, Trans } from '@lingui/macro';
-import axios from 'axios';
-import { APP_NAME, FRESHDESK_WORKER_URL } from 'data/constants';
-import type { FC } from 'react';
-import { useEffect, useState } from 'react';
-import { PAGEVIEW } from 'src/tracking';
+import { APP_NAME, FRESHDESK_WORKER_URL } from '@lenster/data/constants';
 import {
   Button,
   Card,
@@ -21,7 +15,14 @@ import {
   Spinner,
   TextArea,
   useZodForm
-} from 'ui';
+} from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
+import axios from 'axios';
+import type { FC } from 'react';
+import { useState } from 'react';
+import { PAGEVIEW } from 'src/tracking';
+import { useEffectOnce } from 'usehooks-ts';
 import { object, string } from 'zod';
 
 const newContactSchema = object({
@@ -42,15 +43,19 @@ const Contact: FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'contact' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'contact' });
+  });
 
   const form = useZodForm({
     schema: newContactSchema
   });
 
-  const submitToFreshdesk = async (email: string, subject: string, body: string) => {
+  const submitToFreshdesk = async (
+    email: string,
+    subject: string,
+    body: string
+  ) => {
     setSubmitting(true);
     try {
       const { data } = await axios(FRESHDESK_WORKER_URL, {
@@ -91,14 +96,32 @@ const Contact: FC = () => {
                 submitToFreshdesk(email, subject, message);
               }}
             >
-              <Input label={t`Email`} placeholder="gavin@hooli.com" {...form.register('email')} />
-              <Input label={t`Subject`} placeholder={t`What happened?`} {...form.register('subject')} />
-              <TextArea label={t`Message`} placeholder={t`How can we help?`} {...form.register('message')} />
+              <Input
+                label={t`Email`}
+                placeholder="gavin@hooli.com"
+                {...form.register('email')}
+              />
+              <Input
+                label={t`Subject`}
+                placeholder={t`What happened?`}
+                {...form.register('subject')}
+              />
+              <TextArea
+                label={t`Message`}
+                placeholder={t`How can we help?`}
+                {...form.register('message')}
+              />
               <div className="ml-auto">
                 <Button
                   type="submit"
                   disabled={submitting}
-                  icon={submitting ? <Spinner size="xs" /> : <PencilAltIcon className="h-4 w-4" />}
+                  icon={
+                    submitting ? (
+                      <Spinner size="xs" />
+                    ) : (
+                      <PencilAltIcon className="h-4 w-4" />
+                    )
+                  }
                 >
                   <Trans>Submit</Trans>
                 </Button>

@@ -1,20 +1,20 @@
 import Sidebar from '@components/Shared/Sidebar';
 import UserProfile from '@components/Shared/UserProfile';
 import {
-  AdjustmentsIcon,
   BookmarkIcon,
   ChipIcon,
+  DatabaseIcon,
   ExclamationIcon,
   FingerPrintIcon,
   ShareIcon,
   SparklesIcon,
   UserIcon
 } from '@heroicons/react/outline';
+import type { Profile } from '@lenster/lens';
 import { t, Trans } from '@lingui/macro';
-import { IS_RELAYER_AVAILABLE } from 'data';
-import type { Profile } from 'lens';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
+import { IS_RELAYER_AVAILABLE } from '@lenster/data';
 
 const SettingsSidebar: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -22,7 +22,10 @@ const SettingsSidebar: FC = () => {
   return (
     <div className="mb-4 space-y-1.5 px-3 sm:px-0">
       <div className="pb-3">
-        <UserProfile profile={currentProfile as Profile} showUserPreview={false} />
+        <UserProfile
+          profile={currentProfile as Profile}
+          showUserPreview={false}
+        />
       </div>
       <Sidebar
         items={[
@@ -35,11 +38,6 @@ const SettingsSidebar: FC = () => {
             title: t`Account`,
             icon: <ChipIcon className="h-4 w-4" />,
             url: '/settings/account'
-          },
-          {
-            title: t`Preferences`,
-            icon: <AdjustmentsIcon className="h-4 w-4" />,
-            url: '/settings/preferences'
           },
           {
             title: t`Interests`,
@@ -64,6 +62,11 @@ const SettingsSidebar: FC = () => {
             title: t`Cleanup`,
             icon: <SparklesIcon className="h-4 w-4" />,
             url: '/settings/cleanup'
+          },
+          {
+            title: t`Export`,
+            icon: <DatabaseIcon className="h-4 w-4" />,
+            url: '/settings/export'
           },
           {
             title: (

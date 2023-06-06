@@ -1,12 +1,12 @@
+import type { Profile } from '@lenster/lens';
+import { useMutualFollowersQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import { Image } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import type { Profile } from 'lens';
-import { useMutualFollowersQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
 import type { Dispatch, FC, ReactNode } from 'react';
 import { useAppStore } from 'src/store/app';
-import { Image } from 'ui';
 
 interface MutualFollowersProps {
   setShowMutualFollowersModal?: Dispatch<boolean>;
@@ -37,20 +37,21 @@ const MutualFollowers: FC<MutualFollowersProps> = ({
 
   const Wrapper = ({ children }: { children: ReactNode }) => (
     <div
-      className={clsx('lt-text-gray-500 flex cursor-pointer items-center space-x-2.5', {
-        'text-sm': variant === 'sm',
-        'text-xs': variant === 'xs'
-      })}
+      className={clsx(
+        'lt-text-gray-500 flex cursor-pointer items-center space-x-2.5',
+        {
+          'text-sm': variant === 'sm',
+          'text-xs': variant === 'xs'
+        }
+      )}
       onClick={() => setShowMutualFollowersModal?.(true)}
+      aria-hidden="true"
     >
       <div className="contents -space-x-2">
         {profiles?.map((profile) => (
           <Image
             key={profile.handle}
             className="h-5 w-5 rounded-full border dark:border-gray-700"
-            onError={({ currentTarget }) => {
-              currentTarget.src = getAvatar(profile, false);
-            }}
             src={getAvatar(profile)}
             alt={formatHandle(profile?.handle)}
           />

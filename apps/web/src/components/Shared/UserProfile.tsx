@@ -1,15 +1,16 @@
 import { BadgeCheckIcon } from '@heroicons/react/solid';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import getProfileAttribute from '@lenster/lib/getProfileAttribute';
+import isVerified from '@lenster/lib/isVerified';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import { Image } from '@lenster/ui';
 import { formatTime, getTwitterFormat } from '@lib/formatTime';
 import clsx from 'clsx';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import getProfileAttribute from 'lib/getProfileAttribute';
-import isVerified from 'lib/isVerified';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { Image } from 'ui';
+import { memo, useState } from 'react';
 
 import Follow from './Follow';
 import Markup from './Markup';
@@ -50,14 +51,14 @@ const UserProfile: FC<UserProfileProps> = ({
 }) => {
   const [following, setFollowing] = useState(isFollowing);
   const statusEmoji = getProfileAttribute(profile?.attributes, 'statusEmoji');
-  const statusMessage = getProfileAttribute(profile?.attributes, 'statusMessage');
+  const statusMessage = getProfileAttribute(
+    profile?.attributes,
+    'statusMessage'
+  );
   const hasStatus = statusEmoji && statusMessage;
 
   const UserAvatar = () => (
     <Image
-      onError={({ currentTarget }) => {
-        currentTarget.src = getAvatar(profile, false);
-      }}
       src={getAvatar(profile)}
       loading="lazy"
       className={clsx(
@@ -74,9 +75,14 @@ const UserProfile: FC<UserProfileProps> = ({
     <>
       <div className="flex max-w-sm items-center">
         <div className={clsx(isBig ? 'font-bold' : 'text-md', 'grid')}>
-          <div className="truncate">{profile?.name ?? formatHandle(profile?.handle)}</div>
+          <div className="truncate">
+            {sanitizeDisplayName(profile?.name) ??
+              formatHandle(profile?.handle)}
+          </div>
         </div>
-        {isVerified(profile?.id) && <BadgeCheckIcon className="text-brand ml-1 h-4 w-4" />}
+        {isVerified(profile?.id) && (
+          <BadgeCheckIcon className="text-brand ml-1 h-4 w-4" />
+        )}
         {showStatus && hasStatus ? (
           <div className="lt-text-gray-500 flex items-center">
             <span className="mx-1.5">·</span>
@@ -88,7 +94,11 @@ const UserProfile: FC<UserProfileProps> = ({
         ) : null}
       </div>
       <div>
-        <Slug className="text-brand-500" slug={formatHandle(profile?.handle)} prefix="@" />
+        <Slug
+          className="text-brand-500"
+          slug={formatHandle(profile?.handle)}
+          prefix="@"
+        />
         {timestamp ? (
           <span className="lt-text-gray-500">
             <span className="mx-1.5">·</span>
@@ -117,7 +127,11 @@ const UserProfile: FC<UserProfileProps> = ({
               <div
                 // Replace with Tailwind
                 style={{ wordBreak: 'break-word' }}
-                className={clsx(isBig ? 'text-base' : 'text-sm', 'mt-2', 'linkify leading-6')}
+                className={clsx(
+                  isBig ? 'text-base' : 'text-sm',
+                  'mt-2',
+                  'linkify leading-6'
+                )}
               >
                 <Markup>{profile?.bio}</Markup>
               </div>
@@ -129,7 +143,10 @@ const UserProfile: FC<UserProfileProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-between" data-testid={`user-profile-${profile.id}`}>
+    <div
+      className="flex items-center justify-between"
+      data-testid={`user-profile-${profile.id}`}
+    >
       {linkToProfile ? (
         <Link href={`/u/${formatHandle(profile?.handle)}`}>
           <UserInfo />
@@ -140,8 +157,14 @@ const UserProfile: FC<UserProfileProps> = ({
       {showFollow &&
         (followStatusLoading ? (
           <div className="shimmer h-8 w-10 rounded-lg" />
-        ) : following ? null : profile?.followModule?.__typename === 'FeeFollowModuleSettings' ? (
-          <SuperFollow profile={profile} setFollowing={setFollowing} />
+        ) : following ? null : profile?.followModule?.__typename ===
+          'FeeFollowModuleSettings' ? (
+          <SuperFollow
+            profile={profile}
+            setFollowing={setFollowing}
+            followPosition={followPosition}
+            followSource={followSource}
+          />
         ) : (
           <Follow
             profile={profile}
@@ -154,4 +177,4 @@ const UserProfile: FC<UserProfileProps> = ({
   );
 };
 
-export default UserProfile;
+export default memo(UserProfile);

@@ -1,7 +1,7 @@
+import type { Publication } from '@lenster/lens';
+import getAppName from '@lenster/lib/getAppName';
 import { formatTime } from '@lib/formatTime';
 import dayjs from 'dayjs';
-import type { Publication } from 'lens';
-import getAppName from 'lib/getAppName';
 import type { FC } from 'react';
 
 import PublicationActions from './Actions';
@@ -17,7 +17,9 @@ interface FullPublicationProps {
 
 const FullPublication: FC<FullPublicationProps> = ({ publication }) => {
   const isMirror = publication.__typename === 'Mirror';
-  const timestamp = isMirror ? publication?.mirrorOf?.createdAt : publication?.createdAt;
+  const timestamp = isMirror
+    ? publication?.mirrorOf?.createdAt
+    : publication?.createdAt;
 
   // Count check to show the publication stats only if the publication has a comment, like or collect
   const mirrorCount = isMirror
@@ -46,7 +48,9 @@ const FullPublication: FC<FullPublicationProps> = ({ publication }) => {
                 <span title={formatTime(timestamp)}>
                   {dayjs(new Date(timestamp)).format('hh:mm A · MMM D, YYYY')}
                 </span>
-                {publication?.appId ? <span> · Posted via {getAppName(publication?.appId)}</span> : null}
+                {publication?.appId ? (
+                  <span> · Posted via {getAppName(publication?.appId)}</span>
+                ) : null}
               </div>
               {showStats && (
                 <>

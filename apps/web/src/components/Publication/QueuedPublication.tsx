@@ -1,22 +1,22 @@
 import Attachments from '@components/Shared/Attachments';
-import IFramely from '@components/Shared/IFramely';
 import Markup from '@components/Shared/Markup';
+import Oembed from '@components/Shared/Oembed';
 import UserProfile from '@components/Shared/UserProfile';
-import { t } from '@lingui/macro';
-import type { Profile } from 'lens';
+import type { Profile } from '@lenster/lens';
 import {
   PublicationDocument,
   PublicationMetadataStatusType,
   useHasTxHashBeenIndexedQuery,
   usePublicationLazyQuery
-} from 'lens';
-import { useApolloClient } from 'lens/apollo';
-import getURLs from 'lib/getURLs';
+} from '@lenster/lens';
+import { useApolloClient } from '@lenster/lens/apollo';
+import getURLs from '@lenster/lib/getURLs';
+import { Tooltip } from '@lenster/ui';
+import { t } from '@lingui/macro';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useTransactionPersistStore } from 'src/store/transaction';
 import type { OptimisticTransaction } from 'src/types';
-import { Tooltip } from 'ui';
 
 interface QueuedPublicationProps {
   txn: OptimisticTransaction;
@@ -44,7 +44,10 @@ const QueuedPublication: FC<QueuedPublicationProps> = ({ txn }) => {
         cache.modify({
           fields: {
             publications() {
-              cache.writeQuery({ data: publication as any, query: PublicationDocument });
+              cache.writeQuery({
+                data: publication,
+                query: PublicationDocument
+              });
             }
           }
         });
@@ -75,7 +78,9 @@ const QueuedPublication: FC<QueuedPublicationProps> = ({ txn }) => {
           getPublication({
             variables: {
               request: { txHash: hasTxHashBeenIndexed.txHash },
-              reactionRequest: currentProfile ? { profileId: currentProfile?.id } : null,
+              reactionRequest: currentProfile
+                ? { profileId: currentProfile?.id }
+                : null,
               profileId: currentProfile?.id ?? null
             }
           });
@@ -99,9 +104,12 @@ const QueuedPublication: FC<QueuedPublicationProps> = ({ txn }) => {
           <Markup>{txn?.content}</Markup>
         </div>
         {txn?.attachments?.length > 0 ? (
-          <Attachments attachments={txn?.attachments} txn={txn} isNew hideDelete />
+          <Attachments attachments={txn?.attachments} txn={txn} hideDelete />
         ) : (
-          txn?.attachments && getURLs(txn?.content)?.length > 0 && <IFramely url={getURLs(txn?.content)[0]} />
+          txn?.attachments &&
+          getURLs(txn?.content)?.length > 0 && (
+            <Oembed url={getURLs(txn?.content)[0]} />
+          )
         )}
       </div>
     </article>

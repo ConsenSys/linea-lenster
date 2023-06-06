@@ -1,9 +1,10 @@
 import { BadgeCheckIcon } from '@heroicons/react/solid';
+import isVerified from '@lenster/lib/isVerified';
+import { Card } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import isVerified from 'lib/isVerified';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
-import { Card } from 'ui';
 
 const Verification: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -21,9 +22,13 @@ const Verification: FC = () => {
       ) : (
         <div>
           <Trans>No.</Trans>{' '}
-          <a href="https://tally.so/r/wgDajK" target="_blank" rel="noreferrer noopener">
+          <Link
+            href="https://tally.so/r/wgDajK"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Trans>Request Verification</Trans>
-          </a>
+          </Link>
         </div>
       )}
     </Card>

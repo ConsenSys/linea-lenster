@@ -1,10 +1,10 @@
 import { UsersIcon } from '@heroicons/react/outline';
-import { t, Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
-import humanize from 'lib/humanize';
+import type { Profile } from '@lenster/lens';
+import humanize from '@lenster/lib/humanize';
+import { Modal } from '@lenster/ui';
+import { Plural, t } from '@lingui/macro';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Modal } from 'ui';
 
 import Followers from './Followers';
 import Following from './Following';
@@ -25,9 +25,16 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
         onClick={() => setShowFollowingModal(!showFollowingModal)}
         data-testid="profile-followings"
       >
-        <div className="text-xl">{humanize(profile?.stats?.totalFollowing)}</div>
+        <div className="text-xl">
+          {humanize(profile?.stats?.totalFollowing)}
+        </div>
         <div className="lt-text-gray-500">
-          <Trans>Following</Trans>
+          <Plural
+            value={profile?.stats?.totalFollowing}
+            zero="Following"
+            one="Following"
+            other="Following"
+          />
         </div>
       </button>
       <button
@@ -36,9 +43,16 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
         onClick={() => setShowFollowersModal(!showFollowersModal)}
         data-testid="profile-followers"
       >
-        <div className="text-xl">{humanize(profile?.stats?.totalFollowers)}</div>
+        <div className="text-xl">
+          {humanize(profile?.stats?.totalFollowers)}
+        </div>
         <div className="lt-text-gray-500">
-          <Trans>Followers</Trans>
+          <Plural
+            value={profile?.stats?.totalFollowers}
+            zero="Follower"
+            one="Follower"
+            other="Followers"
+          />
         </div>
       </button>
       <Modal

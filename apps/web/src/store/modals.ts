@@ -1,4 +1,4 @@
-import type { Publication } from 'lens';
+import type { Publication } from '@lenster/lens';
 import { create } from 'zustand';
 
 interface GlobalModalState {
@@ -27,7 +27,8 @@ export const useGlobalModalStateStore = create<GlobalModalState>((set) => ({
   showStatusModal: false,
   setShowStatusModal: (showStatusModal) => set(() => ({ showStatusModal })),
   showProfileSwitchModal: false,
-  setShowProfileSwitchModal: (showProfileSwitchModal) => set(() => ({ showProfileSwitchModal })),
+  setShowProfileSwitchModal: (showProfileSwitchModal) =>
+    set(() => ({ showProfileSwitchModal })),
   showMobileDrawer: false,
   setShowMobileDrawer: (showMobileDrawer) => set(() => ({ showMobileDrawer }))
 }));

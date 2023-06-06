@@ -1,14 +1,18 @@
 import SwitchNetwork from '@components/Shared/SwitchNetwork';
-import useIsMounted from '@components/utils/hooks/useIsMounted';
 import { KeyIcon } from '@heroicons/react/outline';
 import { XCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
+import { Errors } from '@lenster/data';
+import {
+  useAuthenticateMutation,
+  useChallengeLazyQuery,
+  useUserProfilesLazyQuery
+} from '@lenster/lens';
+import getWalletDetails from '@lenster/lib/getWalletDetails';
+import { Button, Spinner } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import Errors from 'data/errors';
-import { useAuthenticateMutation, useChallengeLazyQuery, useUserProfilesLazyQuery } from 'lens';
-import getWalletDetails from 'lib/getWalletDetails';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -16,23 +20,37 @@ import { CHAIN_ID } from 'src/constants';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
 import { useAuthStore } from 'src/store/auth';
 import { AUTH } from 'src/tracking';
-import { Button, Spinner } from 'ui';
+import { useIsMounted } from 'usehooks-ts';
 import type { Connector } from 'wagmi';
-import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from 'wagmi';
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useNetwork,
+  useSignMessage
+} from 'wagmi';
 
 interface WalletSelectorProps {
   setHasConnected: Dispatch<boolean>;
   setHasProfile: Dispatch<boolean>;
 }
 
-const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfile }) => {
+const WalletSelector: FC<WalletSelectorProps> = ({
+  setHasConnected,
+  setHasProfile
+}) => {
   const setProfiles = useAppStore((state) => state.setProfiles);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
   const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { mounted } = useIsMounted();
+  const onError = (error: any) => {
+    setIsLoading(false);
+    errorToast(error);
+  };
+
+  const isMounted = useIsMounted();
   const { chain } = useNetwork();
   const { connectors, error, connectAsync } = useConnect({ chainId: CHAIN_ID });
   const { disconnect } = useDisconnect();
@@ -41,7 +59,8 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
   const [loadChallenge, { error: errorChallenge }] = useChallengeLazyQuery({
     fetchPolicy: 'no-cache'
   });
-  const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
+  const [authenticate, { error: errorAuthenticate }] =
+    useAuthenticateMutation();
   const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery();
 
   const onConnect = async (connector: Connector) => {
@@ -50,7 +69,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       if (account) {
         setHasConnected(true);
       }
-      Mixpanel.track(AUTH.CONNECT_WALLET, {
+      Leafwatch.track(AUTH.CONNECT_WALLET, {
         wallet: connector.name.toLowerCase()
       });
     } catch (error) {
@@ -61,7 +80,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
   const handleSign = async () => {
     let keepModal = false;
     try {
-      setLoading(true);
+      setIsLoading(true);
       // Get challenge
       const challenge = await loadChallenge({
         variables: { request: { address } }
@@ -81,7 +100,10 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         variables: { request: { address, signature } }
       });
       localStorage.setItem('accessToken', auth.data?.authenticate.accessToken);
-      localStorage.setItem('refreshToken', auth.data?.authenticate.refreshToken);
+      localStorage.setItem(
+        'refreshToken',
+        auth.data?.authenticate.refreshToken
+      );
 
       // Get authed profiles
       const { data: profilesData } = await getProfiles({
@@ -95,17 +117,19 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         const profiles: any = profilesData?.profiles?.items
           ?.slice()
           ?.sort((a, b) => Number(a.id) - Number(b.id))
-          ?.sort((a, b) => (a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1));
+          ?.sort((a, b) =>
+            a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1
+          );
         const currentProfile = profiles[0];
         setProfiles(profiles);
         setCurrentProfile(currentProfile);
         setProfileId(currentProfile.id);
       }
-      Mixpanel.track(AUTH.SIWL);
+      Leafwatch.track(AUTH.SIWL);
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
       if (!keepModal) {
         setShowAuthModal(false);
       }
@@ -130,7 +154,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         <button
           onClick={() => {
             disconnect?.();
-            Mixpanel.track(AUTH.CHANGE_WALLET);
+            Leafwatch.track(AUTH.CHANGE_WALLET);
           }}
           className="flex items-center space-x-1 text-sm text-gray-300 underline hover:text-brand-500"
         >
@@ -148,26 +172,33 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       )}
     </div>
   ) : (
-    <div className="inline-block w-full transform space-y-3 overflow-hidden text-left align-middle transition-all">
+    <div className="inline-block w-full space-y-3 overflow-hidden text-left align-middle">
       {connectors.map((connector) => {
         return (
           <button
             type="button"
             key={connector.id}
             className={clsx(
-              { 'hover:bg-brand-500': connector.id !== activeConnector?.id },
+              {
+                'hover:bg-brand-500':
+                  connector.id !== activeConnector?.id
+              },
               'flex w-full dark:text-darker hitems-center justify-between overflow-hidden rounded-full bg-white px-3 py-2 outline-none'
             )}
             onClick={() => onConnect(connector)}
-            disabled={mounted ? !connector.ready || connector.id === activeConnector?.id : false}
+            disabled={
+              isMounted()
+                ? !connector.ready || connector.id === activeConnector?.id
+                : false
+            }
           >
             <span>
-              {mounted
+              {isMounted()
                 ? connector.id === 'injected'
                   ? 'MetaMask'
                   : getWalletDetails(connector.name).name
                 : getWalletDetails(connector.name).name}
-              {mounted ? !connector.ready && ' (unsupported)' : ''}
+              {isMounted() ? !connector.ready && ' (unsupported)' : ''}
             </span>
             <img
               src={getWalletDetails(connector.name).logo}

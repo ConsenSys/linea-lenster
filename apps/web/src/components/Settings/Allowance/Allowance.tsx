@@ -1,8 +1,9 @@
-import type { ApprovedAllowanceAmount, ApprovedModuleAllowanceAmountQuery } from 'lens';
-import { CollectModules } from 'lens';
+import type { ApprovedAllowanceAmount, ApprovedModuleAllowanceAmountQuery } from '@lenster/lens';
+import { CollectModules } from '@lenster/lens';
 import type { FC } from 'react';
 
 import Module from './Module';
+import { ZERO_ADDRESS } from '@lenster/data';
 
 interface AllowanceProps {
   allowance: ApprovedModuleAllowanceAmountQuery | undefined;
@@ -10,15 +11,14 @@ interface AllowanceProps {
 
 const Allowance: FC<AllowanceProps> = ({ allowance }) => {
   return (
-    <div className="space-y-4 p-5">
-      {allowance?.approvedModuleAllowanceAmount?.map((item: ApprovedAllowanceAmount) =>
-        item?.module === CollectModules.RevertCollectModule ||
-        item?.module === CollectModules.FreeCollectModule ||
-        item?.module === CollectModules.MultirecipientFeeCollectModule ? (
-          ''
-        ) : (
-          <Module key={item?.contractAddress} module={item} />
-        )
+    <div className='space-y-4 p-5'>
+      {allowance?.approvedModuleAllowanceAmount?.map(
+        (item: ApprovedAllowanceAmount) =>
+          item?.module === CollectModules.RevertCollectModule || item.contractAddress === ZERO_ADDRESS ? (
+            ''
+          ) : (
+            <Module key={item?.contractAddress} module={item} />
+          ),
       )}
     </div>
   );
