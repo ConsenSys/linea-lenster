@@ -24,7 +24,7 @@ contract MockProfileCreationProxy {
     }
 
     function proxyCreateProfile(DataTypes.CreateProfileData memory vars) external {
-        require(tx.origin == msg.sender, 'Please refrain from creating multiple smart contracts that continuously request a handle');
+        require(tx.origin == msg.sender, 'The transaction sender must be the same as the transaction origin');
 
         uint256 balanceLens = LENS_HUB.balanceOf(msg.sender);
         require(balanceLens == 0, 'Already has a Lens handle');
