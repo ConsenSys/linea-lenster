@@ -36,7 +36,7 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
   const { address } = useAccount();
 
   //get profiles with the address
-  useUserProfilesQuery({
+  const { data: userProfilesData } = useUserProfilesQuery({
     variables: { ownedBy: address },
     pollInterval: 1000
   });
@@ -72,15 +72,11 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
       localStorage.setItem('refreshToken', auth.data?.authenticate.refreshToken);
 
       // Get authed profiles
-      const { data: profilesData } = await getProfiles({
-        variables: { ownedBy: address }
-      });
-
-      if (!profilesData?.profiles?.items?.length) {
+      if (!userProfilesData?.profiles?.items?.length) {
         keepModal = true;
         console.error('No profiles with this address');
       } else {
-        const profiles: any = profilesData?.profiles?.items
+        const profiles: any = userProfilesData?.profiles?.items
           ?.slice()
           ?.sort((a, b) => Number(a.id) - Number(b.id))
           ?.sort((a, b) => (a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1));
