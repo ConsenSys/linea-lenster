@@ -1,14 +1,20 @@
 import MetaTags from '@components/Common/MetaTags';
 import { HomeIcon } from '@heroicons/react/outline';
+import { APP_NAME } from '@lenster/data/constants';
+import { Button } from '@lenster/ui';
+import circluarStd from '@lib/lensterFont';
 import { Trans } from '@lingui/macro';
-import { APP_NAME } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { Button } from 'ui';
 
 const Custom500: FC = () => {
   return (
     <div className="page-center flex-col">
+      <style jsx global>{`
+        body {
+          font-family: ${circluarStd.style.fontFamily};
+        }
+      `}</style>
       <MetaTags title={`500 • ${APP_NAME}`} />
       <div className="py-10 text-center">
         <h1 className="mb-4 text-3xl font-bold">
@@ -21,7 +27,7 @@ const Custom500: FC = () => {
           </Trans>
         </div>
         <Link href="/">
-          <Button className="item-center mx-auto flex" size="lg" icon={<HomeIcon className="h-4 w-4" />}>
+          <Button className="mx-auto flex items-center" size="lg" icon={<HomeIcon className="h-4 w-4" />}>
             <Trans>Go to home</Trans>
           </Button>
         </Link>

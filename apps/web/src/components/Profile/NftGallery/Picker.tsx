@@ -1,12 +1,13 @@
 import SingleNft from '@components/Nft/SingleNft';
 import NftPickerShimmer from '@components/Shared/Shimmer/NftPickerShimmer';
 import { CheckIcon, CollectionIcon } from '@heroicons/react/outline';
+import { IS_MAINNET } from '@lenster/data/constants';
+import type { Nft, NfTsRequest } from '@lenster/lens';
+import { useNftFeedQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import { IS_MAINNET } from 'data/constants';
-import type { Nft, NfTsRequest } from 'lens';
-import { useNftFeedQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
@@ -15,7 +16,6 @@ import { CHAIN_ID } from 'src/constants';
 import { useAppStore } from 'src/store/app';
 import type { NftGalleryItem } from 'src/store/nft-gallery';
 import { useNftGalleryStore } from 'src/store/nft-gallery';
-import { EmptyState, ErrorMessage } from 'ui';
 import { mainnet } from 'wagmi/chains';
 
 const Picker: FC = () => {
@@ -137,12 +137,12 @@ const Picker: FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-3">
-      {nfts?.map((nft, i) => {
+      {nfts?.map((nft, index) => {
         const id = `${nft.chainId}_${nft.contractAddress}_${nft.tokenId}`;
         const isSelected = selectedItems.includes(id);
         return (
           <div
-            key={`${id}_${i}`}
+            key={`${id}_${index}`}
             className={clsx(
               'relative rounded-xl border-2',
               isSelected ? 'border-brand-500' : 'border-transparent'

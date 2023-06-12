@@ -1,10 +1,10 @@
 import MetaTags from '@components/Common/MetaTags';
 import { HomeIcon } from '@heroicons/react/outline';
+import { APP_NAME, STATIC_IMAGES_URL } from '@lenster/data/constants';
+import { Button } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import { APP_NAME, STATIC_IMAGES_URL } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { Button } from 'ui';
 
 const Custom404: FC = () => {
   return (
@@ -19,7 +19,7 @@ const Custom404: FC = () => {
           <Trans>This page could not be found.</Trans>
         </div>
         <Link href="/">
-          <Button className="item-center mx-auto flex" size="lg" icon={<HomeIcon className="h-4 w-4" />}>
+          <Button className="mx-auto flex items-center" size="lg" icon={<HomeIcon className="h-4 w-4" />}>
             <Trans>Go to home</Trans>
           </Button>
         </Link>

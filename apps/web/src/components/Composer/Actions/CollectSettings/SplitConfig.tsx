@@ -1,26 +1,27 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
 import { PlusIcon, SwitchHorizontalIcon, UsersIcon, XCircleIcon } from '@heroicons/react/outline';
-import isValidEthAddress from '@lib/isValidEthAddress';
+import { HANDLE_SUFFIX, LENSPROTOCOL_HANDLE } from '@lenster/data/constants';
+import { CollectModules, useProfileLazyQuery } from '@lenster/lens';
+import isValidEthAddress from '@lenster/lib/isValidEthAddress';
+import splitNumber from '@lenster/lib/splitNumber';
+import { Button, Input } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
-import { HANDLE_SUFFIX, LENSPROTOCOL_HANDLE } from 'data/constants';
-import { useProfileLazyQuery } from 'lens';
-import splitNumber from 'lib/splitNumber';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useCollectModuleStore } from 'src/store/collect-module';
-import { Button, Input } from 'ui';
 
 interface SplitConfigProps {
   isRecipientsDuplicated: () => boolean;
+  setCollectType: (data: any) => void;
 }
 
-const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
+const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated, setCollectType }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const recipients = useCollectModuleStore((state) => state.recipients);
-  const setRecipients = useCollectModuleStore((state) => state.setRecipients);
+  const collectModule = useCollectModuleStore((state) => state.collectModule);
 
-  const hasRecipients = recipients.length > 0;
-  const splitTotal = recipients.reduce((acc, curr) => acc + curr.split, 0);
+  const recipients = collectModule.recipients ?? [];
+  const hasRecipients = (recipients ?? []).length > 0;
+  const splitTotal = recipients?.reduce((acc, curr) => acc + curr.split, 0);
 
   const [getProfileByHandle, { loading }] = useProfileLazyQuery();
 
@@ -32,7 +33,9 @@ const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
         split: equalSplits[i]
       };
     });
-    setRecipients([...splits]);
+    setCollectType({
+      recipients: [...splits]
+    });
   };
 
   const getIsHandle = (handle: string) => {
@@ -57,13 +60,13 @@ const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
         variables: { request: { handle: value } },
         onCompleted: ({ profile }) => {
           if (profile) {
-            setRecipients(getRecipients(profile.ownedBy));
+            setCollectType({ recipients: getRecipients(profile.ownedBy) });
           }
         }
       });
     }
 
-    setRecipients(getRecipients(value));
+    setCollectType({ recipients: getRecipients(value) });
   };
 
   return (
@@ -71,11 +74,13 @@ const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
       <ToggleWithHelper
         on={recipients.length > 0}
         setOn={() => {
-          if (recipients.length > 0) {
-            setRecipients([]);
-          } else {
-            setRecipients([{ recipient: currentProfile?.ownedBy, split: 100 }]);
-          }
+          setCollectType({
+            type:
+              recipients.length > 0
+                ? CollectModules.SimpleCollectModule
+                : CollectModules.MultirecipientFeeCollectModule,
+            recipients: recipients.length > 0 ? [] : [{ recipient: currentProfile?.ownedBy, split: 100 }]
+          });
         }}
         heading={
           <div className="flex items-center space-x-2">
@@ -112,7 +117,9 @@ const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
                 </div>
                 <button
                   onClick={() => {
-                    setRecipients(recipients.filter((_, i) => i !== index));
+                    setCollectType({
+                      recipients: recipients.filter((_, i) => i !== index)
+                    });
                   }}
                 >
                   <XCircleIcon className="h-5 w-5 text-red-500" />
@@ -129,7 +136,9 @@ const SplitConfig: FC<SplitConfigProps> = ({ isRecipientsDuplicated }) => {
                 outline
                 icon={<PlusIcon className="h-3 w-3" />}
                 onClick={() => {
-                  setRecipients([...recipients, { recipient: '', split: 0 }]);
+                  setCollectType({
+                    recipients: [...recipients, { recipient: '', split: 0 }]
+                  });
                 }}
               >
                 Add recipient

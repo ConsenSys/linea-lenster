@@ -1,10 +1,12 @@
 import { UsersIcon } from '@heroicons/react/outline';
-import { t, Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
-import humanize from 'lib/humanize';
+import type { Profile } from '@lenster/lens';
+import humanize from '@lenster/lib/humanize';
+import { Modal } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { Plural, t } from '@lingui/macro';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Modal } from 'ui';
+import { PROFILE } from 'src/tracking';
 
 import Followers from './Followers';
 import Following from './Following';
@@ -22,23 +24,33 @@ const Followerings: FC<FolloweringsProps> = ({ profile }) => {
       <button
         type="button"
         className="text-left"
-        onClick={() => setShowFollowingModal(!showFollowingModal)}
+        onClick={() => {
+          setShowFollowingModal(!showFollowingModal);
+          Leafwatch.track(PROFILE.OPEN_FOLLOWING, {
+            profile_id: profile.id
+          });
+        }}
         data-testid="profile-followings"
       >
         <div className="text-xl">{humanize(profile?.stats?.totalFollowing)}</div>
         <div className="lt-text-gray-500">
-          <Trans>Following</Trans>
+          <Plural value={profile?.stats?.totalFollowing} zero="Following" one="Following" other="Following" />
         </div>
       </button>
       <button
         type="button"
         className="text-left"
-        onClick={() => setShowFollowersModal(!showFollowersModal)}
+        onClick={() => {
+          setShowFollowersModal(!showFollowersModal);
+          Leafwatch.track(PROFILE.OPEN_FOLLOWERS, {
+            profile_id: profile.id
+          });
+        }}
         data-testid="profile-followers"
       >
         <div className="text-xl">{humanize(profile?.stats?.totalFollowers)}</div>
         <div className="lt-text-gray-500">
-          <Trans>Followers</Trans>
+          <Plural value={profile?.stats?.totalFollowers} zero="Follower" one="Follower" other="Followers" />
         </div>
       </button>
       <Modal

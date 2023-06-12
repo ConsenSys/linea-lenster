@@ -3,8 +3,7 @@ import LensEndpoint from './lens-endpoints';
 import getEnvConfig from './utils/getEnvConfig';
 
 // Environments
-export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-export const IS_PREVIEW = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview';
+export const IS_PRODUCTION = process.env.NEXT_PUBLIC_IS_PRODUCTION === 'true';
 
 // Lens Network
 export const LENS_NETWORK = process.env.NEXT_PUBLIC_LENS_NETWORK ?? 'mainnet';
@@ -115,9 +114,24 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'Approval',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'approved', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'approved',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -125,8 +139,18 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'ApprovalForAll',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'operator', internalType: 'address', indexed: true },
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'operator',
+        internalType: 'address',
+        indexed: true
+      },
       { type: 'bool', name: 'approved', internalType: 'bool', indexed: false }
     ],
     anonymous: false
@@ -135,8 +159,18 @@ export const LINEA_RESOLVER_ABI = [
     type: 'event',
     name: 'OwnershipTransferred',
     inputs: [
-      { type: 'address', name: 'previousOwner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'newOwner', internalType: 'address', indexed: true }
+      {
+        type: 'address',
+        name: 'previousOwner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'newOwner',
+        internalType: 'address',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -146,7 +180,12 @@ export const LINEA_RESOLVER_ABI = [
     inputs: [
       { type: 'address', name: 'from', internalType: 'address', indexed: true },
       { type: 'address', name: 'to', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -243,7 +282,13 @@ export const LINEA_RESOLVER_ABI = [
     name: 'ownerOf',
     inputs: [{ type: 'uint256', name: 'tokenId', internalType: 'uint256' }]
   },
-  { type: 'function', stateMutability: 'nonpayable', outputs: [], name: 'renounceOwnership', inputs: [] },
+  {
+    type: 'function',
+    stateMutability: 'nonpayable',
+    outputs: [],
+    name: 'renounceOwnership',
+    inputs: []
+  },
   {
     type: 'function',
     stateMutability: 'view',
@@ -384,6 +429,11 @@ export const IS_MAINNET = API_URL === LensEndpoint.Mainnet;
 export const XMTP_ENV = IS_MAINNET ? 'production' : 'dev';
 export const XMTP_PREFIX = 'lens.dev/dm';
 
+// Snapshot
+export const SNAPSHOT_HUB_URL = IS_MAINNET ? 'https://hub.snapshot.org' : 'https://testnet.snapshot.org';
+export const LENSTER_POLLS_SPACE = 'polls.lenster.xyz';
+export const SNAPSHOT_URL = IS_MAINNET ? 'https://snapshot.org' : 'https://demo.snapshot.org';
+
 // Application
 export const APP_NAME = 'Lineaster';
 export const DESCRIPTION =
@@ -397,14 +447,12 @@ export const GIT_COMMIT_SHA = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.sli
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const LENSPROTOCOL_HANDLE = 'lensprotocol';
 export const HANDLE_SUFFIX = IS_MAINNET ? '.lens' : '.test';
+// TODO: Remove this once everyone has migrated to the new Lens relayer
 export const OLD_LENS_RELAYER_ADDRESS = '0xD1FecCF6881970105dfb2b654054174007f0e07E';
-
-// Mixpanel
-export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? '';
-export const MIXPANEL_ENABLED = MIXPANEL_TOKEN && IS_PRODUCTION;
 
 // URLs
 export const STATIC_ASSETS_URL = 'https://static-assets.lenster.xyz';
+export const LENS_MEDIA_SNAPSHOT_URL = 'https://ik.imagekit.io/lens/media-snapshot';
 export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
 export const LINEA_EXPLORER_URL = IS_MAINNET
   ? 'https://explorer.linea.build'
@@ -414,29 +462,27 @@ export const ZONIC_URL = IS_MAINNET ? 'https://zonic.app' : 'https://testnet.zon
 export const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
 export const ARWEAVE_GATEWAY = 'https://arweave.net/';
 export const EVER_API = 'https://endpoint.4everland.co';
-export const SIMPLEANALYTICS_API = 'https://simpleanalytics.com/lenster.xyz.json';
 export const DEFAULT_OG = `${STATIC_IMAGES_URL}/og/logo.jpeg`;
-export const IFRAMELY_URL = 'https://iframely.lenster.xyz/iframely';
 export const ENS_FRONT_DEV_LINEA_URL = 'https://ensfront.dev.linea.build/metadata';
 
 // Workers
-export const USER_CONTENT_URL = 'https://user-content.lenster.xyz';
-export const STS_TOKEN_URL = IS_PRODUCTION ? 'https://sts.lenster.xyz' : 'http://localhost:8082';
+export const STS_GENERATOR_WORKER_URL = IS_PRODUCTION ? 'https://sts.lenster.xyz' : 'http://localhost:8082';
 export const METADATA_WORKER_URL = IS_PRODUCTION ? 'https://metadata.lenster.xyz' : 'http://localhost:8083';
 export const FRESHDESK_WORKER_URL = IS_PRODUCTION ? 'https://freshdesk.lenster.xyz' : 'http://localhost:8084';
+export const SNAPSHOR_RELAY_WORKER_URL = IS_PRODUCTION
+  ? 'https://snapshot-relay.lenster.xyz'
+  : 'http://localhost:8085';
+export const ENS_RESOLVER_WORKER_URL = IS_PRODUCTION
+  ? 'https://ens-resolver.lenster.xyz'
+  : 'http://localhost:8086';
+export const OEMBED_WORKER_URL = IS_PRODUCTION ? 'https://oembed.lenster.xyz' : 'http://localhost:8087';
+export const LEAFWATCH_WORKER_URL = IS_PRODUCTION ? 'https://leafwatch.lenster.xyz' : 'http://localhost:8088';
 
-// Web3
+// Tokens / Keys
 export const ALCHEMY_KEY = '7jxlM7yIx-aJXDivcEZxsLFFRKQS6-ue';
 export const WALLETCONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'cd542acc70c2b548030f9901a52e70c8';
-
-// Regex
-export const URL_REGEX =
-  /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.\-][\da-z]+)*\.[a-z]{2,63}(:\d{1,5})?(\/.*)?$/;
-export const ADDRESS_REGEX = /^(0x)?[\da-f]{40}$/i;
-export const HANDLE_REGEX = /^[\da-z]+$/;
-export const ALL_HANDLES_REGEX = /([\s+])@(\S+)/g;
-export const HANDLE_SANITIZE_REGEX = /[^\d .A-Za-z]/g;
+export const GROWTHBOOK_KEY = IS_MAINNET ? 'sdk-fDLRMwvpyh4Kq3b' : 'sdk-STENQl8vU1da648';
 
 // Utils
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -456,10 +502,11 @@ export const ALLOWED_MEDIA_TYPES = [...ALLOWED_VIDEO_TYPES, ...ALLOWED_IMAGE_TYP
 export const MESSAGE_PAGE_LIMIT = 15;
 export const MIN_WIDTH_DESKTOP = 1024;
 
-// Named transforms
-export const AVATAR = '300x300';
-export const COVER = '1500x500';
-export const ATTACHMENT = '1000,fit';
+// Named transforms for ImageKit
+export const AVATAR = 'tr:w-300,h-300';
+export const EXPANDED_AVATAR = 'tr:w-1000,h-1000';
+export const COVER = 'tr:w-1500,h-500';
+export const ATTACHMENT = 'tr:w-1000';
 
 // S3 bucket
 export const S3_BUCKET = {

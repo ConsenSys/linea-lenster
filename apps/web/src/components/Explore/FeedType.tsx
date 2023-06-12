@@ -1,7 +1,7 @@
-import { Mixpanel } from '@lib/mixpanel';
+import { PublicationMainFocus } from '@lenster/lens';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import clsx from 'clsx';
-import { PublicationMainFocus } from 'lens';
 import type { Dispatch, FC } from 'react';
 import { EXPLORE } from 'src/tracking';
 
@@ -21,13 +21,15 @@ const FeedType: FC<FeedTypeProps> = ({ setFocus, focus }) => {
       type="button"
       onClick={() => {
         setFocus(type as PublicationMainFocus);
-        Mixpanel.track(EXPLORE.SWITCH_EXPLORE_FEED_FOCUS, {
+        Leafwatch.track(EXPLORE.SWITCH_EXPLORE_FEED_FOCUS, {
           explore_feed_focus: (type ?? 'all_posts').toLowerCase()
         });
       }}
       className={clsx(
         { '!bg-brand-500 !text-white': focus === type },
-        'bg-brand-100 text-brand border-brand-300 dark:border-brand-500 rounded-full border px-3 py-1.5 text-xs dark:bg-opacity-10 sm:px-4'
+        'text-brand rounded-full px-3 py-1.5 text-xs sm:px-4',
+        'border-brand-300 dark:border-brand-500 border',
+        'bg-brand-100 dark:bg-brand-300/20'
       )}
       aria-label={name}
       aria-selected={focus === type}

@@ -1,9 +1,10 @@
+import type { Profile } from '@lenster/lens';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import { Button } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
 import type { FC } from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
-import { Button } from 'ui';
 
 import Create from './Create';
 
@@ -57,7 +58,9 @@ const NoGallery: FC<NoGalleryProps> = ({ profile }) => {
       <div className="text-center">
         {!isOwner ? (
           <>
-            <h5 className="mb-2 text-xl">{profile.name ?? profile.handle} hasn't setup gallery yet!</h5>
+            <h5 className="mb-2 text-xl">
+              {sanitizeDisplayName(profile.name) ?? profile.handle} hasn't setup gallery yet!
+            </h5>
             <p className="text-sm opacity-60">Check again later</p>
           </>
         ) : (

@@ -39,7 +39,7 @@ contract MockProfileCreationProxy {
         if (firstByte == '-' || firstByte == '_' || firstByte == '.')
             revert Errors.HandleFirstCharInvalid();
 
-        for (uint256 i = 1; i < handleLength; ) {
+        for (uint256 i = 1; i < handleLength;) {
             if (bytes(vars.handle)[i] == '.') revert Errors.HandleContainsInvalidCharacters();
             unchecked {
                 ++i;

@@ -1,33 +1,33 @@
-name: Clean branch cache
+name: Clean cache
 
 on:
-  pull_request:
-    types: [closed]
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   cleanup:
-    name: Cache cleanup
+    name: Cleanup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🚪
         uses: actions/checkout@v3
 
-      - name: Cleanup 🧹
+      - name: Cleanup ✨
         run: |
           gh extension install actions/gh-actions-cache
 
           REPO=${{ github.repository }}
-          BRANCH="refs/pull/${{ github.event.pull_request.number }}/merge"
 
           echo "Fetching list of cache key"
-          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -L 100 | cut -f 1 )
 
-          ## Setting this to not fail the workflow while deleting cache keys. 
+          ## Setting this to not fail the workflow while deleting cache keys.
           set +e
           echo "Deleting caches..."
           for cacheKey in $cacheKeysForPR
           do
-            gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
+              gh actions-cache delete $cacheKey -R $REPO --confirm
           done
           echo "Done"
         env:

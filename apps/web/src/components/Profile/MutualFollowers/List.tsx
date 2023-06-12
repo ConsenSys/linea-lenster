@@ -1,14 +1,14 @@
 import Loader from '@components/Shared/Loader';
 import UserProfile from '@components/Shared/UserProfile';
+import type { MutualFollowersProfilesQueryRequest, Profile } from '@lenster/lens';
+import { useMutualFollowersQuery } from '@lenster/lens';
+import { ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import type { MutualFollowersProfilesQueryRequest, Profile } from 'lens';
-import { useMutualFollowersListQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { useAppStore } from 'src/store/app';
-import { FollowSource } from 'src/tracking';
-import { ErrorMessage } from 'ui';
+import { FollowUnfollowSource } from 'src/tracking';
 
 interface MutualFollowersListProps {
   profileId: string;
@@ -25,7 +25,7 @@ const MutualFollowersList: FC<MutualFollowersListProps> = ({ profileId }) => {
     limit: 10
   };
 
-  const { data, loading, error, fetchMore } = useMutualFollowersListQuery({
+  const { data, loading, error, fetchMore } = useMutualFollowersQuery({
     variables: { request },
     skip: !profileId
   });
@@ -61,8 +61,8 @@ const MutualFollowersList: FC<MutualFollowersListProps> = ({ profileId }) => {
             <UserProfile
               profile={profile as Profile}
               isFollowing={profile?.isFollowedByMe}
-              followPosition={index + 1}
-              followSource={FollowSource.MUTUAL_FOLLOWERS_MODAL}
+              followUnfollowPosition={index + 1}
+              followUnfollowSource={FollowUnfollowSource.MUTUAL_FOLLOWERS_MODAL}
               showBio
               showFollow
               showUserPreview={false}

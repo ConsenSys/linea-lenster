@@ -1,17 +1,24 @@
 import MetaTags from '@components/Common/MetaTags';
 import Loader from '@components/Shared/Loader';
-import { Mixpanel } from '@lib/mixpanel';
+import { APP_NAME, DEFAULT_COLLECT_TOKEN } from '@lenster/data/constants';
+import type { Erc20 } from '@lenster/lens';
+import {
+  CollectModules,
+  FollowModules,
+  ReferenceModules,
+  useApprovedModuleAllowanceAmountQuery,
+  useEnabledModulesQuery
+} from '@lenster/lens';
+import { Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import { APP_NAME, DEFAULT_COLLECT_TOKEN } from 'data/constants';
-import type { Erc20 } from 'lens';
-import { CollectModules, FollowModules, ReferenceModules, useApprovedModuleAllowanceAmountQuery } from 'lens';
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Custom404 from 'src/pages/404';
 import Custom500 from 'src/pages/500';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import SettingsSidebar from '../Sidebar';
 import Allowance from './Allowance';
@@ -20,11 +27,7 @@ const getAllowancePayload = (currency: string) => {
   return {
     currencies: [currency],
     collectModules: [
-      CollectModules.LimitedFeeCollectModule,
-      CollectModules.FeeCollectModule,
-      CollectModules.LimitedTimedFeeCollectModule,
-      CollectModules.TimedFeeCollectModule,
-      CollectModules.FreeCollectModule,
+      CollectModules.SimpleCollectModule,
       CollectModules.RevertCollectModule,
       CollectModules.MultirecipientFeeCollectModule
     ],
@@ -36,18 +39,23 @@ const getAllowancePayload = (currency: string) => {
 const AllowanceSettings: NextPage = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [currencyLoading, setCurrencyLoading] = useState(false);
+
+  const {
+    data: enabledModules,
+    loading: enabledModulesLoading,
+    error: enabledModulesError
+  } = useEnabledModulesQuery();
+
   const { data, loading, error, refetch } = useApprovedModuleAllowanceAmountQuery({
-    variables: {
-      request: getAllowancePayload(DEFAULT_COLLECT_TOKEN)
-    },
-    skip: !currentProfile?.id
+    variables: { request: getAllowancePayload(DEFAULT_COLLECT_TOKEN) },
+    skip: !currentProfile?.id || enabledModulesLoading
   });
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'settings', subpage: 'allowance' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'settings', subpage: 'allowance' });
+  });
 
-  if (error) {
+  if (error || enabledModulesError) {
     return <Custom500 />;
   }
 
@@ -80,7 +88,7 @@ const AllowanceSettings: NextPage = () => {
               <Trans>Select Currency</Trans>
             </div>
             <select
-              className="focus:border-brand-500 focus:ring-brand-400 w-full rounded-xl border border-gray-300 bg-white outline-none disabled:bg-gray-500 disabled:bg-opacity-20 disabled:opacity-60 dark:border-gray-700 dark:bg-gray-800"
+              className="focus:border-brand-500 focus:ring-brand-400 w-full rounded-xl border border-gray-300 bg-white outline-none dark:border-gray-700 dark:bg-gray-800"
               onChange={(e) => {
                 setCurrencyLoading(true);
                 refetch({
@@ -88,10 +96,10 @@ const AllowanceSettings: NextPage = () => {
                 }).finally(() => setCurrencyLoading(false));
               }}
             >
-              {loading ? (
+              {enabledModulesLoading ? (
                 <option>Loading...</option>
               ) : (
-                data?.enabledModuleCurrencies.map((currency: Erc20) => (
+                enabledModules?.enabledModuleCurrencies.map((currency: Erc20) => (
                   <option key={currency.address} value={currency.address}>
                     {currency.name}
                   </option>
@@ -99,7 +107,7 @@ const AllowanceSettings: NextPage = () => {
               )}
             </select>
           </div>
-          {loading || currencyLoading ? (
+          {loading || enabledModulesLoading || currencyLoading ? (
             <div className="py-5">
               <Loader />
             </div>

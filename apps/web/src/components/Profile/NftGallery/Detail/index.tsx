@@ -1,29 +1,30 @@
 import MetaTags from '@components/Common/MetaTags';
 import Slug from '@components/Shared/Slug';
 import UserProfile from '@components/Shared/UserProfile';
-import { Mixpanel } from '@lib/mixpanel';
-import { FeatureFlag } from 'data/feature-flags';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import isFeatureEnabled from 'lib/isFeatureEnabled';
+import { FeatureFlag } from '@lenster/data';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import { Card, GridItemEight, GridItemFour, GridLayout, Image } from '@lenster/ui';
+import { Growthbook } from '@lib/growthbook';
+import { Leafwatch } from '@lib/leafwatch';
 import Link from 'next/link';
 import type { FC } from 'react';
-import React, { useEffect } from 'react';
 import Custom404 from 'src/pages/404';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridItemFour, GridLayout, Image } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 const NFTDetail: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const profiles = useAppStore((state) => state.profiles);
+  const { on: isNftDetailEnabled } = Growthbook.feature(FeatureFlag.NftDetail);
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'nft' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'nft' });
+  });
 
-  if (!isFeatureEnabled(FeatureFlag.NftDetail, currentProfile?.id) || !currentProfile) {
+  if (!isNftDetailEnabled || !currentProfile) {
     return <Custom404 />;
   }
 
@@ -52,9 +53,6 @@ const NFTDetail: FC = () => {
                 <Image
                   key={profile.handle}
                   className="h-5 w-5 rounded-full border dark:border-gray-700"
-                  onError={({ currentTarget }) => {
-                    currentTarget.src = getAvatar(profile, false);
-                  }}
                   src={getAvatar(profile)}
                   alt={formatHandle(profile?.handle)}
                 />

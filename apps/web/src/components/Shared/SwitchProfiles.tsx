@@ -1,14 +1,17 @@
+import { UserAddIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
+import { IS_MAINNET } from '@lenster/data';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import { Image } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { Trans } from '@lingui/macro';
+import Link from 'next/link';
 import type { FC } from 'react';
-import React from 'react';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
 import { PROFILE } from 'src/tracking';
-import { Image } from 'ui';
 
 const SwitchProfiles: FC = () => {
   const profiles = useAppStore((state) => state.profiles);
@@ -29,7 +32,7 @@ const SwitchProfiles: FC = () => {
             setCurrentProfile(selectedProfile);
             setProfileId(selectedProfile.id);
             setShowProfileSwitchModal(false);
-            Mixpanel.track(PROFILE.SWITCH_PROFILE, {
+            Leafwatch.track(PROFILE.SWITCH_PROFILE, {
               switch_profile_to: selectedProfile.id
             });
           }}
@@ -39,9 +42,6 @@ const SwitchProfiles: FC = () => {
               className="h-6 w-6 rounded-full border dark:border-gray-700"
               height={20}
               width={20}
-              onError={({ currentTarget }) => {
-                currentTarget.src = getAvatar(profile, false);
-              }}
               src={getAvatar(profile)}
               alt={formatHandle(profile?.handle)}
             />
@@ -50,6 +50,22 @@ const SwitchProfiles: FC = () => {
           {currentProfile?.id === profile?.id && <CheckCircleIcon className="h-5 w-5 text-green-500" />}
         </button>
       ))}
+      {!IS_MAINNET && (
+        <Link
+          href="/new/profile"
+          className="flex w-full cursor-pointer items-center justify-between space-x-2 rounded-lg py-3 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+          onClick={() => setShowProfileSwitchModal(false)}
+        >
+          <span className="flex items-center space-x-2">
+            <div className="dark:border-brand-700 border-brand-400 bg-brand-500/20 flex h-6 w-6 items-center justify-center rounded-full border">
+              <UserAddIcon className="text-brand h-3 w-3" />
+            </div>
+            <div>
+              <Trans>Create Profile</Trans>
+            </div>
+          </span>
+        </Link>
+      )}
     </div>
   );
 };

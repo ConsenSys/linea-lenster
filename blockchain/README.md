@@ -12,9 +12,9 @@ This contract aims to create Lens handles, with 2 restrictions:
 
 1. Add your secrets
 
-   1. Copy the `.env.example` file to a `.env` file
-   2. Fill it with your Infura URL + Infura key
-   3. Add your private key
+    1. Copy the `.env.example` file to a `.env` file
+    2. Fill it with your Infura URL + Infura key
+    3. Add your private key
 
 2. Install dependencies
 
@@ -36,10 +36,10 @@ This contract aims to create Lens handles, with 2 restrictions:
 
 5. Verify contract on explorer
 
-   1. Flatten contract
+    1. Flatten contract
 
-      ```
-         npm run flatten
-      ```
+       ```
+          npm run flatten
+       ```
 
-   2. Copy the content of `Flattened.sol` and use it in the verification process
+    2. Copy the content of `Flattened.sol` and use it in the verification process

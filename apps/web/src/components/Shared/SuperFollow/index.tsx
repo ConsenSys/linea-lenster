@@ -1,15 +1,15 @@
 import { StarIcon } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { Button, Modal } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import dynamic from 'next/dynamic';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
-import { useAuthStore } from 'src/store/auth';
+import { useGlobalModalStateStore } from 'src/store/modals';
 import { PROFILE } from 'src/tracking';
-import { Button, Modal } from 'ui';
 
 import Loader from '../Loader';
 import Slug from '../Slug';
@@ -23,12 +23,23 @@ interface SuperFollowProps {
   setFollowing: Dispatch<boolean>;
   showText?: boolean;
   again?: boolean;
+
+  // For data analytics
+  followUnfollowPosition?: number;
+  followUnfollowSource?: string;
 }
 
-const SuperFollow: FC<SuperFollowProps> = ({ profile, setFollowing, showText = false, again = false }) => {
+const SuperFollow: FC<SuperFollowProps> = ({
+  profile,
+  setFollowing,
+  showText = false,
+  again = false,
+  followUnfollowPosition,
+  followUnfollowSource
+}) => {
   const [showFollowModal, setShowFollowModal] = useState(false);
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
+  const setShowAuthModal = useGlobalModalStateStore((state) => state.setShowAuthModal);
 
   return (
     <>
@@ -42,7 +53,7 @@ const SuperFollow: FC<SuperFollowProps> = ({ profile, setFollowing, showText = f
             return;
           }
           setShowFollowModal(!showFollowModal);
-          Mixpanel.track(PROFILE.OPEN_SUPER_FOLLOW);
+          Leafwatch.track(PROFILE.OPEN_SUPER_FOLLOW);
         }}
         aria-label="Super Follow"
         icon={<StarIcon className="h-4 w-4" />}
@@ -64,6 +75,8 @@ const SuperFollow: FC<SuperFollowProps> = ({ profile, setFollowing, showText = f
           setFollowing={setFollowing}
           setShowFollowModal={setShowFollowModal}
           again={again}
+          followUnfollowPosition={followUnfollowPosition}
+          followUnfollowSource={followUnfollowSource}
         />
       </Modal>
     </>

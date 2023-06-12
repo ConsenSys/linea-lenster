@@ -1,10 +1,9 @@
 import { SupportIcon } from '@heroicons/react/outline';
+import { DISCORD_URL } from '@lenster/data';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import { DISCORD_URL } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
-import React from 'react';
 
 interface ContactProps {
   onClick?: () => void;

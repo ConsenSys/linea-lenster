@@ -6,6 +6,11 @@ export type SerializedEmojiNode = Spread<{ className: string; type: 'emoji' }, S
 export class EmojiNode extends TextNode {
   __className: string;
 
+  constructor(className: string, text: string, key?: NodeKey) {
+    super(text, key);
+    this.__className = className;
+  }
+
   static getType(): string {
     return 'emoji';
   }
@@ -14,9 +19,15 @@ export class EmojiNode extends TextNode {
     return new EmojiNode(node.__className, node.__text, node.__key);
   }
 
-  constructor(className: string, text: string, key?: NodeKey) {
-    super(text, key);
-    this.__className = className;
+  static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
+    // eslint-disable-next-line no-use-before-define
+    const node = $createEmojiNode(serializedNode.className, serializedNode.text);
+    node.setFormat(serializedNode.format);
+    node.setDetail(serializedNode.detail);
+    node.setMode(serializedNode.mode);
+    node.setStyle(serializedNode.style);
+
+    return node;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
@@ -37,17 +48,6 @@ export class EmojiNode extends TextNode {
     super.updateDOM(prevNode, inner as HTMLElement, config);
 
     return false;
-  }
-
-  static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
-    // eslint-disable-next-line no-use-before-define
-    const node = $createEmojiNode(serializedNode.className, serializedNode.text);
-    node.setFormat(serializedNode.format);
-    node.setDetail(serializedNode.detail);
-    node.setMode(serializedNode.mode);
-    node.setStyle(serializedNode.style);
-
-    return node;
   }
 
   exportJSON(): SerializedEmojiNode {

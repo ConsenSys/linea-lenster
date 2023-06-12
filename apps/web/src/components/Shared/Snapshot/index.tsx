@@ -1,51 +1,52 @@
-import { stopEventPropagation } from 'lib/stopEventPropagation';
-import type { FC, ReactNode } from 'react';
+import { LENSTER_POLLS_SPACE, ZERO_ADDRESS } from '@lenster/data';
+import generateSnapshotAccount from '@lenster/lib/generateSnapshotAccount';
+import stopEventPropagation from '@lenster/lib/stopEventPropagation';
+import { Spinner } from '@lenster/ui';
+import getSnapshotProposal from '@lib/getSnapshotProposal';
+import getSnapshotSpace from '@lib/getSnapshotSpace';
+import { useQuery } from '@tanstack/react-query';
+import type { Proposal, Vote } from '@workers/snapshot-relay';
+import type { FC } from 'react';
 import { useState } from 'react';
-import { useInView } from 'react-cool-inview';
-import type { Proposal, Vote } from 'snapshot';
-import { useSnapshotQuery } from 'snapshot';
-import { webClient } from 'snapshot/apollo';
 import { useAppStore } from 'src/store/app';
-import { Card, Spinner } from 'ui';
 
+import Wrapper from '../Embed/Wrapper';
 import Choices from './Choices';
 import Header from './Header';
 
-interface WrapperProps {
-  children: ReactNode;
-  dataTestId?: string;
-}
-
-const Wrapper: FC<WrapperProps> = ({ children, dataTestId = '' }) => (
-  <Card className="mt-3 cursor-auto p-5" dataTestId={dataTestId} onClick={stopEventPropagation}>
-    {children}
-  </Card>
-);
-
 interface SnapshotProps {
-  propsalId: string;
+  proposalId: string;
 }
 
-const Snapshot: FC<SnapshotProps> = ({ propsalId }) => {
+const Snapshot: FC<SnapshotProps> = ({ proposalId }) => {
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const [pollInterval, setPollInterval] = useState(0);
-  const { observe, inView } = useInView();
+  const [voterAddress, setVoterAddress] = useState<string>(ZERO_ADDRESS);
 
-  const { data, loading, error, refetch } = useSnapshotQuery({
-    variables: {
-      id: propsalId,
-      where: { voter: currentProfile?.ownedBy ?? null, proposal: propsalId }
-    },
-    pollInterval: inView ? pollInterval : 0,
-    client: webClient,
-    onCompleted: (data) => {
-      if (data.proposal?.state === 'active') {
-        setPollInterval(5000);
+  const { isLoading: spaceLoading } = useQuery(['space', proposalId], () =>
+    getSnapshotSpace(proposalId).then(async (res) => {
+      if (res.spaceId === LENSTER_POLLS_SPACE) {
+        const { address } = await generateSnapshotAccount({
+          ownedBy: currentProfile?.ownedBy,
+          profileId: currentProfile?.id,
+          proposalId
+        });
+
+        setVoterAddress(address);
+      } else {
+        setVoterAddress(currentProfile?.ownedBy);
       }
-    }
-  });
 
-  if (loading) {
+      return res;
+    })
+  );
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ['poll', proposalId, voterAddress],
+    () => getSnapshotProposal(proposalId, voterAddress).then((res) => res),
+    { enabled: !spaceLoading }
+  );
+
+  if (spaceLoading || isLoading) {
     // TODO: Add skeleton loader here
     return (
       <Wrapper>
@@ -56,15 +57,32 @@ const Snapshot: FC<SnapshotProps> = ({ propsalId }) => {
     );
   }
 
-  if (!data?.proposal || error) {
+  if (!data.success || error) {
     return null;
   }
 
-  const { proposal, votes } = data;
+  const { proposal, votes } = data.poll;
+  const isLensterPoll = proposal?.space?.id === LENSTER_POLLS_SPACE;
+
+  if (!proposal) {
+    return null;
+  }
+
+  if (isLensterPoll) {
+    return (
+      <span onClick={stopEventPropagation} data-testid={`poll-${proposal.id}`} aria-hidden="true">
+        <Choices
+          proposal={proposal as Proposal}
+          votes={votes as Vote[]}
+          isLensterPoll={isLensterPoll}
+          refetch={refetch}
+        />
+      </span>
+    );
+  }
 
   return (
     <Wrapper dataTestId={`snapshot-${proposal.id}`}>
-      <span ref={observe} />
       <Header proposal={proposal as Proposal} />
       <Choices proposal={proposal as Proposal} votes={votes as Vote[]} refetch={refetch} />
     </Wrapper>

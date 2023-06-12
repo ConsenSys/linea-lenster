@@ -15,12 +15,21 @@ const decoded = (str: string): string => Buffer.from(str, 'base64').toString('bi
 const parseJwt = (
   token: string
 ): {
+  id: string;
+  role: string;
+  iat: number;
   exp: number;
 } => {
   try {
     return JSON.parse(decoded(token.split('.')[1]));
-  } catch {
-    return { exp: 0 };
+  } catch (error) {
+    console.error('Failed to parse JWT', error);
+    return {
+      id: '',
+      role: '',
+      iat: 0,
+      exp: 0
+    };
   }
 };
 

@@ -5,8 +5,8 @@ import {
   CommentRankingFilter,
   CustomFiltersTypes,
   PublicationDocument
-} from 'lens';
-import { nodeClient } from 'lens/apollo';
+} from '@lenster/lens';
+import { nodeClient } from '@lenster/lens/apollo';
 import type { GetServerSidePropsContext } from 'next';
 
 export const config = {
@@ -34,7 +34,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const profileId = null;
     const reactionRequest = { profileId };
     const { publication } = publicationData;
-    const id = publication.__typename === 'Mirror' ? publication.mirrorOf.id : publication.id;
+    const id =
+      publication.__typename === 'Mirror'
+        ? publication.mirrorOf.id
+        : publication.id;
 
     const { data: commentsData } = await nodeClient.query({
       query: CommentFeedDocument,

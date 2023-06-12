@@ -1,19 +1,13 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
+import { IS_RELAYER_AVAILABLE, LENS_PROFILE_CREATOR, LENS_PROFILE_CREATOR_ABI, Regex } from '@lenster/data';
+import { APP_NAME, ZERO_ADDRESS } from '@lenster/data/constants';
+import { useCreateProfileMutation } from '@lenster/lens';
+import getStampFyiURL from '@lenster/lib/getStampFyiURL';
+import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
-import {
-  APP_NAME,
-  HANDLE_REGEX,
-  IS_RELAYER_AVAILABLE,
-  LENS_PROFILE_CREATOR,
-  LENS_PROFILE_CREATOR_ABI,
-  ZERO_ADDRESS
-} from 'data/constants';
-import { useCreateProfileMutation } from 'lens';
-import getStampFyiURL from 'lib/getStampFyiURL';
 import type { FC } from 'react';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from 'ui';
+import { useEffect, useMemo, useState } from 'react';
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { object, string } from 'zod';
 
@@ -22,9 +16,9 @@ import Pending from './Pending';
 const newUserSchema = object({
   handle: string()
     .min(5, { message: t`Handle should be at least 5 characters` })
-    .max(31, { message: t`Handle should not exceed 32 characters` })
-    .regex(HANDLE_REGEX, {
-      message: t`Handle should only contain lowercase alphanumeric characters`
+    .max(26, { message: t`Handle should not exceed 26 characters` })
+    .regex(Regex.handle, {
+      message: t`Handle should only contain alphanumeric characters`
     })
 });
 
@@ -79,20 +73,24 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     );
   }, [data, txData]);
 
-  const handleContractError = (error: { message: string; data: string }) => {
+  const handleContractError = (error: { message: string; data: { errorName: string } }) => {
+    if (!error) {
+      return 'Something is wrong with this handle, please try another one';
+    }
+
     if (error.message.includes("Doesn't have an ENS token")) {
       return 'You need a Linea ENS domain before creating a Lineaster handle';
     } else if (error.message.includes('Already has a Lens handle')) {
       return 'You already have a Lineaster handle';
-    } else if (error.data === '0x3eb64ab3') {
+    } else if (error.data.errorName === 'HandleLengthInvalid') {
       return 'Handle too short';
-    } else if (error.data === '0x561a8587') {
+    } else if (error.data.errorName === 'NotWhitelisted') {
       return 'Profile creator not allowlisted';
     } else if (error.message.includes('The transaction sender must be')) {
       return error.message;
     }
 
-    return `Error code = ${error.data}`;
+    return `Error = ${error.data.errorName}`;
   };
 
   return isCreationLoading ? (
@@ -140,7 +138,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
           title="Unable to create your handle"
           error={{
             name: 'Create profile failed!',
-            message: handleContractError((contractError as any).data)
+            message: handleContractError((contractError as any).cause)
           }}
         />
       )}

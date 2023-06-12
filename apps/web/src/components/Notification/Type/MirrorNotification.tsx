@@ -1,12 +1,13 @@
 import Markup from '@components/Shared/Markup';
 import UserPreview from '@components/Shared/UserPreview';
 import { SwitchHorizontalIcon } from '@heroicons/react/solid';
+import type { NewMirrorNotification } from '@lenster/lens';
 import { formatTime, getTimeFromNow } from '@lib/formatTime';
 import { defineMessage } from '@lingui/macro';
 import { Trans } from '@lingui/react';
-import type { NewMirrorNotification } from 'lens';
 import Link from 'next/link';
 import type { FC } from 'react';
+import { memo } from 'react';
 import type { MessageDescriptor } from 'src/types';
 
 import { NotificationProfileAvatar, NotificationProfileName } from '../Profile';
@@ -66,4 +67,4 @@ const MirrorNotification: FC<MirrorNotificationProps> = ({ notification }) => {
   );
 };
 
-export default MirrorNotification;
+export default memo(MirrorNotification);

@@ -1,18 +1,18 @@
 import Sidebar from '@components/Shared/Sidebar';
 import UserProfile from '@components/Shared/UserProfile';
 import {
-  AdjustmentsIcon,
   BookmarkIcon,
   ChipIcon,
+  DatabaseIcon,
   ExclamationIcon,
   FingerPrintIcon,
   ShareIcon,
   SparklesIcon,
   UserIcon
 } from '@heroicons/react/outline';
+import { IS_RELAYER_AVAILABLE } from '@lenster/data';
+import type { Profile } from '@lenster/lens';
 import { t, Trans } from '@lingui/macro';
-import { IS_RELAYER_AVAILABLE } from 'data';
-import type { Profile } from 'lens';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 
@@ -37,11 +37,6 @@ const SettingsSidebar: FC = () => {
             url: '/settings/account'
           },
           {
-            title: t`Preferences`,
-            icon: <AdjustmentsIcon className="h-4 w-4" />,
-            url: '/settings/preferences'
-          },
-          {
             title: t`Interests`,
             icon: <BookmarkIcon className="h-4 w-4" />,
             url: '/settings/interests'
@@ -64,6 +59,11 @@ const SettingsSidebar: FC = () => {
             title: t`Cleanup`,
             icon: <SparklesIcon className="h-4 w-4" />,
             url: '/settings/cleanup'
+          },
+          {
+            title: t`Export`,
+            icon: <DatabaseIcon className="h-4 w-4" />,
+            url: '/settings/export'
           },
           {
             title: (

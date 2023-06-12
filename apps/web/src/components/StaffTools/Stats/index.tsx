@@ -11,20 +11,20 @@ import {
   UsersIcon
 } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
+import { Errors } from '@lenster/data';
+import { APP_NAME } from '@lenster/data/constants';
+import { useLensterStatsQuery } from '@lenster/lens';
+import humanize from '@lenster/lib/humanize';
+import { Card, GridItemEight, GridItemFour, GridLayout, Spinner } from '@lenster/ui';
 import { getTimeAddedNDayUnix, getTimeMinusNDayUnix } from '@lib/formatTime';
-import { Mixpanel } from '@lib/mixpanel';
-import { t } from '@lingui/macro';
+import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import { APP_NAME } from 'data/constants';
-import Errors from 'data/errors';
-import { useLensterStatsQuery } from 'lens';
-import humanize from 'lib/humanize';
 import type { NextPage } from 'next';
 import type { FC, ReactNode } from 'react';
-import { useEffect } from 'react';
 import Custom404 from 'src/pages/404';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import StaffToolsSidebar from '../Sidebar';
 
@@ -73,9 +73,9 @@ export const StatBox: FC<StatBoxProps> = ({ icon, value, todayValue, differenceV
 const Stats: NextPage = () => {
   const { allowed } = useStaffMode();
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'stafftools', subpage: 'stats' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'stafftools', subpage: 'stats' });
+  });
 
   const { data, loading, error } = useLensterStatsQuery({
     variables: { request: { sources: [APP_NAME] } }
@@ -111,7 +111,7 @@ const Stats: NextPage = () => {
 
   return (
     <GridLayout>
-      <MetaTags title={t`Stafftools • ${APP_NAME}`} />
+      <MetaTags title={t`Stafftools | Stats • ${APP_NAME}`} />
       <GridItemFour>
         <StaffToolsSidebar />
       </GridItemFour>
@@ -120,31 +120,35 @@ const Stats: NextPage = () => {
           {error ? (
             <b className="text-red-500">{Errors.SomethingWentWrong}</b>
           ) : loading || todayLoading || yesterdayLoading ? (
-            <div>Loading...</div>
+            <div className="flex justify-center">
+              <Spinner size="sm" />
+            </div>
           ) : (
             <section className="space-y-3">
-              <h1 className="mb-4 text-xl font-bold">Stats</h1>
+              <h1 className="mb-4 text-xl font-bold">
+                <Trans>Stats</Trans>
+              </h1>
               <div className="block justify-between space-y-3 sm:flex sm:space-x-3 sm:space-y-0">
                 <StatBox
                   icon={<UsersIcon className="h-6 w-6" />}
                   value={stats?.totalProfiles}
                   todayValue={todayStats?.totalProfiles}
                   differenceValue={yesterdayStats?.totalProfiles - todayStats?.totalProfiles}
-                  title="total profiles"
+                  title={t`total profiles`}
                 />
                 <StatBox
                   icon={<FireIcon className="h-6 w-6" />}
                   value={stats?.totalBurntProfiles}
                   todayValue={todayStats?.totalBurntProfiles}
                   differenceValue={yesterdayStats?.totalBurntProfiles - todayStats?.totalBurntProfiles}
-                  title="profiles burnt"
+                  title={t`profiles burnt`}
                 />
                 <StatBox
                   icon={<PencilAltIcon className="h-6 w-6" />}
                   value={stats?.totalPosts}
                   todayValue={todayStats?.totalPosts}
                   differenceValue={yesterdayStats?.totalPosts - todayStats?.totalPosts}
-                  title="total posts"
+                  title={t`total posts`}
                 />
               </div>
               <div className="block justify-between space-y-3 sm:flex sm:space-x-3 sm:space-y-0">
@@ -153,14 +157,14 @@ const Stats: NextPage = () => {
                   value={stats?.totalMirrors}
                   todayValue={todayStats?.totalMirrors}
                   differenceValue={yesterdayStats?.totalMirrors - todayStats?.totalMirrors}
-                  title="total mirrors"
+                  title={t`total mirrors`}
                 />
                 <StatBox
                   icon={<ChatAlt2Icon className="h-6 w-6" />}
                   value={stats?.totalComments}
                   todayValue={todayStats?.totalComments}
                   differenceValue={yesterdayStats?.totalComments - todayStats?.totalComments}
-                  title="total comments"
+                  title={t`total comments`}
                 />
               </div>
               <div className="block justify-between space-y-3 sm:flex sm:space-x-3 sm:space-y-0">
@@ -169,14 +173,14 @@ const Stats: NextPage = () => {
                   value={stats?.totalCollects}
                   todayValue={todayStats?.totalCollects}
                   differenceValue={yesterdayStats?.totalCollects - todayStats?.totalCollects}
-                  title="total collects"
+                  title={t`total collects`}
                 />
                 <StatBox
                   icon={<UserAddIcon className="h-6 w-6" />}
                   value={stats?.totalFollows}
                   todayValue={todayStats?.totalFollows}
                   differenceValue={yesterdayStats?.totalFollows - todayStats?.totalFollows}
-                  title="total follows"
+                  title={t`total follows`}
                 />
               </div>
             </section>

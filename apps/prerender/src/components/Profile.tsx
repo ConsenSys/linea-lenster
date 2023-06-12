@@ -1,10 +1,9 @@
-import { AVATAR, USER_CONTENT_URL } from 'data/constants';
-import type { MediaSet, NftImage, Publication } from 'lens';
-import { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getStampFyiURL from 'lib/getStampFyiURL';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
-import truncateByWords from 'lib/truncateByWords';
+import type { MediaSet, NftImage, Publication } from '@lenster/lens';
+import { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getStampFyiURL from '@lenster/lib/getStampFyiURL';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
+import truncateByWords from '@lenster/lib/truncateByWords';
 import type { FC } from 'react';
 import { JsonLd } from 'react-schemaorg';
 import { BASE_URL } from 'src/constants';
@@ -27,9 +26,11 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
     ? `${profile?.name} (@${profile?.handle}) • Lineaster`
     : `@${profile?.handle} • Lineaster`;
   const description = truncateByWords(profile?.bio ?? '', 30);
-  const image = `${USER_CONTENT_URL}/${AVATAR}/${sanitizeDStorageUrl(
-    profile?.picture?.original?.url ?? profile?.picture?.uri ?? getStampFyiURL(profile?.ownedBy)
-  )}`;
+  const image = sanitizeDStorageUrl(
+    profile?.picture?.original?.url ??
+      profile?.picture?.uri ??
+      getStampFyiURL(profile?.ownedBy)
+  );
 
   return (
     <>
@@ -81,10 +82,16 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
         }
       />
       <header>
-        <img alt={`@${formatHandle(profile.handle)}'s avatar`} src={image} width="64" />
+        <img
+          alt={`@${formatHandle(profile.handle)}'s avatar`}
+          src={image}
+          width="64"
+        />
         <h1 data-testid="profile-name">{profile.name ?? profile.handle}</h1>
         <h2 data-testid="profile-handle">@{formatHandle(profile.handle)}</h2>
-        <h3 data-testid="profile-bio">{truncateByWords(profile?.bio ?? '', 30)}</h3>
+        <h3 data-testid="profile-bio">
+          {truncateByWords(profile?.bio ?? '', 30)}
+        </h3>
         <div>
           <div>{profile.stats.totalPosts} Posts</div>
           <div>{profile.stats.totalComments} Replies</div>
@@ -98,16 +105,34 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
             <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}`}>Feed</a>
           </div>
           <div>
-            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=replies`}>Replies</a>
+            <a
+              href={`${BASE_URL}/u/${formatHandle(
+                profile.handle
+              )}?type=replies`}
+            >
+              Replies
+            </a>
           </div>
           <div>
-            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=media`}>Media</a>
+            <a
+              href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=media`}
+            >
+              Media
+            </a>
           </div>
           <div>
-            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=collects`}>Collected</a>
+            <a
+              href={`${BASE_URL}/u/${formatHandle(
+                profile.handle
+              )}?type=collects`}
+            >
+              Collected
+            </a>
           </div>
           <div>
-            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=nft`}>NFTs</a>
+            <a href={`${BASE_URL}/u/${formatHandle(profile.handle)}?type=nft`}>
+              NFTs
+            </a>
           </div>
         </nav>
         <hr />
@@ -116,7 +141,13 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
         {publications?.map((publication) => {
           const { __typename } = publication;
           return (
-            <div key={__typename === 'Mirror' ? publication.mirrorOf.id : publication.id}>
+            <div
+              key={
+                __typename === 'Mirror'
+                  ? publication.mirrorOf.id
+                  : publication.id
+              }
+            >
               <SinglePublication publication={publication} />
             </div>
           );

@@ -28,7 +28,8 @@ There's also a related article https://medium.com/swlh/beautiful-load-testing-wi
 
 ## How to add more scenarios
 
-A k6 test file is composed of a main test file `test.js`, that imports scenarios and functions to execute them. For convenience, queries are exported in a separate file and can be imported inside scenarios or main file.
+A k6 test file is composed of a main test file `test.js`, that imports scenarios and functions to execute them. For
+convenience, queries are exported in a separate file and can be imported inside scenarios or main file.
 
 ```
 - k6/

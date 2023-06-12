@@ -1,15 +1,16 @@
 import { BadgeCheckIcon } from '@heroicons/react/solid';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import getProfileAttribute from '@lenster/lib/getProfileAttribute';
+import isVerified from '@lenster/lib/isVerified';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import { Image } from '@lenster/ui';
 import { formatTime, getTwitterFormat } from '@lib/formatTime';
 import clsx from 'clsx';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import getProfileAttribute from 'lib/getProfileAttribute';
-import isVerified from 'lib/isVerified';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { Image } from 'ui';
+import { memo, useState } from 'react';
 
 import Follow from './Follow';
 import Markup from './Markup';
@@ -30,8 +31,8 @@ interface UserProfileProps {
   timestamp?: Date;
 
   // For data analytics
-  followPosition?: number;
-  followSource?: string;
+  followUnfollowPosition?: number;
+  followUnfollowSource?: string;
 }
 
 const UserProfile: FC<UserProfileProps> = ({
@@ -45,8 +46,8 @@ const UserProfile: FC<UserProfileProps> = ({
   showStatus = false,
   showUserPreview = true,
   timestamp = '',
-  followPosition,
-  followSource
+  followUnfollowPosition,
+  followUnfollowSource
 }) => {
   const [following, setFollowing] = useState(isFollowing);
   const statusEmoji = getProfileAttribute(profile?.attributes, 'statusEmoji');
@@ -55,9 +56,6 @@ const UserProfile: FC<UserProfileProps> = ({
 
   const UserAvatar = () => (
     <Image
-      onError={({ currentTarget }) => {
-        currentTarget.src = getAvatar(profile, false);
-      }}
       src={getAvatar(profile)}
       loading="lazy"
       className={clsx(
@@ -74,7 +72,9 @@ const UserProfile: FC<UserProfileProps> = ({
     <>
       <div className="flex max-w-sm items-center">
         <div className={clsx(isBig ? 'font-bold' : 'text-md', 'grid')}>
-          <div className="truncate">{profile?.name ?? formatHandle(profile?.handle)}</div>
+          <div className="truncate">
+            {sanitizeDisplayName(profile?.name) ?? formatHandle(profile?.handle)}
+          </div>
         </div>
         {isVerified(profile?.id) && <BadgeCheckIcon className="text-brand ml-1 h-4 w-4" />}
         {showStatus && hasStatus ? (
@@ -109,7 +109,7 @@ const UserProfile: FC<UserProfileProps> = ({
         followStatusLoading={followStatusLoading}
         showUserPreview={showUserPreview}
       >
-        <div className="flex items-center space-x-3">
+        <div className="mr-8 flex items-center space-x-3">
           <UserAvatar />
           <div>
             <UserName />
@@ -141,17 +141,22 @@ const UserProfile: FC<UserProfileProps> = ({
         (followStatusLoading ? (
           <div className="shimmer h-8 w-10 rounded-lg" />
         ) : following ? null : profile?.followModule?.__typename === 'FeeFollowModuleSettings' ? (
-          <SuperFollow profile={profile} setFollowing={setFollowing} />
+          <SuperFollow
+            profile={profile}
+            setFollowing={setFollowing}
+            followUnfollowPosition={followUnfollowPosition}
+            followUnfollowSource={followUnfollowSource}
+          />
         ) : (
           <Follow
             profile={profile}
             setFollowing={setFollowing}
-            followPosition={followPosition}
-            followSource={followSource}
+            followUnfollowPosition={followUnfollowPosition}
+            followUnfollowSource={followUnfollowSource}
           />
         ))}
     </div>
   );
 };
 
-export default UserProfile;
+export default memo(UserProfile);

@@ -21,7 +21,7 @@ Lenster's README is still available [here](./README-lenster.md).
 ## 📦 Environments
 
 | Name        | Link                                  |
-| ----------- | ------------------------------------- |
+|-------------|---------------------------------------|
 | Testnet     | https://lineaster.goerli.linea.build/ |
 | Development | https://lineaster.dev.linea.build/    |
 

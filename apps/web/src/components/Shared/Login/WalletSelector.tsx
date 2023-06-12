@@ -1,22 +1,22 @@
 import SwitchNetwork from '@components/Shared/SwitchNetwork';
-import useIsMounted from '@components/utils/hooks/useIsMounted';
 import { KeyIcon } from '@heroicons/react/outline';
 import { XCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
+import { Errors } from '@lenster/data';
+import { useAuthenticateMutation, useChallengeLazyQuery, useUserProfilesLazyQuery } from '@lenster/lens';
+import getWalletDetails from '@lenster/lib/getWalletDetails';
+import { Button, Spinner } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import Errors from 'data/errors';
-import { useAuthenticateMutation, useChallengeLazyQuery, useUserProfilesLazyQuery } from 'lens';
-import getWalletDetails from 'lib/getWalletDetails';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CHAIN_ID } from 'src/constants';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
-import { useAuthStore } from 'src/store/auth';
+import { useGlobalModalStateStore } from 'src/store/modals';
 import { AUTH } from 'src/tracking';
-import { Button, Spinner } from 'ui';
+import { useIsMounted } from 'usehooks-ts';
 import type { Connector } from 'wagmi';
 import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from 'wagmi';
 
@@ -29,10 +29,15 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
   const setProfiles = useAppStore((state) => state.setProfiles);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
-  const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
-  const [loading, setLoading] = useState(false);
+  const setShowAuthModal = useGlobalModalStateStore((state) => state.setShowAuthModal);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { mounted } = useIsMounted();
+  const onError = (error: any) => {
+    setIsLoading(false);
+    errorToast(error);
+  };
+
+  const isMounted = useIsMounted();
   const { chain } = useNetwork();
   const { connectors, error, connectAsync } = useConnect({ chainId: CHAIN_ID });
   const { disconnect } = useDisconnect();
@@ -50,7 +55,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       if (account) {
         setHasConnected(true);
       }
-      Mixpanel.track(AUTH.CONNECT_WALLET, {
+      Leafwatch.track(AUTH.CONNECT_WALLET, {
         wallet: connector.name.toLowerCase()
       });
     } catch (error) {
@@ -61,7 +66,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
   const handleSign = async () => {
     let keepModal = false;
     try {
-      setLoading(true);
+      setIsLoading(true);
       // Get challenge
       const challenge = await loadChallenge({
         variables: { request: { address } }
@@ -101,11 +106,11 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         setCurrentProfile(currentProfile);
         setProfileId(currentProfile.id);
       }
-      Mixpanel.track(AUTH.SIWL);
+      Leafwatch.track(AUTH.SIWL);
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
       if (!keepModal) {
         setShowAuthModal(false);
       }
@@ -117,9 +122,9 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       <div className="space-y-2.5">
         {chain?.id === CHAIN_ID ? (
           <Button
-            disabled={loading}
+            disabled={isLoading}
             className="rounded-full"
-            icon={loading && <Spinner className="mr-0.5" size="xs" />}
+            icon={isLoading && <Spinner className="mr-0.5" size="xs" />}
             onClick={handleSign}
           >
             <Trans>Sign-In with Lens</Trans>
@@ -130,7 +135,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
         <button
           onClick={() => {
             disconnect?.();
-            Mixpanel.track(AUTH.CHANGE_WALLET);
+            Leafwatch.track(AUTH.CHANGE_WALLET);
           }}
           className="flex items-center space-x-1 text-sm text-gray-300 underline hover:text-brand-500"
         >
@@ -148,26 +153,28 @@ const WalletSelector: FC<WalletSelectorProps> = ({ setHasConnected, setHasProfil
       )}
     </div>
   ) : (
-    <div className="inline-block w-full transform space-y-3 overflow-hidden text-left align-middle transition-all">
+    <div className="inline-block w-full space-y-3 overflow-hidden text-left align-middle">
       {connectors.map((connector) => {
         return (
           <button
             type="button"
             key={connector.id}
             className={clsx(
-              { 'hover:bg-brand-500': connector.id !== activeConnector?.id },
+              {
+                'hover:bg-brand-500': connector.id !== activeConnector?.id
+              },
               'flex w-full dark:text-darker hitems-center justify-between overflow-hidden rounded-full bg-white px-3 py-2 outline-none'
             )}
             onClick={() => onConnect(connector)}
-            disabled={mounted ? !connector.ready || connector.id === activeConnector?.id : false}
+            disabled={isMounted() ? !connector.ready || connector.id === activeConnector?.id : false}
           >
             <span>
-              {mounted
+              {isMounted()
                 ? connector.id === 'injected'
                   ? 'MetaMask'
                   : getWalletDetails(connector.name).name
                 : getWalletDetails(connector.name).name}
-              {mounted ? !connector.ready && ' (unsupported)' : ''}
+              {isMounted() ? !connector.ready && ' (unsupported)' : ''}
             </span>
             <img
               src={getWalletDetails(connector.name).logo}

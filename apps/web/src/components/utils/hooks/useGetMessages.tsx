@@ -1,15 +1,16 @@
-import type { Conversation } from '@xmtp/xmtp-js';
+import { MESSAGE_PAGE_LIMIT } from '@lenster/data/constants';
 import { SortDirection } from '@xmtp/xmtp-js';
-import { MESSAGE_PAGE_LIMIT } from 'data/constants';
 import { useEffect, useState } from 'react';
 import { useMessageStore } from 'src/store/message';
 
-const useGetMessages = (conversationKey: string, conversation?: Conversation, endTime?: Date) => {
+const useGetMessages = (conversationKey: string, endTime?: Date) => {
+  const conversations = useMessageStore((state) => state.conversations);
   const messages = useMessageStore((state) => state.messages.get(conversationKey));
   const addMessages = useMessageStore((state) => state.addMessages);
   const [hasMore, setHasMore] = useState<Map<string, boolean>>(new Map());
 
   useEffect(() => {
+    const conversation = conversations.get(conversationKey);
     if (!conversation) {
       return;
     }
@@ -36,7 +37,7 @@ const useGetMessages = (conversationKey: string, conversation?: Conversation, en
     };
     loadMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conversation, conversationKey, endTime]);
+  }, [conversationKey, endTime]);
 
   return {
     messages,

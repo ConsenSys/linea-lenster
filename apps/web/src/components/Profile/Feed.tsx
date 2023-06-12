@@ -1,17 +1,17 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
 import { CollectionIcon } from '@heroicons/react/outline';
+import type { Profile, Publication, PublicationsQueryRequest } from '@lenster/lens';
+import { PublicationMainFocus, PublicationTypes, useProfileFeedQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { Card, EmptyState, ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import type { Profile, Publication, PublicationsQueryRequest } from 'lens';
-import { PublicationMainFocus, PublicationTypes, useProfileFeedQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { ProfileFeedType } from 'src/enums';
 import { useAppStore } from 'src/store/app';
 import { useProfileFeedStore } from 'src/store/profile-feed';
-import { Card, EmptyState, ErrorMessage } from 'ui';
 
 interface FeedProps {
   profile: Profile;
@@ -76,7 +76,11 @@ const Feed: FC<FeedProps> = ({ profile, type }) => {
       }
 
       await fetchMore({
-        variables: { request: { ...request, cursor: pageInfo?.next }, reactionRequest, profileId }
+        variables: {
+          request: { ...request, cursor: pageInfo?.next },
+          reactionRequest,
+          profileId
+        }
       }).then(({ data }) => {
         setHasMore(data?.publications?.items?.length > 0);
       });
@@ -117,7 +121,10 @@ const Feed: FC<FeedProps> = ({ profile, type }) => {
   }
 
   return (
-    <Card className="divide-y-[1px] dark:divide-gray-700">
+    <Card
+      className="divide-y-[1px] dark:divide-gray-700"
+      dataTestId={`profile-feed-type-${type.toLowerCase()}`}
+    >
       {publications?.map((publication, index) => (
         <SinglePublication
           key={`${publication.id}_${index}`}

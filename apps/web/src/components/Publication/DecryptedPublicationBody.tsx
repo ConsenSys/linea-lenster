@@ -1,6 +1,7 @@
 import Attachments from '@components/Shared/Attachments';
-import IFramely from '@components/Shared/IFramely';
 import Markup from '@components/Shared/Markup';
+import Oembed from '@components/Shared/Oembed';
+import useEthersWalletClient from '@components/utils/hooks/useEthersWalletClient';
 import useNft from '@components/utils/hooks/useNft';
 import {
   CollectionIcon,
@@ -12,32 +13,33 @@ import {
   UserAddIcon
 } from '@heroicons/react/outline';
 import { LockClosedIcon } from '@heroicons/react/solid';
+import type { LensEnvironment } from '@lens-protocol/sdk-gated';
 import { LensGatedSDK } from '@lens-protocol/sdk-gated';
 import type {
   CollectConditionOutput,
   Erc20OwnershipOutput,
   NftOwnershipOutput
 } from '@lens-protocol/sdk-gated/dist/graphql/types';
-import { Mixpanel } from '@lib/mixpanel';
+import { LIT_PROTOCOL_ENVIRONMENT, RARIBLE_URL } from '@lenster/data/constants';
+import type { Publication, PublicationMetadataV2Input } from '@lenster/lens';
+import { DecryptFailReason, useCanDecryptStatusQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getURLs from '@lenster/lib/getURLs';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
+import stopEventPropagation from '@lenster/lib/stopEventPropagation';
+import { Card, ErrorMessage, Tooltip } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
 import axios from 'axios';
 import clsx from 'clsx';
-import { LINEA_EXPLORER_URL, LIT_PROTOCOL_ENVIRONMENT, RARIBLE_URL } from 'data/constants';
-import type { Publication, PublicationMetadataV2Input } from 'lens';
-import { DecryptFailReason, useCanDecryptStatusQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getURLs from 'lib/getURLs';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
-import { stopEventPropagation } from 'lib/stopEventPropagation';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { FC, ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
-import { useAuthStore } from 'src/store/auth';
+import { useGlobalModalStateStore } from 'src/store/modals';
 import { PUBLICATION } from 'src/tracking';
-import { Card, ErrorMessage, Tooltip } from 'ui';
-import { useProvider, useSigner, useToken } from 'wagmi';
+import { usePublicClient, useToken } from 'wagmi';
 
 interface DecryptMessageProps {
   icon: ReactNode;
@@ -58,14 +60,14 @@ interface DecryptedPublicationBodyProps {
 const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encryptedPublication }) => {
   const { pathname } = useRouter();
   const currentProfile = useAppStore((state) => state.currentProfile);
-  const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
+  const setShowAuthModal = useGlobalModalStateStore((state) => state.setShowAuthModal);
   const [decryptedData, setDecryptedData] = useState<any>(null);
   const [decryptError, setDecryptError] = useState<any>(null);
   const [isDecrypting, setIsDecrypting] = useState(false);
   const [canDecrypt, setCanDecrypt] = useState<boolean>(encryptedPublication?.canDecrypt?.result);
   const [reasons, setReasons] = useState<any>(encryptedPublication?.canDecrypt.reasons);
-  const provider = useProvider();
-  const { data: signer } = useSigner();
+  const publicClient = usePublicClient();
+  const { data: walletClient } = useEthersWalletClient();
 
   const showMore = encryptedPublication?.metadata?.content?.length > 450 && pathname !== '/posts/[id]';
 
@@ -139,7 +141,7 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
   const doesNotOwnNft = reasons?.includes(DecryptFailReason.DoesNotOwnNft);
 
   const getDecryptedData = async () => {
-    if (!signer || isDecrypting) {
+    if (!walletClient || isDecrypting) {
       return;
     }
 
@@ -147,24 +149,15 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
     const contentUri = sanitizeDStorageUrl(encryptedPublication?.onChainContentURI);
     const { data } = await axios.get(contentUri);
     const sdk = await LensGatedSDK.create({
-      provider: provider as any,
-      signer,
-      env: LIT_PROTOCOL_ENVIRONMENT as any
+      provider: publicClient as any,
+      signer: walletClient as any,
+      env: LIT_PROTOCOL_ENVIRONMENT as LensEnvironment
     });
     const { decrypted, error } = await sdk.gated.decryptMetadata(data);
     setDecryptedData(decrypted);
     setDecryptError(error);
     setIsDecrypting(false);
   };
-
-  useEffect(() => {
-    const lensLitAuthSig = localStorage.getItem('lens-lit-authsig');
-
-    if (lensLitAuthSig) {
-      getDecryptedData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!currentProfile) {
     return (
@@ -200,7 +193,7 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
               <Link
                 href={`/posts/${collectCondition?.publicationId}`}
                 className="font-bold lowercase underline"
-                onClick={() => Mixpanel.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_COLLECT)}
+                onClick={() => Leafwatch.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_COLLECT)}
               >
                 {encryptedPublication?.__typename}
               </Link>
@@ -231,15 +224,15 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
           {unauthorizedBalance && (
             <DecryptMessage icon={<DatabaseIcon className="h-4 w-4" />}>
               You need{' '}
-              <a
+              <Link
                 href={`${LINEA_EXPLORER_URL}/token/${tokenCondition.contractAddress}`}
                 className="font-bold underline"
-                onClick={() => Mixpanel.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_TOKEN)}
+                onClick={() => Leafwatch.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_TOKEN)}
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
               >
                 {tokenCondition.amount} {tokenData?.symbol}
-              </a>{' '}
+              </Link>{' '}
               to unlock
             </DecryptMessage>
           )}
@@ -249,15 +242,15 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
             <DecryptMessage icon={<PhotographIcon className="h-4 w-4" />}>
               You need{' '}
               <Tooltip content={nftData?.contractMetadata?.name} placement="top">
-                <a
+                <Link
                   href={`${RARIBLE_URL}/collection/polygon/${nftCondition.contractAddress}/items`}
                   className="font-bold underline"
-                  onClick={() => Mixpanel.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_NFT)}
+                  onClick={() => Leafwatch.track(PUBLICATION.TOKEN_GATED.CHECKLIST_NAVIGATED_TO_NFT)}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                 >
                   {nftData?.contractMetadata?.symbol}
-                </a>
+                </Link>
               </Tooltip>{' '}
               nft to unlock
             </DecryptMessage>
@@ -284,10 +277,10 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
     return (
       <Card
         className={clsx(cardClasses, '!cursor-pointer')}
-        onClick={(event) => {
+        onClick={async (event) => {
           stopEventPropagation(event);
-          getDecryptedData();
-          Mixpanel.track(PUBLICATION.TOKEN_GATED.DECRYPT);
+          await getDecryptedData();
+          Leafwatch.track(PUBLICATION.TOKEN_GATED.DECRYPT);
         }}
       >
         <div className="flex items-center space-x-1 font-bold text-white">
@@ -318,7 +311,7 @@ const DecryptedPublicationBody: FC<DecryptedPublicationBodyProps> = ({ encrypted
       {publication?.media?.length ? (
         <Attachments attachments={publication?.media} />
       ) : publication?.content ? (
-        getURLs(publication?.content)?.length > 0 && <IFramely url={getURLs(publication?.content)[0]} />
+        getURLs(publication?.content)?.length > 0 && <Oembed url={getURLs(publication?.content)[0]} />
       ) : null}
     </div>
   );

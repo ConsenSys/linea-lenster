@@ -1,9 +1,8 @@
 import type { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
+import type { Nft } from '@lenster/lens';
 import { motion } from 'framer-motion';
-import type { Nft } from 'lens';
-import type { FC } from 'react';
-import React from 'react';
+import { type FC, memo } from 'react';
 
 import NftCard from './NftCard';
 
@@ -61,4 +60,4 @@ const DraggableCard: FC<CardProps> = ({ id, nft }) => {
   );
 };
 
-export default React.memo(DraggableCard);
+export default memo(DraggableCard);

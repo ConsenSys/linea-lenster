@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: lenster\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-11 00:09\n"
+"PO-Revision-Date: 2023-06-10 00:09\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -60,12 +60,14 @@ msgstr ""
 
 #: src/components/Composer/Actions/AccessSettings/BasicSettings.tsx
 #: src/components/Composer/Actions/CollectSettings/CollectForm.tsx
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
 #: src/components/Profile/NftGallery/Gallery.tsx
 msgid "Cancel"
 msgstr ""
 
 #: src/components/Composer/Actions/AccessSettings/BasicSettings.tsx
 #: src/components/Composer/Actions/CollectSettings/CollectForm.tsx
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
 #: src/components/Profile/NftGallery/Gallery.tsx
 #: src/components/Settings/Account/SetProfile.tsx
 #: src/components/Settings/Profile/NftPicture.tsx
@@ -73,6 +75,10 @@ msgstr ""
 #: src/components/Settings/Profile/Profile.tsx
 #: src/components/Shared/Status.tsx
 msgid "Save"
+msgstr ""
+
+#: src/components/Composer/Actions/AccessSettings/index.tsx
+msgid "Access"
 msgstr ""
 
 #: src/components/Composer/Actions/AccessSettings/index.tsx
@@ -92,7 +98,13 @@ msgid "File format not allowed."
 msgstr ""
 
 #: src/components/Composer/Actions/Attachment.tsx
+#: src/components/utils/hooks/useUploadAttachments.tsx
 msgid "Something went wrong while uploading!"
+msgstr ""
+
+#: src/components/Composer/Actions/Attachment.tsx
+#: src/components/Profile/FeedType.tsx
+msgid "Media"
 msgstr ""
 
 #: src/components/Composer/Actions/CollectSettings/AmountConfig.tsx
@@ -198,7 +210,42 @@ msgid "Loading GIFs"
 msgstr ""
 
 #: src/components/Composer/Actions/Giphy/index.tsx
+msgid "GIF"
+msgstr ""
+
+#: src/components/Composer/Actions/Giphy/index.tsx
 msgid "Select GIF"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+msgid "{0, plural, zero {day} one {day} other {days}}"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+msgid "Poll length"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+msgid "Poll length (days)"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+#: src/components/Profile/NftGallery/Gallery.tsx
+#: src/components/Shared/Alert/DeletePublication.tsx
+msgid "Delete"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+msgid "Choice {0}"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/PollEditor.tsx
+msgid "Add another option"
+msgstr ""
+
+#: src/components/Composer/Actions/PollSettings/index.tsx
+#: src/components/Shared/Snapshot/Choices.tsx
+msgid "Poll"
 msgstr ""
 
 #: src/components/Composer/Actions/ReferenceSettings/index.tsx
@@ -233,14 +280,41 @@ msgstr ""
 msgid "Everyone can comment and mirror"
 msgstr ""
 
+#: src/components/Composer/ChooseThumbnail.tsx
+#: src/components/Composer/ChooseThumbnail.tsx
+msgid "Failed to upload thumbnail"
+msgstr ""
+
+#: src/components/Composer/ChooseThumbnail.tsx
+msgid "Please upload a custom thumbnail"
+msgstr ""
+
+#: src/components/Composer/ChooseThumbnail.tsx
+msgid "Choose Thumbnail"
+msgstr ""
+
+#: src/components/Composer/ChooseThumbnail.tsx
+#: src/components/Settings/Profile/Profile.tsx
+msgid "Upload"
+msgstr ""
+
 #: src/components/Composer/Editor/index.tsx
 msgid "Please choose either 1 video or up to 4 photos."
+msgstr ""
+
+#: src/components/Composer/Editor/index.tsx
+msgid "Ask a question..."
 msgstr ""
 
 #: src/components/Composer/Editor/index.tsx
 #: src/components/Composer/Post/New.tsx
 #: src/components/Shared/Status.tsx
 msgid "What's happening?"
+msgstr ""
+
+#: src/components/Composer/NewPublication.tsx
+#: src/components/Publication/Actions/Share/Mirror.tsx
+msgid "Momoka is currently in beta - during this time certain actions are not available to all profiles."
 msgstr ""
 
 #: src/components/Composer/NewPublication.tsx
@@ -252,15 +326,12 @@ msgid "Transaction failed!"
 msgstr ""
 
 #: src/components/Composer/NewPublication.tsx
-msgid "[cta]Comment"
+#: src/components/Publication/Actions/Comment.tsx
+msgid "Comment"
 msgstr ""
 
 #: src/components/Composer/NewPublication.tsx
-msgid "[cta]Post"
-msgstr ""
-
-#: src/components/Composer/Post/New.tsx
-msgid "Create post"
+msgid "Post"
 msgstr ""
 
 #: src/components/Explore/Feed.tsx
@@ -279,6 +350,7 @@ msgid "All posts"
 msgstr ""
 
 #: src/components/Explore/FeedType.tsx
+#: src/components/Mod/index.tsx
 msgid "Text"
 msgstr ""
 
@@ -288,13 +360,19 @@ msgid "Video"
 msgstr ""
 
 #: src/components/Explore/FeedType.tsx
+#: src/components/Mod/index.tsx
 #: src/components/Profile/Filters/MediaFilter.tsx
 msgid "Audio"
 msgstr ""
 
 #: src/components/Explore/FeedType.tsx
+#: src/components/Mod/index.tsx
 #: src/components/Profile/Filters/MediaFilter.tsx
 msgid "Images"
+msgstr ""
+
+#: src/components/Explore/index.tsx
+msgid "For you"
 msgstr ""
 
 #: src/components/Explore/index.tsx
@@ -313,10 +391,6 @@ msgstr ""
 #: src/components/Explore/index.tsx
 msgid "Explore • {APP_NAME}"
 msgstr ""
-
-#: src/components/Explore/index.tsx
-#~ msgid "For you"
-#~ msgstr ""
 
 #: src/components/Home/EnableDispatcher.tsx
 #: src/components/Settings/Dispatcher/index.tsx
@@ -351,6 +425,7 @@ msgid "Enable DMs"
 msgstr ""
 
 #: src/components/Home/FeedEventFilters.tsx
+#: src/components/Profile/Filters/MediaFilter.tsx
 msgid "Filter"
 msgstr ""
 
@@ -379,12 +454,8 @@ msgid "Welcome to {APP_NAME} 👋"
 msgstr ""
 
 #: src/components/Home/Hero.tsx
-msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿 on Linea"
+msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿"
 msgstr ""
-
-#: src/components/Home/Hero.tsx
-#~ msgid "{APP_NAME} is a decentralized, and permissionless social media app built with Lens Protocol 🌿"
-#~ msgstr ""
 
 #: src/components/Home/Highlights.tsx
 msgid "Failed to load highlights"
@@ -519,7 +590,11 @@ msgid "Failed to load trending"
 msgstr ""
 
 #: src/components/Home/Trending.tsx
-msgid "{0} Publications"
+msgid "{0, plural, zero {Publication} one {Publication} other {Publications}}"
+msgstr ""
+
+#: src/components/Messages/Composer.tsx
+msgid "Error sending attachment"
 msgstr ""
 
 #: src/components/Messages/Composer.tsx
@@ -555,16 +630,6 @@ msgid "Loading..."
 msgstr ""
 
 #: src/components/Messages/PreviewList.tsx
-#: src/components/Profile/Followerings.tsx
-#: src/components/Profile/Followerings.tsx
-msgid "Following"
-msgstr ""
-
-#: src/components/Messages/PreviewList.tsx
-msgid "Requested"
-msgstr ""
-
-#: src/components/Messages/PreviewList.tsx
 msgid "These conversations are from Lens profiles that you don't currently follow."
 msgstr ""
 
@@ -586,6 +651,14 @@ msgstr ""
 
 #: src/components/Messages/PreviewList.tsx
 msgid "Search for someone to message..."
+msgstr ""
+
+#: src/components/Messages/RemoteAttachmentPreview.tsx
+msgid "Attachments are not loaded automatically from people you don’t follow."
+msgstr ""
+
+#: src/components/Messages/RemoteAttachmentPreview.tsx
+msgid "Large attachments are not loaded automatically."
 msgstr ""
 
 #: src/components/Messages/index.tsx
@@ -626,6 +699,26 @@ msgid "Comments"
 msgstr ""
 
 #: src/components/Mod/index.tsx
+msgid "Media filters"
+msgstr ""
+
+#: src/components/Mod/index.tsx
+msgid "Articles"
+msgstr ""
+
+#: src/components/Mod/index.tsx
+msgid "Embeds"
+msgstr ""
+
+#: src/components/Mod/index.tsx
+msgid "Links"
+msgstr ""
+
+#: src/components/Mod/index.tsx
+msgid "Videos"
+msgstr ""
+
+#: src/components/Mod/index.tsx
 msgid "Custom filters"
 msgstr ""
 
@@ -634,15 +727,12 @@ msgid "Gardeners"
 msgstr ""
 
 #: src/components/Nft/NftFeed.tsx
-msgid "NFTs are loading..."
-msgstr ""
-
-#: src/components/Nft/NftFeed.tsx
 msgid "doesn’t have any NFTs!"
 msgstr ""
 
 #: src/components/Nft/NftFeed.tsx
-msgid "Failed to load NFTs feed"
+#: src/components/Profile/NftGallery/Picker.tsx
+msgid "Failed to load nft feed"
 msgstr ""
 
 #: src/components/Notification/FeedType.tsx
@@ -674,81 +764,98 @@ msgid "Notification settings"
 msgstr ""
 
 #: src/components/Notification/Settings.tsx
-msgid "Quality filter"
+msgid "Signal filter"
 msgstr ""
 
 #: src/components/Notification/Settings.tsx
-msgid "Choose to filter out low-quality notifications"
+msgid "Turn on high-signal notification filter"
 msgstr ""
 
 #: src/components/Notification/Type/CollectNotification/Amount.tsx
-msgid "Collected for {0} {1}"
+msgid "Collected for {0} {currency}"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CollectNotification/index.tsx
 msgid "<0><1/> collected your <2>comment</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CollectNotification/index.tsx
 msgid "<0><1/> collected your <2>mirror</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CollectNotification/index.tsx
 msgid "<0><1/> collected your <2>post</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CommentNotification.tsx
 msgid "<0><1/> commented on your <2>comment</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CommentNotification.tsx
 msgid "<0><1/> commented on your <2>mirror</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/CommentNotification.tsx
 msgid "<0><1/> commented on your <2>post</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/FollowerNotification.tsx
 msgid "<0><1/> followed you</0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/FollowerNotification.tsx
 msgid "<0><1/> super followed you</0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/LikeNotification.tsx
 msgid "<0><1/> liked your <2>comment</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/LikeNotification.tsx
 msgid "<0><1/> liked your <2>mirror</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/LikeNotification.tsx
 msgid "<0><1/> liked your <2>post</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MentionNotification.tsx
 msgid "<0><1/> mentioned you in a <2>comment</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MentionNotification.tsx
 msgid "<0><1/> mentioned you in a <2>mirror</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MentionNotification.tsx
 msgid "<0><1/> mentioned you in a <2>post</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MirrorNotification.tsx
 msgid "<0><1/> mirrored your <2>comment</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MirrorNotification.tsx
 msgid "<0><1/> mirrored your <2>mirror</2></0>"
 msgstr ""
 
+#. js-lingui-explicit-id
 #: src/components/Notification/Type/MirrorNotification.tsx
 msgid "<0><1/> mirrored your <2>post</2></0>"
 msgstr ""
@@ -1169,6 +1276,11 @@ msgid "Worldcoin verified"
 msgstr ""
 
 #: src/components/Profile/Details.tsx
+#: src/components/Settings/Account/Verification.tsx
+msgid "Verified"
+msgstr ""
+
+#: src/components/Profile/Details.tsx
 msgid "Follows you"
 msgstr ""
 
@@ -1193,10 +1305,6 @@ msgid "Replies"
 msgstr ""
 
 #: src/components/Profile/FeedType.tsx
-msgid "Media"
-msgstr ""
-
-#: src/components/Profile/FeedType.tsx
 msgid "Collected"
 msgstr ""
 
@@ -1210,6 +1318,19 @@ msgid "Not now"
 msgstr ""
 
 #: src/components/Profile/Followerings.tsx
+#: src/components/Shared/UserPreview.tsx
+msgid "{0, plural, zero {Following} one {Following} other {Following}}"
+msgstr ""
+
+#: src/components/Profile/Followerings.tsx
+#: src/components/Shared/UserPreview.tsx
+msgid "{0, plural, zero {Follower} one {Follower} other {Followers}}"
+msgstr ""
+
+#: src/components/Profile/Followerings.tsx
+msgid "Following"
+msgstr ""
+
 #: src/components/Profile/Followerings.tsx
 msgid "Followers"
 msgstr ""
@@ -1318,11 +1439,6 @@ msgstr ""
 msgid "Rearrrange"
 msgstr ""
 
-#: src/components/Profile/NftGallery/Gallery.tsx
-#: src/components/Shared/Alert/DeletePublication.tsx
-msgid "Delete"
-msgstr ""
-
 #: src/components/Profile/NftGallery/NoGallery.tsx
 msgid "Welcome to your gallery"
 msgstr ""
@@ -1340,32 +1456,11 @@ msgid "doesn't have any NFTs!"
 msgstr ""
 
 #: src/components/Profile/NftGallery/Picker.tsx
-msgid "Failed to load nft feed"
-msgstr ""
-
-#: src/components/Profile/NftGallery/Picker.tsx
 msgid "Only 50 items allowed for gallery"
 msgstr ""
 
 #: src/components/Profile/NftGallery/ReviewSelection.tsx
 msgid "No collectables selected!"
-msgstr ""
-
-#: src/components/Publication/Actions/Analytics/Stats.tsx
-#: src/components/Publication/Actions/Analytics/index.tsx
-msgid "Loading analytics"
-msgstr ""
-
-#: src/components/Publication/Actions/Analytics/Stats.tsx
-msgid "Views"
-msgstr ""
-
-#: src/components/Publication/Actions/Analytics/Stats.tsx
-msgid "Times people viewed the details about this publication"
-msgstr ""
-
-#: src/components/Publication/Actions/Analytics/index.tsx
-msgid "Publication Analytics"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/CollectModule.tsx
@@ -1378,7 +1473,7 @@ msgid "Loading collect"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/CollectModule.tsx
-msgid "{0} collectors"
+msgid "{count, plural, zero {collector} one {collector} other {collectors}}"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/CollectModule.tsx
@@ -1391,7 +1486,7 @@ msgid "{0} available"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/CollectModule.tsx
-msgid "{0}% referral fee"
+msgid "{referralFee}% referral fee"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/CollectModule.tsx
@@ -1419,25 +1514,19 @@ msgid "Fee recipients"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/index.tsx
-#: src/lib/getModule.ts
-msgid "Free Collect"
+msgid "{count, plural, zero {Collect} one {Collect} other {Collects}}"
 msgstr ""
 
 #: src/components/Publication/Actions/Collect/index.tsx
-#: src/lib/getModule.ts
-msgid "Unknown Collect"
+msgid "Collect"
 msgstr ""
 
 #: src/components/Publication/Actions/Comment.tsx
 msgid "{0} Comments"
 msgstr ""
 
-#: src/components/Publication/Actions/Comment.tsx
-msgid "Comment"
-msgstr ""
-
 #: src/components/Publication/Actions/Like.tsx
-msgid "Dislike"
+msgid "Unlike"
 msgstr ""
 
 #: src/components/Publication/Actions/Like.tsx
@@ -1449,16 +1538,14 @@ msgstr ""
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: src/components/Publication/Actions/Mirror.tsx
-msgid "Post has been mirrored!"
+#: src/components/Publication/Actions/Menu/Translate.tsx
+#: src/components/Shared/Footer/index.tsx
+msgid "Translate"
 msgstr ""
 
-#: src/components/Publication/Actions/Mirror.tsx
-msgid "{0} Mirrors"
-msgstr ""
-
-#: src/components/Publication/Actions/Mirror.tsx
-msgid "Mirror"
+#: src/components/Publication/Actions/Mod.tsx
+#: src/components/Shared/GlobalAlerts.tsx
+msgid "Mod actions"
 msgstr ""
 
 #: src/components/Publication/Actions/ModAction/index.tsx
@@ -1466,42 +1553,32 @@ msgid "Publication reported successfully"
 msgstr ""
 
 #: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Shared/Modal/Report/Reason.tsx
-msgid "Spam"
+msgid "Poor content"
 msgstr ""
 
 #: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Shared/Modal/Report/Reason.tsx
-msgid "Scam"
+msgid "Stop Sponsor"
 msgstr ""
 
-#: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Shared/Modal/Report/Reason.tsx
-msgid "NSFW"
+#: src/components/Publication/Actions/Share/Mirror.tsx
+msgid "Post has been mirrored!"
 msgstr ""
 
-#: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Shared/Modal/Report/Reason.tsx
-msgid "Repetitive"
+#: src/components/Publication/Actions/Share/Mirror.tsx
+#: src/components/Publication/Actions/Share/index.tsx
+msgid "Mirror"
 msgstr ""
 
-#: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Publication/Actions/ModAction/index.tsx
-#: src/components/Shared/GlobalModals.tsx
-#: src/components/Shared/Modal/Report/index.tsx
-msgid "Report"
+#: src/components/Publication/Actions/Share/Mirror.tsx
+msgid "Unmirror"
 msgstr ""
 
-#: src/components/Publication/Actions/ModAction/index.tsx
-msgid "Others"
+#: src/components/Publication/Actions/Share/Quote.tsx
+msgid "Quote"
 msgstr ""
 
-#: src/components/Publication/Actions/ModAction/index.tsx
-msgid "Report?"
-msgstr ""
-
-#: src/components/Publication/Actions/ModAction/index.tsx
-msgid "Are you sure? You want to report this user so that we can take action."
+#: src/components/Publication/Actions/Share/index.tsx
+msgid "{0} Mirrors"
 msgstr ""
 
 #: src/components/Publication/DecryptedPublicationBody.tsx
@@ -1529,15 +1606,19 @@ msgid "ARWEAVE TRANSACTION"
 msgstr ""
 
 #: src/components/Publication/OnchainMeta.tsx
+msgid "MOMOKA PROOF"
+msgstr ""
+
+#: src/components/Publication/OnchainMeta.tsx
 msgid "NFT ADDRESS"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
-msgid "<0>{0}</0> Comments"
+msgid "{commentsCount, plural, zero {Comment} one {Comment} other {Comments}}"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
-msgid "<0>{0}</0> Mirrors"
+msgid "{mirrorCount, plural, zero {Mirror} one {Mirror} other {Mirrors}}"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
@@ -1545,7 +1626,7 @@ msgid "Mirrored by"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
-msgid "<0>{0}</0> Likes"
+msgid "{reactionCount, plural, zero {Like} one {Like} other {Likes}}"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
@@ -1553,7 +1634,7 @@ msgid "Liked by"
 msgstr ""
 
 #: src/components/Publication/PublicationStats.tsx
-msgid "<0>{0}</0> Collects"
+msgid "{collectCount, plural, zero {Collect} one {Collect} other {Collects}}"
 msgstr ""
 
 #: src/components/Publication/QueuedPublication.tsx
@@ -1580,11 +1661,11 @@ msgstr ""
 msgid "Failed to load publications"
 msgstr ""
 
-#: src/components/Search/Sidebar.tsx
+#: src/components/Search/index.tsx
 msgid "Publications"
 msgstr ""
 
-#: src/components/Search/Sidebar.tsx
+#: src/components/Search/index.tsx
 msgid "Profiles"
 msgstr ""
 
@@ -1637,6 +1718,10 @@ msgid "Invalid Ethereum address"
 msgstr ""
 
 #: src/components/Settings/Account/SuperFollow.tsx
+msgid "Super Follow updated successfully!"
+msgstr ""
+
+#: src/components/Settings/Account/SuperFollow.tsx
 msgid "Loading super follow settings"
 msgstr ""
 
@@ -1669,18 +1754,11 @@ msgid "Set Super follow"
 msgstr ""
 
 #: src/components/Settings/Account/Verification.tsx
-msgid "Verified"
-msgstr ""
-
-#: src/components/Settings/Account/Verification.tsx
 msgid "No."
 msgstr ""
 
-#: src/components/Settings/Account/Verification.tsx
-msgid "Request Verification"
-msgstr ""
-
 #: src/components/Settings/Account/index.tsx
+#: src/components/Settings/Export/index.tsx
 msgid "Account settings • {APP_NAME}"
 msgstr ""
 
@@ -1689,7 +1767,11 @@ msgid "Allow"
 msgstr ""
 
 #: src/components/Settings/Allowance/Button.tsx
-msgid "Module {0} successfully!"
+msgid "Module disabled successfully!"
+msgstr ""
+
+#: src/components/Settings/Allowance/Button.tsx
+msgid "Module enabled successfully!"
 msgstr ""
 
 #: src/components/Settings/Allowance/Button.tsx
@@ -1748,6 +1830,7 @@ msgstr ""
 #: src/components/Settings/Cleanup/index.tsx
 #: src/components/Settings/Cleanup/index.tsx
 #: src/components/Settings/Cleanup/index.tsx
+#: src/components/Settings/Cleanup/index.tsx
 #: src/components/Settings/Sidebar.tsx
 msgid "Cleanup"
 msgstr ""
@@ -1773,6 +1856,14 @@ msgid "Cleared DM keys"
 msgstr ""
 
 #: src/components/Settings/Cleanup/index.tsx
+msgid "Feature flags cache"
+msgstr ""
+
+#: src/components/Settings/Cleanup/index.tsx
+msgid "Clean your feature flags cache"
+msgstr ""
+
+#: src/components/Settings/Cleanup/index.tsx
 msgid "App settings"
 msgstr ""
 
@@ -1785,15 +1876,15 @@ msgid "Delete Profile • {APP_NAME}"
 msgstr ""
 
 #: src/components/Settings/Delete/index.tsx
-msgid "This will deactivate your account"
+msgid "This will delete your Lens profile"
 msgstr ""
 
 #: src/components/Settings/Delete/index.tsx
-msgid "Deleting your account is permanent. All your data will be wiped out immediately and you won't be able to get it back."
+msgid "This will permanently delete your Profile NFT on the Lens Protocol. You will not be able to use any apps built on Lens, including Lenster. All your data will be wiped out immediately and you won't be able to get it back."
 msgstr ""
 
 #: src/components/Settings/Delete/index.tsx
-msgid "You cannot restore your {APP_NAME} account if it was accidentally or wrongfully deleted."
+msgid "You cannot restore your Lens profile if it was accidentally or wrongfully deleted."
 msgstr ""
 
 #: src/components/Settings/Delete/index.tsx
@@ -1850,24 +1941,108 @@ msgstr ""
 msgid "Dispatcher • {APP_NAME}"
 msgstr ""
 
+#: src/components/Settings/Export/Fingerprint.tsx
+msgid "Your unique fingerprint"
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+msgid "Export followers"
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+msgid "Export all your followers to a JSON file."
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+msgid "Exported <0>{0}</0> followers"
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+msgid "Download followers"
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+#: src/components/Settings/Export/Following.tsx
+#: src/components/Settings/Export/Notifications.tsx
+#: src/components/Settings/Export/Profile.tsx
+#: src/components/Settings/Export/Publications.tsx
+msgid "Exporting..."
+msgstr ""
+
+#: src/components/Settings/Export/Followers.tsx
+#: src/components/Settings/Export/Following.tsx
+#: src/components/Settings/Export/Notifications.tsx
+#: src/components/Settings/Export/Profile.tsx
+#: src/components/Settings/Export/Publications.tsx
+msgid "Export now"
+msgstr ""
+
+#: src/components/Settings/Export/Following.tsx
+msgid "Export following"
+msgstr ""
+
+#: src/components/Settings/Export/Following.tsx
+msgid "Export all your following to a JSON file."
+msgstr ""
+
+#: src/components/Settings/Export/Following.tsx
+msgid "Exported <0>{0}</0> following"
+msgstr ""
+
+#: src/components/Settings/Export/Following.tsx
+msgid "Download following"
+msgstr ""
+
+#: src/components/Settings/Export/Notifications.tsx
+msgid "Export notifications"
+msgstr ""
+
+#: src/components/Settings/Export/Notifications.tsx
+msgid "Export all your notifications to a JSON file."
+msgstr ""
+
+#: src/components/Settings/Export/Notifications.tsx
+msgid "Exported <0>{0}</0> notifications"
+msgstr ""
+
+#: src/components/Settings/Export/Notifications.tsx
+msgid "Download notifications"
+msgstr ""
+
+#: src/components/Settings/Export/Profile.tsx
+msgid "Export profile"
+msgstr ""
+
+#: src/components/Settings/Export/Profile.tsx
+msgid "Export all your profile data to a JSON file."
+msgstr ""
+
+#: src/components/Settings/Export/Profile.tsx
+msgid "Download profile"
+msgstr ""
+
+#: src/components/Settings/Export/Publications.tsx
+msgid "Export publications"
+msgstr ""
+
+#: src/components/Settings/Export/Publications.tsx
+msgid "Export all your posts, comments and mirrors to a JSON file."
+msgstr ""
+
+#: src/components/Settings/Export/Publications.tsx
+msgid "Exported <0>{0}</0> publications"
+msgstr ""
+
+#: src/components/Settings/Export/Publications.tsx
+msgid "Download publications"
+msgstr ""
+
 #: src/components/Settings/Interests/index.tsx
 msgid "Interests settings • {APP_NAME}"
 msgstr ""
 
 #: src/components/Settings/Interests/index.tsx
 msgid "Interests you select are used to personalize your experience across Lenster. You can adjust your interests if something doesn't look right."
-msgstr ""
-
-#: src/components/Settings/Preferences/LikesPreferences.tsx
-msgid "Hide number of likes"
-msgstr ""
-
-#: src/components/Settings/Preferences/LikesPreferences.tsx
-msgid "You won't see the total number of likes for publications others share to Feed. Your likes to a post will still be visible to you and everyone else."
-msgstr ""
-
-#: src/components/Settings/Preferences/index.tsx
-msgid "Preferences • {APP_NAME}"
 msgstr ""
 
 #: src/components/Settings/Profile/NftPicture.tsx
@@ -1892,10 +2067,7 @@ msgid "Token Id"
 msgstr ""
 
 #: src/components/Settings/Profile/Picture.tsx
-msgid "Upload failed"
-msgstr ""
-
-#: src/components/Settings/Profile/Picture.tsx
+#: src/components/Settings/Profile/Profile.tsx
 msgid "Crop image"
 msgstr ""
 
@@ -1905,6 +2077,10 @@ msgstr ""
 
 #: src/components/Settings/Profile/Profile.tsx
 msgid "Name should not exceed 100 characters"
+msgstr ""
+
+#: src/components/Settings/Profile/Profile.tsx
+msgid "Profile name must not contain restricted symbols"
 msgstr ""
 
 #: src/components/Settings/Profile/Profile.tsx
@@ -1940,7 +2116,6 @@ msgid "Website"
 msgstr ""
 
 #: src/components/Settings/Profile/Profile.tsx
-#: src/components/Shared/Footer/index.tsx
 msgid "Twitter"
 msgstr ""
 
@@ -1950,6 +2125,10 @@ msgstr ""
 
 #: src/components/Settings/Profile/Profile.tsx
 msgid "Tell us something about you!"
+msgstr ""
+
+#: src/components/Settings/Profile/Profile.tsx
+msgid "Cover picture crop preview"
 msgstr ""
 
 #: src/components/Settings/Profile/Profile.tsx
@@ -1977,10 +2156,6 @@ msgid "Account"
 msgstr ""
 
 #: src/components/Settings/Sidebar.tsx
-msgid "Preferences"
-msgstr ""
-
-#: src/components/Settings/Sidebar.tsx
 msgid "Interests"
 msgstr ""
 
@@ -1990,6 +2165,10 @@ msgstr ""
 
 #: src/components/Settings/Sidebar.tsx
 msgid "Allowance"
+msgstr ""
+
+#: src/components/Settings/Sidebar.tsx
+msgid "Export"
 msgstr ""
 
 #: src/components/Shared/Alert/DeletePublication.tsx
@@ -2006,6 +2185,10 @@ msgstr ""
 
 #: src/components/Shared/Attachments.tsx
 msgid "Open Image in new tab"
+msgstr ""
+
+#: src/components/Shared/Attachments.tsx
+msgid "Cancel Upload"
 msgstr ""
 
 #: src/components/Shared/Audio/index.tsx
@@ -2062,11 +2245,15 @@ msgid "Privacy"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
-msgid "ConsenSys Discord"
+msgid "Discord"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
-msgid "Donate to Lenster"
+msgid "Donate"
+msgstr ""
+
+#: src/components/Shared/Footer/index.tsx
+msgid "Status"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
@@ -2074,43 +2261,24 @@ msgid "Feedback"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
+msgid "Thanks"
+msgstr ""
+
+#: src/components/Shared/Footer/index.tsx
 msgid "GitHub"
 msgstr ""
 
 #: src/components/Shared/Footer/index.tsx
-#~ msgid "Lenster Discord"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "Discord"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "Donate"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "Status"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "Thanks"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "Translate"
-#~ msgstr ""
-
-#: src/components/Shared/Footer/index.tsx
-#~ msgid "▲ Powered by Vercel"
-#~ msgstr ""
-
-#: src/components/Shared/GlobalAlerts.tsx
-msgid "Mod actions"
+msgid "▲ Powered by Vercel"
 msgstr ""
 
 #: src/components/Shared/GlobalAlerts.tsx
 msgid "Perform mod actions on this publication."
+msgstr ""
+
+#: src/components/Shared/GlobalModals.tsx
+#: src/components/Shared/Modal/Report/index.tsx
+msgid "Report"
 msgstr ""
 
 #: src/components/Shared/GlobalModals.tsx
@@ -2125,6 +2293,10 @@ msgstr ""
 #: src/components/Shared/GlobalModals.tsx
 #: src/components/Shared/Navbar/LoginButton.tsx
 msgid "Login"
+msgstr ""
+
+#: src/components/Shared/GlobalModals.tsx
+msgid "Create post"
 msgstr ""
 
 #: src/components/Shared/IndexStatus.tsx
@@ -2160,11 +2332,15 @@ msgid "Handle should be at least 5 characters"
 msgstr ""
 
 #: src/components/Shared/Login/New/index.tsx
-msgid "Handle should not exceed 32 characters"
+msgid "Handle should not exceed 26 characters"
 msgstr ""
 
 #: src/components/Shared/Login/New/index.tsx
-msgid "Handle should only contain lowercase alphanumeric characters"
+msgid "Handle should only contain alphanumeric characters"
+msgstr ""
+
+#: src/components/Shared/Login/New/index.tsx
+msgid "The selected handle is already taken"
 msgstr ""
 
 #: src/components/Shared/Login/New/index.tsx
@@ -2176,20 +2352,8 @@ msgid "Handle"
 msgstr ""
 
 #: src/components/Shared/Login/New/index.tsx
-msgid "{0}"
+msgid "Sign up"
 msgstr ""
-
-#: src/components/Shared/Login/New/index.tsx
-#~ msgid "Handle should be at least 2 characters"
-#~ msgstr ""
-
-#: src/components/Shared/Login/New/index.tsx
-#~ msgid "Handle should only contain alphanumeric characters"
-#~ msgstr ""
-
-#: src/components/Shared/Login/New/index.tsx
-#~ msgid "Sign up"
-#~ msgstr ""
 
 #: src/components/Shared/Login/WalletSelector.tsx
 msgid "Sign-In with Lens"
@@ -2200,12 +2364,12 @@ msgid "Change wallet"
 msgstr ""
 
 #: src/components/Shared/Login/WalletSelector.tsx
-msgid "Failed to connect"
+msgid "Browser Wallet"
 msgstr ""
 
 #: src/components/Shared/Login/WalletSelector.tsx
-#~ msgid "Browser Wallet"
-#~ msgstr ""
+msgid "Failed to connect"
+msgstr ""
 
 #: src/components/Shared/Login/index.tsx
 msgid "Please sign the message"
@@ -2276,6 +2440,10 @@ msgid "Sensitive"
 msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
+msgid "Spam"
+msgstr ""
+
+#: src/components/Shared/Modal/Report/Reason.tsx
 msgid "Reason"
 msgstr ""
 
@@ -2304,7 +2472,15 @@ msgid "Violence"
 msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
+msgid "Scam"
+msgstr ""
+
+#: src/components/Shared/Modal/Report/Reason.tsx
 msgid "Impersonation"
+msgstr ""
+
+#: src/components/Shared/Modal/Report/Reason.tsx
+msgid "NSFW"
 msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
@@ -2313,6 +2489,10 @@ msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
 msgid "Fake engagement"
+msgstr ""
+
+#: src/components/Shared/Modal/Report/Reason.tsx
+msgid "Low signal"
 msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
@@ -2325,6 +2505,10 @@ msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
 msgid "Misuse hashtags"
+msgstr ""
+
+#: src/components/Shared/Modal/Report/Reason.tsx
+msgid "Repetitive"
 msgstr ""
 
 #: src/components/Shared/Modal/Report/Reason.tsx
@@ -2365,7 +2549,6 @@ msgid "More"
 msgstr ""
 
 #: src/components/Shared/Navbar/NavItems/Contact.tsx
-#: src/components/Shared/Navbar/index.tsx
 msgid "Contact"
 msgstr ""
 
@@ -2386,8 +2569,8 @@ msgid "Enable mod mode"
 msgstr ""
 
 #: src/components/Shared/Navbar/NavItems/ReportBug.tsx
-#~ msgid "Report a bug"
-#~ msgstr ""
+msgid "Report a bug"
+msgstr ""
 
 #: src/components/Shared/Navbar/NavItems/Settings.tsx
 msgid "Settings"
@@ -2446,11 +2629,27 @@ msgid "{type} voting is not supported yet!"
 msgstr ""
 
 #: src/components/Shared/Snapshot/Choices.tsx
+msgid "This poll is ended!"
+msgstr ""
+
+#: src/components/Shared/Snapshot/Choices.tsx
+msgid "Your vote has been casted!"
+msgstr ""
+
+#: src/components/Shared/Snapshot/Choices.tsx
 msgid "Current results"
 msgstr ""
 
 #: src/components/Shared/Snapshot/Choices.tsx
 msgid "Results"
+msgstr ""
+
+#: src/components/Shared/Snapshot/Choices.tsx
+msgid "{0, plural, zero {Vote} one {Vote} other {Votes}}"
+msgstr ""
+
+#: src/components/Shared/Snapshot/Choices.tsx
+msgid "{0} left"
 msgstr ""
 
 #: src/components/Shared/Snapshot/Choices.tsx
@@ -2534,8 +2733,8 @@ msgstr ""
 msgid "Switch Network"
 msgstr ""
 
-#: src/components/Shared/Unfollow.tsx
-msgid "User rejected request"
+#: src/components/Shared/SwitchProfiles.tsx
+msgid "Create Profile"
 msgstr ""
 
 #: src/components/Shared/Unfollow.tsx
@@ -2547,58 +2746,145 @@ msgid "Unfollow"
 msgstr ""
 
 #: src/components/Shared/Uniswap.tsx
-msgid "You don't have enough <0>{0}</0>"
+msgid "You don't have enough <0>{currency}</0>"
 msgstr ""
 
 #: src/components/Shared/Uniswap.tsx
 msgid "Swap in Uniswap"
 msgstr ""
 
+#: src/components/StaffTools/Panels/Profile.tsx
+#: src/components/StaffTools/Panels/Publication.tsx
+msgid "Staff tool"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "{APP_NAME} account"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Profile ID"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Address"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "NFT address"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Can use relay"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Gas sponsored"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Follow module"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Metadata"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Profile.tsx
+msgid "Open"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Publication.tsx
+msgid "Publication ID"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Publication.tsx
+msgid "Comment on"
+msgstr ""
+
+#: src/components/StaffTools/Panels/Publication.tsx
+msgid "Collect module"
+msgstr ""
+
+#: src/components/StaffTools/RelayQueues.tsx
+msgid "Transactions"
+msgstr ""
+
+#: src/components/StaffTools/RelayQueues.tsx
+msgid "Stafftools | Relay queues • {APP_NAME}"
+msgstr ""
+
+#: src/components/StaffTools/RelayQueues.tsx
+#: src/components/StaffTools/Sidebar.tsx
+msgid "Relay queues"
+msgstr ""
+
+#: src/components/StaffTools/Sidebar.tsx
 #: src/components/StaffTools/Stats/index.tsx
-msgid "Stafftools • {APP_NAME}"
+msgid "Stats"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "Stafftools | Stats • {APP_NAME}"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total profiles"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "profiles burnt"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total posts"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total mirrors"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total comments"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total collects"
+msgstr ""
+
+#: src/components/StaffTools/Stats/index.tsx
+msgid "total follows"
 msgstr ""
 
 #: src/components/utils/hooks/useUploadAttachments.tsx
-msgid "Image size should be less than 10MB"
+msgid "Image size should be less than 50MB"
 msgstr ""
 
 #: src/components/utils/hooks/useUploadAttachments.tsx
-msgid "Video size should be less than 100MB"
+msgid "Video size should be less than 200MB"
 msgstr ""
 
 #: src/components/utils/hooks/useUploadAttachments.tsx
 msgid "Audio size should be less than 100MB"
 msgstr ""
 
-#: src/lib/getModule.ts
+#: src/lib/getAllowanceModule.ts
 msgid "Multirecipient Paid Collect"
 msgstr ""
 
-#: src/lib/getModule.ts
-msgid "Paid Collect"
+#: src/lib/getAllowanceModule.ts
+msgid "Basic Collect"
 msgstr ""
 
-#: src/lib/getModule.ts
-msgid "Rare Paid Collect"
-msgstr ""
-
-#: src/lib/getModule.ts
-msgid "24 Hour Collect"
-msgstr ""
-
-#: src/lib/getModule.ts
-msgid "Rare 24 Hour Collect"
-msgstr ""
-
-#: src/lib/getModule.ts
+#: src/lib/getAllowanceModule.ts
 msgid "No Collect"
 msgstr ""
 
-#: src/lib/getModule.ts
+#: src/lib/getAllowanceModule.ts
 msgid "Fee Follow"
 msgstr ""
 
-#: src/lib/getModule.ts
+#: src/lib/getAllowanceModule.ts
 msgid "Follower Only Reference"
 msgstr ""
 
@@ -2622,3 +2908,4 @@ msgstr ""
 #: src/pages/500.tsx
 msgid "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
 msgstr ""
+

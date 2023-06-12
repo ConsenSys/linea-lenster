@@ -3,24 +3,24 @@ import UserProfile from '@components/Shared/UserProfile';
 import { Menu } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import { t, Trans } from '@lingui/macro';
-import clsx from 'clsx';
-import type { FeedItem, FeedRequest, Profile, ProfileSearchResult } from 'lens';
+import type { FeedItem, FeedRequest, Profile, ProfileSearchResult } from '@lenster/lens';
 import {
   CustomFiltersTypes,
   SearchRequestTypes,
   useSearchProfilesLazyQuery,
   useSeeThroughProfilesLazyQuery
-} from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
+} from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import { Image, Input, Spinner } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
+import clsx from 'clsx';
 import type { ChangeEvent, FC } from 'react';
 import { Fragment, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useTimelineStore } from 'src/store/timeline';
 import { MISCELLANEOUS } from 'src/tracking';
-import { Image, Input, Spinner } from 'ui';
 
 const SeeThroughLens: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -86,13 +86,10 @@ const SeeThroughLens: FC = () => {
     <Menu as="div" className="relative">
       <Menu.Button as={Fragment}>
         <button
-          className="flex items-center space-x-1 rounded-md p-1 pl-1 text-sm hover:bg-gray-300 hover:bg-opacity-20"
+          className="flex items-center space-x-1 rounded-md p-1 text-sm hover:bg-gray-300/20"
           onClick={() => fetchRecommendedProfiles()}
         >
           <Image
-            onError={({ currentTarget }) => {
-              currentTarget.src = getAvatar(profile, false);
-            }}
             src={getAvatar(profile)}
             loading="lazy"
             width={20}
@@ -156,7 +153,7 @@ const SeeThroughLens: FC = () => {
                     onClick={() => {
                       setSeeThroughProfile(profile);
                       setSearchText('');
-                      Mixpanel.track(MISCELLANEOUS.SELECT_USER_FEED, {
+                      Leafwatch.track(MISCELLANEOUS.SELECT_USER_FEED, {
                         see_through_profile: profile?.id
                       });
                     }}

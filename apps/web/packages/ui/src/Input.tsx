@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
         <div
           className={clsx(
-            { 'bg-brand-500 bg-opacity-20 opacity-60': props.disabled },
+            { 'bg-brand-500/20 opacity-60': props.disabled },
             error && '!border-red-500',
             prefix ? 'rounded-r-full' : 'rounded-full',
             'focus-within:bg-brand-500 flex w-full items-center bg-white'
@@ -53,7 +53,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           <input
             id={id}
             className={clsx(
-              { 'placeholder-red-500': error },
+              { 'placeholder:text-red-500': error },
               prefix ? 'rounded-r-xl' : 'rounded-full',
               'autofill:shadow-transparentfocus-within:border-none peer w-full border-none bg-none text-black outline-none ring-0 autofill:bg-transparent focus-within:bg-transparent focus:border-none focus:bg-transparent focus:ring-0',
               className

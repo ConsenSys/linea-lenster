@@ -1,18 +1,18 @@
 import { PlusCircleIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
-import sanitizeProfileInterests from '@lib/sanitizeProfileInterests';
 import {
   useAddProfileInterestMutation,
   useProfileInterestsQuery,
   useRemoveProfileInterestMutation
-} from 'lens';
-import { useApolloClient } from 'lens/apollo';
+} from '@lenster/lens';
+import { useApolloClient } from '@lenster/lens/apollo';
+import { Button } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
+import sanitizeProfileInterests from '@lib/sanitizeProfileInterests';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
 import { SETTINGS } from 'src/tracking';
-import { Button } from 'ui';
 
 import Loader from '../../Shared/Loader';
 
@@ -29,13 +29,17 @@ const Interests: FC = () => {
     });
   };
 
+  const onError = (error: any) => {
+    errorToast(error);
+  };
+
   const { data, loading } = useProfileInterestsQuery();
   const [addProfileInterests] = useAddProfileInterestMutation({
-    onCompleted: () => Mixpanel.track(SETTINGS.INTERESTS.ADD),
+    onCompleted: () => Leafwatch.track(SETTINGS.INTERESTS.ADD),
     onError
   });
   const [removeProfileInterests] = useRemoveProfileInterestMutation({
-    onCompleted: () => Mixpanel.track(SETTINGS.INTERESTS.REMOVE),
+    onCompleted: () => Leafwatch.track(SETTINGS.INTERESTS.REMOVE),
     onError
   });
 
@@ -43,7 +47,9 @@ const Interests: FC = () => {
   const selectedTopics = currentProfile?.interests ?? [];
 
   const onSelectTopic = (topic: string) => {
-    const variables = { request: { profileId: currentProfile?.id, interests: [topic] } };
+    const variables = {
+      request: { profileId: currentProfile?.id, interests: [topic] }
+    };
     if (!selectedTopics.includes(topic)) {
       const interests = [...selectedTopics, topic];
       updateCache(interests);

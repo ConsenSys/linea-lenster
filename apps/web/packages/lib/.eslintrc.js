@@ -1,4 +1,3 @@
 module.exports = {
-  root: true,
-  extends: ['weblint']
+  extends: [require.resolve('@lenster/config/eslint/base.js')]
 };

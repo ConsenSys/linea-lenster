@@ -1,10 +1,11 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "@lenster/config/base.tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "noEmit": true,
     "paths": {
-      "test/constants": ["constants.ts"]
+      "test/constants": [
+        "constants.ts"
+      ]
     }
   }
 }

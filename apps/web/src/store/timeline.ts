@@ -1,5 +1,5 @@
-import { Localstorage } from 'data/storage';
-import type { Profile } from 'lens';
+import { Localstorage } from '@lenster/data';
+import type { Profile } from '@lenster/lens';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -16,7 +16,12 @@ interface TimelineState {
 export const useTimelinePersistStore = create(
   persist<TimelinePersistState>(
     (set) => ({
-      feedEventFilters: { posts: true, collects: true, mirrors: true, likes: false },
+      feedEventFilters: {
+        posts: true,
+        collects: true,
+        mirrors: true,
+        likes: false
+      },
       setFeedEventFilters: (feedEventFilters) => set(() => ({ feedEventFilters }))
     }),
     { name: Localstorage.TimelineStore }

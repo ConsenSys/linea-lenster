@@ -2,13 +2,14 @@ import MetaTags from '@components/Common/MetaTags';
 import NewPost from '@components/Composer/Post/New';
 import Feed from '@components/Explore/Feed';
 import Footer from '@components/Shared/Footer';
-import { Mixpanel } from '@lib/mixpanel';
-import { IS_RELAYER_AVAILABLE } from 'data';
+import { IS_RELAYER_AVAILABLE } from '@lenster/data';
+import { GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import EnableDispatcher from './EnableDispatcher';
 import EnableMessages from './EnableMessages';
@@ -24,9 +25,9 @@ const Home: NextPage = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const [feedType, setFeedType] = useState<'TIMELINE' | 'HIGHLIGHTS'>('TIMELINE');
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'home' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'home' });
+  });
 
   return (
     <>

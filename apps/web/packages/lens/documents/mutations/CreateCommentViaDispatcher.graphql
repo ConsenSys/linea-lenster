@@ -1,5 +1,5 @@
 mutation CreateCommentViaDispatcher($request: CreatePublicCommentRequest!) {
-  createCommentViaDispatcher(request: $request) {
-    ...RelayerResultFields
-  }
+    createCommentViaDispatcher(request: $request) {
+        ...RelayerResultFields
+    }
 }

@@ -1,9 +1,9 @@
 import { SparklesIcon, ViewListIcon } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
+import { TabButton } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import type { Dispatch, FC } from 'react';
 import { MISCELLANEOUS } from 'src/tracking';
-import { TabButton } from 'ui';
 
 import FeedEventFilters from './FeedEventFilters';
 import SeeThroughLens from './SeeThroughLens';
@@ -24,7 +24,7 @@ const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
           showOnSm={false}
           onClick={() => {
             setFeedType('TIMELINE');
-            Mixpanel.track(MISCELLANEOUS.SWITCH_TIMELINE);
+            Leafwatch.track(MISCELLANEOUS.SWITCH_TIMELINE);
           }}
         />
         <TabButton
@@ -34,7 +34,7 @@ const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
           showOnSm={false}
           onClick={() => {
             setFeedType('HIGHLIGHTS');
-            Mixpanel.track(MISCELLANEOUS.SWITCH_HIGHLIGHTS);
+            Leafwatch.track(MISCELLANEOUS.SWITCH_HIGHLIGHTS);
           }}
         />
       </div>

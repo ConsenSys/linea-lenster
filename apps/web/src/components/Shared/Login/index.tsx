@@ -1,6 +1,7 @@
 import WalletSelector from '@components/Shared/Login/WalletSelector';
+import { APP_NAME, IS_MAINNET } from '@lenster/data/constants';
 import { Trans } from '@lingui/macro';
-import { APP_NAME, IS_MAINNET } from 'data/constants';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { useState } from 'react';
 
@@ -41,14 +42,14 @@ const Login: FC = () => {
           <div className="space-y-1">
             <div className="linkify text-white">
               Visit{' '}
-              <a
+              <Link
                 className="font-medium"
                 href="https://claim.lens.xyz"
                 target="_blank"
                 rel="noreferrer noopener"
               >
                 claiming site
-              </a>{' '}
+              </Link>{' '}
               to claim your profile now 🏃‍♂️
             </div>
             <div className="lt-text-gray-500 text-sm">Make sure to check back here when done!</div>

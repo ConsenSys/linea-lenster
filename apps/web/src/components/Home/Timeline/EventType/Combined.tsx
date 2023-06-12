@@ -1,7 +1,7 @@
 import Profiles from '@components/Shared/Profiles';
 import { SparklesIcon } from '@heroicons/react/outline';
+import type { FeedItem } from '@lenster/lens';
 import { Trans } from '@lingui/macro';
-import type { FeedItem } from 'lens';
 import type { FC } from 'react';
 
 interface CombinedProps {
@@ -38,7 +38,10 @@ const Combined: FC<CombinedProps> = ({ feedItem }) => {
       <div className="flex items-center space-x-1">
         {mirrorsLength ? (
           <span>
-            <Trans>mirrored{totalActions < 3 ? (totalActions !== 1 ? ' and ' : '') : ', '}</Trans>
+            <Trans>
+              mirrored
+              {totalActions < 3 ? (totalActions !== 1 ? ' and ' : '') : ', '}
+            </Trans>
           </span>
         ) : null}
         {commentsLength ? (

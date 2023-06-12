@@ -5,6 +5,7 @@ import EmojisPlugin from '@components/Shared/Lexical/Plugins/EmojisPlugin';
 import ImagesPlugin from '@components/Shared/Lexical/Plugins/ImagesPlugin';
 import ToolbarPlugin from '@components/Shared/Lexical/Plugins/ToolbarPlugin';
 import useUploadAttachments from '@components/utils/hooks/useUploadAttachments';
+import { Errors } from '@lenster/data';
 import { $convertToMarkdownString, TEXT_FORMAT_TRANSFORMERS } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -14,7 +15,6 @@ import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPl
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { t, Trans } from '@lingui/macro';
-import Errors from 'data/errors';
 import { COMMAND_PRIORITY_NORMAL, INSERT_LINE_BREAK_COMMAND, INSERT_PARAGRAPH_COMMAND } from 'lexical';
 import type { FC } from 'react';
 import { useEffect } from 'react';
@@ -25,6 +25,7 @@ const TRANSFORMERS = [...TEXT_FORMAT_TRANSFORMERS];
 
 const Editor: FC = () => {
   const setPublicationContent = usePublicationStore((state) => state.setPublicationContent);
+  const showPollEditor = usePublicationStore((state) => state.showPollEditor);
   const attachments = usePublicationStore((state) => state.attachments);
   const { handleUploadAttachments } = useUploadAttachments();
   const [editor] = useLexicalComposerContext();
@@ -58,7 +59,7 @@ const Editor: FC = () => {
         contentEditable={<ContentEditable className="my-4 block min-h-[65px] overflow-auto px-5" />}
         placeholder={
           <div className="pointer-events-none absolute top-[65px] whitespace-nowrap px-5 text-gray-400">
-            <Trans>What's happening?</Trans>
+            {showPollEditor ? <Trans>Ask a question...</Trans> : <Trans>What's happening?</Trans>}
           </div>
         }
         ErrorBoundary={() => <div>{Errors.SomethingWentWrong}</div>}

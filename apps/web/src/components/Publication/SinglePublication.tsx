@@ -1,6 +1,6 @@
 import ActionType from '@components/Home/Timeline/EventType';
-import type { ElectedMirror, FeedItem, Publication } from 'lens';
-import { useRouter } from 'next/router';
+import PublicationWrapper from '@components/Shared/PublicationWrapper';
+import type { ElectedMirror, FeedItem, Publication } from '@lenster/lens';
 import type { FC } from 'react';
 
 import PublicationActions from './Actions';
@@ -17,6 +17,7 @@ interface SinglePublicationProps {
   showActions?: boolean;
   showModActions?: boolean;
   showThread?: boolean;
+  showMore?: boolean;
 }
 
 const SinglePublication: FC<SinglePublicationProps> = ({
@@ -25,22 +26,16 @@ const SinglePublication: FC<SinglePublicationProps> = ({
   showType = true,
   showActions = true,
   showModActions = false,
-  showThread = true
+  showThread = true,
+  showMore = true
 }) => {
-  const { push } = useRouter();
   const firstComment = feedItem?.comments && feedItem.comments[0];
   const rootPublication = feedItem ? (firstComment ? firstComment : feedItem?.root) : publication;
 
   return (
-    <article
+    <PublicationWrapper
       className="cursor-pointer p-5 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-100 dark:hover:bg-gray-900"
-      onClick={() => {
-        const selection = window.getSelection();
-        if (!selection || selection.toString().length === 0) {
-          push(`/posts/${rootPublication?.id}`);
-        }
-      }}
-      data-testid={`publication-${publication.id}`}
+      publication={rootPublication}
     >
       {feedItem ? (
         <ActionType feedItem={feedItem} />
@@ -53,7 +48,7 @@ const SinglePublication: FC<SinglePublicationProps> = ({
           <HiddenPublication type={publication.__typename} />
         ) : (
           <>
-            <PublicationBody publication={rootPublication} />
+            <PublicationBody publication={rootPublication} showMore={showMore} />
             {showActions && (
               <PublicationActions
                 publication={rootPublication}
@@ -64,7 +59,7 @@ const SinglePublication: FC<SinglePublicationProps> = ({
           </>
         )}
       </div>
-    </article>
+    </PublicationWrapper>
   );
 };
 

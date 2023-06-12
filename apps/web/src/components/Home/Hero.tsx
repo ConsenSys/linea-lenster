@@ -1,5 +1,5 @@
+import { APP_NAME } from '@lenster/data/constants';
 import { Trans } from '@lingui/macro';
-import { APP_NAME } from 'data/constants';
 import type { FC } from 'react';
 
 const Hero: FC = () => {
@@ -17,7 +17,7 @@ const Hero: FC = () => {
             </Trans>
           </div>
         </div>
-        <div className="hidden w-full flex-1 flex-shrink-0 sm:block" />
+        <div className="hidden w-full flex-1 shrink-0 sm:block" />
       </div>
     </div>
   );

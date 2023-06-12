@@ -1,9 +1,10 @@
 import { PauseIcon, PlayIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
+import type { Publication } from '@lenster/lens';
+import getPublicationAttribute from '@lenster/lib/getPublicationAttribute';
+import getThumbnailUrl from '@lenster/lib/getThumbnailUrl';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
-import type { Publication } from 'lens';
-import getPublicationAttribute from 'lib/getPublicationAttribute';
-import getThumbnailUrl from 'lib/getThumbnailUrl';
 import type { APITypes } from 'plyr-react';
 import type { ChangeEvent, FC } from 'react';
 import { useRef, useState } from 'react';
@@ -48,17 +49,24 @@ const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCov
     }
     if (playerRef.current?.plyr.paused && !playing) {
       setPlaying(true);
-      Mixpanel.track(PUBLICATION.ATTACHMENT.AUDIO.PLAY);
+      Leafwatch.track(PUBLICATION.ATTACHMENT.AUDIO.PLAY, {
+        publication_id: publication?.id
+      });
 
       return playerRef.current?.plyr.play();
     }
     setPlaying(false);
     playerRef.current?.plyr.pause();
-    Mixpanel.track(PUBLICATION.ATTACHMENT.AUDIO.PAUSE);
+    Leafwatch.track(PUBLICATION.ATTACHMENT.AUDIO.PAUSE, {
+      publication_id: publication?.id
+    });
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAudioPublication({ ...audioPublication, [e.target.name]: e.target.value });
+    setAudioPublication({
+      ...audioPublication,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
@@ -71,7 +79,11 @@ const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCov
           isNew={isNew && !txn}
           cover={isNew ? txn?.cover ?? audioPublication.cover : getThumbnailUrl(publication?.metadata)}
           setCover={(url, mimeType) =>
-            setAudioPublication({ ...audioPublication, cover: url, coverMimeType: mimeType })
+            setAudioPublication({
+              ...audioPublication,
+              cover: url,
+              coverMimeType: mimeType
+            })
           }
           imageRef={imageRef}
           expandCover={expandCover}
@@ -90,7 +102,7 @@ const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCov
                 {isNew && !txn ? (
                   <div className="flex w-full flex-col">
                     <input
-                      className="border-none bg-transparent text-lg text-white placeholder-white outline-none"
+                      className="border-none bg-transparent text-lg text-white outline-none placeholder:text-white"
                       placeholder={t`Add title`}
                       name="title"
                       value={audioPublication.title}
@@ -98,7 +110,7 @@ const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCov
                       onChange={handleChange}
                     />
                     <input
-                      className="border-none bg-transparent text-white/70 placeholder-white/70 outline-none"
+                      className="border-none bg-transparent text-white/70 outline-none placeholder:text-white/70"
                       placeholder={t`Add author`}
                       name="author"
                       value={audioPublication.author}
@@ -112,7 +124,7 @@ const Audio: FC<AudioProps> = ({ src, isNew = false, publication, txn, expandCov
                     <h6 className="truncate text-white/70">
                       {txn?.author ??
                         getPublicationAttribute(publication?.metadata.attributes, 'author') ??
-                        publication?.profile.name}
+                        sanitizeDisplayName(publication?.profile.name)}
                     </h6>
                   </>
                 )}

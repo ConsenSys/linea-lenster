@@ -1,34 +1,23 @@
 import GlobalAlerts from '@components/Shared/GlobalAlerts';
 import BottomNavigation from '@components/Shared/Navbar/BottomNavigation';
+import type { Profile } from '@lenster/lens';
+import { useUserProfilesQuery } from '@lenster/lens';
 import getIsAuthTokensAvailable from '@lib/getIsAuthTokensAvailable';
 import getToastOptions from '@lib/getToastOptions';
 import resetAuthData from '@lib/resetAuthData';
-import { IS_MAINNET, MIXPANEL_ENABLED, MIXPANEL_TOKEN } from 'data/constants';
-import type { Profile } from 'lens';
-import { useUserProfilesQuery } from 'lens';
-import mixpanel from 'mixpanel-browser';
 import Head from 'next/head';
 import { useTheme } from 'next-themes';
 import type { FC, ReactNode } from 'react';
-import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { CHAIN_ID } from 'src/constants';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
+import { useIsMounted, useUpdateEffect } from 'usehooks-ts';
 import { useAccount, useDisconnect, useNetwork } from 'wagmi';
 
 import GlobalModals from '../Shared/GlobalModals';
 import Loading from '../Shared/Loading';
 import Navbar from '../Shared/Navbar';
-import useIsMounted from '../utils/hooks/useIsMounted';
 import { useDisconnectXmtp } from '../utils/hooks/useXmtpClient';
-
-if (MIXPANEL_ENABLED) {
-  mixpanel.init(MIXPANEL_TOKEN, {
-    ignore_dnt: true,
-    api_host: '/collect',
-    batch_requests: false
-  });
-}
 
 interface LayoutProps {
   children: ReactNode;
@@ -37,14 +26,12 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   const { resolvedTheme } = useTheme();
   const setProfiles = useAppStore((state) => state.setProfiles);
-  const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
-  const setIsPro = useAppStore((state) => state.setIsPro);
   const profileId = useAppPersistStore((state) => state.profileId);
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
 
-  const { mounted } = useIsMounted();
+  const isMounted = useIsMounted();
   const { address } = useAccount();
   const { chain } = useNetwork();
   const { disconnect } = useDisconnect();
@@ -73,7 +60,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       setProfiles(profiles as Profile[]);
       setCurrentProfile(selectedUser as Profile);
       setProfileId(selectedUser?.id);
-      setUserSigNonce(data?.userSigNonces?.lensHubOnChainSigNonce);
     },
     onError: () => {
       setProfileId(null);
@@ -95,39 +81,11 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     validateAuthentication();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, chain, disconnect, profileId]);
 
-  // set pro status
-  useEffect(() => {
-    if (currentProfile?.id && currentProfile?.id === '0x0d') {
-      if (IS_MAINNET) {
-        setIsPro(true);
-      } else {
-        setIsPro(true);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentProfile?.id]);
-
-  // Mixpanel identify
-  useEffect(() => {
-    if (MIXPANEL_ENABLED && currentProfile?.id) {
-      mixpanel.identify(currentProfile?.id);
-      mixpanel.people.set({
-        $name: currentProfile?.handle,
-        $last_active: new Date()
-      });
-      mixpanel.people.set_once({
-        $created_at: new Date()
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentProfile?.id]);
-
-  if (loading || !mounted) {
+  if (loading || !isMounted()) {
     return <Loading />;
   }
 

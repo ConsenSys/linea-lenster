@@ -13,7 +13,10 @@ export const PROFILE = {
   FOLLOW: 'Follow profile',
   SUPER_FOLLOW: 'Super follow profile',
   UNFOLLOW: 'Unfollow profile',
+  DISMISS_RECOMMENDED_PROFILE: 'Dismiss recommended profile',
   OPEN_SUPER_FOLLOW: 'Open super follow modal',
+  OPEN_FOLLOWERS: 'Open followers modal',
+  OPEN_FOLLOWING: 'Open following modal',
   SWITCH_PROFILE_FEED_TAB: 'Switch profile feed tab',
   SWITCH_PROFILE: 'Switch profile',
   LOGOUT: 'Profile logout'
@@ -23,13 +26,19 @@ export const PUBLICATION = {
   NEW_POST: 'New post',
   NEW_COMMENT: 'New comment',
   LIKE: 'Like publication',
-  DISLIKE: 'Dislike publication',
+  UNLIKE: 'Unlike publication',
   MIRROR: 'Mirror publication',
-  EMBED: 'Embed publication',
   PERMALINK: 'Permalink publication',
+  TRANSLATE: 'Translate publication',
   DELETE: 'Delete publication',
   REPORT: 'Report publication',
-  OEMBED_CLICK: 'Click publication oembed',
+  CLICK_OEMBED: 'Click publication oembed',
+  CLICK_HASHTAG: 'Click publication hashtag',
+  CLICK_MENTION: 'Click publication mention',
+  OPEN_LIKES: 'Open likes modal',
+  OPEN_MIRRORS: 'Open mirrors modal',
+  OPEN_COLLECTORS: 'Open collectors modal',
+  OPEN_GIFS: 'Open GIFs modal',
   ATTACHMENT: {
     IMAGE: {
       OPEN: 'Open image attachment'
@@ -95,6 +104,13 @@ export const SETTINGS = {
     ADD: 'Add profile interest',
     REMOVE: 'Remove profile interest'
   },
+  EXPORT: {
+    PROFILE: 'Export profile',
+    PUBLICATIONS: 'Export publications',
+    NOTIFICATIONS: 'Export notifications',
+    FOLLOWING: 'Export following',
+    FOLLOWERS: 'Export followers'
+  },
   DELETE: 'Delete profile'
 };
 
@@ -118,7 +134,16 @@ export const MISCELLANEOUS = {
   SWITCH_TIMELINE: 'Switch to timeline',
   SWITCH_HIGHLIGHTS: 'Switch to highlights',
   SELECT_USER_FEED: 'Select user feed',
-  SELECT_LOCALE: 'Select locale'
+  SELECT_LOCALE: 'Select locale',
+  FOOTER: {
+    OPEN_DISCORD: 'Open Discord',
+    OPEN_GITHUB: 'Open GitHub',
+    OPEN_VERCEL: 'Open Vercel',
+    OPEN_STATUS: 'Open status',
+    OPEN_FEEDBACK: 'Open feedback',
+    OPEN_TRANSLATE: 'Open translate',
+    OPEN_DONATE: 'Open donate'
+  }
 };
 
 export const ONBOARDING = {
@@ -127,7 +152,7 @@ export const ONBOARDING = {
 };
 
 // enums
-export enum FollowSource {
+export enum FollowUnfollowSource {
   WHO_TO_FOLLOW = 'who_to_follow',
   WHO_TO_FOLLOW_MODAL = 'who_to_follow_modal',
   LIKES_MODAL = 'likes_modal',

@@ -30,9 +30,24 @@ export const LensHub = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'approved', type: 'address' },
-      { indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' }
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'approved',
+        type: 'address'
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256'
+      }
     ],
     name: 'Approval',
     type: 'event'
@@ -40,8 +55,18 @@ export const LensHub = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'operator', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address'
+      },
       { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' }
     ],
     name: 'ApprovalForAll',
@@ -52,7 +77,12 @@ export const LensHub = [
     inputs: [
       { indexed: true, internalType: 'address', name: 'from', type: 'address' },
       { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-      { indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' }
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256'
+      }
     ],
     name: 'Transfer',
     type: 'event'
@@ -148,13 +178,25 @@ export const LensHub = [
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' }
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          }
         ],
         internalType: 'struct DataTypes.CommentData',
         name: 'vars',
@@ -172,13 +214,25 @@ export const LensHub = [
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -207,13 +261,25 @@ export const LensHub = [
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -244,7 +310,11 @@ export const LensHub = [
           { internalType: 'string', name: 'handle', type: 'string' },
           { internalType: 'string', name: 'imageURI', type: 'string' },
           { internalType: 'address', name: 'followModule', type: 'address' },
-          { internalType: 'bytes', name: 'followModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'followModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'string', name: 'followNFTURI', type: 'string' }
         ],
         internalType: 'struct DataTypes.CreateProfileData',
@@ -472,7 +542,11 @@ export const LensHub = [
     outputs: [
       {
         components: [
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
@@ -595,11 +669,19 @@ export const LensHub = [
       {
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' }
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          }
         ],
         internalType: 'struct DataTypes.MirrorData',
         name: 'vars',
@@ -616,11 +698,19 @@ export const LensHub = [
       {
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -648,11 +738,19 @@ export const LensHub = [
       {
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
-          { internalType: 'uint256', name: 'profileIdPointed', type: 'uint256' },
+          {
+            internalType: 'uint256',
+            name: 'profileIdPointed',
+            type: 'uint256'
+          },
           { internalType: 'uint256', name: 'pubIdPointed', type: 'uint256' },
           { internalType: 'bytes', name: 'referenceModuleData', type: 'bytes' },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -739,9 +837,17 @@ export const LensHub = [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' }
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          }
         ],
         internalType: 'struct DataTypes.PostData',
         name: 'vars',
@@ -760,9 +866,17 @@ export const LensHub = [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -792,9 +906,17 @@ export const LensHub = [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'string', name: 'contentURI', type: 'string' },
           { internalType: 'address', name: 'collectModule', type: 'address' },
-          { internalType: 'bytes', name: 'collectModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'collectModuleInitData',
+            type: 'bytes'
+          },
           { internalType: 'address', name: 'referenceModule', type: 'address' },
-          { internalType: 'bytes', name: 'referenceModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'referenceModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -947,7 +1069,11 @@ export const LensHub = [
         components: [
           { internalType: 'uint256', name: 'profileId', type: 'uint256' },
           { internalType: 'address', name: 'followModule', type: 'address' },
-          { internalType: 'bytes', name: 'followModuleInitData', type: 'bytes' },
+          {
+            internalType: 'bytes',
+            name: 'followModuleInitData',
+            type: 'bytes'
+          },
           {
             components: [
               { internalType: 'uint8', name: 'v', type: 'uint8' },
@@ -1054,7 +1180,13 @@ export const LensHub = [
     type: 'function'
   },
   {
-    inputs: [{ internalType: 'enum DataTypes.ProtocolState', name: 'newState', type: 'uint8' }],
+    inputs: [
+      {
+        internalType: 'enum DataTypes.ProtocolState',
+        name: 'newState',
+        type: 'uint8'
+      }
+    ],
     name: 'setState',
     outputs: [],
     stateMutability: 'nonpayable',

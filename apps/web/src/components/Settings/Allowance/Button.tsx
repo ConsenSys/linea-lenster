@@ -1,15 +1,15 @@
 import { ExclamationIcon, MinusIcon, PlusIcon } from '@heroicons/react/outline';
-import { getModule } from '@lib/getModule';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
+import type { ApprovedAllowanceAmount } from '@lenster/lens';
+import { useGenerateModuleCurrencyApprovalDataLazyQuery } from '@lenster/lens';
+import { Button, Modal, Spinner, WarningMessage } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import getAllowanceModule from '@lib/getAllowanceModule';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import type { ApprovedAllowanceAmount } from 'lens';
-import { useGenerateModuleCurrencyApprovalDataLazyQuery } from 'lens';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { SETTINGS } from 'src/tracking';
-import { Button, Modal, Spinner, WarningMessage } from 'ui';
 import { useSendTransaction, useWaitForTransaction } from 'wagmi';
 
 interface AllowanceButtonProps {
@@ -24,26 +24,28 @@ const AllowanceButton: FC<AllowanceButtonProps> = ({ title = t`Allow`, module, a
   const [generateAllowanceQuery, { loading: queryLoading }] =
     useGenerateModuleCurrencyApprovalDataLazyQuery();
 
+  const onError = (error: any) => {
+    errorToast(error);
+  };
+
   const {
     data: txData,
     isLoading: transactionLoading,
     sendTransaction
   } = useSendTransaction({
-    request: {},
-    mode: 'recklesslyUnprepared',
     onError
   });
 
   const { isLoading: waitLoading } = useWaitForTransaction({
     hash: txData?.hash,
     onSuccess: () => {
-      toast.success(t`Module ${allowed ? 'disabled' : 'enabled'} successfully!`);
+      toast.success(allowed ? t`Module disabled successfully!` : t`Module enabled successfully!`);
       setShowWarningModal(false);
       setAllowed(!allowed);
-      Mixpanel.track(SETTINGS.ALLOWANCE.TOGGLE, {
-        allowance_module: module.module,
-        allowance_currency: module.currency,
-        allowance_allowed: !allowed
+      Leafwatch.track(SETTINGS.ALLOWANCE.TOGGLE, {
+        module: module.module,
+        currency: module.currency,
+        allowed: !allowed
       });
     },
     onError
@@ -55,17 +57,15 @@ const AllowanceButton: FC<AllowanceButtonProps> = ({ title = t`Allow`, module, a
         request: {
           currency: currencies,
           value: value,
-          [getModule(module.module).field]: selectedModule
+          [getAllowanceModule(module.module).field]: selectedModule
         }
       }
     }).then((res) => {
       const data = res?.data?.generateModuleCurrencyApprovalData;
       sendTransaction?.({
-        recklesslySetUnpreparedRequest: {
-          from: data?.from,
-          to: data?.to,
-          data: data?.data
-        }
+        account: data?.from,
+        to: data?.to,
+        data: data?.data
       });
     });
   };

@@ -1,14 +1,14 @@
-import useOnClickOutside from '@components/utils/hooks/useOnClickOutside';
 import { SearchIcon, XIcon } from '@heroicons/react/outline';
+import type { Profile, ProfileSearchResult } from '@lenster/lens';
+import { CustomFiltersTypes, SearchRequestTypes, useSearchProfilesLazyQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { Input, Spinner } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import type { Profile, ProfileSearchResult } from 'lens';
-import { CustomFiltersTypes, SearchRequestTypes, useSearchProfilesLazyQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import { useRouter } from 'next/router';
 import type { ChangeEvent, FC } from 'react';
 import { useRef, useState } from 'react';
-import { Input, Spinner } from 'ui';
+import { useOnClickOutside } from 'usehooks-ts';
 
 import UserProfile from '../UserProfile';
 
@@ -108,6 +108,7 @@ const Search: FC<SearchProps> = ({
                       setSearchText('');
                     }}
                     data-testid={`search-profile-${formatHandle(profile?.handle)}`}
+                    aria-hidden="true"
                   >
                     <UserProfile
                       linkToProfile={!onProfileSelected}

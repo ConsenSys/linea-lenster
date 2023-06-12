@@ -1,14 +1,14 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
 import { CollectionIcon } from '@heroicons/react/outline';
+import type { ExplorePublicationRequest, Publication, PublicationMainFocus } from '@lenster/lens';
+import { CustomFiltersTypes, PublicationSortCriteria, useExploreFeedQuery } from '@lenster/lens';
+import { Card, EmptyState, ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import type { ExplorePublicationRequest, Publication, PublicationMainFocus } from 'lens';
-import { CustomFiltersTypes, PublicationSortCriteria, useExploreFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { useAppStore } from 'src/store/app';
-import { Card, EmptyState, ErrorMessage } from 'ui';
 
 interface FeedProps {
   focus?: PublicationMainFocus;
@@ -44,7 +44,11 @@ const Feed: FC<FeedProps> = ({ focus, feedType = PublicationSortCriteria.Latest 
       }
 
       await fetchMore({
-        variables: { request: { ...request, cursor: pageInfo?.next }, reactionRequest, profileId }
+        variables: {
+          request: { ...request, cursor: pageInfo?.next },
+          reactionRequest,
+          profileId
+        }
       }).then(({ data }) => {
         setHasMore(data?.explorePublications?.items?.length > 0);
       });

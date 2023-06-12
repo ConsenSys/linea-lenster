@@ -1,15 +1,16 @@
+import DismissRecommendedProfile from '@components/Shared/DismissRecommendedProfile';
 import UserProfileShimmer from '@components/Shared/Shimmer/UserProfileShimmer';
 import UserProfile from '@components/Shared/UserProfile';
 import { DotsCircleHorizontalIcon, UsersIcon } from '@heroicons/react/outline';
 import { SparklesIcon } from '@heroicons/react/solid';
-import { Mixpanel } from '@lib/mixpanel';
+import type { Profile } from '@lenster/lens';
+import { useRecommendedProfilesQuery } from '@lenster/lens';
+import { Card, EmptyState, ErrorMessage, Modal } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import type { Profile } from 'lens';
-import { useRecommendedProfilesQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { FollowSource, MISCELLANEOUS } from 'src/tracking';
-import { Card, EmptyState, ErrorMessage, Modal } from 'ui';
+import { FollowUnfollowSource, MISCELLANEOUS } from 'src/tracking';
 
 import Suggested from './Suggested';
 
@@ -61,13 +62,20 @@ const RecommendedProfiles: FC = () => {
         <div className="space-y-4 p-5">
           <ErrorMessage title={t`Failed to load recommendations`} error={error} />
           {data?.recommendedProfiles?.slice(0, 5)?.map((profile, index) => (
-            <div key={profile?.id} className="truncate">
-              <UserProfile
+            <div key={profile?.id} className="flex items-center space-x-3 truncate">
+              <div className="w-full">
+                <UserProfile
+                  profile={profile as Profile}
+                  isFollowing={profile.isFollowedByMe}
+                  followUnfollowPosition={index + 1}
+                  followUnfollowSource={FollowUnfollowSource.WHO_TO_FOLLOW}
+                  showFollow
+                />
+              </div>
+              <DismissRecommendedProfile
                 profile={profile as Profile}
-                isFollowing={profile.isFollowedByMe}
-                followPosition={index + 1}
-                followSource={FollowSource.WHO_TO_FOLLOW}
-                showFollow
+                dismissPosition={index + 1}
+                dismissSource={FollowUnfollowSource.WHO_TO_FOLLOW}
               />
             </div>
           ))}
@@ -77,7 +85,7 @@ const RecommendedProfiles: FC = () => {
           type="button"
           onClick={() => {
             setShowSuggestedModal(true);
-            Mixpanel.track(MISCELLANEOUS.OPEN_RECOMMENDED_PROFILES);
+            Leafwatch.track(MISCELLANEOUS.OPEN_RECOMMENDED_PROFILES);
           }}
         >
           <DotsCircleHorizontalIcon className="h-4 w-4" />

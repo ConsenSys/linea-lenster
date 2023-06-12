@@ -1,8 +1,10 @@
-import { explorerAPIcall, constantsVus, rampingVus } from './scenarios/explorer.js';
+import { constantsVus, explorerAPIcall, rampingVus } from './scenarios/explorer.js';
 
 // K6 doesn't support ES2018 and therefore spread operator inside object literals.
 // We need to use Object.assign instead
-const constantsVusScenario = Object.assign(constantsVus, { exec: 'constantsVusFn' });
+const constantsVusScenario = Object.assign(constantsVus, {
+  exec: 'constantsVusFn'
+});
 const rampingVusScenario = Object.assign(rampingVus, { exec: 'rampingVusFn' });
 
 // Test configuration
@@ -21,6 +23,7 @@ export const options = {
 export function constantsVusFn() {
   explorerAPIcall();
 }
+
 export function rampingVusFn() {
   explorerAPIcall();
 }

@@ -1,24 +1,26 @@
 import { BadgeCheckIcon } from '@heroicons/react/solid';
+import { AVATAR } from '@lenster/data/constants';
+import type { MediaSet, NftImage, Profile, ProfileSearchResult } from '@lenster/lens';
+import { SearchRequestTypes, useSearchProfilesLazyQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getStampFyiURL from '@lenster/lib/getStampFyiURL';
+import imageKit from '@lenster/lib/imageKit';
+import isVerified from '@lenster/lib/isVerified';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import type { QueryMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
+import type { MenuTextMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import {
   LexicalTypeaheadMenuPlugin,
-  TypeaheadOption,
+  MenuOption,
   useBasicTypeaheadTriggerMatch
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import clsx from 'clsx';
-import { AVATAR } from 'data/constants';
-import type { MediaSet, NftImage, Profile, ProfileSearchResult } from 'lens';
-import { SearchRequestTypes, useSearchProfilesLazyQuery } from 'lens';
 import type { TextNode } from 'lexical';
-import formatHandle from 'lib/formatHandle';
-import getStampFyiURL from 'lib/getStampFyiURL';
-import imageProxy from 'lib/imageProxy';
-import isVerified from 'lib/isVerified';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
 import type { FC } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
+import { useUpdateEffect } from 'usehooks-ts';
 
 import { $createMentionNode } from '../Nodes/MentionsNode';
 
@@ -56,7 +58,7 @@ const AtSignMentionsRegexAliasRegex = new RegExp(
   '(^|\\s|\\()(' + '[' + TRIGGERS + ']' + '((?:' + VALID_CHARS + '){0,' + ALIAS_LENGTH_LIMIT + '})' + ')$'
 );
 
-const checkForAtSignMentions = (text: string, minMatchLength: number): QueryMatch | null => {
+const checkForAtSignMentions = (text: string, minMatchLength: number): MenuTextMatch | null => {
   let match = AtSignMentionsRegex.exec(text);
 
   if (match === null) {
@@ -78,12 +80,12 @@ const checkForAtSignMentions = (text: string, minMatchLength: number): QueryMatc
   return null;
 };
 
-const getPossibleQueryMatch = (text: string): QueryMatch | null => {
+const getPossibleQueryMatch = (text: string): MenuTextMatch | null => {
   const match = checkForAtSignMentions(text, 1);
   return match;
 };
 
-class MentionTypeaheadOption extends TypeaheadOption {
+class MentionTypeaheadOption extends MenuOption {
   id: string;
   name: string;
   picture: string;
@@ -119,9 +121,10 @@ const MentionsTypeaheadMenuItem: FC<MentionsTypeaheadMenuItemProps> = ({
       className="cursor-pointer"
       ref={option.setRefElement}
       role="option"
-      aria-selected={isSelected}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
+      aria-selected={isSelected}
+      aria-hidden="true"
     >
       <div
         className={clsx(
@@ -169,10 +172,16 @@ const MentionsPlugin: FC = () => {
     return getStampFyiURL(user?.ownedBy);
   };
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (queryString) {
       searchUsers({
-        variables: { request: { type: SearchRequestTypes.Profile, query: queryString, limit: 5 } }
+        variables: {
+          request: {
+            type: SearchRequestTypes.Profile,
+            query: queryString,
+            limit: 5
+          }
+        }
       }).then(({ data }) => {
         const search = data?.search;
         const profileSearchResult = search as ProfileSearchResult;
@@ -182,7 +191,7 @@ const MentionsPlugin: FC = () => {
           (user: Profile) =>
             ({
               id: user?.id,
-              name: user?.name,
+              name: sanitizeDisplayName(user?.name),
               handle: user?.handle,
               picture: getUserPicture(user)
             } as Record<string, string>)
@@ -190,7 +199,6 @@ const MentionsPlugin: FC = () => {
         setResults(profilesResults);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);
 
   const checkForSlashTriggerMatch = useBasicTypeaheadTriggerMatch('/', {
@@ -204,7 +212,7 @@ const MentionsPlugin: FC = () => {
           return new MentionTypeaheadOption(
             id,
             name ?? handle,
-            imageProxy(sanitizeDStorageUrl(picture), AVATAR),
+            imageKit(sanitizeDStorageUrl(picture), AVATAR),
             handle
           );
         })

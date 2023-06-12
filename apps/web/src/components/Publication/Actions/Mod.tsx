@@ -1,9 +1,10 @@
 import { ShieldCheckIcon } from '@heroicons/react/outline';
+import type { Publication } from '@lenster/lens';
+import { Tooltip } from '@lenster/ui';
+import { t } from '@lingui/macro';
 import { motion } from 'framer-motion';
-import type { Publication } from 'lens';
 import type { FC } from 'react';
 import { useGlobalAlertStateStore } from 'src/store/alerts';
-import { Tooltip } from 'ui';
 
 interface ModProps {
   publication: Publication;
@@ -20,8 +21,8 @@ const Mod: FC<ModProps> = ({ publication, isFullPublication = false }) => {
       onClick={() => setShowModActionAlert(true, publication)}
       aria-label="Mod"
     >
-      <div className="rounded-full p-1.5 text-yellow-600 hover:bg-yellow-400 hover:bg-opacity-20">
-        <Tooltip placement="top" content="Mod actions" withDelay>
+      <div className="rounded-full p-1.5 text-yellow-600 hover:bg-yellow-400/20">
+        <Tooltip placement="top" content={t`Mod actions`} withDelay>
           <ShieldCheckIcon className={iconClassName} />
         </Tooltip>
       </div>

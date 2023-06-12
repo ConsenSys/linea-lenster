@@ -24,9 +24,12 @@ const useUploadAttachments = () => {
 
         return {
           id: attachmentId,
-          type: file.type,
-          altTag: '',
-          previewItem: URL.createObjectURL(file)
+          file: file,
+          previewItem: URL.createObjectURL(file),
+          original: {
+            url: URL.createObjectURL(file),
+            mimeType: file.type
+          }
         };
       });
 
@@ -35,13 +38,13 @@ const useUploadAttachments = () => {
         const isVideo = file.type.includes('video');
         const isAudio = file.type.includes('audio');
 
-        if (isImage && file.size > 10000000) {
-          toast.error(t`Image size should be less than 10MB`);
+        if (isImage && file.size > 50000000) {
+          toast.error(t`Image size should be less than 50MB`);
           return false;
         }
 
-        if (isVideo && file.size > 100000000) {
-          toast.error(t`Video size should be less than 100MB`);
+        if (isVideo && file.size > 200000000) {
+          toast.error(t`Video size should be less than 200MB`);
           return false;
         }
 
@@ -66,13 +69,17 @@ const useUploadAttachments = () => {
         if (attachmentsUploaded) {
           attachmentsIPFS = previewAttachments.map((attachment: NewLensterAttachment, index: number) => ({
             ...attachment,
-            item: attachmentsUploaded[index].item
+            original: {
+              url: attachmentsUploaded[index].original.url,
+              mimeType: attachmentsUploaded[index].original.mimeType
+            }
           }));
           updateAttachments(attachmentsIPFS);
         }
-      } catch {
+      } catch (error) {
+        console.error('Failed to upload attachments', error);
         removeAttachments(attachmentIds);
-        toast.error('Something went wrong while uploading!');
+        toast.error(t`Something went wrong while uploading!`);
       }
       setIsUploading(false);
 

@@ -1,17 +1,22 @@
 import QueuedPublication from '@components/Publication/QueuedPublication';
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
-import { CollectionIcon } from '@heroicons/react/outline';
+import { ChatAlt2Icon } from '@heroicons/react/outline';
+import type { Comment, Publication, PublicationsQueryRequest } from '@lenster/lens';
+import {
+  CommentOrderingTypes,
+  CommentRankingFilter,
+  CustomFiltersTypes,
+  useCommentFeedQuery
+} from '@lenster/lens';
+import { Card, EmptyState, ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
-import type { Comment, Publication, PublicationsQueryRequest } from 'lens';
-import { CommentOrderingTypes, CommentRankingFilter, CustomFiltersTypes, useCommentFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { OptmisticPublicationType } from 'src/enums';
 import { useAppStore } from 'src/store/app';
 import { useTransactionPersistStore } from 'src/store/transaction';
-import { Card, EmptyState, ErrorMessage } from 'ui';
 
 import NewPublication from '../Composer/NewPublication';
 import CommentWarning from '../Shared/CommentWarning';
@@ -58,7 +63,11 @@ const Feed: FC<FeedProps> = ({ publication }) => {
       }
 
       await fetchMore({
-        variables: { request: { ...request, cursor: pageInfo?.next }, reactionRequest, profileId }
+        variables: {
+          request: { ...request, cursor: pageInfo?.next },
+          reactionRequest,
+          profileId
+        }
       }).then(({ data }) => {
         setHasMore(data?.publications?.items?.length > 0);
       });
@@ -67,12 +76,18 @@ const Feed: FC<FeedProps> = ({ publication }) => {
 
   return (
     <>
-      {currentProfile ? canComment ? <NewPublication publication={publication} /> : <CommentWarning /> : null}
+      {currentProfile && !publication?.hidden ? (
+        canComment ? (
+          <NewPublication publication={publication} />
+        ) : (
+          <CommentWarning />
+        )
+      ) : null}
       {loading && <PublicationsShimmer />}
-      {!loading && totalComments === 0 && (
+      {!publication?.hidden && !loading && totalComments === 0 && (
         <EmptyState
           message={t`Be the first one to comment!`}
-          icon={<CollectionIcon className="text-brand h-8 w-8" />}
+          icon={<ChatAlt2Icon className="text-brand h-8 w-8" />}
         />
       )}
       <ErrorMessage title={t`Failed to load comment feed`} error={error} />

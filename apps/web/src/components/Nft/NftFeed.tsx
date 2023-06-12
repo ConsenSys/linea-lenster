@@ -1,13 +1,13 @@
 import SingleNft from '@components/Nft/SingleNft';
 import { CollectionIcon } from '@heroicons/react/outline';
+import type { Profile } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import { EmptyState, ErrorMessage } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import type { Profile } from 'lens';
-import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
 import { useMemo } from 'react';
-import { EmptyState, ErrorMessage } from 'ui';
 
 import type { NftLinea, RawNfts } from '../../types';
 

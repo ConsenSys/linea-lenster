@@ -1,116 +1,84 @@
-import type { DataItemCreateOptions } from 'arbundles';
 import base64url from 'base64url';
-import { Wallet } from 'ethers';
-import { publicKeyCreate } from 'secp256k1';
+import { bytesToHex, hexToBytes, toHex } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
 
 import {
   byteArrayToLong,
-  getShim,
-  getSignatureData,
   longTo8ByteArray,
   serializeTags,
   shortTo2ByteArray,
   sign
 } from './utils';
 
+interface DataItemCreateOptions {
+  target?: string;
+  anchor?: string;
+  tags?: {
+    name: string;
+    value: string;
+  }[];
+}
+
 export class Secp256k1 {
   readonly ownerLength: number = 65;
   readonly signatureLength: number = 65;
-
   readonly signatureType = 3;
   public readonly pk: string;
 
   constructor(protected _key: string, pk: Buffer) {
     this.pk = pk.toString('hex');
   }
-
-  public get publicKey(): Buffer {
-    return Buffer.alloc(0);
-  }
-
-  public get key(): Uint8Array {
-    return Buffer.from(this._key, 'hex');
-  }
 }
 
 export class EthereumSigner extends Secp256k1 {
+  constructor(key: string) {
+    const b = Buffer.from(key, 'hex');
+    const account = privateKeyToAccount(bytesToHex(b));
+    super(key, Buffer.from(hexToBytes(account.publicKey)));
+  }
+
   get publicKey(): Buffer {
     return Buffer.from(this.pk, 'hex');
   }
 
-  constructor(key: string) {
-    const b = Buffer.from(key, 'hex');
-    const pub = publicKeyCreate(b, false);
-    super(key, Buffer.from(pub));
-  }
-
   sign(message: Uint8Array): Uint8Array {
-    const wallet = new Wallet(this._key);
-    return wallet.signMessage(message).then((r) => Buffer.from(r.slice(2), 'hex')) as any;
+    return privateKeyToAccount(`0x${this._key}`)
+      .signMessage({ message: { raw: toHex(message) } })
+      .then((r) => {
+        return Buffer.from(r.slice(2), 'hex');
+      }) as any;
   }
 }
 
 export class DataItem {
   private readonly binary: Buffer;
-  private _id!: Buffer;
 
   constructor(binary: Buffer) {
     this.binary = binary;
   }
 
-  static isDataItem(obj: any): obj is DataItem {
-    return obj.binary !== undefined;
-  }
-
-  get signatureType(): number {
-    const signatureTypeVal: number = byteArrayToLong(this.binary.subarray(0, 2));
-    return signatureTypeVal;
-  }
+  private _id!: Buffer;
 
   get id(): string {
     return base64url.encode(this._id);
   }
 
-  set id(id: string) {
-    this._id = base64url.toBuffer(id);
-  }
-
-  // @ts-ignore
-  get rawId(): Promise<Buffer> {
-    return getShim('sha256').update(this.rawSignature).digest();
-  }
-
-  set rawId(id: Buffer) {
-    this._id = id;
-  }
-
-  get rawSignature(): Buffer {
-    return this.binary.subarray(2, 2 + this.signatureLength);
-  }
-
-  get signature(): string {
-    return base64url.encode(this.rawSignature);
-  }
-
-  set rawOwner(pubkey: Buffer) {
-    if (pubkey.byteLength !== this.ownerLength) {
-      throw new Error(
-        `Expected raw owner (pubkey) to be ${this.ownerLength} bytes, got ${pubkey.byteLength} bytes.`
-      );
-    }
-    this.binary.set(pubkey, 2 + this.signatureLength);
+  get signatureType(): number {
+    const signatureTypeVal: number = byteArrayToLong(
+      this.binary.subarray(0, 2)
+    );
+    return signatureTypeVal;
   }
 
   get rawOwner(): Buffer {
-    return this.binary.subarray(2 + this.signatureLength, 2 + this.signatureLength + this.ownerLength);
+    return this.binary.subarray(
+      2 + this.signatureLength,
+      2 + this.signatureLength + this.ownerLength
+    );
   }
 
   get signatureLength(): number {
     return 65;
-  }
-
-  get owner(): string {
-    return base64url.encode(this.rawOwner);
   }
 
   get ownerLength(): number {
@@ -120,76 +88,48 @@ export class DataItem {
   get rawTarget(): Buffer {
     const targetStart = this.getTargetStart();
     const isPresent = this.binary[targetStart] === 1;
-    return isPresent ? this.binary.subarray(targetStart + 1, targetStart + 33) : Buffer.alloc(0);
-  }
-
-  get target(): string {
-    return base64url.encode(this.rawTarget);
+    return isPresent
+      ? this.binary.subarray(targetStart + 1, targetStart + 33)
+      : Buffer.alloc(0);
   }
 
   get rawAnchor(): Buffer {
     const anchorStart = this.getAnchorStart();
     const isPresent = this.binary[anchorStart] === 1;
 
-    return isPresent ? this.binary.subarray(anchorStart + 1, anchorStart + 33) : Buffer.alloc(0);
-  }
-
-  get anchor(): string {
-    return this.rawAnchor.toString();
+    return isPresent
+      ? this.binary.subarray(anchorStart + 1, anchorStart + 33)
+      : Buffer.alloc(0);
   }
 
   get rawTags(): Buffer {
     const tagsStart = this.getTagsStart();
-    const tagsSize = byteArrayToLong(this.binary.subarray(tagsStart + 8, tagsStart + 16));
+    const tagsSize = byteArrayToLong(
+      this.binary.subarray(tagsStart + 8, tagsStart + 16)
+    );
+
     return this.binary.subarray(tagsStart + 16, tagsStart + 16 + tagsSize);
-  }
-
-  getStartOfData(): number {
-    const tagsStart = this.getTagsStart();
-
-    const numberOfTagBytesArray = this.binary.subarray(tagsStart + 8, tagsStart + 16);
-    const numberOfTagBytes = byteArrayToLong(numberOfTagBytesArray);
-    return tagsStart + 16 + numberOfTagBytes;
   }
 
   get rawData(): Buffer {
     const tagsStart = this.getTagsStart();
-
-    const numberOfTagBytesArray = this.binary.subarray(tagsStart + 8, tagsStart + 16);
+    const numberOfTagBytesArray = this.binary.subarray(
+      tagsStart + 8,
+      tagsStart + 16
+    );
     const numberOfTagBytes = byteArrayToLong(numberOfTagBytesArray);
     const dataStart = tagsStart + 16 + numberOfTagBytes;
 
     return this.binary.subarray(dataStart, this.binary.length);
   }
 
-  get data(): string {
-    return base64url.encode(this.rawData);
-  }
-
-  /**
-   * UNSAFE!!
-   * DO NOT MUTATE THE BINARY ARRAY. THIS WILL CAUSE UNDEFINED BEHAVIOUR.
-   */
   getRaw(): Buffer {
     return this.binary;
   }
 
   public async sign(signer: EthereumSigner): Promise<Buffer> {
     this._id = await sign(this, signer);
-    return this.rawId;
-  }
-
-  public async setSignature(signature: Buffer): Promise<void> {
-    this.binary.set(signature, 2);
-    this._id = Buffer.from(await crypto.subtle.digest('SHA-256', signature));
-  }
-
-  public isSigned(): boolean {
-    return (this._id?.length ?? 0) > 0;
-  }
-
-  public async getSignatureData(): Promise<Uint8Array> {
-    return getSignatureData(this);
+    return this._id;
   }
 
   private getTagsStart(): number {
@@ -225,9 +165,11 @@ export const createData = (
   const target_length = 1 + (_target?.byteLength ?? 0);
   const _anchor = opts?.anchor ? Buffer.from(opts.anchor) : null;
   const anchor_length = 1 + (_anchor?.byteLength ?? 0);
-  const _tags = (opts?.tags?.length ?? 0) > 0 ? serializeTags(opts?.tags) : null;
+  const _tags =
+    (opts?.tags?.length ?? 0) > 0 ? serializeTags(opts?.tags) : null;
   const tags_length = 16 + (_tags ? _tags.byteLength : 0);
-  const _data = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data);
+  const _data =
+    typeof data === 'string' ? Buffer.from(data) : Buffer.from(data);
   const data_length = _data.byteLength;
 
   const length =
@@ -244,7 +186,9 @@ export const createData = (
   bytes.set(new Uint8Array(signer.signatureLength).fill(0), 2);
 
   if (_owner.byteLength !== signer.ownerLength) {
-    throw new Error(`Owner must be ${signer.ownerLength} bytes, but was incorrectly ${_owner.byteLength}`);
+    throw new Error(
+      `Owner must be ${signer.ownerLength} bytes, but was incorrectly ${_owner.byteLength}`
+    );
   }
   bytes.set(_owner, 2 + signer.signatureLength);
 
@@ -252,7 +196,9 @@ export const createData = (
   bytes[position] = _target ? 1 : 0;
   if (_target) {
     if (_target.byteLength !== 32) {
-      throw new Error(`Target must be 32 bytes but was incorrectly ${_target.byteLength}`);
+      throw new Error(
+        `Target must be 32 bytes but was incorrectly ${_target.byteLength}`
+      );
     }
     bytes.set(_target, position + 1);
   }
@@ -276,11 +222,7 @@ export const createData = (
   }
 
   const data_start = tags_start + tags_length;
-
   bytes.set(_data, data_start);
 
   return new DataItem(bytes);
 };
-
-export * from './deephash';
-export * from './utils';

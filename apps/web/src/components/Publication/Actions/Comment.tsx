@@ -1,12 +1,12 @@
 import { ChatAlt2Icon } from '@heroicons/react/outline';
+import type { Publication } from '@lenster/lens';
+import humanize from '@lenster/lib/humanize';
+import nFormatter from '@lenster/lib/nFormatter';
+import { Tooltip } from '@lenster/ui';
 import { t } from '@lingui/macro';
 import { motion } from 'framer-motion';
-import type { Publication } from 'lens';
-import humanize from 'lib/humanize';
-import nFormatter from 'lib/nFormatter';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { Tooltip } from 'ui';
 
 interface CommentProps {
   publication: Publication;
@@ -24,7 +24,7 @@ const Comment: FC<CommentProps> = ({ publication, showCount }) => {
     <div className="flex items-center space-x-1 text-blue-500">
       <motion.button whileTap={{ scale: 0.9 }} aria-label="Comment">
         <Link href={`/posts/${publication.id}`}>
-          <div className="rounded-full p-1.5 hover:bg-blue-300 hover:bg-opacity-20">
+          <div className="rounded-full p-1.5 hover:bg-blue-300/20">
             <Tooltip
               placement="top"
               content={count > 0 ? t`${humanize(count)} Comments` : t`Comment`}

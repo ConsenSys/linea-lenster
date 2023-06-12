@@ -18,6 +18,11 @@ export type SerializedMentionNode = Spread<
 export class MentionNode extends TextNode {
   __mention: string;
 
+  constructor(mentionName: string, text?: string, key?: NodeKey) {
+    super(text ?? `@${mentionName}`, key);
+    this.__mention = `@${mentionName}`;
+  }
+
   static getType(): string {
     return 'mention';
   }
@@ -25,6 +30,7 @@ export class MentionNode extends TextNode {
   static clone(node: MentionNode): MentionNode {
     return new MentionNode(node.__mention, node.__text, node.__key);
   }
+
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
     // eslint-disable-next-line no-use-before-define
     const node = $createMentionNode(serializedNode.mentionName);
@@ -37,9 +43,20 @@ export class MentionNode extends TextNode {
     return node;
   }
 
-  constructor(mentionName: string, text?: string, key?: NodeKey) {
-    super(text ?? `@${mentionName}`, key);
-    this.__mention = `@${mentionName}`;
+  static importDOM(): DOMConversionMap | null {
+    return {
+      span: (domNode: HTMLElement) => {
+        if (!domNode.hasAttribute('data-lexical-mention')) {
+          return null;
+        }
+
+        return {
+          // eslint-disable-next-line no-use-before-define
+          conversion: convertMentionElement,
+          priority: 1
+        };
+      }
+    };
   }
 
   exportJSON(): SerializedMentionNode {
@@ -64,22 +81,6 @@ export class MentionNode extends TextNode {
     element.textContent = this.__text;
 
     return { element };
-  }
-
-  static importDOM(): DOMConversionMap | null {
-    return {
-      span: (domNode: HTMLElement) => {
-        if (!domNode.hasAttribute('data-lexical-mention')) {
-          return null;
-        }
-
-        return {
-          // eslint-disable-next-line no-use-before-define
-          conversion: convertMentionElement,
-          priority: 1
-        };
-      }
-    };
   }
 
   isTextEntity(): true {

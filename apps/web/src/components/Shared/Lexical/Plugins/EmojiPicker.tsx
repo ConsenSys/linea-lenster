@@ -1,19 +1,20 @@
+import { STATIC_ASSETS_URL } from '@lenster/data/constants';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   LexicalTypeaheadMenuPlugin,
-  TypeaheadOption,
+  MenuOption,
   useBasicTypeaheadTriggerMatch
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import clsx from 'clsx';
-import { STATIC_ASSETS_URL } from 'data/constants';
 import type { TextNode } from 'lexical';
 import { $createTextNode, $getSelection, $isRangeSelection } from 'lexical';
 import type { FC } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import type { Emoji } from 'src/types';
+import { useEffectOnce } from 'usehooks-ts';
 
-class EmojiOption extends TypeaheadOption {
+class EmojiOption extends MenuOption {
   title: string;
   emoji: string;
   keywords: string[];
@@ -50,10 +51,11 @@ const EmojiMenuItem: FC<EmojiMenuItemProps> = ({ index, isSelected, onClick, onM
       className={clsx({ 'dropdown-active': isSelected }, 'm-2 cursor-pointer rounded-lg p-2 outline-none')}
       ref={setRefElement}
       role="option"
-      aria-selected={isSelected}
       id={'typeahead-item-' + index}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
+      aria-selected={isSelected}
+      aria-hidden="true"
     >
       <div className="flex items-center space-x-2">
         <span className="text-base">{emoji}</span>
@@ -76,9 +78,9 @@ const EmojiPickerPlugin: FC = () => {
     setEmojis(data);
   };
 
-  useEffect(() => {
+  useEffectOnce(() => {
     fetchEmojis();
-  }, []);
+  });
 
   const emojiOptions = useMemo(
     () =>

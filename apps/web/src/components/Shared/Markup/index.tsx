@@ -1,9 +1,9 @@
-import { hashtagRegex, mentionRegex, urlRegex } from '@lib/markupUtils';
-import trimify from 'lib/trimify';
+import { Regex } from '@lenster/data';
+import trimify from '@lenster/lib/trimify';
 import type { FC } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
-// @ts-ignore
+// @ts-expect-error
 import linkifyRegex from 'remark-linkify-regex';
 import stripMarkdown from 'strip-markdown';
 
@@ -13,9 +13,9 @@ import MarkupLink from './MarkupLink';
 const plugins = [
   [stripMarkdown, { keep: ['strong', 'emphasis', 'inlineCode'] }],
   remarkBreaks,
-  linkifyRegex(mentionRegex),
-  linkifyRegex(hashtagRegex),
-  linkifyRegex(urlRegex)
+  linkifyRegex(Regex.url),
+  linkifyRegex(Regex.mention),
+  linkifyRegex(Regex.hashtag)
 ];
 
 const components = {

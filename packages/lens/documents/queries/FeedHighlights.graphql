@@ -1,22 +1,22 @@
 query FeedHighlights(
-  $request: FeedHighlightsRequest!
-  $reactionRequest: ReactionFieldResolverRequest
-  $profileId: ProfileId
+    $request: FeedHighlightsRequest!
+    $reactionRequest: ReactionFieldResolverRequest
+    $profileId: ProfileId
 ) {
-  feedHighlights(request: $request) {
-    items {
-      ... on Post {
-        ...PostFields
-      }
-      ... on Comment {
-        ...CommentFields
-      }
-      ... on Mirror {
-        ...MirrorFields
-      }
+    feedHighlights(request: $request) {
+        items {
+            ... on Post {
+                ...PostFields
+            }
+            ... on Comment {
+                ...CommentFields
+            }
+            ... on Mirror {
+                ...MirrorFields
+            }
+        }
+        pageInfo {
+            next
+        }
     }
-    pageInfo {
-      next
-    }
-  }
 }

@@ -1,11 +1,11 @@
 import ToggleDispatcher from '@components/Settings/Dispatcher/ToggleDispatcher';
 import { HandIcon } from '@heroicons/react/outline';
+import { APP_NAME, OLD_LENS_RELAYER_ADDRESS } from '@lenster/data/constants';
+import getIsDispatcherEnabled from '@lenster/lib/getIsDispatcherEnabled';
+import { Card } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import { APP_NAME, OLD_LENS_RELAYER_ADDRESS } from 'data/constants';
-import getIsDispatcherEnabled from 'lib/getIsDispatcherEnabled';
 import type { FC } from 'react';
 import { useAppStore } from 'src/store/app';
-import { Card } from 'ui';
 
 const EnableDispatcher: FC = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -40,10 +40,7 @@ const EnableDispatcher: FC = () => {
   }
 
   return (
-    <Card
-      as="aside"
-      className="border-brand-400 !bg-brand-300 text-brand-600 mb-4 space-y-2.5 !bg-opacity-20 p-5"
-    >
+    <Card as="aside" className="border-brand-400 !bg-brand-300/20 text-brand-600 mb-4 space-y-2.5 p-5">
       <div className="flex items-center space-x-2 font-bold">
         <HandIcon className="h-5 w-5" />
         <p>{getTitle()}</p>

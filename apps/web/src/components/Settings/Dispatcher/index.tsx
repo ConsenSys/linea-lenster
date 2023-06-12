@@ -1,14 +1,14 @@
 import MetaTags from '@components/Common/MetaTags';
-import { Mixpanel } from '@lib/mixpanel';
+import { APP_NAME, OLD_LENS_RELAYER_ADDRESS } from '@lenster/data/constants';
+import getIsDispatcherEnabled from '@lenster/lib/getIsDispatcherEnabled';
+import { Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import { APP_NAME, OLD_LENS_RELAYER_ADDRESS } from 'data/constants';
-import getIsDispatcherEnabled from 'lib/getIsDispatcherEnabled';
 import type { FC } from 'react';
-import { useEffect } from 'react';
 import Custom404 from 'src/pages/404';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Card, GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import SettingsSidebar from '../Sidebar';
 import ToggleDispatcher from './ToggleDispatcher';
@@ -19,9 +19,9 @@ const DispatcherSettings: FC = () => {
   const isOldDispatcherEnabled =
     currentProfile?.dispatcher?.address?.toLocaleLowerCase() === OLD_LENS_RELAYER_ADDRESS.toLocaleLowerCase();
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'settings', subpage: 'dispatcher' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'settings', subpage: 'dispatcher' });
+  });
 
   const getTitleText = () => {
     if (canUseRelay) {

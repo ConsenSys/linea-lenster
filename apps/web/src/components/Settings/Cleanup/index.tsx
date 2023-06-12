@@ -1,16 +1,16 @@
 import MetaTags from '@components/Common/MetaTags';
 import { useDisconnectXmtp } from '@components/utils/hooks/useXmtpClient';
-import { Mixpanel } from '@lib/mixpanel';
+import { Localstorage } from '@lenster/data';
+import { APP_NAME } from '@lenster/data/constants';
+import { Button, Card, GridItemEight, GridItemFour, GridLayout } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t, Trans } from '@lingui/macro';
-import { APP_NAME } from 'data/constants';
-import { Localstorage } from 'data/storage';
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import Custom404 from 'src/pages/404';
 import { useAppStore } from 'src/store/app';
 import { PAGEVIEW } from 'src/tracking';
-import { Button, Card, GridItemEight, GridItemFour, GridLayout } from 'ui';
+import { useEffectOnce } from 'usehooks-ts';
 
 import SettingsSidebar from '../Sidebar';
 
@@ -18,9 +18,9 @@ const CleanupSettings: NextPage = () => {
   const currentProfile = useAppStore((state) => state.currentProfile);
   const disconnectXmtp = useDisconnectXmtp();
 
-  useEffect(() => {
-    Mixpanel.track(PAGEVIEW, { page: 'settings', subpage: 'cleanup' });
-  }, []);
+  useEffectOnce(() => {
+    Leafwatch.track(PAGEVIEW, { page: 'settings', subpage: 'cleanup' });
+  });
 
   if (!currentProfile) {
     return <Custom404 />;
@@ -93,6 +93,19 @@ const CleanupSettings: NextPage = () => {
                   toast.success(t`Cleared DM keys`);
                 }}
               >
+                <Trans>Cleanup</Trans>
+              </Button>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <b>
+                  <Trans>Feature flags cache</Trans>
+                </b>
+                <div className="lt-text-gray-500 text-xs font-bold">
+                  <Trans>Clean your feature flags cache</Trans>
+                </div>
+              </div>
+              <Button onClick={() => cleanup(Localstorage.FeaturesCache)}>
                 <Trans>Cleanup</Trans>
               </Button>
             </div>

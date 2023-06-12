@@ -1,10 +1,10 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
 import { BellIcon, CogIcon, ColorSwatchIcon } from '@heroicons/react/outline';
+import { Modal, Tooltip } from '@lenster/ui';
 import { t } from '@lingui/macro';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { usePreferencesStore } from 'src/store/preferences';
-import { Modal, Tooltip } from 'ui';
 
 const Settings: FC = () => {
   const highSignalNotificationFilter = usePreferencesStore((state) => state.highSignalNotificationFilter);
@@ -16,7 +16,7 @@ const Settings: FC = () => {
   return (
     <>
       <button
-        className="rounded-md p-1 hover:bg-gray-300 hover:bg-opacity-20"
+        className="rounded-md p-1 hover:bg-gray-300/20"
         onClick={() => setShowNotificationSettings(true)}
       >
         <Tooltip placement="top" content={t`Notification settings`}>
@@ -35,8 +35,8 @@ const Settings: FC = () => {
             setOn={() => {
               setHighSignalNotificationFilter(!highSignalNotificationFilter);
             }}
-            heading={t`Quality filter`}
-            description={t`Choose to filter out low-quality notifications`}
+            heading={t`Signal filter`}
+            description={t`Turn on high-signal notification filter`}
             icon={<ColorSwatchIcon className="h-4 w-4" />}
           />
         </div>

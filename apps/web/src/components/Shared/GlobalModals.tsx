@@ -1,10 +1,10 @@
+import NewPublication from '@components/Composer/NewPublication';
 import Report from '@components/Shared/Modal/Report';
 import { ArrowCircleRightIcon, EmojiHappyIcon, ShieldCheckIcon } from '@heroicons/react/outline';
+import { Modal } from '@lenster/ui';
 import { t } from '@lingui/macro';
 import type { FC } from 'react';
-import { useAuthStore } from 'src/store/auth';
 import { useGlobalModalStateStore } from 'src/store/modals';
-import { Modal } from 'ui';
 
 import Login from './Login';
 import Status from './Status';
@@ -19,8 +19,10 @@ const GlobalModals: FC = () => {
   const setShowStatusModal = useGlobalModalStateStore((state) => state.setShowStatusModal);
   const showProfileSwitchModal = useGlobalModalStateStore((state) => state.showProfileSwitchModal);
   const setShowProfileSwitchModal = useGlobalModalStateStore((state) => state.setShowProfileSwitchModal);
-  const showAuthModal = useAuthStore((state) => state.showAuthModal);
-  const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
+  const showNewPostModal = useGlobalModalStateStore((state) => state.showNewPostModal);
+  const setShowNewPostModal = useGlobalModalStateStore((state) => state.setShowNewPostModal);
+  const showAuthModal = useGlobalModalStateStore((state) => state.showAuthModal);
+  const setShowAuthModal = useGlobalModalStateStore((state) => state.setShowAuthModal);
 
   return (
     <>
@@ -58,6 +60,14 @@ const GlobalModals: FC = () => {
         dataTestId="login-modal"
       >
         <Login />
+      </Modal>
+      <Modal
+        title={t`Create post`}
+        size="md"
+        show={showNewPostModal}
+        onClose={() => setShowNewPostModal(false)}
+      >
+        <NewPublication />
       </Modal>
     </>
   );

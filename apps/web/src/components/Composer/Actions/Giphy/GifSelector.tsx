@@ -1,12 +1,12 @@
-import { useDebounce } from '@components/utils/hooks/useDebounce';
 import type { ICategory } from '@giphy/js-fetch-api';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import type { IGif } from '@giphy/js-types';
 import { Grid } from '@giphy/react-components';
+import { Input } from '@lenster/ui';
 import { t, Trans } from '@lingui/macro';
 import type { ChangeEvent, Dispatch, FC } from 'react';
-import { useEffect, useState } from 'react';
-import { Input } from 'ui';
+import { useState } from 'react';
+import { useDebounce, useEffectOnce } from 'usehooks-ts';
 
 const giphyFetch = new GiphyFetch('sXpGFDGZs0Dv1mmNFvYaGUvYwKX0PWIh');
 
@@ -17,8 +17,8 @@ interface GifSelectorProps {
 
 const GifSelector: FC<GifSelectorProps> = ({ setShowModal, setGifAttachment }) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [debouncedGifInput, setDebouncedGifInput] = useState('');
   const [searchText, setSearchText] = useState('');
+  const debouncedGifInput = useDebounce<string>(searchText, 500);
 
   const fetchGiphyCategories = async () => {
     const { data } = await giphyFetch.categories();
@@ -28,41 +28,27 @@ const GifSelector: FC<GifSelectorProps> = ({ setShowModal, setGifAttachment }) =
 
   const onSelectGif = (item: IGif) => {
     setGifAttachment(item);
-    setDebouncedGifInput('');
     setSearchText('');
     setShowModal(false);
   };
 
-  useDebounce(
-    () => {
-      setSearchText(debouncedGifInput);
-    },
-    1000,
-    [debouncedGifInput]
-  );
-
-  useEffect(() => {
+  useEffectOnce(() => {
     fetchGiphyCategories();
-  }, []);
+  });
 
   const fetchGifs = (offset: number) => {
-    return giphyFetch.search(searchText, { offset, limit: 10 });
+    return giphyFetch.search(debouncedGifInput, { offset, limit: 10 });
   };
 
   const handleSearch = (evt: ChangeEvent<HTMLInputElement>) => {
     const keyword = evt.target.value;
-    setDebouncedGifInput(keyword);
+    setSearchText(keyword);
   };
 
   return (
     <div>
       <div className="m-3">
-        <Input
-          type="text"
-          placeholder={t`Search for GIFs`}
-          value={debouncedGifInput}
-          onChange={handleSearch}
-        />
+        <Input type="text" placeholder={t`Search for GIFs`} value={searchText} onChange={handleSearch} />
       </div>
       <div className="flex h-[45vh] overflow-y-auto overflow-x-hidden">
         {debouncedGifInput ? (
@@ -87,7 +73,7 @@ const GifSelector: FC<GifSelectorProps> = ({ setShowModal, setGifAttachment }) =
                 type="button"
                 key={category.name_encoded}
                 className="relative flex outline-none"
-                onClick={() => setDebouncedGifInput(category.name)}
+                onClick={() => setSearchText(category.name)}
               >
                 <img
                   className="h-32 w-full cursor-pointer object-cover"

@@ -1,12 +1,12 @@
 query Profiles($request: ProfileQueryRequest!) {
-  profiles(request: $request) {
-    items {
-      ...ProfileFields
-      isDefault
-      isFollowedByMe
+    profiles(request: $request) {
+        items {
+            ...ProfileFields
+            isDefault
+            isFollowedByMe
+        }
+        pageInfo {
+            next
+        }
     }
-    pageInfo {
-      next
-    }
-  }
 }

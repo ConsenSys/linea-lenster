@@ -1,21 +1,26 @@
 {
-  "name": "tests",
+  "name": "@lenster/tests",
   "version": "0.0.0",
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
+    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint:fix": "eslint . --fix --ext .js,.ts,.tsx",
+    "prettier": "prettier --check \"**/*.{js,ts,tsx,md}\"  --cache",
+    "prettier:fix": "prettier --write \"**/*.{js,ts,tsx,md}\"  --cache",
     "test:dev": "playwright test",
-    "test:nightly": "playwright test scripts/apps"
+    "test:nightly": "playwright test apps",
+    "typecheck": "tsc --pretty"
   },
   "dependencies": {
-    "data": "workspace:*",
-    "lens": "workspace:*",
-    "lib": "workspace:*"
+    "@lenster/data": "workspace:*",
+    "@lenster/lens": "workspace:*",
+    "@lenster/lib": "workspace:*"
   },
   "devDependencies": {
-    "@playwright/test": "1.32.3",
-    "@types/node": "^18.15.11",
-    "eslint-config-weblint": "workspace:*",
-    "tsconfig": "workspace:*"
+    "@lenster/config": "workspace:*",
+    "@playwright/test": "1.35.0",
+    "@types/node": "^20.3.0",
+    "typescript": "^5.1.3"
   }
 }

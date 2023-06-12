@@ -1,12 +1,12 @@
-import { Mixpanel } from '@lib/mixpanel';
+import { useHidePublicationMutation } from '@lenster/lens';
+import { publicationKeyFields } from '@lenster/lens/apollo/lib';
+import { Alert } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
-import { useHidePublicationMutation } from 'lens';
-import { publicationKeyFields } from 'lens/apollo/lib';
 import type { FC } from 'react';
 import { toast } from 'react-hot-toast';
 import { useGlobalAlertStateStore } from 'src/store/alerts';
 import { PUBLICATION } from 'src/tracking';
-import { Alert } from 'ui';
 
 const DeletePublication: FC = () => {
   const showPublicationDeleteAlert = useGlobalAlertStateStore((state) => state.showPublicationDeleteAlert);
@@ -18,7 +18,7 @@ const DeletePublication: FC = () => {
   const [hidePost, { loading }] = useHidePublicationMutation({
     onCompleted: () => {
       setShowPublicationDeleteAlert(false, null);
-      Mixpanel.track(PUBLICATION.DELETE);
+      Leafwatch.track(PUBLICATION.DELETE);
       toast.success(t`Publication deleted successfully`);
     },
     update: (cache) => {
@@ -34,7 +34,11 @@ const DeletePublication: FC = () => {
       show={showPublicationDeleteAlert}
       isDestructive
       isPerformingAction={loading}
-      onConfirm={() => hidePost({ variables: { request: { publicationId: deletingPublication?.id } } })}
+      onConfirm={() =>
+        hidePost({
+          variables: { request: { publicationId: deletingPublication?.id } }
+        })
+      }
       onClose={() => setShowPublicationDeleteAlert(false, null)}
     />
   );

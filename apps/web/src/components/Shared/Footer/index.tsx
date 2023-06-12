@@ -1,7 +1,7 @@
 import Locale from '@components/Shared/Footer/Locale';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
+import { APP_NAME } from '@lenster/data/constants';
 import { Trans } from '@lingui/macro';
-import { APP_NAME } from 'data/constants';
 import Link from 'next/link';
 import type { FC } from 'react';
 

@@ -1,23 +1,23 @@
 import EmojiPicker from '@components/Shared/EmojiPicker';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { t, Trans } from '@lingui/macro';
-import Errors from 'data/errors';
-import type { NftGallery } from 'lens';
+import { Errors } from '@lenster/data';
+import type { NftGallery } from '@lenster/lens';
 import {
   NftGalleriesDocument,
   useCreateNftGalleryMutation,
   useNftGalleriesLazyQuery,
   useUpdateNftGalleryInfoMutation,
   useUpdateNftGalleryItemsMutation
-} from 'lens';
-import { useApolloClient } from 'lens/apollo';
-import trimify from 'lib/trimify';
+} from '@lenster/lens';
+import { useApolloClient } from '@lenster/lens/apollo';
+import trimify from '@lenster/lib/trimify';
+import { Button, Modal, Spinner } from '@lenster/ui';
+import { t, Trans } from '@lingui/macro';
 import type { Dispatch, FC } from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAppStore } from 'src/store/app';
 import { useNftGalleryStore } from 'src/store/nft-gallery';
-import { Button, Modal, Spinner } from 'ui';
 
 import Picker from './Picker';
 import ReviewSelection from './ReviewSelection';
@@ -54,7 +54,11 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
   const create = async () => {
     try {
       const sanitizedItems = gallery.items.map((el) => {
-        return { tokenId: el.tokenId, contractAddress: el.contractAddress, chainId: el.chainId };
+        return {
+          tokenId: el.tokenId,
+          contractAddress: el.contractAddress,
+          chainId: el.chainId
+        };
       });
       const { data } = await createGallery({
         variables: {
@@ -72,7 +76,10 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
         cache.modify({
           fields: {
             nftGalleries() {
-              cache.writeQuery({ data: data?.nftGalleries as NftGallery[], query: NftGalleriesDocument });
+              cache.writeQuery({
+                data: data?.nftGalleries as NftGallery[],
+                query: NftGalleriesDocument
+              });
             }
           }
         });
@@ -100,7 +107,7 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
           fields: {
             nftGalleries() {
               cache.updateQuery({ query: NftGalleriesDocument }, () => ({
-                data: gallery as any
+                data: gallery
               }));
             }
           }
@@ -124,14 +131,22 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
           value.itemId === gallery.alreadySelectedItems.find((t) => t.itemId === value.itemId)?.itemId
       );
       const sanitizedAddItems = newlyAddedItems?.map((el) => {
-        return { tokenId: el.tokenId, contractAddress: el.contractAddress, chainId: el.chainId };
+        return {
+          tokenId: el.tokenId,
+          contractAddress: el.contractAddress,
+          chainId: el.chainId
+        };
       });
       const sanitizedRemoveItems = newlyRemovedItems?.map((el) => {
-        return { tokenId: el.tokenId, contractAddress: el.contractAddress, chainId: el.chainId };
+        return {
+          tokenId: el.tokenId,
+          contractAddress: el.contractAddress,
+          chainId: el.chainId
+        };
       });
       // if gallery name only update
       if (!sanitizedAddItems.length && !sanitizedRemoveItems.length) {
-        return rename();
+        return await rename();
       }
       const { data } = await updateGallery({
         variables: {
@@ -238,7 +253,13 @@ const Create: FC<CreateProps> = ({ showModal, setShowModal }) => {
           <textarea
             className="w-full resize-none border-none bg-white px-4 py-2 outline-none !ring-0 dark:bg-gray-800"
             value={gallery.name}
-            onChange={(e) => setGallery({ ...gallery, name: e.target.value, items: gallery.items })}
+            onChange={(e) =>
+              setGallery({
+                ...gallery,
+                name: e.target.value,
+                items: gallery.items
+              })
+            }
             rows={4}
           />
         )}

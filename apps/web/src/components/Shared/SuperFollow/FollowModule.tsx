@@ -1,31 +1,33 @@
 import AllowanceButton from '@components/Settings/Allowance/Button';
 import { StarIcon, UserIcon } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
-import splitSignature from '@lib/splitSignature';
-import { t, Trans } from '@lingui/macro';
-import { LensHub } from 'abis';
-import { LENSHUB_PROXY, LINEA_EXPLORER_URL } from 'data/constants';
-import Errors from 'data/errors';
-import type { ApprovedAllowanceAmount, Profile } from 'lens';
+import { LensHub } from '@lenster/abis';
+import { Errors } from '@lenster/data';
+import { LENSHUB_PROXY, LINEA_EXPLORER_URL } from '@lenster/data/constants';
+import type { ApprovedAllowanceAmount, Profile } from '@lenster/lens';
 import {
   FollowModules,
   useApprovedModuleAllowanceAmountQuery,
   useBroadcastMutation,
   useCreateFollowTypedDataMutation,
   useSuperFollowQuery
-} from 'lens';
-import formatAddress from 'lib/formatAddress';
-import formatHandle from 'lib/formatHandle';
-import getSignature from 'lib/getSignature';
-import getTokenImage from 'lib/getTokenImage';
+} from '@lenster/lens';
+import formatAddress from '@lenster/lib/formatAddress';
+import formatHandle from '@lenster/lib/formatHandle';
+import getSignature from '@lenster/lib/getSignature';
+import getTokenImage from '@lenster/lib/getTokenImage';
+import { Button, Spinner, WarningMessage } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Leafwatch } from '@lib/leafwatch';
+import { t, Trans } from '@lingui/macro';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { Dispatch, FC } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAppStore } from 'src/store/app';
+import { useNonceStore } from 'src/store/nonce';
 import { PROFILE } from 'src/tracking';
-import { Button, Spinner, WarningMessage } from 'ui';
-import { useAccount, useBalance, useContractWrite, useSignTypedData } from 'wagmi';
+import { useBalance, useContractWrite, useSignTypedData } from 'wagmi';
 
 import Loader from '../Loader';
 import Slug from '../Slug';
@@ -36,30 +38,62 @@ interface FollowModuleProps {
   setFollowing: Dispatch<boolean>;
   setShowFollowModal: Dispatch<boolean>;
   again: boolean;
+
+  // For data analytics
+  followUnfollowPosition?: number;
+  followUnfollowSource?: string;
 }
 
-const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFollowModal, again }) => {
-  const userSigNonce = useAppStore((state) => state.userSigNonce);
-  const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
+const FollowModule: FC<FollowModuleProps> = ({
+  profile,
+  setFollowing,
+  setShowFollowModal,
+  again,
+  followUnfollowPosition,
+  followUnfollowSource
+}) => {
+  const { pathname } = useRouter();
+  const userSigNonce = useNonceStore((state) => state.userSigNonce);
+  const setUserSigNonce = useNonceStore((state) => state.setUserSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
+  const [isLoading, setIsLoading] = useState(false);
   const [allowed, setAllowed] = useState(true);
-  const { address } = useAccount();
-  const { isLoading: signLoading, signTypedDataAsync } = useSignTypedData({ onError });
 
-  const onCompleted = () => {
+  const onCompleted = (__typename?: 'RelayError' | 'RelayerResult') => {
+    if (__typename === 'RelayError') {
+      return;
+    }
+
+    setIsLoading(false);
     setFollowing(true);
     setShowFollowModal(false);
     toast.success(t`Followed successfully!`);
-    Mixpanel.track(PROFILE.SUPER_FOLLOW);
+    Leafwatch.track(PROFILE.SUPER_FOLLOW, {
+      path: pathname,
+      ...(followUnfollowSource && { source: followUnfollowSource }),
+      ...(followUnfollowPosition && { position: followUnfollowPosition }),
+      target: profile?.id
+    });
   };
 
-  const { isLoading: writeLoading, write } = useContractWrite({
+  const onError = (error: any) => {
+    setIsLoading(false);
+    errorToast(error);
+  };
+
+  const { signTypedDataAsync } = useSignTypedData({ onError });
+  const { write } = useContractWrite({
     address: LENSHUB_PROXY,
     abi: LensHub,
-    functionName: 'followWithSig',
-    mode: 'recklesslyUnprepared',
-    onSuccess: onCompleted,
-    onError
+    functionName: 'follow',
+    onSuccess: () => {
+      onCompleted();
+      setUserSigNonce(userSigNonce + 1);
+    },
+    onError: (error) => {
+      onError(error);
+      setUserSigNonce(userSigNonce - 1);
+    }
   });
 
   const { data, loading } = useSuperFollowQuery({
@@ -98,26 +132,19 @@ const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFol
     hasAmount = true;
   }
 
-  const [broadcast, { loading: broadcastLoading }] = useBroadcastMutation({
-    onCompleted
+  const [broadcast] = useBroadcastMutation({
+    onCompleted: ({ broadcast }) => onCompleted(broadcast.__typename)
   });
-  const [createFollowTypedData, { loading: typedDataLoading }] = useCreateFollowTypedDataMutation({
+  const [createFollowTypedData] = useCreateFollowTypedDataMutation({
     onCompleted: async ({ createFollowTypedData }) => {
       const { id, typedData } = createFollowTypedData;
-      const { profileIds, datas: followData, deadline } = typedData.value;
       const signature = await signTypedDataAsync(getSignature(typedData));
-      const { v, r, s } = splitSignature(signature);
-      const sig = { v, r, s, deadline };
-      const inputStruct = {
-        follower: address,
-        profileIds,
-        datas: followData,
-        sig
-      };
-      setUserSigNonce(userSigNonce + 1);
-      const { data } = await broadcast({ variables: { request: { id, signature } } });
+      const { data } = await broadcast({
+        variables: { request: { id, signature } }
+      });
       if (data?.broadcast.__typename === 'RelayError') {
-        return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+        const { profileIds, datas } = typedData.value;
+        return write?.({ args: [profileIds, datas] });
       }
     },
     onError
@@ -129,7 +156,8 @@ const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFol
     }
 
     try {
-      await createFollowTypedData({
+      setIsLoading(true);
+      return await createFollowTypedData({
         variables: {
           options: { overrideSigNonce: userSigNonce },
           request: {
@@ -149,7 +177,9 @@ const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFol
           }
         }
       });
-    } catch {}
+    } catch (error) {
+      onError(error);
+    }
   };
 
   if (loading) {
@@ -184,14 +214,14 @@ const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFol
           <span>
             <Trans>Recipient:</Trans>
           </span>
-          <a
+          <Link
             href={`${LINEA_EXPLORER_URL}/address/${followModule?.recipient}`}
             target="_blank"
             className="font-bold text-gray-600"
             rel="noreferrer noopener"
           >
             {formatAddress(followModule?.recipient)}
-          </a>
+          </Link>
         </div>
       </div>
       <div className="space-y-2 pt-5">
@@ -239,14 +269,8 @@ const FollowModule: FC<FollowModuleProps> = ({ profile, setFollowing, setShowFol
               variant="super"
               outline
               onClick={createFollow}
-              disabled={typedDataLoading || signLoading || writeLoading || broadcastLoading}
-              icon={
-                typedDataLoading || signLoading || writeLoading || broadcastLoading ? (
-                  <Spinner variant="super" size="xs" />
-                ) : (
-                  <StarIcon className="h-4 w-4" />
-                )
-              }
+              disabled={isLoading}
+              icon={isLoading ? <Spinner variant="super" size="xs" /> : <StarIcon className="h-4 w-4" />}
             >
               {again ? t`Super follow again` : t`Super follow now`}
             </Button>

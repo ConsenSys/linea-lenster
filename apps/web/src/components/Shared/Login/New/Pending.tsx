@@ -1,23 +1,21 @@
 import { ArrowRightIcon } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
-import onError from '@lib/onError';
-import { Trans } from '@lingui/macro';
-import Errors from 'data/errors';
+import { Errors } from '@lenster/data';
 import {
   useAuthenticateMutation,
   useChallengeLazyQuery,
   useHasTxHashBeenIndexedQuery,
-  useUserProfilesLazyQuery,
   useUserProfilesQuery
-} from 'lens';
+} from '@lenster/lens';
+import { Button, Spinner } from '@lenster/ui';
+import errorToast from '@lib/errorToast';
+import { Trans } from '@lingui/macro';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import toast from 'react-hot-toast';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
-import { useAuthStore } from 'src/store/auth';
-import { AUTH } from 'src/tracking';
-import { Button, Spinner } from 'ui';
 import { useAccount, useSignMessage } from 'wagmi';
+
+import { useGlobalModalStateStore } from '../../../../store/modals';
 
 interface PendingProps {
   handle: string;
@@ -25,14 +23,13 @@ interface PendingProps {
 }
 
 const Pending: FC<PendingProps> = ({ handle, txHash }) => {
+  const setShowAuthModal = useGlobalModalStateStore((state) => state.setShowAuthModal);
   const { data, loading } = useHasTxHashBeenIndexedQuery({
     variables: { request: { txHash } },
     pollInterval: 1000
   });
   const { push } = useRouter();
-  const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
   const [authenticate] = useAuthenticateMutation();
-  const [getProfiles] = useUserProfilesLazyQuery();
   const { address } = useAccount();
 
   //get profiles with the address
@@ -44,6 +41,9 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
   const [loadChallenge] = useChallengeLazyQuery({
     fetchPolicy: 'no-cache'
   });
+  const onError = (error: any) => {
+    errorToast(error);
+  };
   const { signMessageAsync } = useSignMessage({ onError });
   const setProfiles = useAppStore((state) => state.setProfiles);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
@@ -87,7 +87,6 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
         setProfileId(currentProfile.id);
         keepModal = false;
       }
-      Mixpanel.track(AUTH.SIWL);
     } catch (error: any) {
       console.error(error);
     } finally {

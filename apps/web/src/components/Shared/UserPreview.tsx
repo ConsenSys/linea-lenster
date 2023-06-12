@@ -1,16 +1,19 @@
 import { BadgeCheckIcon } from '@heroicons/react/solid';
+import type { Profile } from '@lenster/lens';
+import { useProfileLazyQuery } from '@lenster/lens';
+import formatHandle from '@lenster/lib/formatHandle';
+import getAvatar from '@lenster/lib/getAvatar';
+import isVerified from '@lenster/lib/isVerified';
+import nFormatter from '@lenster/lib/nFormatter';
+import sanitizeDisplayName from '@lenster/lib/sanitizeDisplayName';
+import stopEventPropagation from '@lenster/lib/stopEventPropagation';
+import { Image } from '@lenster/ui';
+import { Plural } from '@lingui/macro';
 import Tippy from '@tippyjs/react';
 import clsx from 'clsx';
-import type { Profile } from 'lens';
-import { useProfileLazyQuery } from 'lens';
-import formatHandle from 'lib/formatHandle';
-import getAvatar from 'lib/getAvatar';
-import isVerified from 'lib/isVerified';
-import nFormatter from 'lib/nFormatter';
 import type { FC, ReactNode } from 'react';
 import { useState } from 'react';
-import { FollowSource } from 'src/tracking';
-import { Image } from 'ui';
+import { FollowUnfollowSource } from 'src/tracking';
 
 import Follow from './Follow';
 import Markup from './Markup';
@@ -41,9 +44,6 @@ const UserPreview: FC<UserPreviewProps> = ({
 
   const UserAvatar = () => (
     <Image
-      onError={({ currentTarget }) => {
-        currentTarget.src = getAvatar(lazyProfile, false);
-      }}
       src={getAvatar(lazyProfile)}
       loading="lazy"
       className={clsx(
@@ -60,7 +60,7 @@ const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex max-w-sm items-center gap-1 truncate">
         <div className={clsx(isBig ? 'font-bold' : 'text-md')}>
-          {lazyProfile?.name ?? formatHandle(lazyProfile?.handle)}
+          {sanitizeDisplayName(lazyProfile?.name) ?? formatHandle(lazyProfile?.handle)}
         </div>
         {isVerified(lazyProfile?.id) && <BadgeCheckIcon className="text-brand h-4 w-4" />}
       </div>
@@ -72,17 +72,21 @@ const UserPreview: FC<UserPreviewProps> = ({
     <>
       <div className="flex items-center justify-between">
         <UserAvatar />
-        <div onClick={(e) => e.preventDefault()}>
+        <div onClick={stopEventPropagation} aria-hidden="true">
           {!lazyProfile.isFollowedByMe &&
             (followStatusLoading ? (
               <div className="shimmer h-8 w-10 rounded-lg" />
             ) : following ? null : lazyProfile?.followModule?.__typename === 'FeeFollowModuleSettings' ? (
-              <SuperFollow profile={lazyProfile} setFollowing={setFollowing} />
+              <SuperFollow
+                profile={lazyProfile}
+                setFollowing={setFollowing}
+                followUnfollowSource={FollowUnfollowSource.PROFILE_POPOVER}
+              />
             ) : (
               <Follow
                 profile={lazyProfile}
                 setFollowing={setFollowing}
-                followSource={FollowSource.PROFILE_POPOVER}
+                followUnfollowSource={FollowUnfollowSource.PROFILE_POPOVER}
               />
             ))}
         </div>
@@ -99,11 +103,25 @@ const UserPreview: FC<UserPreviewProps> = ({
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-1">
             <div className="text-base">{nFormatter(lazyProfile?.stats?.totalFollowing)}</div>
-            <div className="lt-text-gray-500 text-sm">Following</div>
+            <div className="lt-text-gray-500 text-sm">
+              <Plural
+                value={lazyProfile?.stats?.totalFollowing}
+                zero="Following"
+                one="Following"
+                other="Following"
+              />
+            </div>
           </div>
           <div className="text-md flex items-center space-x-1">
             <div className="text-base">{nFormatter(lazyProfile?.stats?.totalFollowers)}</div>
-            <div className="lt-text-gray-500 text-sm">Followers</div>
+            <div className="lt-text-gray-500 text-sm">
+              <Plural
+                value={lazyProfile?.stats?.totalFollowers}
+                zero="Follower"
+                one="Follower"
+                other="Followers"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -113,7 +131,9 @@ const UserPreview: FC<UserPreviewProps> = ({
   const onPreviewStart = async () => {
     if (!lazyProfile.id) {
       const { data } = await loadProfile({
-        variables: { request: { handle: formatHandle(lazyProfile?.handle, true) } }
+        variables: {
+          request: { handle: formatHandle(lazyProfile?.handle, true) }
+        }
       });
       const getProfile = data?.profile;
       if (getProfile) {
@@ -123,7 +143,7 @@ const UserPreview: FC<UserPreviewProps> = ({
   };
 
   return showUserPreview ? (
-    <span onMouseOver={onPreviewStart}>
+    <span onMouseOver={onPreviewStart} onFocus={onPreviewStart}>
       {lazyProfile?.id ? (
         <Tippy
           placement="bottom-start"

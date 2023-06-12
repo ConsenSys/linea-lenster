@@ -1,11 +1,12 @@
 import { CheckCircleIcon } from '@heroicons/react/solid';
+import { LINEA_EXPLORER_URL } from '@lenster/data/constants';
+import { useHasTxHashBeenIndexedQuery } from '@lenster/lens';
+import { Spinner } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import { LINEA_EXPLORER_URL } from 'data/constants';
-import { useHasTxHashBeenIndexedQuery } from 'lens';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Spinner } from 'ui';
 
 interface IndexStatusProps {
   type?: string;
@@ -33,7 +34,7 @@ const IndexStatus: FC<IndexStatusProps> = ({ type = 'Transaction', txHash, reloa
   });
 
   return (
-    <a
+    <Link
       className={clsx({ hidden: hide }, 'ml-auto text-sm font-medium')}
       href={`${LINEA_EXPLORER_URL}/tx/${txHash}`}
       target="_blank"
@@ -56,7 +57,7 @@ const IndexStatus: FC<IndexStatusProps> = ({ type = 'Transaction', txHash, reloa
           </div>
         </div>
       )}
-    </a>
+    </Link>
   );
 };
 

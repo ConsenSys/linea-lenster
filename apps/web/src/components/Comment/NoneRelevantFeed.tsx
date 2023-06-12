@@ -1,12 +1,17 @@
 import SinglePublication from '@components/Publication/SinglePublication';
+import type { Comment, Publication, PublicationsQueryRequest } from '@lenster/lens';
+import {
+  CommentOrderingTypes,
+  CommentRankingFilter,
+  CustomFiltersTypes,
+  useCommentFeedQuery
+} from '@lenster/lens';
+import { Card } from '@lenster/ui';
 import { Trans } from '@lingui/macro';
-import type { Comment, Publication, PublicationsQueryRequest } from 'lens';
-import { CommentOrderingTypes, CommentRankingFilter, CustomFiltersTypes, useCommentFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { useAppStore } from 'src/store/app';
-import { Card } from 'ui';
 
 interface NoneRelevantFeedProps {
   publication?: Publication;
@@ -45,7 +50,11 @@ const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
       }
 
       await fetchMore({
-        variables: { request: { ...request, cursor: pageInfo?.next }, reactionRequest, profileId }
+        variables: {
+          request: { ...request, cursor: pageInfo?.next },
+          reactionRequest,
+          profileId
+        }
       }).then(({ data }) => {
         setHasMore(data?.publications?.items?.length > 0);
       });

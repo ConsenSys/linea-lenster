@@ -1,11 +1,11 @@
+import { Errors } from '@lenster/data';
+import { STATIC_ASSETS_URL } from '@lenster/data/constants';
+import { ErrorMessage } from '@lenster/ui';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { STATIC_ASSETS_URL } from 'data/constants';
-import Errors from 'data/errors';
 import type { FC } from 'react';
 import type { Emoji } from 'src/types';
-import { ErrorMessage } from 'ui';
 
 import Loader from '../Loader';
 

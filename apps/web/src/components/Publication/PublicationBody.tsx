@@ -1,59 +1,83 @@
 import Attachments from '@components/Shared/Attachments';
-import IFramely from '@components/Shared/IFramely';
+import Quote from '@components/Shared/Embed/Quote';
+import Space from '@components/Shared/Embed/Space';
 import Markup from '@components/Shared/Markup';
+import Oembed from '@components/Shared/Oembed';
 import Snapshot from '@components/Shared/Snapshot';
 import { EyeIcon } from '@heroicons/react/outline';
+import { FeatureFlag } from '@lenster/data';
+import type { Publication } from '@lenster/lens';
+import getPublicationAttribute from '@lenster/lib/getPublicationAttribute';
+import getSnapshotProposalId from '@lenster/lib/getSnapshotProposalId';
+import getURLs from '@lenster/lib/getURLs';
+import { Growthbook } from '@lib/growthbook';
 import { Trans } from '@lingui/macro';
 import clsx from 'clsx';
-import type { Publication } from 'lens';
-import getSnapshotProposalId from 'lib/getSnapshotProposalId';
-import getURLs from 'lib/getURLs';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import type { FC } from 'react';
+import type { SpaceMetadata } from 'src/types';
 
 import DecryptedPublicationBody from './DecryptedPublicationBody';
 
 interface PublicationBodyProps {
   publication: Publication;
+  showMore?: boolean;
+  quoted?: boolean;
 }
 
-const PublicationBody: FC<PublicationBodyProps> = ({ publication }) => {
-  const { pathname } = useRouter();
-  const showMore = publication?.metadata?.content?.length > 450 && pathname !== '/posts/[id]';
-  const hasURLs = getURLs(publication?.metadata?.content)?.length > 0;
-  const snapshotProposalId = hasURLs && getSnapshotProposalId(getURLs(publication?.metadata?.content)[0]);
-  let content = publication?.metadata?.content;
-  if (snapshotProposalId) {
-    content = content?.replace(getURLs(publication?.metadata?.content)[0], '');
+const PublicationBody: FC<PublicationBodyProps> = ({ publication, showMore = false, quoted = false }) => {
+  const { on: isSpacesEnabled } = Growthbook.feature(FeatureFlag.Spaces);
+  const { id, metadata } = publication;
+  const canShowMore = metadata?.content?.length > 450 && showMore;
+  const urls = getURLs(metadata?.content);
+  const hasURLs = urls?.length > 0;
+  const snapshotProposalId = hasURLs && getSnapshotProposalId(urls);
+  const quotedPublicationId = getPublicationAttribute(metadata.attributes, 'quotedPublicationId');
+  const spaceObject = getPublicationAttribute(metadata.attributes, 'space');
+  const space: SpaceMetadata = Boolean(spaceObject) ? JSON.parse(spaceObject) : null;
+
+  let content = metadata?.content;
+  const filterId = snapshotProposalId || quotedPublicationId;
+
+  if (filterId) {
+    for (const url of urls) {
+      if (url.includes(filterId)) {
+        content = content?.replace(url, '');
+      }
+    }
   }
 
-  if (publication?.metadata?.encryptionParams) {
+  if (metadata?.encryptionParams) {
     return <DecryptedPublicationBody encryptedPublication={publication} />;
   }
 
+  if (Boolean(space?.id) && isSpacesEnabled) {
+    return <Space publication={publication} />;
+  }
+
+  const showAttachments = metadata?.media?.length > 0;
+  const showSnapshot = snapshotProposalId;
+  const showQuotedPublication = quotedPublicationId && !quoted;
+  const showOembed = hasURLs && !showAttachments && !showSnapshot && !showQuotedPublication && !quoted;
+
   return (
     <div className="break-words">
-      <Markup className={clsx({ 'line-clamp-5': showMore }, 'markup linkify text-md break-words')}>
+      <Markup className={clsx({ 'line-clamp-5': canShowMore }, 'markup linkify text-md break-words')}>
         {content}
       </Markup>
-      {showMore && (
+      {canShowMore && (
         <div className="lt-text-gray-500 mt-4 flex items-center space-x-1 text-sm font-bold">
           <EyeIcon className="h-4 w-4" />
-          <Link href={`/posts/${publication?.id}`}>
+          <Link href={`/posts/${id}`}>
             <Trans>Show more</Trans>
           </Link>
         </div>
       )}
       {/* Snapshot, Attachments and Opengraph */}
-      {snapshotProposalId ? (
-        <Snapshot propsalId={snapshotProposalId} />
-      ) : publication?.metadata?.media?.length > 0 ? (
-        <Attachments attachments={publication?.metadata?.media} publication={publication} />
-      ) : (
-        publication?.metadata?.content &&
-        hasURLs && <IFramely url={getURLs(publication?.metadata?.content)[0]} />
-      )}
+      {showAttachments ? <Attachments attachments={metadata?.media} publication={publication} /> : null}
+      {showSnapshot ? <Snapshot proposalId={snapshotProposalId} /> : null}
+      {showOembed ? <Oembed url={urls[0]} /> : null}
+      {showQuotedPublication ? <Quote publicationId={quotedPublicationId} /> : null}
     </div>
   );
 };

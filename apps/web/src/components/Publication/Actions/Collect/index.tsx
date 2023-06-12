@@ -1,20 +1,17 @@
 import Loader from '@components/Shared/Loader';
-import GetModuleIcon from '@components/utils/GetModuleIcon';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { CollectionIcon as CollectionIconSolid } from '@heroicons/react/solid';
-import { getModule } from '@lib/getModule';
-import { Mixpanel } from '@lib/mixpanel';
-import { t } from '@lingui/macro';
+import type { ElectedMirror, Publication } from '@lenster/lens';
+import humanize from '@lenster/lib/humanize';
+import nFormatter from '@lenster/lib/nFormatter';
+import { Modal, Tooltip } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
+import { plural, t } from '@lingui/macro';
 import { motion } from 'framer-motion';
-import type { ElectedMirror, Publication } from 'lens';
-import { CollectModules } from 'lens';
-import humanize from 'lib/humanize';
-import nFormatter from 'lib/nFormatter';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { PUBLICATION } from 'src/tracking';
-import { Modal, Tooltip } from 'ui';
 
 const CollectModule = dynamic(() => import('./CollectModule'), {
   loading: () => <Loader message={t`Loading collect`} />
@@ -29,8 +26,6 @@ interface CollectProps {
 const Collect: FC<CollectProps> = ({ publication, electedMirror, showCount }) => {
   const [count, setCount] = useState(0);
   const [showCollectModal, setShowCollectModal] = useState(false);
-  const isFreeCollect = publication?.collectModule.__typename === 'FreeCollectModuleSettings';
-  const isUnknownCollect = publication?.collectModule.__typename === 'UnknownCollectModuleSettings';
   const isMirror = publication.__typename === 'Mirror';
   const hasCollected = isMirror ? publication?.mirrorOf?.hasCollectedByMe : publication?.hasCollectedByMe;
 
@@ -58,14 +53,18 @@ const Collect: FC<CollectProps> = ({ publication, electedMirror, showCount }) =>
           whileTap={{ scale: 0.9 }}
           onClick={() => {
             setShowCollectModal(true);
-            Mixpanel.track(PUBLICATION.COLLECT_MODULE.OPEN_COLLECT);
+            Leafwatch.track(PUBLICATION.COLLECT_MODULE.OPEN_COLLECT);
           }}
           aria-label="Collect"
         >
-          <div className="rounded-full p-1.5 hover:bg-red-300 hover:bg-opacity-20">
+          <div className="rounded-full p-1.5 hover:bg-red-300/20">
             <Tooltip
               placement="top"
-              content={count > 0 ? `${humanize(count)} Collects` : 'Collect'}
+              content={`${humanize(count)} ${plural(count, {
+                zero: 'Collect',
+                one: 'Collect',
+                other: 'Collects'
+              })}`}
               withDelay
             >
               {hasCollected ? (
@@ -79,21 +78,8 @@ const Collect: FC<CollectProps> = ({ publication, electedMirror, showCount }) =>
         {count > 0 && !showCount && <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>}
       </div>
       <Modal
-        title={
-          isFreeCollect
-            ? t`Free Collect`
-            : isUnknownCollect
-            ? t`Unknown Collect`
-            : getModule(publication?.collectModule?.type).name
-        }
-        icon={
-          <div className="text-brand">
-            <GetModuleIcon
-              module={isFreeCollect ? CollectModules.FreeCollectModule : publication?.collectModule?.type}
-              size={5}
-            />
-          </div>
-        }
+        title={t`Collect`}
+        icon={<CollectionIcon className="text-brand h-5 w-5" />}
         show={showCollectModal}
         onClose={() => setShowCollectModal(false)}
       >

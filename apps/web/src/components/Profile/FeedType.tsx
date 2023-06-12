@@ -5,12 +5,12 @@ import {
   PencilAltIcon,
   PhotographIcon
 } from '@heroicons/react/outline';
-import { Mixpanel } from '@lib/mixpanel';
+import { TabButton } from '@lenster/ui';
+import { Leafwatch } from '@lib/leafwatch';
 import { t } from '@lingui/macro';
 import type { Dispatch, FC } from 'react';
 import { ProfileFeedType } from 'src/enums';
 import { PROFILE } from 'src/tracking';
-import { TabButton } from 'ui';
 
 import MediaFilter from './Filters/MediaFilter';
 
@@ -22,7 +22,7 @@ interface FeedTypeProps {
 const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
   const switchTab = (type: string) => {
     setFeedType(type);
-    Mixpanel.track(PROFILE.SWITCH_PROFILE_FEED_TAB, {
+    Leafwatch.track(PROFILE.SWITCH_PROFILE_FEED_TAB, {
       profile_feed_type: type.toLowerCase()
     });
   };

@@ -1,25 +1,31 @@
 import { Menu } from '@headlessui/react';
 import { GlobeAltIcon } from '@heroicons/react/outline';
-import { setLocale, supportedLocales } from '@lib/i18n';
-import { Mixpanel } from '@lib/mixpanel';
+import { FeatureFlag, Localstorage } from '@lenster/data';
+import { Growthbook } from '@lib/growthbook';
+import { Leafwatch } from '@lib/leafwatch';
 import { useLingui } from '@lingui/react';
 import clsx from 'clsx';
-import isFeatureEnabled from 'lib/isFeatureEnabled';
 import type { FC } from 'react';
-import { useAppStore } from 'src/store/app';
+import { useCallback } from 'react';
+import { SUPPORTED_LOCALES } from 'src/i18n';
 import { MISCELLANEOUS } from 'src/tracking';
 
 import MenuTransition from '../MenuTransition';
 
 const Locale: FC = () => {
-  const currentProfile = useAppStore((state) => state.currentProfile);
   const { i18n } = useLingui();
-  const gatedLocales = ['ta', 'es', 'kn'];
+  const { on: isGatedLocalesEnabled } = Growthbook.feature(FeatureFlag.GatedLocales);
+  const gatedLocales = ['fr', 'ru', 'ta'];
   const locales = Object.fromEntries(
-    Object.entries(supportedLocales).filter(([key]) =>
-      isFeatureEnabled('gated-locales', currentProfile?.id) ? true : !gatedLocales.includes(key)
+    Object.entries(SUPPORTED_LOCALES).filter(([key]) =>
+      isGatedLocalesEnabled ? true : !gatedLocales.includes(key)
     )
   );
+
+  const setLanguage = useCallback((locale: string) => {
+    localStorage.setItem(Localstorage.LocaleStore, locale);
+    location.reload();
+  }, []);
 
   return (
     <Menu as="span">
@@ -38,10 +44,11 @@ const Locale: FC = () => {
               key={localeCode}
               as="div"
               onClick={() => {
-                setLocale(localeCode);
-                Mixpanel.track(MISCELLANEOUS.SELECT_LOCALE, {
+                setLanguage(localeCode);
+                Leafwatch.track(MISCELLANEOUS.SELECT_LOCALE, {
                   locale: localeCode
                 });
+                location.reload();
               }}
               className={({ active }: { active: boolean }) =>
                 clsx({ 'dropdown-active': active }, 'menu-item')

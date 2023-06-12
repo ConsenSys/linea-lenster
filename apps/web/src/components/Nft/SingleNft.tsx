@@ -1,10 +1,10 @@
-import { IS_RARIBLE_AVAILABLE, RARIBLE_URL, STATIC_IMAGES_URL, ZONIC_URL } from 'data/constants';
-import type { Nft } from 'lens';
-import sanitizeDStorageUrl from 'lib/sanitizeDStorageUrl';
+import { IS_RARIBLE_AVAILABLE, RARIBLE_URL, STATIC_IMAGES_URL, ZONIC_URL } from '@lenster/data/constants';
+import type { Nft } from '@lenster/lens';
+import sanitizeDStorageUrl from '@lenster/lib/sanitizeDStorageUrl';
+import { Card } from '@lenster/ui';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { CHAIN_ID } from 'src/constants';
-import { Card } from 'ui';
 
 import type { NftLinea } from '../../types';
 
