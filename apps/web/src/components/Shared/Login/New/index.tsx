@@ -1,6 +1,6 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
-import { IS_RELAYER_AVAILABLE, LENS_PROFILE_CREATOR, LENS_PROFILE_CREATOR_ABI, Regex } from '@lenster/data';
+import { IS_RELAYER_AVAILABLE, LENS_PROFILE_CREATOR, Regex } from '@lenster/data';
 import { APP_NAME, ZERO_ADDRESS } from '@lenster/data/constants';
 import { useCreateProfileMutation } from '@lenster/lens';
 import getStampFyiURL from '@lenster/lib/getStampFyiURL';
@@ -12,6 +12,7 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 import { object, string } from 'zod';
 
 import Pending from './Pending';
+import { LensProfileCreator } from '@lenster/abis/LensProfileCreator';
 
 const newUserSchema = object({
   handle: string()
@@ -43,7 +44,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
 
   const { config, error: contractError } = usePrepareContractWrite({
     address: LENS_PROFILE_CREATOR,
-    abi: LENS_PROFILE_CREATOR_ABI,
+    abi: LensProfileCreator,
     functionName: 'proxyCreateProfile',
     args: [
       {
