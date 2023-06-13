@@ -8,6 +8,8 @@ export const mainnetVerified = [
   '0x82', // chinzilla
   '0x87', // nakedwinnie
   '0x7a', // rooshee
+  '0x33', // lovekosmas
+  '0x8e', // chaindoe
   '0x6d' // emily
 ];
 
@@ -18,5 +20,7 @@ export const testnetVerified = [
   '0x82', // chinzilla
   '0x87', // nakedwinnie
   '0x7a', // rooshee
+  '0x33', // lovekosmas
+  '0x8e', // chaindoe
   '0x6d' // emily
 ];
