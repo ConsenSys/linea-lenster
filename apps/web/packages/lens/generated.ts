@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import { gql } from '@apollo/client';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -41431,6 +41432,7 @@ export function useAddProfileInterestMutation(
     options
   );
 }
+
 export type AddProfileInterestMutationHookResult = ReturnType<typeof useAddProfileInterestMutation>;
 export type AddProfileInterestMutationResult = Apollo.MutationResult<AddProfileInterestMutation>;
 export type AddProfileInterestMutationOptions = Apollo.BaseMutationOptions<
@@ -41470,6 +41472,7 @@ export function useAddReactionMutation(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<AddReactionMutation, AddReactionMutationVariables>(AddReactionDocument, options);
 }
+
 export type AddReactionMutationHookResult = ReturnType<typeof useAddReactionMutation>;
 export type AddReactionMutationResult = Apollo.MutationResult<AddReactionMutation>;
 export type AddReactionMutationOptions = Apollo.BaseMutationOptions<
@@ -41515,6 +41518,7 @@ export function useAuthenticateMutation(
     options
   );
 }
+
 export type AuthenticateMutationHookResult = ReturnType<typeof useAuthenticateMutation>;
 export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutation>;
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<
@@ -41559,6 +41563,7 @@ export function useBroadcastMutation(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<BroadcastMutation, BroadcastMutationVariables>(BroadcastDocument, options);
 }
+
 export type BroadcastMutationHookResult = ReturnType<typeof useBroadcastMutation>;
 export type BroadcastMutationResult = Apollo.MutationResult<BroadcastMutation>;
 export type BroadcastMutationOptions = Apollo.BaseMutationOptions<
@@ -41612,6 +41617,7 @@ export function useBroadcastDataAvailabilityMutation(
     options
   );
 }
+
 export type BroadcastDataAvailabilityMutationHookResult = ReturnType<
   typeof useBroadcastDataAvailabilityMutation
 >;
@@ -41683,6 +41689,7 @@ export function useCreateBurnProfileTypedDataMutation(
     options
   );
 }
+
 export type CreateBurnProfileTypedDataMutationHookResult = ReturnType<
   typeof useCreateBurnProfileTypedDataMutation
 >;
@@ -41756,6 +41763,7 @@ export function useCreateCollectTypedDataMutation(
     options
   );
 }
+
 export type CreateCollectTypedDataMutationHookResult = ReturnType<typeof useCreateCollectTypedDataMutation>;
 export type CreateCollectTypedDataMutationResult = Apollo.MutationResult<CreateCollectTypedDataMutation>;
 export type CreateCollectTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -41832,6 +41840,7 @@ export function useCreateCommentTypedDataMutation(
     options
   );
 }
+
 export type CreateCommentTypedDataMutationHookResult = ReturnType<typeof useCreateCommentTypedDataMutation>;
 export type CreateCommentTypedDataMutationResult = Apollo.MutationResult<CreateCommentTypedDataMutation>;
 export type CreateCommentTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -41880,6 +41889,7 @@ export function useCreateCommentViaDispatcherMutation(
     options
   );
 }
+
 export type CreateCommentViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateCommentViaDispatcherMutation
 >;
@@ -41958,6 +41968,7 @@ export function useCreateDataAvailabilityCommentTypedDataMutation(
     CreateDataAvailabilityCommentTypedDataMutationVariables
   >(CreateDataAvailabilityCommentTypedDataDocument, options);
 }
+
 export type CreateDataAvailabilityCommentTypedDataMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityCommentTypedDataMutation
 >;
@@ -42014,6 +42025,7 @@ export function useCreateDataAvailabilityCommentViaDispatcherMutation(
     CreateDataAvailabilityCommentViaDispatcherMutationVariables
   >(CreateDataAvailabilityCommentViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityCommentViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityCommentViaDispatcherMutation
 >;
@@ -42070,6 +42082,7 @@ export function useCreateDataAvailabilityMirrorViaDispatcherMutation(
     CreateDataAvailabilityMirrorViaDispatcherMutationVariables
   >(CreateDataAvailabilityMirrorViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityMirrorViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityMirrorViaDispatcherMutation
 >;
@@ -42145,6 +42158,7 @@ export function useCreateDataAvailabilityPostTypedDataMutation(
     CreateDataAvailabilityPostTypedDataMutationVariables
   >(CreateDataAvailabilityPostTypedDataDocument, options);
 }
+
 export type CreateDataAvailabilityPostTypedDataMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityPostTypedDataMutation
 >;
@@ -42201,6 +42215,7 @@ export function useCreateDataAvailabilityPostViaDispatcherMutation(
     CreateDataAvailabilityPostViaDispatcherMutationVariables
   >(CreateDataAvailabilityPostViaDispatcherDocument, options);
 }
+
 export type CreateDataAvailabilityPostViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateDataAvailabilityPostViaDispatcherMutation
 >;
@@ -42273,6 +42288,7 @@ export function useCreateFollowTypedDataMutation(
     options
   );
 }
+
 export type CreateFollowTypedDataMutationHookResult = ReturnType<typeof useCreateFollowTypedDataMutation>;
 export type CreateFollowTypedDataMutationResult = Apollo.MutationResult<CreateFollowTypedDataMutation>;
 export type CreateFollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -42346,6 +42362,7 @@ export function useCreateMirrorTypedDataMutation(
     options
   );
 }
+
 export type CreateMirrorTypedDataMutationHookResult = ReturnType<typeof useCreateMirrorTypedDataMutation>;
 export type CreateMirrorTypedDataMutationResult = Apollo.MutationResult<CreateMirrorTypedDataMutation>;
 export type CreateMirrorTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -42394,6 +42411,7 @@ export function useCreateMirrorViaDispatcherMutation(
     options
   );
 }
+
 export type CreateMirrorViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateMirrorViaDispatcherMutation
 >;
@@ -42439,6 +42457,7 @@ export function useCreateNftGalleryMutation(
     options
   );
 }
+
 export type CreateNftGalleryMutationHookResult = ReturnType<typeof useCreateNftGalleryMutation>;
 export type CreateNftGalleryMutationResult = Apollo.MutationResult<CreateNftGalleryMutation>;
 export type CreateNftGalleryMutationOptions = Apollo.BaseMutationOptions<
@@ -42509,6 +42528,7 @@ export function useCreatePostTypedDataMutation(
     options
   );
 }
+
 export type CreatePostTypedDataMutationHookResult = ReturnType<typeof useCreatePostTypedDataMutation>;
 export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePostTypedDataMutation>;
 export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -42557,6 +42577,7 @@ export function useCreatePostViaDispatcherMutation(
     options
   );
 }
+
 export type CreatePostViaDispatcherMutationHookResult = ReturnType<typeof useCreatePostViaDispatcherMutation>;
 export type CreatePostViaDispatcherMutationResult = Apollo.MutationResult<CreatePostViaDispatcherMutation>;
 export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
@@ -42602,6 +42623,7 @@ export function useCreateProfileMutation(
     options
   );
 }
+
 export type CreateProfileMutationHookResult = ReturnType<typeof useCreateProfileMutation>;
 export type CreateProfileMutationResult = Apollo.MutationResult<CreateProfileMutation>;
 export type CreateProfileMutationOptions = Apollo.BaseMutationOptions<
@@ -42674,6 +42696,7 @@ export function useCreateSetDefaultProfileTypedDataMutation(
     CreateSetDefaultProfileTypedDataMutationVariables
   >(CreateSetDefaultProfileTypedDataDocument, options);
 }
+
 export type CreateSetDefaultProfileTypedDataMutationHookResult = ReturnType<
   typeof useCreateSetDefaultProfileTypedDataMutation
 >;
@@ -42746,6 +42769,7 @@ export function useCreateSetDispatcherTypedDataMutation(
     CreateSetDispatcherTypedDataMutationVariables
   >(CreateSetDispatcherTypedDataDocument, options);
 }
+
 export type CreateSetDispatcherTypedDataMutationHookResult = ReturnType<
   typeof useCreateSetDispatcherTypedDataMutation
 >;
@@ -42822,6 +42846,7 @@ export function useCreateSetFollowModuleTypedDataMutation(
     CreateSetFollowModuleTypedDataMutationVariables
   >(CreateSetFollowModuleTypedDataDocument, options);
 }
+
 export type CreateSetFollowModuleTypedDataMutationHookResult = ReturnType<
   typeof useCreateSetFollowModuleTypedDataMutation
 >;
@@ -42897,6 +42922,7 @@ export function useCreateSetProfileImageUriTypedDataMutation(
     CreateSetProfileImageUriTypedDataMutationVariables
   >(CreateSetProfileImageUriTypedDataDocument, options);
 }
+
 export type CreateSetProfileImageUriTypedDataMutationHookResult = ReturnType<
   typeof useCreateSetProfileImageUriTypedDataMutation
 >;
@@ -42948,6 +42974,7 @@ export function useCreateSetProfileImageUriViaDispatcherMutation(
     CreateSetProfileImageUriViaDispatcherMutationVariables
   >(CreateSetProfileImageUriViaDispatcherDocument, options);
 }
+
 export type CreateSetProfileImageUriViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateSetProfileImageUriViaDispatcherMutation
 >;
@@ -43023,6 +43050,7 @@ export function useCreateSetProfileMetadataTypedDataMutation(
     CreateSetProfileMetadataTypedDataMutationVariables
   >(CreateSetProfileMetadataTypedDataDocument, options);
 }
+
 export type CreateSetProfileMetadataTypedDataMutationHookResult = ReturnType<
   typeof useCreateSetProfileMetadataTypedDataMutation
 >;
@@ -43074,6 +43102,7 @@ export function useCreateSetProfileMetadataViaDispatcherMutation(
     CreateSetProfileMetadataViaDispatcherMutationVariables
   >(CreateSetProfileMetadataViaDispatcherDocument, options);
 }
+
 export type CreateSetProfileMetadataViaDispatcherMutationHookResult = ReturnType<
   typeof useCreateSetProfileMetadataViaDispatcherMutation
 >;
@@ -43144,6 +43173,7 @@ export function useCreateUnfollowTypedDataMutation(
     options
   );
 }
+
 export type CreateUnfollowTypedDataMutationHookResult = ReturnType<typeof useCreateUnfollowTypedDataMutation>;
 export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
 export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
@@ -43186,6 +43216,7 @@ export function useDeleteNftGalleryMutation(
     options
   );
 }
+
 export type DeleteNftGalleryMutationHookResult = ReturnType<typeof useDeleteNftGalleryMutation>;
 export type DeleteNftGalleryMutationResult = Apollo.MutationResult<DeleteNftGalleryMutation>;
 export type DeleteNftGalleryMutationOptions = Apollo.BaseMutationOptions<
@@ -43231,6 +43262,7 @@ export function useDismissRecommendedProfilesMutation(
     options
   );
 }
+
 export type DismissRecommendedProfilesMutationHookResult = ReturnType<
   typeof useDismissRecommendedProfilesMutation
 >;
@@ -43276,6 +43308,7 @@ export function useHidePublicationMutation(
     options
   );
 }
+
 export type HidePublicationMutationHookResult = ReturnType<typeof useHidePublicationMutation>;
 export type HidePublicationMutationResult = Apollo.MutationResult<HidePublicationMutation>;
 export type HidePublicationMutationOptions = Apollo.BaseMutationOptions<
@@ -43315,6 +43348,7 @@ export function useProxyActionMutation(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<ProxyActionMutation, ProxyActionMutationVariables>(ProxyActionDocument, options);
 }
+
 export type ProxyActionMutationHookResult = ReturnType<typeof useProxyActionMutation>;
 export type ProxyActionMutationResult = Apollo.MutationResult<ProxyActionMutation>;
 export type ProxyActionMutationOptions = Apollo.BaseMutationOptions<
@@ -43360,6 +43394,7 @@ export function useRemoveProfileInterestMutation(
     options
   );
 }
+
 export type RemoveProfileInterestMutationHookResult = ReturnType<typeof useRemoveProfileInterestMutation>;
 export type RemoveProfileInterestMutationResult = Apollo.MutationResult<RemoveProfileInterestMutation>;
 export type RemoveProfileInterestMutationOptions = Apollo.BaseMutationOptions<
@@ -43402,6 +43437,7 @@ export function useRemoveReactionMutation(
     options
   );
 }
+
 export type RemoveReactionMutationHookResult = ReturnType<typeof useRemoveReactionMutation>;
 export type RemoveReactionMutationResult = Apollo.MutationResult<RemoveReactionMutation>;
 export type RemoveReactionMutationOptions = Apollo.BaseMutationOptions<
@@ -43444,6 +43480,7 @@ export function useReportPublicationMutation(
     options
   );
 }
+
 export type ReportPublicationMutationHookResult = ReturnType<typeof useReportPublicationMutation>;
 export type ReportPublicationMutationResult = Apollo.MutationResult<ReportPublicationMutation>;
 export type ReportPublicationMutationOptions = Apollo.BaseMutationOptions<
@@ -43489,6 +43526,7 @@ export function useUpdateNftGalleryInfoMutation(
     options
   );
 }
+
 export type UpdateNftGalleryInfoMutationHookResult = ReturnType<typeof useUpdateNftGalleryInfoMutation>;
 export type UpdateNftGalleryInfoMutationResult = Apollo.MutationResult<UpdateNftGalleryInfoMutation>;
 export type UpdateNftGalleryInfoMutationOptions = Apollo.BaseMutationOptions<
@@ -43534,6 +43572,7 @@ export function useUpdateNftGalleryItemsMutation(
     options
   );
 }
+
 export type UpdateNftGalleryItemsMutationHookResult = ReturnType<typeof useUpdateNftGalleryItemsMutation>;
 export type UpdateNftGalleryItemsMutationResult = Apollo.MutationResult<UpdateNftGalleryItemsMutation>;
 export type UpdateNftGalleryItemsMutationOptions = Apollo.BaseMutationOptions<
@@ -43579,6 +43618,7 @@ export function useUpdateNftGalleryOrderMutation(
     options
   );
 }
+
 export type UpdateNftGalleryOrderMutationHookResult = ReturnType<typeof useUpdateNftGalleryOrderMutation>;
 export type UpdateNftGalleryOrderMutationResult = Apollo.MutationResult<UpdateNftGalleryOrderMutation>;
 export type UpdateNftGalleryOrderMutationOptions = Apollo.BaseMutationOptions<
@@ -43624,6 +43664,7 @@ export function useApprovedModuleAllowanceAmountQuery(
     options
   );
 }
+
 export function useApprovedModuleAllowanceAmountLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     ApprovedModuleAllowanceAmountQuery,
@@ -43636,6 +43677,7 @@ export function useApprovedModuleAllowanceAmountLazyQuery(
     options
   );
 }
+
 export type ApprovedModuleAllowanceAmountQueryHookResult = ReturnType<
   typeof useApprovedModuleAllowanceAmountQuery
 >;
@@ -43700,6 +43742,7 @@ export function useCanDecryptStatusQuery(
     options
   );
 }
+
 export function useCanDecryptStatusLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CanDecryptStatusQuery, CanDecryptStatusQueryVariables>
 ) {
@@ -43709,6 +43752,7 @@ export function useCanDecryptStatusLazyQuery(
     options
   );
 }
+
 export type CanDecryptStatusQueryHookResult = ReturnType<typeof useCanDecryptStatusQuery>;
 export type CanDecryptStatusLazyQueryHookResult = ReturnType<typeof useCanDecryptStatusLazyQuery>;
 export type CanDecryptStatusQueryResult = Apollo.QueryResult<
@@ -43745,12 +43789,14 @@ export function useChallengeQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
 }
+
 export function useChallengeLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ChallengeQuery, ChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
 }
+
 export type ChallengeQueryHookResult = ReturnType<typeof useChallengeQuery>;
 export type ChallengeLazyQueryHookResult = ReturnType<typeof useChallengeLazyQuery>;
 export type ChallengeQueryResult = Apollo.QueryResult<ChallengeQuery, ChallengeQueryVariables>;
@@ -43802,12 +43848,14 @@ export function useCollectModuleQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CollectModuleQuery, CollectModuleQueryVariables>(CollectModuleDocument, options);
 }
+
 export function useCollectModuleLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CollectModuleQuery, CollectModuleQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<CollectModuleQuery, CollectModuleQueryVariables>(CollectModuleDocument, options);
 }
+
 export type CollectModuleQueryHookResult = ReturnType<typeof useCollectModuleQuery>;
 export type CollectModuleLazyQueryHookResult = ReturnType<typeof useCollectModuleLazyQuery>;
 export type CollectModuleQueryResult = Apollo.QueryResult<CollectModuleQuery, CollectModuleQueryVariables>;
@@ -43851,12 +43899,14 @@ export function useCollectorsQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CollectorsQuery, CollectorsQueryVariables>(CollectorsDocument, options);
 }
+
 export function useCollectorsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CollectorsQuery, CollectorsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<CollectorsQuery, CollectorsQueryVariables>(CollectorsDocument, options);
 }
+
 export type CollectorsQueryHookResult = ReturnType<typeof useCollectorsQuery>;
 export type CollectorsLazyQueryHookResult = ReturnType<typeof useCollectorsLazyQuery>;
 export type CollectorsQueryResult = Apollo.QueryResult<CollectorsQuery, CollectorsQueryVariables>;
@@ -43904,12 +43954,14 @@ export function useCommentFeedQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CommentFeedQuery, CommentFeedQueryVariables>(CommentFeedDocument, options);
 }
+
 export function useCommentFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CommentFeedQuery, CommentFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<CommentFeedQuery, CommentFeedQueryVariables>(CommentFeedDocument, options);
 }
+
 export type CommentFeedQueryHookResult = ReturnType<typeof useCommentFeedQuery>;
 export type CommentFeedLazyQueryHookResult = ReturnType<typeof useCommentFeedLazyQuery>;
 export type CommentFeedQueryResult = Apollo.QueryResult<CommentFeedQuery, CommentFeedQueryVariables>;
@@ -43951,6 +44003,7 @@ export function useEnabledModulesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<EnabledModulesQuery, EnabledModulesQueryVariables>(EnabledModulesDocument, options);
 }
+
 export function useEnabledModulesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<EnabledModulesQuery, EnabledModulesQueryVariables>
 ) {
@@ -43960,6 +44013,7 @@ export function useEnabledModulesLazyQuery(
     options
   );
 }
+
 export type EnabledModulesQueryHookResult = ReturnType<typeof useEnabledModulesQuery>;
 export type EnabledModulesLazyQueryHookResult = ReturnType<typeof useEnabledModulesLazyQuery>;
 export type EnabledModulesQueryResult = Apollo.QueryResult<EnabledModulesQuery, EnabledModulesQueryVariables>;
@@ -44015,12 +44069,14 @@ export function useExploreFeedQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(ExploreFeedDocument, options);
 }
+
 export function useExploreFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ExploreFeedQuery, ExploreFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ExploreFeedQuery, ExploreFeedQueryVariables>(ExploreFeedDocument, options);
 }
+
 export type ExploreFeedQueryHookResult = ReturnType<typeof useExploreFeedQuery>;
 export type ExploreFeedLazyQueryHookResult = ReturnType<typeof useExploreFeedLazyQuery>;
 export type ExploreFeedQueryResult = Apollo.QueryResult<ExploreFeedQuery, ExploreFeedQueryVariables>;
@@ -44076,6 +44132,7 @@ export function useFeedHighlightsQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FeedHighlightsQuery, FeedHighlightsQueryVariables>(FeedHighlightsDocument, options);
 }
+
 export function useFeedHighlightsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<FeedHighlightsQuery, FeedHighlightsQueryVariables>
 ) {
@@ -44085,6 +44142,7 @@ export function useFeedHighlightsLazyQuery(
     options
   );
 }
+
 export type FeedHighlightsQueryHookResult = ReturnType<typeof useFeedHighlightsQuery>;
 export type FeedHighlightsLazyQueryHookResult = ReturnType<typeof useFeedHighlightsLazyQuery>;
 export type FeedHighlightsQueryResult = Apollo.QueryResult<FeedHighlightsQuery, FeedHighlightsQueryVariables>;
@@ -44125,6 +44183,7 @@ export function useFollowersNftOwnedTokenIdsQuery(
     options
   );
 }
+
 export function useFollowersNftOwnedTokenIdsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     FollowersNftOwnedTokenIdsQuery,
@@ -44137,6 +44196,7 @@ export function useFollowersNftOwnedTokenIdsLazyQuery(
     options
   );
 }
+
 export type FollowersNftOwnedTokenIdsQueryHookResult = ReturnType<typeof useFollowersNftOwnedTokenIdsQuery>;
 export type FollowersNftOwnedTokenIdsLazyQueryHookResult = ReturnType<
   typeof useFollowersNftOwnedTokenIdsLazyQuery
@@ -44188,12 +44248,14 @@ export function useFollowersQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
+
 export function useFollowersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<FollowersQuery, FollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
+
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
 export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
 export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
@@ -44237,12 +44299,14 @@ export function useFollowingQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FollowingQuery, FollowingQueryVariables>(FollowingDocument, options);
 }
+
 export function useFollowingLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<FollowingQuery, FollowingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<FollowingQuery, FollowingQueryVariables>(FollowingDocument, options);
 }
+
 export type FollowingQueryHookResult = ReturnType<typeof useFollowingQuery>;
 export type FollowingLazyQueryHookResult = ReturnType<typeof useFollowingLazyQuery>;
 export type FollowingQueryResult = Apollo.QueryResult<FollowingQuery, FollowingQueryVariables>;
@@ -44284,6 +44348,7 @@ export function useGenerateModuleCurrencyApprovalDataQuery(
     GenerateModuleCurrencyApprovalDataQueryVariables
   >(GenerateModuleCurrencyApprovalDataDocument, options);
 }
+
 export function useGenerateModuleCurrencyApprovalDataLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GenerateModuleCurrencyApprovalDataQuery,
@@ -44296,6 +44361,7 @@ export function useGenerateModuleCurrencyApprovalDataLazyQuery(
     GenerateModuleCurrencyApprovalDataQueryVariables
   >(GenerateModuleCurrencyApprovalDataDocument, options);
 }
+
 export type GenerateModuleCurrencyApprovalDataQueryHookResult = ReturnType<
   typeof useGenerateModuleCurrencyApprovalDataQuery
 >;
@@ -44348,6 +44414,7 @@ export function useHasTxHashBeenIndexedQuery(
     options
   );
 }
+
 export function useHasTxHashBeenIndexedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>
 ) {
@@ -44357,6 +44424,7 @@ export function useHasTxHashBeenIndexedLazyQuery(
     options
   );
 }
+
 export type HasTxHashBeenIndexedQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedQuery>;
 export type HasTxHashBeenIndexedLazyQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedLazyQuery>;
 export type HasTxHashBeenIndexedQueryResult = Apollo.QueryResult<
@@ -44399,12 +44467,14 @@ export function useLensterStatsQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<LensterStatsQuery, LensterStatsQueryVariables>(LensterStatsDocument, options);
 }
+
 export function useLensterStatsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<LensterStatsQuery, LensterStatsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<LensterStatsQuery, LensterStatsQueryVariables>(LensterStatsDocument, options);
 }
+
 export type LensterStatsQueryHookResult = ReturnType<typeof useLensterStatsQuery>;
 export type LensterStatsLazyQueryHookResult = ReturnType<typeof useLensterStatsLazyQuery>;
 export type LensterStatsQueryResult = Apollo.QueryResult<LensterStatsQuery, LensterStatsQueryVariables>;
@@ -44446,12 +44516,14 @@ export function useLikesQuery(baseOptions: Apollo.QueryHookOptions<LikesQuery, L
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<LikesQuery, LikesQueryVariables>(LikesDocument, options);
 }
+
 export function useLikesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<LikesQuery, LikesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<LikesQuery, LikesQueryVariables>(LikesDocument, options);
 }
+
 export type LikesQueryHookResult = ReturnType<typeof useLikesQuery>;
 export type LikesLazyQueryHookResult = ReturnType<typeof useLikesLazyQuery>;
 export type LikesQueryResult = Apollo.QueryResult<LikesQuery, LikesQueryVariables>;
@@ -44496,6 +44568,7 @@ export function useMutualFollowersQuery(
     options
   );
 }
+
 export function useMutualFollowersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<MutualFollowersQuery, MutualFollowersQueryVariables>
 ) {
@@ -44505,6 +44578,7 @@ export function useMutualFollowersLazyQuery(
     options
   );
 }
+
 export type MutualFollowersQueryHookResult = ReturnType<typeof useMutualFollowersQuery>;
 export type MutualFollowersLazyQueryHookResult = ReturnType<typeof useMutualFollowersLazyQuery>;
 export type MutualFollowersQueryResult = Apollo.QueryResult<
@@ -44542,12 +44616,14 @@ export function useNftChallengeQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<NftChallengeQuery, NftChallengeQueryVariables>(NftChallengeDocument, options);
 }
+
 export function useNftChallengeLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NftChallengeQuery, NftChallengeQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<NftChallengeQuery, NftChallengeQueryVariables>(NftChallengeDocument, options);
 }
+
 export type NftChallengeQueryHookResult = ReturnType<typeof useNftChallengeQuery>;
 export type NftChallengeLazyQueryHookResult = ReturnType<typeof useNftChallengeLazyQuery>;
 export type NftChallengeQueryResult = Apollo.QueryResult<NftChallengeQuery, NftChallengeQueryVariables>;
@@ -44592,12 +44668,14 @@ export function useNftFeedQuery(baseOptions: Apollo.QueryHookOptions<NftFeedQuer
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<NftFeedQuery, NftFeedQueryVariables>(NftFeedDocument, options);
 }
+
 export function useNftFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NftFeedQuery, NftFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<NftFeedQuery, NftFeedQueryVariables>(NftFeedDocument, options);
 }
+
 export type NftFeedQueryHookResult = ReturnType<typeof useNftFeedQuery>;
 export type NftFeedLazyQueryHookResult = ReturnType<typeof useNftFeedLazyQuery>;
 export type NftFeedQueryResult = Apollo.QueryResult<NftFeedQuery, NftFeedQueryVariables>;
@@ -44645,12 +44723,14 @@ export function useNftGalleriesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(NftGalleriesDocument, options);
 }
+
 export function useNftGalleriesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NftGalleriesQuery, NftGalleriesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<NftGalleriesQuery, NftGalleriesQueryVariables>(NftGalleriesDocument, options);
 }
+
 export type NftGalleriesQueryHookResult = ReturnType<typeof useNftGalleriesQuery>;
 export type NftGalleriesLazyQueryHookResult = ReturnType<typeof useNftGalleriesLazyQuery>;
 export type NftGalleriesQueryResult = Apollo.QueryResult<NftGalleriesQuery, NftGalleriesQueryVariables>;
@@ -44689,6 +44769,7 @@ export function useNotificationCountQuery(
     options
   );
 }
+
 export function useNotificationCountLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NotificationCountQuery, NotificationCountQueryVariables>
 ) {
@@ -44698,6 +44779,7 @@ export function useNotificationCountLazyQuery(
     options
   );
 }
+
 export type NotificationCountQueryHookResult = ReturnType<typeof useNotificationCountQuery>;
 export type NotificationCountLazyQueryHookResult = ReturnType<typeof useNotificationCountLazyQuery>;
 export type NotificationCountQueryResult = Apollo.QueryResult<
@@ -44876,12 +44958,14 @@ export function useNotificationsQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
 }
+
 export function useNotificationsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<NotificationsQuery, NotificationsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<NotificationsQuery, NotificationsQueryVariables>(NotificationsDocument, options);
 }
+
 export type NotificationsQueryHookResult = ReturnType<typeof useNotificationsQuery>;
 export type NotificationsLazyQueryHookResult = ReturnType<typeof useNotificationsLazyQuery>;
 export type NotificationsQueryResult = Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>;
@@ -44940,12 +45024,14 @@ export function useProfileQuery(baseOptions: Apollo.QueryHookOptions<ProfileQuer
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
+
 export function useProfileLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
+
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
@@ -45001,12 +45087,14 @@ export function useProfileFeedQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(ProfileFeedDocument, options);
 }
+
 export function useProfileFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileFeedQuery, ProfileFeedQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ProfileFeedQuery, ProfileFeedQueryVariables>(ProfileFeedDocument, options);
 }
+
 export type ProfileFeedQueryHookResult = ReturnType<typeof useProfileFeedQuery>;
 export type ProfileFeedLazyQueryHookResult = ReturnType<typeof useProfileFeedLazyQuery>;
 export type ProfileFeedQueryResult = Apollo.QueryResult<ProfileFeedQuery, ProfileFeedQueryVariables>;
@@ -45040,6 +45128,7 @@ export function useProfileInterestsQuery(
     options
   );
 }
+
 export function useProfileInterestsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileInterestsQuery, ProfileInterestsQueryVariables>
 ) {
@@ -45049,6 +45138,7 @@ export function useProfileInterestsLazyQuery(
     options
   );
 }
+
 export type ProfileInterestsQueryHookResult = ReturnType<typeof useProfileInterestsQuery>;
 export type ProfileInterestsLazyQueryHookResult = ReturnType<typeof useProfileInterestsLazyQuery>;
 export type ProfileInterestsQueryResult = Apollo.QueryResult<
@@ -45089,6 +45179,7 @@ export function useProfileSettingsQuery(
     options
   );
 }
+
 export function useProfileSettingsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileSettingsQuery, ProfileSettingsQueryVariables>
 ) {
@@ -45098,6 +45189,7 @@ export function useProfileSettingsLazyQuery(
     options
   );
 }
+
 export type ProfileSettingsQueryHookResult = ReturnType<typeof useProfileSettingsQuery>;
 export type ProfileSettingsLazyQueryHookResult = ReturnType<typeof useProfileSettingsLazyQuery>;
 export type ProfileSettingsQueryResult = Apollo.QueryResult<
@@ -45142,12 +45234,14 @@ export function useProfilesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
 }
+
 export function useProfilesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
 }
+
 export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
 export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
 export type ProfilesQueryResult = Apollo.QueryResult<ProfilesQuery, ProfilesQueryVariables>;
@@ -45219,12 +45313,14 @@ export function usePublicationQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<PublicationQuery, PublicationQueryVariables>(PublicationDocument, options);
 }
+
 export function usePublicationLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<PublicationQuery, PublicationQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<PublicationQuery, PublicationQueryVariables>(PublicationDocument, options);
 }
+
 export type PublicationQueryHookResult = ReturnType<typeof usePublicationQuery>;
 export type PublicationLazyQueryHookResult = ReturnType<typeof usePublicationLazyQuery>;
 export type PublicationQueryResult = Apollo.QueryResult<PublicationQuery, PublicationQueryVariables>;
@@ -45265,6 +45361,7 @@ export function usePublicationRevenueQuery(
     options
   );
 }
+
 export function usePublicationRevenueLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<PublicationRevenueQuery, PublicationRevenueQueryVariables>
 ) {
@@ -45274,6 +45371,7 @@ export function usePublicationRevenueLazyQuery(
     options
   );
 }
+
 export type PublicationRevenueQueryHookResult = ReturnType<typeof usePublicationRevenueQuery>;
 export type PublicationRevenueLazyQueryHookResult = ReturnType<typeof usePublicationRevenueLazyQuery>;
 export type PublicationRevenueQueryResult = Apollo.QueryResult<
@@ -45315,6 +45413,7 @@ export function useRecommendedProfilesQuery(
     options
   );
 }
+
 export function useRecommendedProfilesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<RecommendedProfilesQuery, RecommendedProfilesQueryVariables>
 ) {
@@ -45324,6 +45423,7 @@ export function useRecommendedProfilesLazyQuery(
     options
   );
 }
+
 export type RecommendedProfilesQueryHookResult = ReturnType<typeof useRecommendedProfilesQuery>;
 export type RecommendedProfilesLazyQueryHookResult = ReturnType<typeof useRecommendedProfilesLazyQuery>;
 export type RecommendedProfilesQueryResult = Apollo.QueryResult<
@@ -45361,12 +45461,14 @@ export function useRelayQueuesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(RelayQueuesDocument, options);
 }
+
 export function useRelayQueuesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<RelayQueuesQuery, RelayQueuesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<RelayQueuesQuery, RelayQueuesQueryVariables>(RelayQueuesDocument, options);
 }
+
 export type RelayQueuesQueryHookResult = ReturnType<typeof useRelayQueuesQuery>;
 export type RelayQueuesLazyQueryHookResult = ReturnType<typeof useRelayQueuesLazyQuery>;
 export type RelayQueuesQueryResult = Apollo.QueryResult<RelayQueuesQuery, RelayQueuesQueryVariables>;
@@ -45408,6 +45510,7 @@ export function useSearchProfilesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(SearchProfilesDocument, options);
 }
+
 export function useSearchProfilesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SearchProfilesQuery, SearchProfilesQueryVariables>
 ) {
@@ -45417,6 +45520,7 @@ export function useSearchProfilesLazyQuery(
     options
   );
 }
+
 export type SearchProfilesQueryHookResult = ReturnType<typeof useSearchProfilesQuery>;
 export type SearchProfilesLazyQueryHookResult = ReturnType<typeof useSearchProfilesLazyQuery>;
 export type SearchProfilesQueryResult = Apollo.QueryResult<SearchProfilesQuery, SearchProfilesQueryVariables>;
@@ -45473,6 +45577,7 @@ export function useSearchPublicationsQuery(
     options
   );
 }
+
 export function useSearchPublicationsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SearchPublicationsQuery, SearchPublicationsQueryVariables>
 ) {
@@ -45482,6 +45587,7 @@ export function useSearchPublicationsLazyQuery(
     options
   );
 }
+
 export type SearchPublicationsQueryHookResult = ReturnType<typeof useSearchPublicationsQuery>;
 export type SearchPublicationsLazyQueryHookResult = ReturnType<typeof useSearchPublicationsLazyQuery>;
 export type SearchPublicationsQueryResult = Apollo.QueryResult<
@@ -45560,6 +45666,7 @@ export function useSeeThroughProfilesQuery(
     options
   );
 }
+
 export function useSeeThroughProfilesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SeeThroughProfilesQuery, SeeThroughProfilesQueryVariables>
 ) {
@@ -45569,6 +45676,7 @@ export function useSeeThroughProfilesLazyQuery(
     options
   );
 }
+
 export type SeeThroughProfilesQueryHookResult = ReturnType<typeof useSeeThroughProfilesQuery>;
 export type SeeThroughProfilesLazyQueryHookResult = ReturnType<typeof useSeeThroughProfilesLazyQuery>;
 export type SeeThroughProfilesQueryResult = Apollo.QueryResult<
@@ -45619,12 +45727,14 @@ export function useSuperFollowQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SuperFollowQuery, SuperFollowQueryVariables>(SuperFollowDocument, options);
 }
+
 export function useSuperFollowLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SuperFollowQuery, SuperFollowQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<SuperFollowQuery, SuperFollowQueryVariables>(SuperFollowDocument, options);
 }
+
 export type SuperFollowQueryHookResult = ReturnType<typeof useSuperFollowQuery>;
 export type SuperFollowLazyQueryHookResult = ReturnType<typeof useSuperFollowLazyQuery>;
 export type SuperFollowQueryResult = Apollo.QueryResult<SuperFollowQuery, SuperFollowQueryVariables>;
@@ -45708,12 +45818,14 @@ export function useTimelineQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<TimelineQuery, TimelineQueryVariables>(TimelineDocument, options);
 }
+
 export function useTimelineLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<TimelineQuery, TimelineQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<TimelineQuery, TimelineQueryVariables>(TimelineDocument, options);
 }
+
 export type TimelineQueryHookResult = ReturnType<typeof useTimelineQuery>;
 export type TimelineLazyQueryHookResult = ReturnType<typeof useTimelineLazyQuery>;
 export type TimelineQueryResult = Apollo.QueryResult<TimelineQuery, TimelineQueryVariables>;
@@ -45750,12 +45862,14 @@ export function useTrendingQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<TrendingQuery, TrendingQueryVariables>(TrendingDocument, options);
 }
+
 export function useTrendingLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<TrendingQuery, TrendingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<TrendingQuery, TrendingQueryVariables>(TrendingDocument, options);
 }
+
 export type TrendingQueryHookResult = ReturnType<typeof useTrendingQuery>;
 export type TrendingLazyQueryHookResult = ReturnType<typeof useTrendingLazyQuery>;
 export type TrendingQueryResult = Apollo.QueryResult<TrendingQuery, TrendingQueryVariables>;
@@ -45799,12 +45913,14 @@ export function useUserProfilesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
 }
+
 export function useUserProfilesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<UserProfilesQuery, UserProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
 }
+
 export type UserProfilesQueryHookResult = ReturnType<typeof useUserProfilesQuery>;
 export type UserProfilesLazyQueryHookResult = ReturnType<typeof useUserProfilesLazyQuery>;
 export type UserProfilesQueryResult = Apollo.QueryResult<UserProfilesQuery, UserProfilesQueryVariables>;
@@ -45837,12 +45953,14 @@ export function useUserSigNoncesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(UserSigNoncesDocument, options);
 }
+
 export function useUserSigNoncesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<UserSigNoncesQuery, UserSigNoncesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<UserSigNoncesQuery, UserSigNoncesQueryVariables>(UserSigNoncesDocument, options);
 }
+
 export type UserSigNoncesQueryHookResult = ReturnType<typeof useUserSigNoncesQuery>;
 export type UserSigNoncesLazyQueryHookResult = ReturnType<typeof useUserSigNoncesLazyQuery>;
 export type UserSigNoncesQueryResult = Apollo.QueryResult<UserSigNoncesQuery, UserSigNoncesQueryVariables>;
@@ -45872,12 +45990,14 @@ export function useVerifyQuery(baseOptions: Apollo.QueryHookOptions<VerifyQuery,
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<VerifyQuery, VerifyQueryVariables>(VerifyDocument, options);
 }
+
 export function useVerifyLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<VerifyQuery, VerifyQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<VerifyQuery, VerifyQueryVariables>(VerifyDocument, options);
 }
+
 export type VerifyQueryHookResult = ReturnType<typeof useVerifyQuery>;
 export type VerifyLazyQueryHookResult = ReturnType<typeof useVerifyLazyQuery>;
 export type VerifyQueryResult = Apollo.QueryResult<VerifyQuery, VerifyQueryVariables>;
@@ -45887,6 +46007,7 @@ export interface PossibleTypesResultData {
     [key: string]: string[];
   };
 }
+
 const result: PossibleTypesResultData = {
   possibleTypes: {
     BroadcastDataAvailabilityUnion: ['CreateDataAvailabilityPublicationResult', 'RelayError'],

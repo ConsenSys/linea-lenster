@@ -21,9 +21,24 @@ export const LineaResolver = [
     type: 'event',
     name: 'Approval',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'approved', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'approved',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -31,8 +46,18 @@ export const LineaResolver = [
     type: 'event',
     name: 'ApprovalForAll',
     inputs: [
-      { type: 'address', name: 'owner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'operator', internalType: 'address', indexed: true },
+      {
+        type: 'address',
+        name: 'owner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'operator',
+        internalType: 'address',
+        indexed: true
+      },
       { type: 'bool', name: 'approved', internalType: 'bool', indexed: false }
     ],
     anonymous: false
@@ -41,8 +66,18 @@ export const LineaResolver = [
     type: 'event',
     name: 'OwnershipTransferred',
     inputs: [
-      { type: 'address', name: 'previousOwner', internalType: 'address', indexed: true },
-      { type: 'address', name: 'newOwner', internalType: 'address', indexed: true }
+      {
+        type: 'address',
+        name: 'previousOwner',
+        internalType: 'address',
+        indexed: true
+      },
+      {
+        type: 'address',
+        name: 'newOwner',
+        internalType: 'address',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -52,7 +87,12 @@ export const LineaResolver = [
     inputs: [
       { type: 'address', name: 'from', internalType: 'address', indexed: true },
       { type: 'address', name: 'to', internalType: 'address', indexed: true },
-      { type: 'uint256', name: 'tokenId', internalType: 'uint256', indexed: true }
+      {
+        type: 'uint256',
+        name: 'tokenId',
+        internalType: 'uint256',
+        indexed: true
+      }
     ],
     anonymous: false
   },
@@ -149,7 +189,13 @@ export const LineaResolver = [
     name: 'ownerOf',
     inputs: [{ type: 'uint256', name: 'tokenId', internalType: 'uint256' }]
   },
-  { type: 'function', stateMutability: 'nonpayable', outputs: [], name: 'renounceOwnership', inputs: [] },
+  {
+    type: 'function',
+    stateMutability: 'nonpayable',
+    outputs: [],
+    name: 'renounceOwnership',
+    inputs: []
+  },
   {
     type: 'function',
     stateMutability: 'view',

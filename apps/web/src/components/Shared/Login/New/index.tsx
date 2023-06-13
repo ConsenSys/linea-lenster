@@ -1,5 +1,6 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
 import { PlusIcon } from '@heroicons/react/outline';
+import { LensProfileCreator } from '@lenster/abis/LensProfileCreator';
 import { IS_RELAYER_AVAILABLE, LENS_PROFILE_CREATOR, Regex } from '@lenster/data';
 import { APP_NAME, ZERO_ADDRESS } from '@lenster/data/constants';
 import { useCreateProfileMutation } from '@lenster/lens';
@@ -12,7 +13,6 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 import { object, string } from 'zod';
 
 import Pending from './Pending';
-import { LensProfileCreator } from '@lenster/abis/LensProfileCreator';
 
 const newUserSchema = object({
   handle: string()
