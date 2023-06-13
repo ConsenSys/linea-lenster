@@ -1,4 +1,5 @@
 import Slug from '@components/Shared/Slug';
+import { LINEA_EXPLORER_URL } from '@lenster/data';
 import type { Profile, RecipientDataOutput } from '@lenster/lens';
 import { useProfilesQuery } from '@lenster/lens';
 import formatAddress from '@lenster/lib/formatAddress';

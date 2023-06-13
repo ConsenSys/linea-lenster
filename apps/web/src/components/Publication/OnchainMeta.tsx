@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from '@heroicons/react/outline';
-import { IPFS_GATEWAY } from '@lenster/data/constants';
+import { IPFS_GATEWAY, LINEA_EXPLORER_URL } from '@lenster/data/constants';
 import type { Publication } from '@lenster/lens';
 import { Card } from '@lenster/ui';
 import { t } from '@lingui/macro';

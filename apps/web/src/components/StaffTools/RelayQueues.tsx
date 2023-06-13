@@ -1,7 +1,7 @@
 import MetaTags from '@components/Common/MetaTags';
 import useStaffMode from '@components/utils/hooks/useStaffMode';
-import { Errors } from '@lenster/data';
-import { APP_NAME, POLYGONSCAN_URL } from '@lenster/data/constants';
+import { Errors, LINEA_EXPLORER_URL } from '@lenster/data';
+import { APP_NAME } from '@lenster/data/constants';
 import { useRelayQueuesQuery } from '@lenster/lens';
 import { Card, GridItemEight, GridItemFour, GridLayout, Spinner } from '@lenster/ui';
 import { Leafwatch } from '@lib/leafwatch';
@@ -36,7 +36,7 @@ export const Relay: FC<RelayProps> = ({ address, queue, relayer }) => {
         <div>
           <Link
             className="text-sm"
-            href={`${POLYGONSCAN_URL}/address/${address}`}
+            href={`${LINEA_EXPLORER_URL}/address/${address}`}
             target="_blank"
             rel="noreferrer noopener"
           >

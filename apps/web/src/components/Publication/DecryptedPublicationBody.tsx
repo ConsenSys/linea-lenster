@@ -20,7 +20,7 @@ import type {
   Erc20OwnershipOutput,
   NftOwnershipOutput
 } from '@lens-protocol/sdk-gated/dist/graphql/types';
-import { LIT_PROTOCOL_ENVIRONMENT, RARIBLE_URL } from '@lenster/data/constants';
+import { LINEA_EXPLORER_URL, LIT_PROTOCOL_ENVIRONMENT, RARIBLE_URL } from '@lenster/data/constants';
 import type { Publication, PublicationMetadataV2Input } from '@lenster/lens';
 import { DecryptFailReason, useCanDecryptStatusQuery } from '@lenster/lens';
 import formatHandle from '@lenster/lib/formatHandle';
@@ -35,7 +35,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { FC, ReactNode } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
 import { PUBLICATION } from 'src/tracking';

@@ -1,7 +1,7 @@
 import { ApolloClient, from } from '@apollo/client';
+import cache from '@workers/snapshot-relay/src/apollo/cache';
 
 import authLink from './authLink';
-import cache from './cache';
 import httpLink from './httpLink';
 import retryLink from './retryLink';
 
