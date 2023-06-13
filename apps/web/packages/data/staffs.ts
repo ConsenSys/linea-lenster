@@ -1,11 +1,17 @@
 export const mainnetStaffs = [
-  '0x01b69c', // sagargowda
-  '0x0d', // yoginth
-  '0x0c' // lenster
+  '0x03', // alain
+  '0x17', // igor
+  '0x09', // seb
+  '0x0a', // matthieu
+  '0x19', // emanuele
+  '0x1a' // marco
 ];
 
 export const testnetStaffs = [
-  '0x15', // yoginth.test
-  '0x01aa', // lenster.test
-  '0x2f' // sasicodes.test
+  '0x03', // alain
+  '0x17', // igor
+  '0x09', // seb
+  '0x0a', // matthieu
+  '0x19', // emanuele
+  '0x1a' // marco
 ];
