@@ -65,10 +65,10 @@ test.describe('Profile sidebar', () => {
       await expect(verifiedBadge).toBeVisible();
     });
 
-    test('should have verified badge', async ({ page }) => {
-      await page.goto(`${WEB_BASE_URL}/u/devlog`);
+    test('should not have verified badge', async ({ page }) => {
+      await page.goto(`${WEB_BASE_URL}/u/alaingalxe`);
       const verifiedBadge = page.getByTestId('profile-verified-badge');
-      await expect(verifiedBadge).toBeVisible();
+      await expect(verifiedBadge).not.toBeVisible();
     });
   });
 
