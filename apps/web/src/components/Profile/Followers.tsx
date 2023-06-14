@@ -3,7 +3,7 @@ import UserProfile from '@components/Shared/UserProfile';
 import WalletProfile from '@components/Shared/WalletProfile';
 import { UsersIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
-import type { FollowersRequest, Profile, Wallet } from 'lens';
+import type { FollowersQuery, FollowersRequest, Profile, Wallet } from 'lens';
 import { useFollowersQuery } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import { FollowSource } from 'src/tracking';
 import { EmptyState, ErrorMessage } from 'ui';
+
+import { uniqBy } from '../utils/uniqBy';
 
 interface FollowersProps {
   profile: Profile;
@@ -27,7 +29,10 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
     skip: !profile?.id
   });
 
-  const followers = [...new Set(data?.followers?.items)];
+  const followers = uniqBy(
+    data?.followers?.items || [],
+    'wallet.defaultProfile.id'
+  ) as FollowersQuery['followers']['items'];
   const pageInfo = data?.followers?.pageInfo;
 
   const { observe } = useInView({
@@ -48,7 +53,7 @@ const Followers: FC<FollowersProps> = ({ profile }) => {
     return <Loader message={t`Loading followers`} />;
   }
 
-  if (followers?.length === 0) {
+  if (followers.length === 0) {
     return (
       <EmptyState
         message={
