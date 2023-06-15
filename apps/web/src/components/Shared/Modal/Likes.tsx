@@ -1,7 +1,7 @@
 import UserProfile from '@components/Shared/UserProfile';
 import { HeartIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { Profile, WhoReactedPublicationRequest } from 'lens';
+import type { LikesQuery, Profile, WhoReactedPublicationRequest } from 'lens';
 import { useLikesQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { useInView } from 'react-cool-inview';
 import { FollowSource } from 'src/tracking';
 import { EmptyState, ErrorMessage } from 'ui';
 
+import { uniqBy } from '../../utils/uniqBy';
 import Loader from '../Loader';
 
 interface LikesProps {
@@ -26,7 +27,10 @@ const Likes: FC<LikesProps> = ({ publicationId }) => {
     skip: !publicationId
   });
 
-  const profiles = [...new Set(data?.whoReactedPublication?.items)];
+  const profiles = uniqBy(
+    data?.whoReactedPublication?.items || [],
+    'profile.id'
+  ) as LikesQuery['whoReactedPublication']['items'];
   const pageInfo = data?.whoReactedPublication?.pageInfo;
 
   const { observe } = useInView({
