@@ -19,7 +19,7 @@ export const IS_RARIBLE_AVAILABLE = getEnvConfig().isRaribleAvailable;
 export const IS_LIT_AVAILABLE = getEnvConfig().isLitAvailable;
 export const LENS_PROFILE_CREATOR = '0x407972ca4683803a926a85963f28C71147c6DBdF';
 export const LINEA_RESOLVER = '0xf9D4b242DCcbB6AB3b3Fea6750bbAb536f925bD3';
-export const LENS_HUB = '0x28af365578586eD5Fd500A1Dc0a3E20Fc7b2Cffa';
+export const LENS_HUB = '0xd5a0b8ed4f14fda62b23dabff6dabb191bff88ba';
 
 export const IS_MAINNET = API_URL === LensEndpoint.Mainnet;
 

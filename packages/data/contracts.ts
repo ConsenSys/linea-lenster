@@ -6,7 +6,7 @@ export enum MainnetContracts {
 }
 
 export enum TestnetContracts {
-  LensHubProxy = '0x28af365578586eD5Fd500A1Dc0a3E20Fc7b2Cffa',
+  LensHubProxy = '0xd5a0b8ed4f14fda62b23dabff6dabb191bff88ba',
   LensPeriphery = '0x0e1F86F248fBc407BfFc4217042b5A55Db289385',
   DefaultToken = '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068', // USDC on Linea testnet
   UpdateOwnableFeeCollectModule = '0x3Dfe8C165929f4AbB02ffb3a46ccE6BdA4e5fABE'
