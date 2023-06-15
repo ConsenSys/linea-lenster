@@ -34,7 +34,7 @@ const getEnvConfig = (): {
         defaultCollectToken: TestnetContracts.DefaultToken,
         UpdateOwnableFeeCollectModuleAddress: TestnetContracts.UpdateOwnableFeeCollectModule,
         litProtocolEnvironment: 'mumbai',
-        isRelayerAvailable: false,
+        isRelayerAvailable: true,
         isRaribleAvailable: false,
         isLitAvailable: false
       };
