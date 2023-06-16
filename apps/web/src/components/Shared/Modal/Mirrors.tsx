@@ -1,7 +1,8 @@
 import UserProfile from '@components/Shared/UserProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { SwitchHorizontalIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { Profile, ProfileQueryRequest } from 'lens';
+import type { MirrorsQuery, Profile, ProfileQueryRequest } from 'lens';
 import { useMirrorsQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -26,7 +27,7 @@ const Mirrors: FC<MirrorsProps> = ({ publicationId }) => {
     skip: !publicationId
   });
 
-  const profiles = [...new Set(data?.profiles?.items)];
+  const profiles = uniqBy(data?.profiles?.items || [], 'id') as MirrorsQuery['profiles']['items'];
   const pageInfo = data?.profiles?.pageInfo;
 
   const { observe } = useInView({

@@ -1,9 +1,10 @@
 import QueuedPublication from '@components/Publication/QueuedPublication';
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { FeedHighlightsRequest, Publication } from 'lens';
+import type { FeedHighlightsQuery, FeedHighlightsRequest, Publication } from 'lens';
 import { useFeedHighlightsQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -27,7 +28,10 @@ const Highlights: FC = () => {
     variables: { request, reactionRequest, profileId }
   });
 
-  const publications = [...new Set(data?.feedHighlights?.items)];
+  const publications = uniqBy(
+    data?.feedHighlights?.items || [],
+    'id'
+  ) as FeedHighlightsQuery['feedHighlights']['items'];
   const pageInfo = data?.feedHighlights?.pageInfo;
 
   const { observe } = useInView({

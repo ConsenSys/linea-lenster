@@ -3,7 +3,7 @@ import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { Comment, Publication, PublicationsQueryRequest } from 'lens';
+import type { Comment, CommentFeedQuery, Publication, PublicationsQueryRequest } from 'lens';
 import { CommentOrderingTypes, CommentRankingFilter, CustomFiltersTypes, useCommentFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -15,6 +15,7 @@ import { Card, EmptyState, ErrorMessage } from 'ui';
 
 import NewPublication from '../Composer/NewPublication';
 import CommentWarning from '../Shared/CommentWarning';
+import { uniqBy } from '../utils/uniqBy';
 
 interface FeedProps {
   publication?: Publication;
@@ -41,8 +42,7 @@ const Feed: FC<FeedProps> = ({ publication }) => {
     variables: { request, reactionRequest, profileId },
     skip: !publicationId
   });
-
-  const comments = [...new Set(data?.publications?.items)] ?? [];
+  const comments = uniqBy(data?.publications?.items || [], 'id') as CommentFeedQuery['publications']['items'];
   const pageInfo = data?.publications?.pageInfo;
 
   const queuedCount = txnQueue.filter((o) => o.type === OptmisticPublicationType.NewComment).length;

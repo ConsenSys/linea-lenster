@@ -1,8 +1,9 @@
 import Loader from '@components/Shared/Loader';
 import UserProfile from '@components/Shared/UserProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { UsersIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
-import type { FollowingRequest, Profile } from 'lens';
+import type { FollowingQuery, FollowingRequest, Profile } from 'lens';
 import { useFollowingQuery } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
@@ -27,7 +28,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
     skip: !profile?.id
   });
 
-  const followings = [...new Set(data?.following?.items)];
+  const followings = uniqBy(data?.following?.items || [], 'id') as FollowingQuery['following']['items'];
   const pageInfo = data?.following?.pageInfo;
 
   const { observe } = useInView({
