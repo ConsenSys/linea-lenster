@@ -1,11 +1,13 @@
 import useSimpleDebounce from '@components/utils/hooks/useSimpleDebounce';
-import { PlusIcon } from '@heroicons/react/outline';
+import { FireIcon, PlusIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
+import { LensHub } from 'abis';
 import { LensProfileCreator } from 'abis/LensProfileCreator';
 import {
   APP_NAME,
   HANDLE_REGEX,
   IS_RELAYER_AVAILABLE,
+  LENS_HUB,
   LENS_PROFILE_CREATOR,
   ZERO_ADDRESS
 } from 'data/constants';
@@ -14,7 +16,13 @@ import getStampFyiURL from 'lib/getStampFyiURL';
 import type { FC } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, ErrorMessage, Form, Input, Spinner, useZodForm } from 'ui';
-import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction
+} from 'wagmi';
 import { object, string } from 'zod';
 
 import Pending from './Pending';
@@ -35,6 +43,7 @@ interface NewProfileProps {
 const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
   const { address, isConnected } = useAccount();
 
+  const [isBurnHandle, setIsBurnHandle] = useState(false);
   const [handle, setHandle] = useState('');
   const [createProfile, { data }] = useCreateProfileMutation();
   const [isCreationLoading, setIsCreationLoading] = useState(false);
@@ -73,6 +82,45 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     write?.();
   };
 
+  const { data: handleBalance } = useContractRead({
+    address: LENS_HUB,
+    abi: LensHub,
+    functionName: 'balanceOf',
+    args: [address],
+    enabled: !!address
+  });
+
+  const { data: handleId } = useContractRead({
+    address: LENS_HUB,
+    abi: LensHub,
+    functionName: 'tokenOfOwnerByIndex',
+    args: [address, 0],
+    enabled: !!handleBalance
+  });
+
+  const { config: configBurnHandle } = usePrepareContractWrite({
+    address: LENS_HUB,
+    abi: LensHub,
+    functionName: 'burn',
+    args: [handleId],
+    enabled: !!handleBalance && !!handleId
+  });
+  const { data: burnData, write: writeBurnHandle } = useContractWrite(configBurnHandle);
+
+  const { isLoading: isBurnLoading, isSuccess: isSuccessBurn } = useWaitForTransaction({
+    hash: burnData?.hash
+  });
+
+  useEffect(() => {
+    if (isSuccessBurn) {
+      setIsBurnHandle(false);
+    }
+  }, [isSuccessBurn]);
+
+  const handleBurn = async () => {
+    writeBurnHandle?.();
+  };
+
   useEffect(() => {
     setIsCreationLoading(
       IS_RELAYER_AVAILABLE ? data?.createProfile.__typename === 'RelayerResult' : !!txData?.hash
@@ -83,7 +131,8 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     if (error.message.includes("Doesn't have an ENS token")) {
       return 'You need a Linea ENS domain before creating a Lineaster handle';
     } else if (error.message.includes('Already has a Lens handle')) {
-      return 'You already have a Lineaster handle';
+      setIsBurnHandle(true);
+      return 'You already have a Lineaster handle. Lens API might not have indexed it. To fix this, you can burn your handle by clicking on the button below. Then recreate a handle.';
     } else if (error.data === '0x3eb64ab3') {
       return 'Handle length is invalid';
     } else if (error.data === '0x902815b9') {
@@ -157,32 +206,47 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
           </div>
         </div>
       )}
-      <Input
-        label={t`Handle`}
-        type="text"
-        placeholder="gavin"
-        {...form.register('handle', {
-          onChange: (e) => setHandle(e.target.value)
-        })}
-      />
-      <div className="space-y-1.5">
-        <div className="font-medium text-white">Avatar</div>
-        <div className="space-y-3">
-          {avatar && (
-            <div>
-              <img className="h-60 w-60 rounded-lg" height={240} width={240} src={avatar} alt={avatar} />
+      {!isBurnHandle && (
+        <>
+          <Input
+            label={t`Handle`}
+            type="text"
+            placeholder="gavin"
+            {...form.register('handle', {
+              onChange: (e) => setHandle(e.target.value)
+            })}
+          />
+          <div className="space-y-1.5">
+            <div className="font-medium text-white">Avatar</div>
+            <div className="space-y-3">
+              {avatar && (
+                <div>
+                  <img className="h-60 w-60 rounded-lg" height={240} width={240} src={avatar} alt={avatar} />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
-      <Button
-        className="ml-auto rounded-full"
-        type="submit"
-        disabled={isLoading || !isConnected}
-        icon={isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />}
-      >
-        <Trans>{isConnected ? 'Sign up' : 'Connect your wallet'}</Trans>
-      </Button>
+          </div>
+        </>
+      )}
+      {isBurnHandle ? (
+        <Button
+          className="ml-auto rounded-full"
+          onClick={handleBurn}
+          disabled={isBurnLoading || !isConnected}
+          icon={isBurnLoading ? <Spinner size="xs" /> : <FireIcon className="h-4 w-4" />}
+        >
+          <Trans>{isConnected ? 'Burn your handle' : 'Connect your wallet'}</Trans>
+        </Button>
+      ) : (
+        <Button
+          className="ml-auto rounded-full"
+          type="submit"
+          disabled={isLoading || !isConnected}
+          icon={isLoading ? <Spinner size="xs" /> : <PlusIcon className="h-4 w-4" />}
+        >
+          <Trans>{isConnected ? 'Sign up' : 'Connect your wallet'}</Trans>
+        </Button>
+      )}
     </Form>
   );
 };
