@@ -2,7 +2,6 @@ import { Menu } from '@headlessui/react';
 import { ClipboardCopyIcon } from '@heroicons/react/outline';
 import { Mixpanel } from '@lib/mixpanel';
 import { t } from '@lingui/macro';
-import clsx from 'clsx';
 import type { Publication } from 'lens';
 import type { FC } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -24,12 +23,10 @@ const Permalink: FC<PermalinkProps> = ({ publication }) => {
     >
       <Menu.Item
         as="div"
-        className={({ active }) =>
-          clsx({ 'dropdown-active': active }, 'm-2 block cursor-pointer rounded-lg px-4 py-1.5 text-sm')
-        }
+        className="block cursor-pointer rounded-md px-4 py-1.5 text-sm outline-none focus:outline:none hover:bg-black dark:hover:bg-dark hover:text-brand-500"
       >
-        <div className="flex items-center space-x-2">
-          <ClipboardCopyIcon className="h-4 w-4" />
+        <div className="flex items-center justify-start space-x-2">
+          <ClipboardCopyIcon className="h-4 w-4 uppercase" />
           <div>Permalink</div>
         </div>
       </Menu.Item>

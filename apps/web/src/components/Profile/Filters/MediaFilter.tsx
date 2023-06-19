@@ -2,7 +2,6 @@ import MenuTransition from '@components/Shared/MenuTransition';
 import { Menu } from '@headlessui/react';
 import { AdjustmentsIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import clsx from 'clsx';
 import type { ChangeEvent } from 'react';
 import { useProfileFeedStore } from 'src/store/profile-feed';
 import { Checkbox, Tooltip } from 'ui';
@@ -25,16 +24,11 @@ const MediaFilter = () => {
       <MenuTransition>
         <Menu.Items
           static
-          className="absolute right-0 z-[5] mt-1 rounded-xl border bg-white py-1 shadow-sm focus:outline-none dark:border-gray-700 dark:bg-gray-900"
+          className="absolute right-0 z-[5] mt-1 rounded-[2px] border uppercase  bg-dark dark:bg-black py-1 shadow-sm focus:outline-none dark:border-gray-700"
         >
           <Menu.Item
-            as="label"
-            className={({ active }) =>
-              clsx(
-                { 'dropdown-active': active },
-                'menu-item flex cursor-pointer items-center gap-1 space-x-1 rounded-lg'
-              )
-            }
+            as="div"
+            className="hover:text-brand-500 py-1.5 text-gray-300 text-sm  flex justify-start px-5 cursor-pointer items-center hover:bg-black dark:hover:bg-dark gap-1"
           >
             <Checkbox
               onChange={handleChange}
@@ -44,13 +38,8 @@ const MediaFilter = () => {
             />
           </Menu.Item>
           <Menu.Item
-            as="label"
-            className={({ active }) =>
-              clsx(
-                { 'dropdown-active': active },
-                'menu-item flex cursor-pointer items-center gap-1 space-x-1 rounded-lg'
-              )
-            }
+            as="div"
+            className="hover:text-brand-500  py-1.5 text-gray-300 text-sm flex justify-start px-5 cursor-pointer items-center  hover:bg-black dark:hover:bg-dark gap-1 space-x-1 focus:outline-none"
           >
             <Checkbox
               onChange={handleChange}
@@ -60,13 +49,8 @@ const MediaFilter = () => {
             />
           </Menu.Item>
           <Menu.Item
-            as="label"
-            className={({ active }) =>
-              clsx(
-                { 'dropdown-active': active },
-                'menu-item flex cursor-pointer items-center gap-1 space-x-1 rounded-lg'
-              )
-            }
+            as="div"
+            className="hover:text-brand-500 py-1.5 text-gray-300 text-sm  flex justify-start px-5 cursor-pointer items-center hover:bg-black dark:hover:bg-dark gap-1 "
           >
             <Checkbox
               onChange={handleChange}
