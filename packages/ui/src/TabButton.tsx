@@ -8,7 +8,6 @@ interface TabButtonProps {
   active: boolean;
   type?: string;
   count?: string;
-  className?: string;
   showOnSm?: boolean;
   onClick: () => void;
 }
@@ -20,7 +19,6 @@ const TabButton: FC<TabButtonProps> = ({
   type,
   count,
   showOnSm = false,
-  className = '',
   onClick
 }) => {
   const router = useRouter();

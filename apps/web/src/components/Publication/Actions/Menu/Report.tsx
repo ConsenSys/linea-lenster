@@ -2,7 +2,6 @@ import { Menu } from '@headlessui/react';
 import { ShieldExclamationIcon } from '@heroicons/react/outline';
 import type { Publication } from '@lenster/lens';
 import stopEventPropagation from '@lenster/lib/stopEventPropagation';
-import clsx from 'clsx';
 import type { FC } from 'react';
 import { useGlobalModalStateStore } from 'src/store/modals';
 

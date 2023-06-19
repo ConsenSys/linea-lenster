@@ -102,21 +102,18 @@ const PreviewList: FC<PreviewListProps> = ({ className, selectedConversationKey 
         <div className="flex justify-between px-4 py-3">
           <div className="flex space-x-2">
             <TabButton
-              className="p-2 px-4"
               name={'All'}
               active={selectedTab === 'All'}
               onClick={() => setSelectedTab('All')}
               showOnSm
             />
             <TabButton
-              className="p-2 px-4"
               name={'Lens'}
               active={selectedTab === 'Lens'}
               onClick={() => setSelectedTab('Lens')}
               showOnSm
             />
             <TabButton
-              className="p-2 px-4"
               name={'Other'}
               active={selectedTab === 'Other'}
               onClick={() => setSelectedTab('Other')}
@@ -124,7 +121,6 @@ const PreviewList: FC<PreviewListProps> = ({ className, selectedConversationKey 
             />
           </div>
           <TabButton
-            className="p-2 px-4"
             name={requestedCount > 99 ? '99+' : `${requestedCount.toString()} Requests`}
             active={selectedTab === MessageTabs.Requests}
             onClick={() => setSelectedTab(MessageTabs.Requests)}

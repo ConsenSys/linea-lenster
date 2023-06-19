@@ -1,8 +1,9 @@
+import { testnetGardeners } from './gardeners';
 import { mainnetStaffs, testnetStaffs } from './staffs';
 
 export const mainnetVerified = [
-  ...aaveMembers,
-  ...lineasterMembers,
+  ...mainnetStaffs,
+  ...testnetGardeners,
   '0x26', // linea
   '0x82', // chinzilla
   '0x87', // nakedwinnie
@@ -14,8 +15,8 @@ export const mainnetVerified = [
 ];
 
 export const testnetVerified = [
-  ...aaveMembers,
-  ...lineasterMembers,
+  ...testnetStaffs,
+  ...testnetGardeners,
   '0x26', // linea
   '0x82', // chinzilla
   '0x87', // nakedwinnie

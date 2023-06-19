@@ -74,30 +74,30 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
     );
   }, [data, txData]);
 
-  const handleContractError = (error: { message: string; data: { errorName: string } }) => {
+  const handleContractError = (error?: string) => {
     if (!error) {
-      return 'Something is wrong with this handle, please try another one';
+      return 'Unknown error';
+    } else {
+      if (error.includes('0x902815b9') || error.includes('HandleTaken')) {
+        return 'This handle is already taken, please choose another one';
+      } else if (error.includes('HandleContainsInvalidCharacters')) {
+        return 'This handle contains invalid characters, please choose another one';
+      } else if (error.includes('HandleFirstCharInvalid')) {
+        return 'This handle first character is invalid, please choose another one';
+      } else if (error.includes("Doesn't have an ENS token")) {
+        return 'You need a Linea ENS domain before creating a Lineaster handle';
+      } else if (error.includes('Already has a Lens handle')) {
+        return 'You already have a Lineaster handle';
+      } else if (error.includes('HandleLengthInvalid')) {
+        return 'Handle length is invalid';
+      } else if (error.includes('NotWhitelisted')) {
+        return 'Profile creator not allowlisted';
+      } else if (error.includes('The transaction sender must be')) {
+        return error;
+      }
     }
 
-    if (error.message.includes("Doesn't have an ENS token")) {
-      return 'You need a Linea ENS domain before creating a Lineaster handle';
-    } else if (error.message.includes('Already has a Lens handle')) {
-      return 'You already have a Lineaster handle';
-    } else if (error.data.errorName === 'HandleLengthInvalid') {
-      return 'Handle length is invalid';
-    } else if (error.data === '0x902815b9') {
-      return 'This handle is already taken, please choose another one';
-    } else if (error.data === '0x2edfc66c') {
-      return 'This handle contains invalid characters, please choose another one';
-    } else if (error.data === '0x5e58454e') {
-      return 'This handle first character is invalid, please choose another one';
-    } else if (error.data.errorName === 'NotWhitelisted') {
-      return 'Profile creator not allowlisted';
-    } else if (error.message.includes('The transaction sender must be')) {
-      return error.message;
-    }
-
-    return `Error = ${error.data.errorName}`;
+    return `Error = ${error}`;
   };
 
   return isCreationLoading ? (
@@ -145,7 +145,7 @@ const NewProfile: FC<NewProfileProps> = ({ isModal = false }) => {
           title="Unable to create your handle"
           error={{
             name: 'Create profile failed!',
-            message: handleContractError((contractError as any).cause)
+            message: handleContractError(contractError?.message)
           }}
         />
       )}

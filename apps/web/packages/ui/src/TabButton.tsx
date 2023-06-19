@@ -8,21 +8,11 @@ interface TabButtonProps {
   active: boolean;
   type?: string;
   count?: string;
-  className?: string;
   showOnSm?: boolean;
   onClick: () => void;
 }
 
-const TabButton: FC<TabButtonProps> = ({
-  name,
-  icon,
-  active,
-  type,
-  count,
-  showOnSm = false,
-  className = '',
-  onClick
-}) => {
+const TabButton: FC<TabButtonProps> = ({ name, icon, active, type, count, showOnSm = false, onClick }) => {
   const router = useRouter();
 
   return (
