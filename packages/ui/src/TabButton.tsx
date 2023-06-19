@@ -25,11 +25,11 @@ const TabButton: FC<TabButtonProps> = ({ name, icon, active, type, showOnSm = fa
       }}
       className={clsx(
         {
-          'text-dark bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium hover:cursor-default sm:px-3 sm:py-1.5':
+          'text-brand-500 flex items-center justify-center space-x-2 px-4 py-2 text-sm  font-medium hover:cursor-default sm:px-3 sm:py-1.5':
             active
         },
         {
-          'text-dark dark:hover:text-dark hover:bg-brand-500 flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium dark:text-white sm:px-3 sm:py-1.5':
+          'text-dark hover:text-brand-500 dark:hover:text-brand-500 flex items-center justify-center space-x-2  px-4 py-2 text-sm font-medium dark:text-white sm:px-3 sm:py-1.5':
             !active
         }
       )}
