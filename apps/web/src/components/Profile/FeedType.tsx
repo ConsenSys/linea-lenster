@@ -29,7 +29,7 @@ const FeedType: FC<FeedTypeProps> = ({ setFeedType, feedType }) => {
 
   return (
     <div className="flex items-center justify-between">
-      <div className="mt-3 flex gap-3 overflow-x-auto px-5 pb-2 sm:mt-0 sm:px-0 md:pb-0">
+      <div className="mt-3  grid grid-cols-5 overflow-x-auto mx-auto pb-2 sm:mt-0 md:pb-0 divide-x-2">
         <TabButton
           name={t`Feed`}
           icon={<PencilAltIcon className="h-4 w-4" />}

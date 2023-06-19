@@ -138,7 +138,7 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
         <Image
           onClick={() => setExpandedImage(getAvatar(profile, EXPANDED_AVATAR))}
           src={getAvatar(profile)}
-          className="h-32 w-32 cursor-pointer rounded-xl bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52"
+          className="h-32 w-32 bg-gray-200 ring-8 ring-gray-50 dark:bg-gray-700 dark:ring-black sm:h-52 sm:w-52"
           height={128}
           width={128}
           alt={formatHandle(profile?.handle)}
@@ -159,9 +159,13 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
         </div>
         <div className="flex items-center space-x-3" data-testid="profile-handle">
           {profile?.name ? (
-            <Slug className="text-sm sm:text-base" slug={formatHandle(profile?.handle)} prefix="@" />
+            <Slug
+              className="text-sm  text-brand-500 sm:text-base"
+              slug={formatHandle(profile?.handle)}
+              prefix="@"
+            />
           ) : (
-            <Slug className="text-sm sm:text-base" slug={formatAddress(profile?.ownedBy)} />
+            <Slug className="text-sm text-brand-500 sm:text-base" slug={formatAddress(profile?.ownedBy)} />
           )}
           {currentProfile && currentProfile?.id !== profile?.id && profile?.isFollowing && (
             <div className="rounded-full bg-gray-200 px-2 py-0.5 text-xs dark:bg-gray-700">
@@ -180,7 +184,11 @@ const Details: FC<DetailsProps> = ({ profile, following, setFollowing }) => {
         <div>
           {currentProfile?.id === profile?.id ? (
             <Link href="/settings">
-              <Button variant="secondary" icon={<CogIcon className="h-5 w-5" />} outline>
+              <Button
+                className="hover:bg-brand-500  rounded-lg lt-text-gray-500 bg-gray-100  dark:bg-black border-none dark:hover:bg-gray-700 uppercase"
+                icon={<CogIcon className="h-5 w-5" />}
+                outline
+              >
                 <Trans>Edit Profile</Trans>
               </Button>
             </Link>

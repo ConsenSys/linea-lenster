@@ -29,8 +29,8 @@ const Permalink: FC<PermalinkProps> = ({ publication }) => {
         });
       }}
     >
-      <div className="flex items-center space-x-2">
-        <ClipboardCopyIcon className="h-4 w-4" />
+      <div className="flex items-center justify-start space-x-2">
+        <ClipboardCopyIcon className="h-4 w-4 uppercase" />
         <div>Permalink</div>
       </div>
     </Menu.Item>
