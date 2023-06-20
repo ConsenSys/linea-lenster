@@ -27,7 +27,7 @@ const Unfollow: FC<UnfollowProps> = ({ profile, showText = false, setFollowing }
 
   const followerNftOwnedTokenIds = data?.followerNftOwnedTokenIds;
 
-  const { config, isError, error } = usePrepareContractWrite({
+  const { config, isError } = usePrepareContractWrite({
     address: profile?.followNftAddress,
     abi: FollowNft,
     functionName: 'burn',

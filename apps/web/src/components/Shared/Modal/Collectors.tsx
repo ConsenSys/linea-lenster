@@ -1,8 +1,9 @@
 import UserProfile from '@components/Shared/UserProfile';
 import WalletProfile from '@components/Shared/WalletProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { Profile, Wallet, WhoCollectedPublicationRequest } from 'lens';
+import type { CollectorsQuery, Profile, Wallet, WhoCollectedPublicationRequest } from 'lens';
 import { useCollectorsQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -27,7 +28,10 @@ const Collectors: FC<CollectorsProps> = ({ publicationId }) => {
     skip: !publicationId
   });
 
-  const profiles = [...new Set(data?.whoCollectedPublication?.items)];
+  const profiles = uniqBy(
+    data?.whoCollectedPublication?.items || [],
+    'defaultProfile.id'
+  ) as CollectorsQuery['whoCollectedPublication']['items'];
   const pageInfo = data?.whoCollectedPublication?.pageInfo;
 
   const { observe } = useInView({

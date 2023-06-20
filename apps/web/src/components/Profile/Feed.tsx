@@ -1,8 +1,9 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { Profile, Publication, PublicationsQueryRequest } from 'lens';
+import type { Profile, ProfileFeedQuery, Publication, PublicationsQueryRequest } from 'lens';
 import { PublicationMainFocus, PublicationTypes, useProfileFeedQuery } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
@@ -66,7 +67,10 @@ const Feed: FC<FeedProps> = ({ profile, type }) => {
     skip: !profile?.id
   });
 
-  const publications = [...new Set(data?.publications?.items)];
+  const publications = uniqBy(
+    data?.publications?.items || [],
+    'id'
+  ) as ProfileFeedQuery['publications']['items'];
   const pageInfo = data?.publications?.pageInfo;
 
   const { observe } = useInView({

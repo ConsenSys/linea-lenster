@@ -1,6 +1,7 @@
 import SinglePublication from '@components/Publication/SinglePublication';
+import { uniqBy } from '@components/utils/uniqBy';
 import { Trans } from '@lingui/macro';
-import type { Comment, Publication, PublicationsQueryRequest } from 'lens';
+import type { Comment, CommentFeedQuery, Publication, PublicationsQueryRequest } from 'lens';
 import { CommentOrderingTypes, CommentRankingFilter, CustomFiltersTypes, useCommentFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -34,7 +35,7 @@ const NoneRelevantFeed: FC<NoneRelevantFeedProps> = ({ publication }) => {
     skip: !publicationId
   });
 
-  const comments = [...new Set(data?.publications?.items)] ?? [];
+  const comments = uniqBy(data?.publications?.items || [], 'id') as CommentFeedQuery['publications']['items'];
   const pageInfo = data?.publications?.pageInfo;
   const totalComments = comments?.length;
 
