@@ -141,3 +141,7 @@ export enum FollowSource {
   PROFILE_PAGE = 'profile_page',
   PROFILE_POPOVER = 'profile_popover'
 }
+
+export enum UnfollowSource {
+  DIRECT_MESSAGE_HEADER = 'direct_message_header'
+}
