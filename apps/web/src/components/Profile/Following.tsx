@@ -27,8 +27,11 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
     variables: { request },
     skip: !profile?.id
   });
-
-  const followings = uniqBy(data?.following?.items || [], 'id') as FollowingQuery['following']['items'];
+  console.log(data?.following?.items);
+  const followings = uniqBy(
+    data?.following?.items || [],
+    'profile.id'
+  ) as FollowingQuery['following']['items'];
   const pageInfo = data?.following?.pageInfo;
 
   const { observe } = useInView({
