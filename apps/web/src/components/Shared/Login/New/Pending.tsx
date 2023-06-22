@@ -7,7 +7,6 @@ import {
   useAuthenticateMutation,
   useChallengeLazyQuery,
   useHasTxHashBeenIndexedQuery,
-  useUserProfilesLazyQuery,
   useUserProfilesQuery
 } from 'lens';
 import { useRouter } from 'next/navigation';
@@ -32,7 +31,6 @@ const Pending: FC<PendingProps> = ({ handle, txHash }) => {
   const { push } = useRouter();
   const setShowAuthModal = useAuthStore((state) => state.setShowAuthModal);
   const [authenticate] = useAuthenticateMutation();
-  const [getProfiles] = useUserProfilesLazyQuery();
   const { address } = useAccount();
 
   //get profiles with the address

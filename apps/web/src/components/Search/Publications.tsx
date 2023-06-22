@@ -1,5 +1,6 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
 import type { Publication, PublicationSearchResult, SearchQueryRequest } from 'lens';
@@ -33,7 +34,7 @@ const Publications: FC<PublicationsProps> = ({ query }) => {
   });
 
   const search = data?.search as PublicationSearchResult;
-  const publications = [...new Set(search?.items)] as Publication[];
+  const publications = uniqBy(search?.items || [], 'id') as Publication[];
   const pageInfo = search?.pageInfo;
 
   const { observe } = useInView({

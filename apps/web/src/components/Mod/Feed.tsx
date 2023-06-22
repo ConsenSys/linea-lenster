@@ -1,8 +1,15 @@
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { CustomFiltersTypes, ExplorePublicationRequest, Publication, PublicationTypes } from 'lens';
+import type {
+  CustomFiltersTypes,
+  ExploreFeedQuery,
+  ExplorePublicationRequest,
+  Publication,
+  PublicationTypes
+} from 'lens';
 import { PublicationSortCriteria, useExploreFeedQuery } from 'lens';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
@@ -36,7 +43,10 @@ const Feed: FC<FeedProps> = ({ refresh, setRefreshing, publicationTypes, customF
     variables: { request, reactionRequest, profileId }
   });
 
-  const publications = [...new Set(data?.explorePublications?.items)];
+  const publications = uniqBy(
+    data?.explorePublications?.items || [],
+    'id'
+  ) as ExploreFeedQuery['explorePublications']['items'];
   const pageInfo = data?.explorePublications?.pageInfo;
 
   useEffect(() => {
