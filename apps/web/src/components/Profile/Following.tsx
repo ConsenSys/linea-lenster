@@ -1,8 +1,9 @@
 import Loader from '@components/Shared/Loader';
 import UserProfile from '@components/Shared/UserProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { UsersIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
-import type { FollowingRequest, Profile } from 'lens';
+import type { FollowingQuery, FollowingRequest, Profile } from 'lens';
 import { useFollowingQuery } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import type { FC } from 'react';
@@ -27,7 +28,10 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
     skip: !profile?.id
   });
 
-  const followings = [...new Set(data?.following?.items)];
+  const followings = uniqBy(
+    data?.following?.items || [],
+    'profile.id'
+  ) as FollowingQuery['following']['items'];
   const pageInfo = data?.following?.pageInfo;
 
   const { observe } = useInView({
@@ -71,7 +75,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
       <div className="divide-y dark:divide-gray-700">
         {followings?.map((following, index) => (
           <div
-            className={`p-5 ${
+            className={`p-5 dark:bg-black ${
               onProfileSelected && 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900'
             }`}
             key={following?.profile?.id}
@@ -92,6 +96,7 @@ const Following: FC<FollowingProps> = ({ profile, onProfileSelected }) => {
               showBio
               showFollow
               showUserPreview={false}
+              isModal
             />
           </div>
         ))}

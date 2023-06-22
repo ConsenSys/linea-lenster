@@ -4,6 +4,7 @@ import onError from '@lib/onError';
 import splitSignature from '@lib/splitSignature';
 import { t } from '@lingui/macro';
 import { LensHub } from 'abis';
+import clsx from 'clsx';
 import { IS_RELAYER_AVAILABLE, LENSHUB_PROXY } from 'data/constants';
 import type { Profile } from 'lens';
 import { useBroadcastMutation, useCreateFollowTypedDataMutation, useProxyActionMutation } from 'lens';
@@ -14,7 +15,7 @@ import type { Dispatch, FC } from 'react';
 import toast from 'react-hot-toast';
 import { useAppStore } from 'src/store/app';
 import { useAuthStore } from 'src/store/auth';
-import { PROFILE } from 'src/tracking';
+import { FollowSource, PROFILE } from 'src/tracking';
 import { Button, Spinner } from 'ui';
 import { useAccount, useContractWrite, useSignTypedData } from 'wagmi';
 
@@ -163,7 +164,13 @@ const Follow: FC<FollowProps> = ({
 
   return (
     <Button
-      className="!px-3 !py-1.5 text-sm"
+      className={clsx(
+        {
+          'border-0  hover:bg-none shadow-none !text-dark hover:!bg-gray-100 dark:!text-gray-300 dark:hover:!bg-dark':
+            followSource === FollowSource.DIRECT_MESSAGE_HEADER
+        },
+        '!px-3 !py-1.5 text-sm'
+      )}
       outline={outline}
       onClick={createFollow}
       aria-label="Follow"

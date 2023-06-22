@@ -1,9 +1,10 @@
 import QueuedPublication from '@components/Publication/QueuedPublication';
 import SinglePublication from '@components/Publication/SinglePublication';
 import PublicationsShimmer from '@components/Shared/Shimmer/PublicationsShimmer';
+import { uniqBy } from '@components/utils/uniqBy';
 import { CollectionIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
-import type { FeedItem, FeedRequest, Publication } from 'lens';
+import type { FeedItem, FeedRequest, Publication, TimelineQuery } from 'lens';
 import { FeedEventItemType, useTimelineQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -47,7 +48,7 @@ const Timeline: FC = () => {
     variables: { request, reactionRequest, profileId }
   });
 
-  const publications = [...new Set(data?.feed?.items)];
+  const publications = uniqBy(data?.feed?.items || [], 'root.id') as TimelineQuery['feed']['items'];
   const pageInfo = data?.feed?.pageInfo;
 
   const { observe } = useInView({

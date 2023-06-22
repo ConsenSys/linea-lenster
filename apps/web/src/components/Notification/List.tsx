@@ -1,3 +1,4 @@
+import { uniqBy } from '@components/utils/uniqBy';
 import { BellIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
 import type {
@@ -7,7 +8,8 @@ import type {
   NewMentionNotification,
   NewMirrorNotification,
   NewReactionNotification,
-  NotificationRequest
+  NotificationRequest,
+  NotificationsQuery
 } from 'lens';
 import { CustomFiltersTypes, NotificationTypes, useNotificationsQuery } from 'lens';
 import type { FC } from 'react';
@@ -65,7 +67,10 @@ const List: FC<ListProps> = ({ feedType }) => {
     variables: { request }
   });
 
-  const notifications = [...new Set(data?.notifications?.items)];
+  const notifications = uniqBy(
+    data?.notifications?.items || [],
+    'wallet.defaultProfile.id'
+  ) as NotificationsQuery['notifications']['items'];
   const pageInfo = data?.notifications?.pageInfo;
 
   const { observe } = useInView({

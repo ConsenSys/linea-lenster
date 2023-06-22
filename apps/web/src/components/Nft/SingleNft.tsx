@@ -30,7 +30,7 @@ const SingleNft: FC<SingleNftProps> = ({ nft, linkToDetail = true }) => {
     <Card>
       <a href={nftUrl} target="_blank" rel="noreferrer noopener">
         <div
-          className="divider h-52 sm:h-80 sm:rounded-t-[10px]"
+          className="divider h-52 sm:h-80 sm:rounded-t-[10px] my-2"
           style={{
             backgroundImage: `url(${sanitizeDStorageUrl(
               nft.originalContent?.uri || `${STATIC_IMAGES_URL}/placeholder.webp`
@@ -41,7 +41,7 @@ const SingleNft: FC<SingleNftProps> = ({ nft, linkToDetail = true }) => {
           }}
         />
       </a>
-      <div className="space-y-1 p-5">
+      <div className="space-y-1 p-5 bg-gray-100  dark:bg-black">
         {nft.collectionName && <div className="lt-text-gray-500 truncate text-sm">{nft.collectionName}</div>}
         <div className="truncate">
           <a className="font-bold" href={nftUrl} target="_blank" rel="noreferrer noopener">

@@ -1,5 +1,6 @@
 import UserProfilesShimmer from '@components/Shared/Shimmer/UserProfilesShimmer';
 import UserProfile from '@components/Shared/UserProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { UsersIcon } from '@heroicons/react/outline';
 import { t, Trans } from '@lingui/macro';
 import type { Profile, ProfileSearchResult, SearchQueryRequest } from 'lens';
@@ -30,7 +31,7 @@ const Profiles: FC<ProfilesProps> = ({ query }) => {
   });
 
   const search = data?.search as ProfileSearchResult;
-  const profiles = [...new Set(search?.items)];
+  const profiles = uniqBy(search?.items || [], 'id') as ProfileSearchResult['items'];
   const pageInfo = search?.pageInfo;
 
   const { observe } = useInView({

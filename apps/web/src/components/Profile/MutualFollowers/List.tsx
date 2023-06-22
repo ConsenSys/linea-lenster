@@ -1,7 +1,8 @@
 import Loader from '@components/Shared/Loader';
 import UserProfile from '@components/Shared/UserProfile';
+import { uniqBy } from '@components/utils/uniqBy';
 import { t } from '@lingui/macro';
-import type { MutualFollowersProfilesQueryRequest, Profile } from 'lens';
+import type { MutualFollowersListQuery, MutualFollowersProfilesQueryRequest, Profile } from 'lens';
 import { useMutualFollowersListQuery } from 'lens';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -30,7 +31,10 @@ const MutualFollowersList: FC<MutualFollowersListProps> = ({ profileId }) => {
     skip: !profileId
   });
 
-  const profiles = [...new Set(data?.mutualFollowersProfiles?.items)];
+  const profiles = uniqBy(
+    data?.mutualFollowersProfiles?.items || [],
+    'id'
+  ) as MutualFollowersListQuery['mutualFollowersProfiles']['items'];
   const pageInfo = data?.mutualFollowersProfiles?.pageInfo;
 
   const { observe } = useInView({
