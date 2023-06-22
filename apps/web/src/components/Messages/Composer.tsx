@@ -60,6 +60,7 @@ const Composer: FC<ComposerProps> = ({ sendMessage, conversationKey, disabledInp
     <div className="flex space-x-4 p-4">
       <Input
         type="text"
+        className="!text-dark !bg-gray-100 hover:!ring-brand-500 hover:!ring-1 focus:ring-1 focus:ring-brand-500"
         placeholder={t`Type Something`}
         value={message}
         disabled={disabledInput}
@@ -67,7 +68,7 @@ const Composer: FC<ComposerProps> = ({ sendMessage, conversationKey, disabledInp
         onChange={(event) => onChangeCallback(event.target.value)}
       />
       <Button disabled={!canSendMessage} onClick={handleSend} variant="primary" aria-label="Send message">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 text-dark">
           {Number(width) > MIN_WIDTH_DESKTOP ? (
             <span>
               <Trans>Send</Trans>

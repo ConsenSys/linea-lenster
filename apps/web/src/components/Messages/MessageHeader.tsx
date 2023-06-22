@@ -5,7 +5,7 @@ import type { Profile } from 'lens';
 import { useRouter } from 'next/router';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
-import { FollowSource } from 'src/tracking';
+import { FollowSource, UnfollowSource } from 'src/tracking';
 
 import Follow from '../Shared/Follow';
 
@@ -43,7 +43,12 @@ const MessageHeader: FC<MessageHeaderProps> = ({ profile }) => {
           followSource={FollowSource.DIRECT_MESSAGE_HEADER}
         />
       ) : (
-        <Unfollow showText profile={profile} setFollowing={setFollowing} />
+        <Unfollow
+          showText
+          profile={profile}
+          setFollowing={setFollowing}
+          unFollowSource={UnfollowSource.DIRECT_MESSAGE_HEADER}
+        />
       )}
     </div>
   );
