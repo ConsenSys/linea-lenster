@@ -1,4 +1,3 @@
-import { AVATAR, USER_CONTENT_URL } from 'data/constants';
 import type { Publication } from 'lens';
 import formatHandle from 'lib/formatHandle';
 import getStampFyiURL from 'lib/getStampFyiURL';
@@ -18,7 +17,7 @@ const SinglePublication: FC<PublicationProps> = ({ publication, h1Content = fals
   const isMirror = __typename === 'Mirror';
   const profile: any = isMirror ? publication?.mirrorOf?.profile : publication?.profile;
   const publicationId = isMirror ? publication?.mirrorOf?.id : id;
-  const avatar = `${USER_CONTENT_URL}/${AVATAR}/${sanitizeDStorageUrl(
+  const avatar = `${sanitizeDStorageUrl(
     profile.picture?.original?.url ?? profile.picture?.uri ?? getStampFyiURL(profile?.ownedBy)
   )}`;
   const attachment = hasMedia ? sanitizeDStorageUrl(metadata?.media[0].original.url) : null;

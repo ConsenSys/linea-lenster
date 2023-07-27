@@ -1,4 +1,3 @@
-import { AVATAR, USER_CONTENT_URL } from 'data/constants';
 import type { MediaSet, NftImage, Publication } from 'lens';
 import { Profile } from 'lens';
 import formatHandle from 'lib/formatHandle';
@@ -27,7 +26,7 @@ const Profile: FC<ProfileProps> = ({ profile, publications }) => {
     ? `${profile?.name} (@${profile?.handle}) • Lineaster`
     : `@${profile?.handle} • Lineaster`;
   const description = truncateByWords(profile?.bio ?? '', 30);
-  const image = `${USER_CONTENT_URL}/${AVATAR}/${sanitizeDStorageUrl(
+  const image = `${sanitizeDStorageUrl(
     profile?.picture?.original?.url ?? profile?.picture?.uri ?? getStampFyiURL(profile?.ownedBy)
   )}`;
 

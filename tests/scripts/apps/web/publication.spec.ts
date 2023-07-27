@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { APP_NAME, ATTACHMENT, IPFS_GATEWAY, USER_CONTENT_URL } from 'data/constants';
+import { APP_NAME, IPFS_GATEWAY } from 'data/constants';
 import { WEB_BASE_URL } from 'test/constants';
 
 test.describe('Publication', () => {
@@ -136,10 +136,7 @@ test.describe('Publication attachments', () => {
     const publicationAudioCover = page
       .getByTestId(`publication-${publicationId}`)
       .getByTestId(`attachment-audio-cover-${coverURL}`);
-    await expect(publicationAudioCover).toHaveAttribute(
-      'src',
-      `${USER_CONTENT_URL}/${ATTACHMENT}/${coverURL}`
-    );
+    await expect(publicationAudioCover).toHaveAttribute('src', `${coverURL}`);
   });
 
   test.describe('Publication oembed', () => {

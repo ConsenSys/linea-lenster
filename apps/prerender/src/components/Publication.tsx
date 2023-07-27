@@ -1,4 +1,4 @@
-import { AVATAR, DEFAULT_OG, USER_CONTENT_URL } from 'data/constants';
+import { DEFAULT_OG } from 'data/constants';
 import type { Comment } from 'lens';
 import { Publication } from 'lens';
 import getStampFyiURL from 'lib/getStampFyiURL';
@@ -31,7 +31,7 @@ const Publication: FC<PublicationProps> = ({ publication, comments }) => {
   const image = hasMedia
     ? sanitizeDStorageUrl(metadata?.media[0].original.url)
     : profile
-    ? `${USER_CONTENT_URL}/${AVATAR}/${sanitizeDStorageUrl(
+    ? `${sanitizeDStorageUrl(
         profile?.picture?.original?.url ?? profile?.picture?.uri ?? getStampFyiURL(profile?.ownedBy)
       )}`
     : DEFAULT_OG;
