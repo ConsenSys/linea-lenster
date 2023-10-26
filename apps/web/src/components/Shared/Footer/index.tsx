@@ -20,7 +20,7 @@ const Footer: FC = () => {
         <Link href="/privacy">
           <Trans>Privacy</Trans>
         </Link>
-        <a href="https://discord.com/invite/9QwXqsyAps" target="_blank" rel="noreferrer noopener">
+        <a href="https://discord.com/invite/consensys" target="_blank" rel="noreferrer noopener">
           <Trans>ConsenSys Discord</Trans>
         </a>
         <a href="https://lenster.xyz/donate" target="_blank" rel="noreferrer noopener">
