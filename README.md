@@ -8,7 +8,7 @@
     <br>
     <a href="https://lineaster.goerli.linea.build"><b>lineaster.goerli.linea.build</b></a>
     <br><br>
-    <a href="https://discord.com/invite/9QwXqsyAps"><b>Discord</b></a>
+    <a href="https://discord.com/invite/consensys"><b>Discord</b></a>
 </div>
 
 ## 🌿 About Lineaster
@@ -27,7 +27,7 @@ Lenster's README is still available [here](./README-lenster.md).
 
 ## ✅ Community
 
-Questions? Suggestions? Join us on [Discord](https://discord.com/invite/9QwXqsyAps)!
+Questions? Suggestions? Join us on [Discord](https://discord.com/invite/consensys)!
 
 ## ⚖️ License
 
