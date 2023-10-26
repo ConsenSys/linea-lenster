@@ -108,6 +108,6 @@ export const S3_BUCKET = {
   LENSTER_MEDIA: 'lenster-media'
 };
 
-export const DISCORD_URL = 'https://discord.com/invite/9QwXqsyAps';
+export const DISCORD_URL = 'https://discord.com/invite/consensys';
 
 export const ENS_DOMAIN_URL = 'https://app.ens.domains';
